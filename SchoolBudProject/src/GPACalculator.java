@@ -2,6 +2,12 @@ import java.util.ArrayList;
 
 
 public class GPACalculator {
+	
+	private ArrayList<double[]> gpaList;
+
+	public GPACalculator(ArrayList<double[]> val) {
+		gpaList = val;
+	}
 
 	public static double TotalGradePoints(ArrayList<double[]> list) {
 		
@@ -23,9 +29,6 @@ public class GPACalculator {
 		double gradePoints = TotalGradePoints(list);
 		double totalCreditHours = 0;
 		for(double[] val: list){
-			if(val[0]<0){
-				throw new IllegalArgumentException();
-			}
 			totalCreditHours+=val[0];
 		}
 		

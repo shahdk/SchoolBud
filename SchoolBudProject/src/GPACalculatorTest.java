@@ -2,6 +2,8 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
+import junit.framework.Assert;
+
 import org.junit.Test;
 
 
@@ -12,6 +14,12 @@ public class GPACalculatorTest {
 	@Test
 	public void testJUnit() {
 		assertTrue("JUnit works!", true);
+	}
+	
+	@Test
+	public void testGPACalculatorInitialze(){
+		double[] val = {0, 4};
+		assertNotNull(new GPACalculator(list(val)));
 	}
 	
 	@Test
