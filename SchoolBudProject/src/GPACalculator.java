@@ -3,7 +3,7 @@ import java.util.ArrayList;
 
 public class GPACalculator {
 
-	public static double TotalGrapdePoints(ArrayList<double[]> list) {
+	public static double TotalGradePoints(ArrayList<double[]> list) {
 		
 		double sum = 0;
 		
@@ -16,6 +16,26 @@ public class GPACalculator {
 		}
 		
 		return sum;
+	}
+
+	public static double TotalGPA(ArrayList<double[]> list) {
+		
+		double gradePoints = TotalGradePoints(list);
+		double totalCreditHours = 0;
+		for(double[] val: list){
+			if(val[0]<0){
+				throw new IllegalArgumentException();
+			}
+			totalCreditHours+=val[0];
+		}
+		
+		if(totalCreditHours == 0){
+			throw new ArithmeticException(); 
+		}
+		
+		double gpa = (Math.round(gradePoints * 100.0 / totalCreditHours)) / 100.00;
+		
+		return gpa;
 	}
 
 }
