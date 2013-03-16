@@ -20,6 +20,12 @@ public class GPACalculatorTest {
 		assertEquals(0, GPACalculator.TotalGrapdePoints(list(val)), DELTA);
 	}
 	
+	@Test
+	public void testTotalGradePointsTwo() {
+		double[] val = {1, 4};
+		assertEquals(4.0, GPACalculator.TotalGrapdePoints(list(val)), DELTA);
+	}
+	
 	private ArrayList<double[]> list(double[]... vals){
 		ArrayList<double[]> ret = new ArrayList<double[]>();
 		for(double[] i: vals){
