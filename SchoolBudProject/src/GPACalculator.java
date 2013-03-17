@@ -9,11 +9,11 @@ public class GPACalculator {
 		gpaList = val;
 	}
 
-	public static double TotalGradePoints(ArrayList<double[]> list) {
+	public double TotalGradePoints() {
 		
 		double sum = 0;
 		
-		for(double[] val: list){
+		for(double[] val: gpaList){
 			if(val[0] < 0 || val[1] < 0){
 				throw new IllegalArgumentException();
 			}
@@ -24,11 +24,11 @@ public class GPACalculator {
 		return sum;
 	}
 
-	public static double TotalGPA(ArrayList<double[]> list) {
+	public double TotalGPA() {
 		
-		double gradePoints = TotalGradePoints(list);
+		double gradePoints = this.TotalGradePoints();
 		double totalCreditHours = 0;
-		for(double[] val: list){
+		for(double[] val: gpaList){
 			totalCreditHours+=val[0];
 		}
 		
