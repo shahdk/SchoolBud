@@ -45,6 +45,28 @@ public class GPACalculatorTest {
 		assertEquals(21.0, obj.TotalGradePoints(), DELTA);
 	}
 	
+	@Test
+	public void testTotalGradePointsFour() {
+		double[] val1 = {3, 0};
+		double[] val2 = {1, 3};
+		double[] val3 = {3, 2};
+		double[] val4 = {4, 0};
+		GPACalculator obj = new GPACalculator(list(val1, val2, val3, val4));
+		assertEquals(9.0, obj.TotalGradePoints(), DELTA);
+	}
+	
+	
+	@Test
+	public void testTotalGradePointsFive() {
+		double[] val1 = {0, 4};
+		double[] val2 = {1, 3};
+		double[] val3 = {2, 2};
+		double[] val4 = {3, 1};
+		double[] val5 = {4, 0};
+		GPACalculator obj = new GPACalculator(list(val1, val2, val3, val4, val5));
+		assertEquals(10.0, obj.TotalGradePoints(), DELTA);
+	}
+	
 	@Test(expected=IllegalArgumentException.class)
 	public void testTotalGradePointsExceptionOne() {
 		double[] val1 = {3, 4};
@@ -88,6 +110,26 @@ public class GPACalculatorTest {
 		double[] val4 = {4, 0};
 		GPACalculator obj = new GPACalculator(list(val1, val2, val3, val4));
 		assertEquals(1.91, obj.TotalGPA(), DELTA);
+	}
+	
+	@Test
+	public void testTotalGPAFour() {
+		double[] val1 = {4, 4};
+		double[] val2 = {4, 3.33};
+		double[] val3 = {2, 2.3};
+		double[] val4 = {4, 4};
+		GPACalculator obj = new GPACalculator(list(val1, val2, val3, val4));
+		assertEquals(3.57, obj.TotalGPA(), DELTA);
+	}
+	
+	@Test
+	public void testTotalGPAFive() {
+		double[] val1 = {3, 3.33};
+		double[] val2 = {1, 2.67};
+		double[] val3 = {3, 3.5};
+		double[] val4 = {4, 1};
+		GPACalculator obj = new GPACalculator(list(val1, val2, val3, val4));
+		assertEquals(2.47, obj.TotalGPA(), DELTA);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
