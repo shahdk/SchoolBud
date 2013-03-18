@@ -109,7 +109,7 @@ public class GPACalculatorTest {
 		double[] val3 = {3, 2};
 		double[] val4 = {4, 0};
 		GPACalculator obj = new GPACalculator(list(val1, val2, val3, val4));
-		assertEquals(1.91, obj.TotalGPA(), DELTA);
+		assertEquals(1.90, obj.TotalGPA(), DELTA);
 	}
 	
 	@Test
@@ -119,7 +119,7 @@ public class GPACalculatorTest {
 		double[] val3 = {2, 2.3};
 		double[] val4 = {4, 4};
 		GPACalculator obj = new GPACalculator(list(val1, val2, val3, val4));
-		assertEquals(3.57, obj.TotalGPA(), DELTA);
+		assertEquals(3.56, obj.TotalGPA(), DELTA);
 	}
 	
 	@Test
@@ -129,7 +129,7 @@ public class GPACalculatorTest {
 		double[] val3 = {3, 3.5};
 		double[] val4 = {4, 1};
 		GPACalculator obj = new GPACalculator(list(val1, val2, val3, val4));
-		assertEquals(2.47, obj.TotalGPA(), DELTA);
+		assertEquals(2.46, obj.TotalGPA(), DELTA);
 	}
 	
 	@Test(expected=IllegalArgumentException.class)

@@ -36,7 +36,7 @@ public class GPACalculator {
 			throw new ArithmeticException(); 
 		}
 		
-		double gpa = (Math.round(gradePoints * 100.0 / totalCreditHours)) / 100.00;
+		double gpa = (Math.floor(gradePoints * 100.0 / totalCreditHours)) / 100.00;
 		
 		return gpa;
 	}
