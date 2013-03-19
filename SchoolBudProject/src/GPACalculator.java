@@ -24,6 +24,8 @@ public class GPACalculator {
 			sum+=product;
 		}
 		
+		sum = (Math.round(sum * 100.0))/100.0;
+		
 		return sum;
 	}
 
