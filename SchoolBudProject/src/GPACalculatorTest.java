@@ -167,6 +167,108 @@ public class GPACalculatorTest {
 	}
 	
 	
+	@Test(expected=IllegalArgumentException.class)
+	public void testTotalGradePointsWithMinPlusCrhrsAndVaryingGPAOne() {
+		double[] val1 = {0.2, 6};
+		double[] val2 = {0.2, 6};
+		double[] val3 = {0.2, 6};
+		double[] val4 = {0.2, 6};
+		GPACalculator obj = new GPACalculator(list(val1, val2, val3, val4), maxCreditHours, maxGPA);
+		obj.TotalGradePoints();
+	}
+	
+	@Test
+	public void testTotalGradePointsWithMinPlusCrhrsAndVaryingGPATwo() {
+		double[] val1 = {0.2, 4};
+		double[] val2 = {0.1, 4};
+		double[] val3 = {0.2, 4};
+		double[] val4 = {0.1, 4};
+		GPACalculator obj = new GPACalculator(list(val1, val2, val3, val4), maxCreditHours, maxGPA);
+		assertEquals(2.4, obj.TotalGradePoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalGradePointsWithMinPlusCrhrsAndVaryingGPAThree() {
+		double[] val1 = {0.2, 3.9};
+		double[] val2 = {0.1, 3.9};
+		double[] val3 = {0.2, 3.9};
+		double[] val4 = {0.1, 3.9};
+		GPACalculator obj = new GPACalculator(list(val1, val2, val3, val4), maxCreditHours, maxGPA);
+		assertEquals(2.34, obj.TotalGradePoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalGradePointsWithMinPlusCrhrsAndVaryingGPAFour() {
+		double[] val1 = {0.2, 2};
+		double[] val2 = {0.1, 2};
+		double[] val3 = {0.2, 2};
+		double[] val4 = {0.1, 2};
+		GPACalculator obj = new GPACalculator(list(val1, val2, val3, val4), maxCreditHours, maxGPA);
+		assertEquals(1.2, obj.TotalGradePoints(), DELTA);
+	}
+	
+	
+	@Test
+	public void testTotalGradePointsWithMinPlusCrhrsAndVaryingGPAFive() {
+		double[] val1 = {0.2, 0.1};
+		double[] val2 = {0.1, 0.1};
+		double[] val3 = {0.2, 0.1};
+		double[] val4 = {0.1, 0.1};
+		GPACalculator obj = new GPACalculator(list(val1, val2, val3, val4), maxCreditHours, maxGPA);
+		assertEquals(0.06, obj.TotalGradePoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalGradePointsWithMinPlusCrhrsAndVaryingGPASix() {
+		double[] val1 = {0.2, 0};
+		double[] val2 = {0.1, 0};
+		double[] val3 = {0.2, 0};
+		double[] val4 = {0.1, 0};
+		GPACalculator obj = new GPACalculator(list(val1, val2, val3, val4), maxCreditHours, maxGPA);
+		assertEquals(0.0, obj.TotalGradePoints(), DELTA);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testTotalGradePointsWithMinPlusCrhrsAndVaryingGPASeven() {
+		double[] val1 = {0.2, -2};
+		double[] val2 = {0.2, -2};
+		double[] val3 = {0.2, -2};
+		double[] val4 = {0.2, -2};
+		GPACalculator obj = new GPACalculator(list(val1, val2, val3, val4), maxCreditHours, maxGPA);
+		obj.TotalGradePoints();
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	@Test
 	public void testTotalGPAOne() {
