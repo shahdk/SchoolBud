@@ -17,7 +17,7 @@ public class GPACalculator {
 		double sum = 0;
 		
 		for(double[] val: gpaList){
-			if(val[0] < 0 || val[1] < 0 || val[1] > this.maxGPA){
+			if(val[0] < 0 || val[0] > this.maxCreditHours || val[1] < 0 || val[1] > this.maxGPA){
 				throw new IllegalArgumentException();
 			}
 			double product = val[0] * val[1];

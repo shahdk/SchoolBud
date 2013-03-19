@@ -24,7 +24,7 @@ public class GPACalculatorTest {
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testTotalGradePointsWithNegativeCrhrsAndVaryingGPAOne() {
+	public void testTotalGradePointsWithMinMinusCrhrsAndMaxPlusGPA() {
 		double[] val1 = {-3, 6};
 		double[] val2 = {-1, 6};
 		double[] val3 = {-3, 6};
@@ -34,7 +34,7 @@ public class GPACalculatorTest {
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testTotalGradePointsWithNegativeCrhrsAndVaryingGPATwo() {
+	public void testTotalGradePointsWithMinMinusCrhrsAndMaxGPA() {
 		double[] val1 = {-3, 4};
 		double[] val2 = {-1, 4};
 		double[] val3 = {-3, 4};
@@ -44,7 +44,7 @@ public class GPACalculatorTest {
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testTotalGradePointsWithNegativeCrhrsAndVaryingGPAThree() {
+	public void testTotalGradePointsWithMinMinusCrhrsAndMaxMinusGPA() {
 		double[] val1 = {-3, 3.9};
 		double[] val2 = {-1, 3.9};
 		double[] val3 = {-3, 3.9};
@@ -54,7 +54,7 @@ public class GPACalculatorTest {
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testTotalGradePointsWithNegativeCrhrsAndVaryingGPAFour() {
+	public void testTotalGradePointsWithMinMinusCrhrsAndNominalGPA() {
 		double[] val1 = {-3, 2};
 		double[] val2 = {-1, 2};
 		double[] val3 = {-3, 2};
@@ -65,7 +65,7 @@ public class GPACalculatorTest {
 	
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testTotalGradePointsWithNegativeCrhrsAndVaryingGPAFive() {
+	public void testTotalGradePointsWithMinMinusCrhrsAndMinPlusGPA() {
 		double[] val1 = {-3, 0.1};
 		double[] val2 = {-1, 0.1};
 		double[] val3 = {-3, 0.1};
@@ -75,7 +75,7 @@ public class GPACalculatorTest {
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testTotalGradePointsWithNegativeCrhrsAndVaryingGPASix() {
+	public void testTotalGradePointsWithMinMinusCrhrsAndMinGPA() {
 		double[] val1 = {-3, 0};
 		double[] val2 = {-1, 0};
 		double[] val3 = {-3, 0};
@@ -85,7 +85,7 @@ public class GPACalculatorTest {
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testTotalGradePointsWithNegativeCrhrsAndVaryingGPASeven() {
+	public void testTotalGradePointsWithMinMinusCrhrsAndMinMinusGPA() {
 		double[] val1 = {-3, -2};
 		double[] val2 = {-1, -2};
 		double[] val3 = {-3, -2};
@@ -96,7 +96,7 @@ public class GPACalculatorTest {
 	
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testTotalGradePointsWithZeroCrhrsAndVaryingGPAOne() {
+	public void testTotalGradePointsWithZeroCrhrsAndMaxPlusGPA() {
 		double[] val1 = {0, 6};
 		double[] val2 = {0, 6};
 		double[] val3 = {0, 6};
@@ -106,7 +106,7 @@ public class GPACalculatorTest {
 	}
 	
 	@Test
-	public void testTotalGradePointsWithZeroCrhrsAndVaryingGPATwo() {
+	public void testTotalGradePointsWithZeroCrhrsAndMaxGPA() {
 		double[] val1 = {0, 4};
 		double[] val2 = {0, 4};
 		double[] val3 = {0, 4};
@@ -116,7 +116,7 @@ public class GPACalculatorTest {
 	}
 	
 	@Test
-	public void testTotalGradePointsWithZeroCrhrsAndVaryingGPAThree() {
+	public void testTotalGradePointsWithZeroCrhrsAndMaxMinusGPA() {
 		double[] val1 = {0, 3.9};
 		double[] val2 = {0, 3.9};
 		double[] val3 = {0, 3.9};
@@ -126,7 +126,7 @@ public class GPACalculatorTest {
 	}
 	
 	@Test
-	public void testTotalGradePointsWithZeroCrhrsAndVaryingGPAFour() {
+	public void testTotalGradePointsWithZeroCrhrsAndNominalGPA() {
 		double[] val1 = {0, 2};
 		double[] val2 = {0, 2};
 		double[] val3 = {0, 2};
@@ -137,7 +137,7 @@ public class GPACalculatorTest {
 	
 	
 	@Test
-	public void testTotalGradePointsWithZeroCrhrsAndVaryingGPAFive() {
+	public void testTotalGradePointsWithZeroCrhrsAndMinPlusGPA() {
 		double[] val1 = {0, 0.1};
 		double[] val2 = {0, 0.1};
 		double[] val3 = {0, 0.1};
@@ -147,7 +147,7 @@ public class GPACalculatorTest {
 	}
 	
 	@Test
-	public void testTotalGradePointsWithZeroCrhrsAndVaryingGPASix() {
+	public void testTotalGradePointsWithZeroCrhrsAndMinGPA() {
 		double[] val1 = {0, 0};
 		double[] val2 = {0, 0};
 		double[] val3 = {0, 0};
@@ -157,7 +157,7 @@ public class GPACalculatorTest {
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testTotalGradePointsWithZeroCrhrsAndVaryingGPASeven() {
+	public void testTotalGradePointsWithZeroCrhrsAndMinMinusGPA() {
 		double[] val1 = {0, -2};
 		double[] val2 = {0, -2};
 		double[] val3 = {0, -2};
@@ -168,7 +168,7 @@ public class GPACalculatorTest {
 	
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testTotalGradePointsWithMinPlusCrhrsAndVaryingGPAOne() {
+	public void testTotalGradePointsWithMinPlusCrhrsAndMaxPlusGPA() {
 		double[] val1 = {0.2, 6};
 		double[] val2 = {0.2, 6};
 		double[] val3 = {0.2, 6};
@@ -178,7 +178,7 @@ public class GPACalculatorTest {
 	}
 	
 	@Test
-	public void testTotalGradePointsWithMinPlusCrhrsAndVaryingGPATwo() {
+	public void testTotalGradePointsWithMinPlusCrhrsAndMaxGPA() {
 		double[] val1 = {0.2, 4};
 		double[] val2 = {0.1, 4};
 		double[] val3 = {0.2, 4};
@@ -188,7 +188,7 @@ public class GPACalculatorTest {
 	}
 	
 	@Test
-	public void testTotalGradePointsWithMinPlusCrhrsAndVaryingGPAThree() {
+	public void testTotalGradePointsWithMinPlusCrhrsAndMaxMinusGPA() {
 		double[] val1 = {0.2, 3.9};
 		double[] val2 = {0.1, 3.9};
 		double[] val3 = {0.2, 3.9};
@@ -198,7 +198,7 @@ public class GPACalculatorTest {
 	}
 	
 	@Test
-	public void testTotalGradePointsWithMinPlusCrhrsAndVaryingGPAFour() {
+	public void testTotalGradePointsWithMinPlusCrhrsAndNominalGPA() {
 		double[] val1 = {0.2, 2};
 		double[] val2 = {0.1, 2};
 		double[] val3 = {0.2, 2};
@@ -209,7 +209,7 @@ public class GPACalculatorTest {
 	
 	
 	@Test
-	public void testTotalGradePointsWithMinPlusCrhrsAndVaryingGPAFive() {
+	public void testTotalGradePointsWithMinPlusCrhrsAndMinPlusGPA() {
 		double[] val1 = {0.2, 0.1};
 		double[] val2 = {0.1, 0.1};
 		double[] val3 = {0.2, 0.1};
@@ -219,7 +219,7 @@ public class GPACalculatorTest {
 	}
 	
 	@Test
-	public void testTotalGradePointsWithMinPlusCrhrsAndVaryingGPASix() {
+	public void testTotalGradePointsWithMinPlusCrhrsAndMinGPA() {
 		double[] val1 = {0.2, 0};
 		double[] val2 = {0.1, 0};
 		double[] val3 = {0.2, 0};
@@ -229,7 +229,7 @@ public class GPACalculatorTest {
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testTotalGradePointsWithMinPlusCrhrsAndVaryingGPASeven() {
+	public void testTotalGradePointsWithMinPlusCrhrsAndMinMinusGPA() {
 		double[] val1 = {0.2, -2};
 		double[] val2 = {0.2, -2};
 		double[] val3 = {0.2, -2};
@@ -240,7 +240,7 @@ public class GPACalculatorTest {
 	
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testTotalGradePointsWithNominalCrhrsAndVaryingGPAOne() {
+	public void testTotalGradePointsWithNominalCrhrsAndMaxPlusGPA() {
 		double[] val1 = {2, 6};
 		double[] val2 = {2, 6};
 		double[] val3 = {2, 6};
@@ -250,7 +250,7 @@ public class GPACalculatorTest {
 	}
 	
 	@Test
-	public void testTotalGradePointsWithNominalCrhrsAndVaryingGPATwo() {
+	public void testTotalGradePointsWithNominalCrhrsAndMaxGPA() {
 		double[] val1 = {2, 4};
 		double[] val2 = {2, 4};
 		double[] val3 = {2, 4};
@@ -260,7 +260,7 @@ public class GPACalculatorTest {
 	}
 	
 	@Test
-	public void testTotalGradePointsWithNominalCrhrsAndVaryingGPAThree() {
+	public void testTotalGradePointsWithNominalCrhrsAndMaxMinusGPA() {
 		double[] val1 = {2, 3.9};
 		double[] val2 = {2, 3.9};
 		double[] val3 = {2, 3.9};
@@ -270,7 +270,7 @@ public class GPACalculatorTest {
 	}
 	
 	@Test
-	public void testTotalGradePointsWithNominalCrhrsAndVaryingGPAFour() {
+	public void testTotalGradePointsWithNominalCrhrsAndNominalGPA() {
 		double[] val1 = {2, 2};
 		double[] val2 = {2, 2};
 		double[] val3 = {2, 2};
@@ -281,7 +281,7 @@ public class GPACalculatorTest {
 	
 	
 	@Test
-	public void testTotalGradePointsWithNominalCrhrsAndVaryingGPAFive() {
+	public void testTotalGradePointsWithNominalCrhrsAndMinPlusGPA() {
 		double[] val1 = {2, 0.1};
 		double[] val2 = {2, 0.1};
 		double[] val3 = {2, 0.1};
@@ -291,7 +291,7 @@ public class GPACalculatorTest {
 	}
 	
 	@Test
-	public void testTotalGradePointsWithNominalCrhrsAndVaryingGPASix() {
+	public void testTotalGradePointsWithNominalCrhrsAndMinGPA() {
 		double[] val1 = {2, 0};
 		double[] val2 = {2, 0};
 		double[] val3 = {2, 0};
@@ -301,7 +301,7 @@ public class GPACalculatorTest {
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testTotalGradePointsWithNominalCrhrsAndVaryingGPASeven() {
+	public void testTotalGradePointsWithNominalCrhrsAndMinMinusGPA() {
 		double[] val1 = {2, -2};
 		double[] val2 = {2, -2};
 		double[] val3 = {2, -2};
@@ -311,7 +311,7 @@ public class GPACalculatorTest {
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testTotalGradePointsWithMaxMinusCrhrsAndVaryingGPAOne() {
+	public void testTotalGradePointsWithMaxMinusCrhrsAndMaxPlusGPA() {
 		double[] val1 = {3.9, 6};
 		double[] val2 = {3.9, 6};
 		double[] val3 = {3.9, 6};
@@ -321,7 +321,7 @@ public class GPACalculatorTest {
 	}
 	
 	@Test
-	public void testTotalGradePointsWithMaxMinusCrhrsAndVaryingGPATwo() {
+	public void testTotalGradePointsWithMaxMinusCrhrsAndMaxGPA() {
 		double[] val1 = {3.9, 4};
 		double[] val2 = {3.9, 4};
 		double[] val3 = {3.9, 4};
@@ -331,7 +331,7 @@ public class GPACalculatorTest {
 	}
 	
 	@Test
-	public void testTotalGradePointsWithMaxMinusCrhrsAndVaryingGPAThree() {
+	public void testTotalGradePointsWithMaxMinusCrhrsAndMaxMinusGPA() {
 		double[] val1 = {3.9, 3.9};
 		double[] val2 = {3.9, 3.9};
 		double[] val3 = {3.9, 3.9};
@@ -341,7 +341,7 @@ public class GPACalculatorTest {
 	}
 	
 	@Test
-	public void testTotalGradePointsWithMaxMinusCrhrsAndVaryingGPAFour() {
+	public void testTotalGradePointsWithMaxMinusCrhrsAndNominalGPA() {
 		double[] val1 = {3.9, 2};
 		double[] val2 = {3.9, 2};
 		double[] val3 = {3.9, 2};
@@ -352,7 +352,7 @@ public class GPACalculatorTest {
 	
 	
 	@Test
-	public void testTotalGradePointsWithMaxMinusCrhrsAndVaryingGPAFive() {
+	public void testTotalGradePointsWithMaxMinusCrhrsAndMinPlusGPA() {
 		double[] val1 = {3.9, 0.1};
 		double[] val2 = {3.9, 0.1};
 		double[] val3 = {3.9, 0.1};
@@ -362,7 +362,7 @@ public class GPACalculatorTest {
 	}
 	
 	@Test
-	public void testTotalGradePointsWithMaxMinusCrhrsAndVaryingGPASix() {
+	public void testTotalGradePointsWithMaxMinusCrhrsAndMinGPA() {
 		double[] val1 = {3.9, 0};
 		double[] val2 = {3.9, 0};
 		double[] val3 = {3.9, 0};
@@ -372,7 +372,7 @@ public class GPACalculatorTest {
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testTotalGradePointsWithMaxMinusCrhrsAndVaryingGPASeven() {
+	public void testTotalGradePointsWithMaxMinusCrhrsAndMinMinusGPA() {
 		double[] val1 = {3.9, -2};
 		double[] val2 = {3.9, -2};
 		double[] val3 = {3.9, -2};
@@ -382,7 +382,7 @@ public class GPACalculatorTest {
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testTotalGradePointsWithMaxCrhrsAndVaryingGPAOne() {
+	public void testTotalGradePointsWithMaxCrhrsAndMaxPlusGPA() {
 		double[] val1 = {4, 6};
 		double[] val2 = {4, 6};
 		double[] val3 = {4, 6};
@@ -392,7 +392,7 @@ public class GPACalculatorTest {
 	}
 	
 	@Test
-	public void testTotalGradePointsWithMaxCrhrsAndVaryingGPATwo() {
+	public void testTotalGradePointsWithMaxCrhrsAndMaxGPA() {
 		double[] val1 = {4, 4};
 		double[] val2 = {4, 4};
 		double[] val3 = {4, 4};
@@ -402,7 +402,7 @@ public class GPACalculatorTest {
 	}
 	
 	@Test
-	public void testTotalGradePointsWithMaxCrhrsAndVaryingGPAThree() {
+	public void testTotalGradePointsWithMaxCrhrsAndMaxMinusGPA() {
 		double[] val1 = {4, 3.9};
 		double[] val2 = {4, 3.9};
 		double[] val3 = {4, 3.9};
@@ -412,7 +412,7 @@ public class GPACalculatorTest {
 	}
 	
 	@Test
-	public void testTotalGradePointsWithMaxCrhrsAndVaryingGPAFour() {
+	public void testTotalGradePointsWithMaxCrhrsAndNominalGPA() {
 		double[] val1 = {4, 2};
 		double[] val2 = {4, 2};
 		double[] val3 = {4, 2};
@@ -423,7 +423,7 @@ public class GPACalculatorTest {
 	
 	
 	@Test
-	public void testTotalGradePointsWithMaxCrhrsAndVaryingGPAFive() {
+	public void testTotalGradePointsWithMaxCrhrsAndMinPlusGPA() {
 		double[] val1 = {4, 0.1};
 		double[] val2 = {4, 0.1};
 		double[] val3 = {4, 0.1};
@@ -433,7 +433,7 @@ public class GPACalculatorTest {
 	}
 	
 	@Test
-	public void testTotalGradePointsWithMaxCrhrsAndVaryingGPASix() {
+	public void testTotalGradePointsWithMaxCrhrsAndMinGPA() {
 		double[] val1 = {4, 0};
 		double[] val2 = {4, 0};
 		double[] val3 = {4, 0};
@@ -443,7 +443,7 @@ public class GPACalculatorTest {
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
-	public void testTotalGradePointsWithMaxCrhrsAndVaryingGPASeven() {
+	public void testTotalGradePointsWithMaxCrhrsAndMinMinusGPA() {
 		double[] val1 = {4, -2};
 		double[] val2 = {4, -2};
 		double[] val3 = {4, -2};
@@ -452,29 +452,76 @@ public class GPACalculatorTest {
 		obj.TotalGradePoints();
 	}
 	
+	@Test(expected=IllegalArgumentException.class)
+	public void testTotalGradePointsWithMaxPlusCrhrsAndMaxPlusGPA() {
+		double[] val1 = {6, 6};
+		double[] val2 = {6, 6};
+		double[] val3 = {6, 6};
+		double[] val4 = {6, 6};
+		GPACalculator obj = new GPACalculator(list(val1, val2, val3, val4), maxCreditHours, maxGPA);
+		obj.TotalGradePoints();
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testTotalGradePointsWithMaxPlusCrhrsAndMaxGPA() {
+		double[] val1 = {6, 4};
+		double[] val2 = {6, 4};
+		double[] val3 = {6, 4};
+		double[] val4 = {6, 4};
+		GPACalculator obj = new GPACalculator(list(val1, val2, val3, val4), maxCreditHours, maxGPA);
+		obj.TotalGradePoints();
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testTotalGradePointsWithMaxPlusCrhrsAndMaxMinusGPA() {
+		double[] val1 = {6, 3.9};
+		double[] val2 = {6, 3.9};
+		double[] val3 = {6, 3.9};
+		double[] val4 = {6, 3.9};
+		GPACalculator obj = new GPACalculator(list(val1, val2, val3, val4), maxCreditHours, maxGPA);
+		obj.TotalGradePoints();
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testTotalGradePointsWithMaxPlusCrhrsAndNominalGPA() {
+		double[] val1 = {6, 2};
+		double[] val2 = {6, 2};
+		double[] val3 = {6, 2};
+		double[] val4 = {6, 2};
+		GPACalculator obj = new GPACalculator(list(val1, val2, val3, val4), maxCreditHours, maxGPA);
+		obj.TotalGradePoints();
+	}
 	
 	
+	@Test(expected=IllegalArgumentException.class)
+	public void testTotalGradePointsWithMaxPlusCrhrsAndMinPlusGPA() {
+		double[] val1 = {6, 0.1};
+		double[] val2 = {6, 0.1};
+		double[] val3 = {6, 0.1};
+		double[] val4 = {6, 0.1};
+		GPACalculator obj = new GPACalculator(list(val1, val2, val3, val4), maxCreditHours, maxGPA);
+		obj.TotalGradePoints();
+	}
 	
+	@Test(expected=IllegalArgumentException.class)
+	public void testTotalGradePointsWithMaxPlusCrhrsAndMinGPA() {
+		double[] val1 = {6, 0};
+		double[] val2 = {6, 0};
+		double[] val3 = {6, 0};
+		double[] val4 = {6, 0};
+		GPACalculator obj = new GPACalculator(list(val1, val2, val3, val4), maxCreditHours, maxGPA);
+		obj.TotalGradePoints();
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	@Test(expected=IllegalArgumentException.class)
+	public void testTotalGradePointsWithMaxPlusCrhrsAndMinMinuGPA() {
+		double[] val1 = {6, -2};
+		double[] val2 = {6, -2};
+		double[] val3 = {6, -2};
+		double[] val4 = {6, -2};
+		GPACalculator obj = new GPACalculator(list(val1, val2, val3, val4), maxCreditHours, maxGPA);
+		obj.TotalGradePoints();
+	}
 	
 	
 	@Test
