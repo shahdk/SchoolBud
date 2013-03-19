@@ -4,9 +4,12 @@ import java.util.ArrayList;
 public class GPACalculator {
 	
 	private ArrayList<double[]> gpaList;
+	private double maxCreditHours, maxGPA;
 
-	public GPACalculator(ArrayList<double[]> val) {
-		gpaList = val;
+	public GPACalculator(ArrayList<double[]> val, double maxCreditHours, double maxGPA) {
+		this.gpaList = val;
+		this.maxCreditHours = maxCreditHours;
+		this.maxGPA = maxGPA;
 	}
 
 	public double TotalGradePoints() {
