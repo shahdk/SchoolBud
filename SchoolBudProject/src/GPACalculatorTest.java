@@ -1,9 +1,5 @@
 import static org.junit.Assert.*;
-
 import java.util.ArrayList;
-
-import junit.framework.TestCase;
-
 import org.junit.Test;
 
 
