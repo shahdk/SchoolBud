@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="11.4">
+  <zoom_level>12</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>156</x>
+      <y>1632</y>
+      <w>276</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>Course
+--
+-Properties
+title
+list of categories
+% weight for categories
+Grade in course
+--
+-Responsibilites
+get Grades
+get Categories
+get % weight for category
+calculate % needed for target score
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>192</x>
+      <y>2292</y>
+      <w>192</w>
+      <h>192</h>
+    </coordinates>
+    <panel_attributes>Item
+--
+-Properties
+title
+earned points
+total points
+--
+-Responsibilites
+get earned points
+get total points</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>168</x>
+      <y>1968</y>
+      <w>240</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>Category
+--
+-Properties
+title
+list of items
+% weight for items
+Grade for an item
+--
+-Responsibilites
+get Grades for an item
+get total grade of the category
+get items
+get % weight for item</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>1188</x>
+      <y>1440</y>
+      <w>240</w>
+      <h>156</h>
+    </coordinates>
+    <panel_attributes>FileReader
+--
+-Properties
+storing information about a file
+--
+-Responsiblity
+Generic method to store info
+load txt files
+parse text files
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>204</x>
+      <y>1836</y>
+      <w>146</w>
+      <h>156</h>
+    </coordinates>
+    <panel_attributes>Constructs
+lt=&lt;-</panel_attributes>
+    <additional_attributes>84;132;84;36</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>204</x>
+      <y>2172</y>
+      <w>146</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>Constructs
+lt=&lt;-</panel_attributes>
+    <additional_attributes>84;120;84;36</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>1188</x>
+      <y>2040</y>
+      <w>408</w>
+      <h>228</h>
+    </coordinates>
+    <panel_attributes>GPACalculator
+--
+-Constructor
+GPACalculator(ArrayList&lt;double[]&gt;, double, double)
+--
+-Private Fields
+ArrayList&lt;double[]&gt; gpaList
+double maxCreditHours, maxGPA
+--
+-Public Methods
+double totalGradePoints
+double totalGPA
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>1188</x>
+      <y>1764</y>
+      <w>264</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>GradeCalculator
+--
+-Properties
+store the earned and total points
+--
+-Responsiblity
+Calculate the current grade and
+the grade needed for target score
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>840</x>
+      <y>1056</y>
+      <w>240</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>Rubric
+--
+-Properties
+store the GPA for each grade.
+--
+-Responsiblity
+Load and Save rubrics
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>1488</x>
+      <y>1044</y>
+      <w>408</w>
+      <h>228</h>
+    </coordinates>
+    <panel_attributes>Scheduler
+--
+-Properties
+text areas to display trends graph.
+--
+-Responsiblity
+Display the trends graph
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>168</x>
+      <y>1308</y>
+      <w>324</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>FrequencyCalculator
+--
+-Properties
+stores the number of assignments
+--
+-Responsiblity
+Predict the number of assginments based
+on the frequency of assignments entered.
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>1944</x>
+      <y>1044</y>
+      <w>252</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>GradeTrender
+--
+-Properties
+store the grades for calcualtion
+--
+-Responsiblity
+calculate the trend given the 
+current grades
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>1224</x>
+      <y>252</y>
+      <w>312</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>SchoolBudGUI
+--
+-Properties
+Menu for options
+Dropdown list for quarters and courses
+jpanel for categories
+--
+-Responsibilities
+Display various components
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>540</x>
+      <y>792</y>
+      <w>324</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>DisplayGradesAndGPA
+--
+-Properties
+Textbox and text areas to display grades, 
+titles, etc.
+--
+-Responsiblity
+Display and enable modification of grade
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>1236</x>
+      <y>0</y>
+      <w>288</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>Main
+--
+-Methods
+public static void main(String args[])
+--
+-Responsibilities
+create SchoolBudGUI
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1284</x>
+      <y>84</y>
+      <w>146</w>
+      <h>192</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+Constructs</panel_attributes>
+    <additional_attributes>84;168;84;36</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>888</x>
+      <y>792</y>
+      <w>312</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>DisplayRubric
+--
+-Properties
+Textbox and text areas to display rubric.
+--
+-Responsiblity
+Display and enable modification of rubric
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>1596</x>
+      <y>780</y>
+      <w>336</w>
+      <h>144</h>
+    </coordinates>
+    <panel_attributes>DisplayScheduler
+--
+-Properties
+Textbox and text areas to display scheduler.
+--
+-Responsiblity
+Display and enable the modification of
+scheduler.
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>1224</x>
+      <y>780</y>
+      <w>348</w>
+      <h>156</h>
+    </coordinates>
+    <panel_attributes>AddEditQuarter
+--
+-Properties
+Textbox and text areas to display information
+on a quarter.
+--
+-Responsiblity
+Display and enable modification and addition
+of quarters
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>1956</x>
+      <y>780</y>
+      <w>276</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>DisplayTrendsGraph
+--
+-Properties
+text areas to display trends graph.
+--
+-Responsiblity
+Display the trends graph
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>660</x>
+      <y>396</y>
+      <w>756</w>
+      <h>420</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>36;396;36;192;372;192;732;192;732;36</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1020</x>
+      <y>396</y>
+      <w>396</w>
+      <h>420</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>36;396;36;192;372;192;372;36</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1356</x>
+      <y>396</y>
+      <w>60</w>
+      <h>408</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>36;384;36;36</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1356</x>
+      <y>396</y>
+      <w>420</w>
+      <h>408</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>396;384;396;192;36;192;36;36</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1356</x>
+      <y>396</y>
+      <w>744</w>
+      <h>408</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>720;384;720;192;36;192;36;36</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>936</x>
+      <y>888</y>
+      <w>132</w>
+      <h>192</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>36;168;36;108;108;108;108;36</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1656</x>
+      <y>888</y>
+      <w>132</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>36;156;36;108;108;108;108;36</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>2016</x>
+      <y>864</y>
+      <w>84</w>
+      <h>204</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>36;180;36;120;60;120;60;36</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1356</x>
+      <y>900</y>
+      <w>60</w>
+      <h>564</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>36;540;36;36</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>660</x>
+      <y>900</y>
+      <w>552</w>
+      <h>972</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>528;948;36;948;36;912;36;36</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>660</x>
+      <y>900</y>
+      <w>552</w>
+      <h>1284</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>528;1260;36;1260;36;36</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>396</x>
+      <y>900</y>
+      <w>324</w>
+      <h>876</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>36;852;300;852;300;36</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>456</x>
+      <y>1356</y>
+      <w>756</w>
+      <h>432</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+fg=</panel_attributes>
+    <additional_attributes>36;36;324;36;324;408;732;408</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>0</x>
+      <y>1356</y>
+      <w>192</w>
+      <h>420</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>156;396;36;396;36;36;168;36</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>396</x>
+      <y>1488</y>
+      <w>816</w>
+      <h>168</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>792;36;600;36;600;144;36;144</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1008</x>
+      <y>1164</y>
+      <w>204</w>
+      <h>384</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>180;360;36;360;36;36</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>396</x>
+      <y>1716</y>
+      <w>816</w>
+      <h>216</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>36;36;228;36;228;192;792;192</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>816</x>
+      <y>1164</y>
+      <w>396</w>
+      <h>1128</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>36;36;36;1104;372;1104</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1272</x>
+      <y>1872</y>
+      <w>144</w>
+      <h>192</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>36;36;36;96;120;96;120;168</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1404</x>
+      <y>1152</y>
+      <w>672</w>
+      <h>636</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>36;612;648;612;648;36</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1560</x>
+      <y>1152</y>
+      <w>516</w>
+      <h>912</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>36;888;492;888;492;36</additional_attributes>
+  </element>
+</diagram>
