@@ -82,12 +82,43 @@ public class ItemTest {
 		assertEquals("HW2", item.getName());
 	}
 	
-	private ArrayList<String> list(String... vals){
-		ArrayList<String> ret = new ArrayList<String>();
-		for(String i: vals){
-			ret.add(i);
-		}
-		return ret;
-	}
-
+	@Test(expected=IllegalArgumentException.class)
+	public void testItemInitializationWithNegativeWeightOne() {
+		Item item = new Item("HW1", "8.5", "10", "-0.10");	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testItemInitializationWithNegativeWeightTwo() {
+		Item item = new Item("HW1", "10", "-0.10");	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testItemInitializationWithNegativeWeightThree() {
+		Item item = new Item("HW1", "-0.10");	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testItemInitializationWithNegativeTotalPointsOne() {
+		Item item = new Item("HW1", "8.5", "-10", "0.10");	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testItemInitializationWithNegativeTotalPointsTwo() {
+		Item item = new Item("HW1", "-10", "0.10");	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testItemInitializationWithZeroTotalPointsOne() {
+		Item item = new Item("HW1", "8.5", "0", "0.10");}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testItemInitializationWithZeroTotalPoints() {
+		Item item = new Item("HW1", "0", "0.10");}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testItemInitializationWithEmptyNameOne() {
+		Item item = new Item("", "8.5", "10", "0.10");}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testItemInitializationWithEmptyNameTwo() {
+		Item item = new Item("", "10", "0.10");}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testItemInitializationWithEmptyNameThree() {
+		Item item = new Item("", "0.10");}
 }
