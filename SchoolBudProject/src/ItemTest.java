@@ -1,9 +1,6 @@
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-
 import org.junit.Test;
-
 
 public class ItemTest {
 
@@ -82,43 +79,78 @@ public class ItemTest {
 		assertEquals("HW2", item.getName());
 	}
 	
+	@SuppressWarnings("unused")
 	@Test(expected=IllegalArgumentException.class)
 	public void testItemInitializationWithNegativeWeightOne() {
 		Item item = new Item("HW1", "8.5", "10", "-0.10");	}
 	
+	@SuppressWarnings("unused")
 	@Test(expected=IllegalArgumentException.class)
 	public void testItemInitializationWithNegativeWeightTwo() {
 		Item item = new Item("HW1", "10", "-0.10");	}
 	
+	@SuppressWarnings("unused")
 	@Test(expected=IllegalArgumentException.class)
 	public void testItemInitializationWithNegativeWeightThree() {
 		Item item = new Item("HW1", "-0.10");	}
 	
+	@SuppressWarnings("unused")
 	@Test(expected=IllegalArgumentException.class)
 	public void testItemInitializationWithNegativeTotalPointsOne() {
 		Item item = new Item("HW1", "8.5", "-10", "0.10");	}
 	
+	@SuppressWarnings("unused")
 	@Test(expected=IllegalArgumentException.class)
 	public void testItemInitializationWithNegativeTotalPointsTwo() {
 		Item item = new Item("HW1", "-10", "0.10");	}
 	
+	@SuppressWarnings("unused")
 	@Test(expected=IllegalArgumentException.class)
 	public void testItemInitializationWithZeroTotalPointsOne() {
 		Item item = new Item("HW1", "8.5", "0", "0.10");}
 	
+	@SuppressWarnings("unused")
 	@Test(expected=IllegalArgumentException.class)
 	public void testItemInitializationWithZeroTotalPoints() {
 		Item item = new Item("HW1", "0", "0.10");}
 	
+	@SuppressWarnings("unused")
 	@Test(expected=IllegalArgumentException.class)
 	public void testItemInitializationWithEmptyNameOne() {
 		Item item = new Item("", "8.5", "10", "0.10");}
 	
+	@SuppressWarnings("unused")
 	@Test(expected=IllegalArgumentException.class)
 	public void testItemInitializationWithEmptyNameTwo() {
 		Item item = new Item("", "10", "0.10");}
 	
+	@SuppressWarnings("unused")
 	@Test(expected=IllegalArgumentException.class)
 	public void testItemInitializationWithEmptyNameThree() {
 		Item item = new Item("", "0.10");}
+	
+	@SuppressWarnings("unused")
+	@Test(expected=IllegalArgumentException.class)
+	public void testItemInitializationWithNonNUmericWeightOne() {
+		Item item = new Item("HW1", "8.5", "10", "hi");	}
+	
+	@SuppressWarnings("unused")
+	@Test(expected=IllegalArgumentException.class)
+	public void testItemInitializationWithNonNumericWeightTwo() {
+		Item item = new Item("HW1", "10", "hi");	}
+	
+	@SuppressWarnings("unused")
+	@Test(expected=IllegalArgumentException.class)
+	public void testItemInitializationWithNonNumericWeightThree() {
+		Item item = new Item("HW1", "hi");	}
+	
+	@SuppressWarnings("unused")
+	@Test(expected=IllegalArgumentException.class)
+	public void testItemInitializationWithNonNumericTotalPointsOne() {
+		Item item = new Item("HW1", "8.5", "lol", "0.10");}
+	
+	@SuppressWarnings("unused")
+	@Test(expected=IllegalArgumentException.class)
+	public void testItemInitializationWithNonNumericTotalPointsTwo() {
+		Item item = new Item("HW1", "lol", "0.10");}
 }

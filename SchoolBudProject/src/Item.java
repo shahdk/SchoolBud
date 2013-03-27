@@ -7,21 +7,46 @@ public class Item {
 	private String name = "";
 
 	public Item(String name, String weight) {
+		if ((!weight.matches("([0-9]+(\\.[0-9]+)?)+")) || name.length()==0) { 
+			throw new IllegalArgumentException();
+		}
 		this.name = name;
 		this.weight = weight;
 	}
 
 	public Item(String name, String totalPoints, String weight) {
-		this.name = name;
-		this.weight = weight;
-		this.totalPoints = totalPoints;
+		if ((!weight.matches("([0-9]+(\\.[0-9]+)?)+")) || name.length()==0 || (!totalPoints.matches("([0-9]+(\\.[0-9]+)?)+"))) { 
+			throw new IllegalArgumentException();
+		}
+		try{
+			Double temp = Double.parseDouble(totalPoints);
+			if(temp.equals(new Double(0))){
+				throw new IllegalArgumentException();
+			}
+			this.name = name;
+			this.weight = weight;
+			this.totalPoints = totalPoints;
+		}catch (Exception e){
+			throw new IllegalArgumentException();
+		}
 	}
 
 	public Item(String name, String earnedPoints, String totalPoints, String weight) {
-		this.name = name;
-		this.weight = weight;
-		this.earnedPoints = earnedPoints;
-		this.totalPoints = totalPoints;
+		if ((!weight.matches("([0-9]+(\\.[0-9]+)?)+")) || name.length()==0 || (!totalPoints.matches("([0-9]+(\\.[0-9]+)?)+"))) { 
+			throw new IllegalArgumentException();
+		}
+		try{
+			Double temp = Double.parseDouble(totalPoints);
+			if(temp.equals(new Double(0))){
+				throw new IllegalArgumentException();
+			}
+			this.name = name;
+			this.weight = weight;
+			this.earnedPoints = earnedPoints;
+			this.totalPoints = totalPoints;
+		}catch (Exception e){
+			throw new IllegalArgumentException();
+		}
 	}
 
 	public String getEarnedPoints() {
