@@ -40,4 +40,20 @@ public class Item {
 		return this.name;
 	}
 
+	public void setEarnedPoints(String earnedPoints) {
+		this.earnedPoints = earnedPoints;
+	}
+
+	public void setTotalPoints(String totalPoints) {
+		this.totalPoints = totalPoints;
+	}
+
+	public void setWeight(String weight) {
+		this.weight = weight;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 }

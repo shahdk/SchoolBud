@@ -54,6 +54,34 @@ public class ItemTest {
 		assertEquals("HW1", item.getName());
 	}
 	
+	@Test
+	public void testSetEarnedPoints(){
+		Item item = new Item("HW1", "8.5", "10", "0.10");
+		item.setEarnedPoints("10");
+		assertEquals("10", item.getEarnedPoints());
+	}
+	
+	@Test
+	public void testSetTotalPoints(){
+		Item item = new Item("HW1", "8.5", "10", "0.10");
+		item.setTotalPoints("15");
+		assertEquals("15", item.getTotalPoints());
+	}
+	
+	@Test
+	public void testSetWeight(){
+		Item item = new Item("HW1", "8.5", "10", "0.10");
+		item.setWeight("0.20");
+		assertEquals("0.20", item.getWeight());
+	}
+	
+	@Test
+	public void testSetName(){
+		Item item = new Item("HW1", "8.5", "10", "0.10");
+		item.setName("HW2");
+		assertEquals("HW2", item.getName());
+	}
+	
 	private ArrayList<String> list(String... vals){
 		ArrayList<String> ret = new ArrayList<String>();
 		for(String i: vals){
