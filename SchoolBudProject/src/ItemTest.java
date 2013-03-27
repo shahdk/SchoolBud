@@ -39,19 +39,19 @@ public class ItemTest {
 	@Test
 	public void testGetTotalPoints(){
 		Item item = new Item("HW1", "8.5", "10", "0.10");
-		assertEquals("8.5", item.getTotalPoints());
+		assertEquals("10", item.getTotalPoints());
 	}
 	
 	@Test
 	public void testGetWeight(){
 		Item item = new Item("HW1", "8.5", "10", "0.10");
-		assertEquals("8.5", item.getWeight());
+		assertEquals("0.10", item.getWeight());
 	}
 	
 	@Test
 	public void testGetName(){
 		Item item = new Item("HW1", "8.5", "10", "0.10");
-		assertEquals("8.5", item.getName());
+		assertEquals("HW1", item.getName());
 	}
 	
 	private ArrayList<String> list(String... vals){

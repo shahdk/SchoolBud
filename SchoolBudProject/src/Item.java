@@ -24,4 +24,20 @@ public class Item {
 		this.totalPoints = totalPoints;
 	}
 
+	public String getEarnedPoints() {
+		return this.earnedPoints;
+	}
+
+	public String getTotalPoints() {
+		return this.totalPoints;
+	}
+
+	public String getWeight() {
+		return this.weight;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
 }
