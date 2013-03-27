@@ -153,4 +153,34 @@ public class ItemTest {
 	@Test(expected=IllegalArgumentException.class)
 	public void testItemInitializationWithNonNumericTotalPointsTwo() {
 		Item item = new Item("HW1", "lol", "0.10");}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetItemWithNegativeWeight() {
+		Item item = new Item("HW1", "8.5", "10", "0.10");
+		item.setWeight("-0.10");	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetItemWithNegativeTotalPoints() {
+		Item item = new Item("HW1", "8.5", "10", "0.10");
+		item.setTotalPoints("-2");}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetItemWithZeroTotalPoints() {
+		Item item = new Item("HW1", "8.5", "10", "0.10");
+		item.setTotalPoints("0");}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetItemWithEmptyNameThree() {
+		Item item = new Item("HW1", "8.5", "10", "0.10");
+		item.setName("");}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetItemWithNonNumericWeight() {
+		Item item = new Item("HW1", "8.5", "10", "0.10");
+		item.setWeight("lol");	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetItemWithNonNumericTotalPoints() {
+		Item item = new Item("HW1", "8.5", "10", "0.10");
+		item.setTotalPoints("lol");}
 }
