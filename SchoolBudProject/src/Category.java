@@ -19,4 +19,16 @@ public class Category {
 		this.items = items;
 	}
 
+	public ArrayList<Item> getItemList() {
+		return this.items;
+	}
+
+	public String getName() {
+		return this.catName;
+	}
+
+	public String getWeight() {
+		return this.weight;
+	}
+
 }
