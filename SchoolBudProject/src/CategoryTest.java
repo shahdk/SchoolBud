@@ -26,6 +26,7 @@ public class CategoryTest {
 		assertTrue("JUnit works!", true);
 	}
 	
+	//initialization test cases
 	@Test
 	public void testCategoryInitialize(){
 		Category cat = new Category("HW", "0.10");
@@ -41,6 +42,7 @@ public class CategoryTest {
 		assertNotNull(cat);
 	}
 	
+	//test code for get methods
 	@Test
 	public void testGetItemsOne(){
 		for(int i=1; i<=10; i++){
@@ -84,6 +86,61 @@ public class CategoryTest {
 		}
 		Category cat = new Category("HW", this.hwItems, "0.10");
 		assertEquals("0.10", cat.getWeight());
+	}
+	
+	//test code for set methods
+	@Test
+	public void testSetItemsOne(){
+		for(int i=1; i<=10; i++){
+			this.hwItems.add(new Item("HW"+i, "0.01"));
+		}
+		Category cat = new Category("HW", "0.10");
+		cat.setItemList(this.hwItems);
+		assertEquals(this.hwItems, cat.getItemList());
+	}
+	
+	@Test
+	public void testSetItemsTwo(){
+		for(int i=1; i<=10; i++){
+			this.hwItems.add(new Item("HW"+i, "0.01"));
+		}
+		Category cat = new Category("HW", this.hwItems, "0.10");
+		cat.setItemList(new ArrayList<Item>());
+		assertEquals(new ArrayList<Item>(), cat.getItemList());
+	}
+	
+	@Test
+	public void testSetNameOne(){
+		Category cat = new Category("HW", "0.10");
+		cat.setName("HomeWork");
+		assertEquals("HomeWork", cat.getName());
+	}
+	
+	@Test
+	public void testSetNameTwo(){
+		for(int i=1; i<=10; i++){
+			this.hwItems.add(new Item("HW"+i, "0.01"));
+		}
+		Category cat = new Category("HW", this.hwItems, "0.10");
+		cat.setName("HomeWork");
+		assertEquals("HomeWork", cat.getName());
+	}
+	
+	@Test
+	public void testSetWeightOne(){
+		Category cat = new Category("HW", "0.10");
+		cat.setWeight("0.20");
+		assertEquals("0.20", cat.getWeight());
+	}
+	
+	@Test
+	public void testSetWeightTwo(){
+		for(int i=1; i<=10; i++){
+			this.hwItems.add(new Item("HW"+i, "0.01"));
+		}
+		Category cat = new Category("HW", this.hwItems, "0.10");
+		cat.setWeight("0.20");
+		assertEquals("0.20", cat.getWeight());
 	}
 
 }
