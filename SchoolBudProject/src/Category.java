@@ -10,6 +10,7 @@ public class Category {
 	public Category(String name, String weight) {
 		this.catName = name;
 		this.weight = weight;
+		this.items = new ArrayList<Item>();
 	}
 
 	public Category(String name, ArrayList<Item> items, String weight) {
