@@ -9,7 +9,7 @@ public class Category {
 	private int numOfItems;
 	
 	public Category(String name, String weight) {
-		if ((!weight.matches("([0-9]+(\\.[0-9]+)?)+"))) { 
+		if ((!weight.matches("([0-9]+(\\.[0-9]+)?)+")) || name.length() == 0) { 
 			throw new IllegalArgumentException();
 		}
 		this.catName = name;
@@ -19,7 +19,7 @@ public class Category {
 	}
 
 	public Category(String name, ArrayList<Item> items, String weight) {
-		if ((!weight.matches("([0-9]+(\\.[0-9]+)?)+"))) { 
+		if ((!weight.matches("([0-9]+(\\.[0-9]+)?)+")) || name.length() == 0) { 
 			throw new IllegalArgumentException();
 		}
 		this.catName = name;
@@ -52,6 +52,9 @@ public class Category {
 	}
 
 	public void setName(String name) {
+		if (name.length() == 0) { 
+			throw new IllegalArgumentException();
+		}
 		this.catName = name;
 	}
 
