@@ -144,11 +144,11 @@ public class CategoryTest {
 	}
 	
 	//test code for add items
+	@Test
 	public void testAddItemOne(){
 		Category cat = new Category("HW", "0.10");
-		this.hwItems.add(new Item("HW1", "0.01"));
 		cat.addItem(new Item("HW1", "0.01"));
-		assertEquals(this.hwItems, cat.getItemList());
+		assertEquals("HW1", cat.getItemList().get(0).getName());
 	}
 	
 	@Test
@@ -159,7 +159,7 @@ public class CategoryTest {
 		Category cat = new Category("HW", this.hwItems, "0.10");
 		this.hwItems.add(new Item("HW11", "0.01"));
 		cat.addItem(new Item("HW11", "0.01"));
-		assertEquals("0.20", cat.getItemList());
+		assertEquals(this.hwItems, cat.getItemList());
 	}
 	
 	//test code for calculating number of items in a category

@@ -51,4 +51,8 @@ public class Category {
 		return this.numOfItems;
 	}
 
+	public void addItem(Item item) {
+		this.items.add(item);
+	}
+
 }
