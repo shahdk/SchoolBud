@@ -149,6 +149,7 @@ public class CategoryTest {
 		Category cat = new Category("HW", "0.10");
 		cat.addItem(new Item("HW1", "0.01"));
 		assertEquals("HW1", cat.getItemList().get(0).getName());
+		assertEquals("0.01", cat.getItemList().get(0).getWeight());
 	}
 	
 	@Test
