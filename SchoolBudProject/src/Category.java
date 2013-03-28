@@ -56,6 +56,9 @@ public class Category {
 	}
 
 	public void setWeight(String weight) {
+		if ((!weight.matches("([0-9]+(\\.[0-9]+)?)+"))) { 
+			throw new IllegalArgumentException();
+		}
 		this.weight = weight;		
 	}
 
