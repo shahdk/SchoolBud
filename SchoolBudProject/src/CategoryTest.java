@@ -143,6 +143,25 @@ public class CategoryTest {
 		assertEquals("0.20", cat.getWeight());
 	}
 	
+	//test code for add items
+	public void testAddItemOne(){
+		Category cat = new Category("HW", "0.10");
+		this.hwItems.add(new Item("HW1", "0.01"));
+		cat.addItem(new Item("HW1", "0.01"));
+		assertEquals(this.hwItems, cat.getItemList());
+	}
+	
+	@Test
+	public void testAddItemTwo(){
+		for(int i=1; i<=10; i++){
+			this.hwItems.add(new Item("HW"+i, "0.01"));
+		}
+		Category cat = new Category("HW", this.hwItems, "0.10");
+		this.hwItems.add(new Item("HW11", "0.01"));
+		cat.addItem(new Item("HW11", "0.01"));
+		assertEquals("0.20", cat.getItemList());
+	}
+	
 	//test code for calculating number of items in a category
 	@Test
 	public void testNUmOfItemsOne(){
@@ -178,5 +197,7 @@ public class CategoryTest {
 		cat.setItemList(new ArrayList<Item>());
 		assertEquals(0, cat.getNumOfItems());
 	}
+	
+	
 
 }
