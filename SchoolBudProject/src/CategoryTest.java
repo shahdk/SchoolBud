@@ -13,7 +13,7 @@ public class CategoryTest {
 	
 	@Before
 	public void setUp(){
-		this.hwItems = new ArrayList<Item>();	
+		this.hwItems = new ArrayList<Item>();
 	}
 	
 	@After
@@ -156,6 +156,19 @@ public class CategoryTest {
 		cat.setWeight("0.20");
 		assertEquals("0.20", cat.getWeight());
 	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetNegativeWeightOne(){
+		Category cat = new Category("HW", "0.10");
+		cat.setWeight("-0.20");	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testSeNegativetWeightTwo(){
+		for(int i=1; i<=10; i++){
+			this.hwItems.add(new Item("HW"+i, "0.01"));
+		}
+		Category cat = new Category("HW", this.hwItems, "0.10");
+		cat.setWeight("-0.20");	}
 	
 	//test code for add items
 	@Test
