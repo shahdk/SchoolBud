@@ -9,6 +9,9 @@ public class Category {
 	private int numOfItems;
 	
 	public Category(String name, String weight) {
+		if ((!weight.matches("([0-9]+(\\.[0-9]+)?)+"))) { 
+			throw new IllegalArgumentException();
+		}
 		this.catName = name;
 		this.weight = weight;
 		this.items = new ArrayList<Item>();
@@ -16,6 +19,9 @@ public class Category {
 	}
 
 	public Category(String name, ArrayList<Item> items, String weight) {
+		if ((!weight.matches("([0-9]+(\\.[0-9]+)?)+"))) { 
+			throw new IllegalArgumentException();
+		}
 		this.catName = name;
 		this.weight = weight;
 		this.items = new ArrayList<Item>();
