@@ -31,4 +31,16 @@ public class Category {
 		return this.weight;
 	}
 
+	public void setItemList(ArrayList<Item> items) {
+		this.items = items;
+	}
+
+	public void setName(String name) {
+		this.catName = name;
+	}
+
+	public void setWeight(String weight) {
+		this.weight = weight;		
+	}
+
 }
