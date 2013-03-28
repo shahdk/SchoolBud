@@ -42,7 +42,7 @@ public class CategoryTest {
 		assertNotNull(cat);
 	}
 	
-	//initialization with negative weights
+	//initialization with negative weights, empty weights, and empty names
 	@SuppressWarnings("unused")
 	@Test(expected=IllegalArgumentException.class)
 	public void testCategoryInitializeWithNegativeWeight(){
@@ -55,6 +55,32 @@ public class CategoryTest {
 			this.hwItems.add(new Item("HW"+i, "0.01"));
 		}
 		Category cat = new Category("HW", this.hwItems, "-0.10");}
+	
+	@SuppressWarnings("unused")
+	@Test(expected=IllegalArgumentException.class)
+	public void testCategoryInitializeWithEmptyWeight(){
+		Category cat = new Category("HW", "");}
+	
+	@SuppressWarnings("unused")
+	@Test(expected=IllegalArgumentException.class)
+	public void testCategoryInitializeWithItemAndEmptyWeight(){
+		for(int i=1; i<=10; i++){
+			this.hwItems.add(new Item("HW"+i, "0.01"));
+		}
+		Category cat = new Category("HW", this.hwItems, "");}
+	
+	@SuppressWarnings("unused")
+	@Test(expected=IllegalArgumentException.class)
+	public void testCategoryInitializeWithEmptyName(){
+		Category cat = new Category("", "0.10");}
+	
+	@SuppressWarnings("unused")
+	@Test(expected=IllegalArgumentException.class)
+	public void testCategoryInitializeWithItemAndEmptyName(){
+		for(int i=1; i<=10; i++){
+			this.hwItems.add(new Item("HW"+i, "0.01"));
+		}
+		Category cat = new Category("", this.hwItems, "0.10");}
 	
 	//test code for get methods
 	@Test
@@ -169,6 +195,32 @@ public class CategoryTest {
 		}
 		Category cat = new Category("HW", this.hwItems, "0.10");
 		cat.setWeight("-0.20");	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetEmptyWeightOne(){
+		Category cat = new Category("HW", "0.10");
+		cat.setWeight("");	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetEmptyWeightTwo(){
+		for(int i=1; i<=10; i++){
+			this.hwItems.add(new Item("HW"+i, "0.01"));
+		}
+		Category cat = new Category("HW", this.hwItems, "0.10");
+		cat.setWeight("");	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetEmptyNameOne(){
+		Category cat = new Category("HW", "0.10");
+		cat.setName("");	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetEmptyNameTwo(){
+		for(int i=1; i<=10; i++){
+			this.hwItems.add(new Item("HW"+i, "0.01"));
+		}
+		Category cat = new Category("HW", this.hwItems, "0.10");
+		cat.setName("");	}
 	
 	//test code for add items
 	@Test
