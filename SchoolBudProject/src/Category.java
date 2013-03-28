@@ -18,7 +18,10 @@ public class Category {
 	public Category(String name, ArrayList<Item> items, String weight) {
 		this.catName = name;
 		this.weight = weight;
-		this.items = items;
+		this.items = new ArrayList<Item>();
+		for(int i=0; i<items.size(); i++){
+			this.items.add(items.get(i));
+		}
 		this.numOfItems = this.items.size();
 	}
 
@@ -35,7 +38,10 @@ public class Category {
 	}
 
 	public void setItemList(ArrayList<Item> items) {
-		this.items = items;
+		this.items = new ArrayList<Item>();
+		for(int i=0; i<items.size(); i++){
+			this.items.add(items.get(i));
+		}
 		this.numOfItems = this.items.size();
 	}
 
@@ -53,6 +59,7 @@ public class Category {
 
 	public void addItem(Item item) {
 		this.items.add(item);
+		this.numOfItems = this.items.size();
 	}
 
 }

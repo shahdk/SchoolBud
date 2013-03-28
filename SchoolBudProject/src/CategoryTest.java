@@ -160,7 +160,8 @@ public class CategoryTest {
 		Category cat = new Category("HW", this.hwItems, "0.10");
 		this.hwItems.add(new Item("HW11", "0.01"));
 		cat.addItem(new Item("HW11", "0.01"));
-		assertEquals(this.hwItems, cat.getItemList());
+		assertEquals("HW11", cat.getItemList().get(10).getName());
+		assertEquals("0.01", cat.getItemList().get(10).getWeight());
 	}
 	
 	//test code for calculating number of items in a category
@@ -181,6 +182,7 @@ public class CategoryTest {
 	
 	@Test
 	public void testNumOfItemsThree(){
+		this.hwItems.clear();
 		for(int i=1; i<=10; i++){
 			this.hwItems.add(new Item("HW"+i, "0.01"));
 		}
@@ -191,6 +193,7 @@ public class CategoryTest {
 	
 	@Test
 	public void testNumOfItemsFour(){
+		this.hwItems.clear();
 		for(int i=1; i<=10; i++){
 			this.hwItems.add(new Item("HW"+i, "0.01"));
 		}
@@ -199,6 +202,24 @@ public class CategoryTest {
 		assertEquals(0, cat.getNumOfItems());
 	}
 	
+	@Test
+	public void testNumItemsWithAddItemOne(){
+		Category cat = new Category("HW", "0.10");
+		cat.addItem(new Item("HW1", "0.01"));
+		assertEquals(1, cat.getNumOfItems());
+	}
+	
+	@Test
+	public void testNumItemsWithAddItemTwo(){
+		ArrayList<Item> items = new ArrayList<Item>();
+		for(int i=1; i<=10; i++){
+			items.add(new Item("HW"+i, "0.01"));
+		}
+		Category cat = new Category("HW", items, "0.10");
+		items.add(new Item("HW11", "0.01"));
+		cat.addItem(new Item("HW11", "0.01"));
+		assertEquals(11, cat.getNumOfItems());
+	}
 	
 
 }
