@@ -1,21 +1,21 @@
 
 public class Item {
 	
-	private String weight = "";
+	private int weight = 0;
 	private String earnedPoints = "";
 	private String totalPoints = "";
 	private String name = "";
 
-	public Item(String name, String weight) {
-		if ((!weight.matches("([0-9]+(\\.[0-9]+)?)+")) || name.length()==0) { 
+	public Item(String name, int weight) {
+		if (weight < 0 || weight > 100 || name.length()==0) { 
 			throw new IllegalArgumentException();
 		}
 		this.name = name;
 		this.weight = weight;
 	}
 
-	public Item(String name, String totalPoints, String weight) {
-		if ((!weight.matches("([0-9]+(\\.[0-9]+)?)+")) || name.length()==0 || (!totalPoints.matches("([0-9]+(\\.[0-9]+)?)+"))) { 
+	public Item(String name, String totalPoints, int weight) {
+		if (weight < 0 || weight > 100 || name.length()==0 || (!totalPoints.matches("([0-9]+(\\.[0-9]+)?)+"))) { 
 			throw new IllegalArgumentException();
 		}
 		try{
@@ -31,8 +31,8 @@ public class Item {
 		}
 	}
 
-	public Item(String name, String earnedPoints, String totalPoints, String weight) {
-		if ((!weight.matches("([0-9]+(\\.[0-9]+)?)+")) || name.length()==0 || (!totalPoints.matches("([0-9]+(\\.[0-9]+)?)+"))) { 
+	public Item(String name, String earnedPoints, String totalPoints, int weight) {
+		if (weight<0 || weight > 100 || name.length()==0 || (!totalPoints.matches("([0-9]+(\\.[0-9]+)?)+"))) { 
 			throw new IllegalArgumentException();
 		}
 		try{
@@ -57,7 +57,7 @@ public class Item {
 		return this.totalPoints;
 	}
 
-	public String getWeight() {
+	public int getWeight() {
 		return this.weight;
 	}
 
@@ -83,8 +83,8 @@ public class Item {
 		}
 	}
 
-	public void setWeight(String weight) {
-		if(!weight.matches("([0-9]+(\\.[0-9]+)?)+")){
+	public void setWeight(int weight) {
+		if(weight < 0 || weight > 100){
 			throw new IllegalArgumentException();
 		}
 		this.weight = weight;

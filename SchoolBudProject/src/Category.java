@@ -4,12 +4,12 @@ import java.util.ArrayList;
 public class Category {
 
 	private String catName;
-	private String weight;
+	private int weight;
 	private ArrayList<Item> items;
 	private int numOfItems;
 	
-	public Category(String name, String weight) {
-		if ((!weight.matches("([0-9]+(\\.[0-9]+)?)+")) || name.length() == 0) { 
+	public Category(String name, int weight) {
+		if (weight < 0 || weight > 100 || name.length() == 0) { 
 			throw new IllegalArgumentException();
 		}
 		this.catName = name;
@@ -18,8 +18,8 @@ public class Category {
 		this.numOfItems = this.items.size();
 	}
 
-	public Category(String name, ArrayList<Item> items, String weight) {
-		if ((!weight.matches("([0-9]+(\\.[0-9]+)?)+")) || name.length() == 0) { 
+	public Category(String name, ArrayList<Item> items, int weight) {
+		if (weight < 0 || weight > 100 || name.length() == 0) { 
 			throw new IllegalArgumentException();
 		}
 		this.catName = name;
@@ -39,7 +39,7 @@ public class Category {
 		return this.catName;
 	}
 
-	public String getWeight() {
+	public int getWeight() {
 		return this.weight;
 	}
 
@@ -58,8 +58,8 @@ public class Category {
 		this.catName = name;
 	}
 
-	public void setWeight(String weight) {
-		if ((!weight.matches("([0-9]+(\\.[0-9]+)?)+"))) { 
+	public void setWeight(int weight) {
+		if (weight < 0 || weight > 100) { 
 			throw new IllegalArgumentException();
 		}
 		this.weight = weight;		
