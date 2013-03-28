@@ -70,14 +70,30 @@ public class Item {
 	}
 
 	public void setTotalPoints(String totalPoints) {
-		this.totalPoints = totalPoints;
+		if(!totalPoints.matches("([0-9]+(\\.[0-9]+)?)+")){
+			throw new IllegalArgumentException();
+		}try{
+			Double temp = Double.parseDouble(totalPoints);
+			if(temp.equals(new Double(0))){
+				throw new IllegalArgumentException();
+			}
+			this.totalPoints = totalPoints;
+		}catch (Exception e){
+			throw new IllegalArgumentException();
+		}
 	}
 
 	public void setWeight(String weight) {
+		if(!weight.matches("([0-9]+(\\.[0-9]+)?)+")){
+			throw new IllegalArgumentException();
+		}
 		this.weight = weight;
 	}
 
 	public void setName(String name) {
+		if(name.length() == 0){
+			throw new IllegalArgumentException();
+		}
 		this.name = name;
 	}
 
