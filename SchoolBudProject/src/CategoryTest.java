@@ -42,6 +42,20 @@ public class CategoryTest {
 		assertNotNull(cat);
 	}
 	
+	//initialization with negative weights
+	@SuppressWarnings("unused")
+	@Test(expected=IllegalArgumentException.class)
+	public void testCategoryInitializeWithNegativeWeight(){
+		Category cat = new Category("HW", "-0.10");}
+	
+	@SuppressWarnings("unused")
+	@Test(expected=IllegalArgumentException.class)
+	public void testCategoryInitializeWithItemAndNegativeWeight(){
+		for(int i=1; i<=10; i++){
+			this.hwItems.add(new Item("HW"+i, "0.01"));
+		}
+		Category cat = new Category("HW", this.hwItems, "-0.10");}
+	
 	//test code for get methods
 	@Test
 	public void testGetItemsOne(){
