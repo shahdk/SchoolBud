@@ -334,5 +334,18 @@ public class CategoryTest {
 		Category cat = new Category("HW", this.hwItems, 10);
 		assertEquals(sumGrade, cat.getTotalEarnedPoints(), DELTA);
 	}
+	
+	//test cases for getting the total earned grades.
+		@Test
+		public void testTotalPossibleGrades(){
+			double sumGrade = 0;
+			for(int i=1; i<=10; i++){
+				double tempGrade = Math.random() * 10;
+				this.hwItems.add(new Item("HW"+i, tempGrade+"", 1));
+				sumGrade+=tempGrade;
+			}
+			Category cat = new Category("HW", this.hwItems, 10);
+			assertEquals(sumGrade, cat.getTotalPossiblePoints(), DELTA);
+		}
 
 }

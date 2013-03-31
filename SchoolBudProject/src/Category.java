@@ -74,4 +74,13 @@ public class Category {
 		this.numOfItems = this.items.size();
 	}
 
+	public double getTotalEarnedPoints() {
+		double earnedGrades = 0;
+		for(Item i: this.items){
+			double earnedGrade = Double.parseDouble(i.getEarnedPoints());
+			earnedGrades += earnedGrade;
+		}
+		return earnedGrades;
+	}
+
 }
