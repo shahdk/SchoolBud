@@ -1,26 +1,23 @@
-//import static org.junit.Assert.*;
-//
-//import java.awt.geom.Point2D;
-//import java.util.ArrayList;
-//import java.util.HashMap;
-//
-//import org.junit.Test;
-//
-//
-//public class CourseTest {
-//
-//	@Test
-//	public void testCourseInitializeWithItemNameAndWeight() {
-//		Course courseObj = new Course("Exams", 0.20);
-//		assertNotNull(courseObj);
-//	}
-//	
-//	@Test
-//	public void testCourseInitializeWithItemGrades() {
-//		Course courseObj = new Course("Exam", "Exam 1", 90, 100);
-//		assertNotNull(courseObj);
-//	}
-//	
-//	
-//
-//}
+import static org.junit.Assert.*;
+
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.junit.Test;
+
+
+public class CourseTest {
+
+	@Test
+	public void testJUnit() {
+		assertTrue("JUnit works!", true);
+	}
+	
+	//test cases for initializing Course
+	@Test
+	public void testInitializeOne(){
+		assertNotNull(new Course("CSSE376"));
+	}
+
+}
