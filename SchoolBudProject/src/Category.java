@@ -83,4 +83,18 @@ public class Category {
 		return earnedGrades;
 	}
 
+	public double getTotalPossiblePoints() {
+		double totalGrades = 0;
+		for(Item i: this.items){
+			double totalGrade = Double.parseDouble(i.getTotalPoints());
+			totalGrades += totalGrade;
+		}
+		return totalGrades;
+	}
+
+	public double getTotalPoints() {
+		double totalPoints = (this.getTotalEarnedPoints() / this.getTotalPossiblePoints())*100;
+		return (Math.round(totalPoints*100))/100.0;
+	}
+
 }
