@@ -10,6 +10,7 @@ import org.junit.Test;
 public class CategoryTest {
 
 	private ArrayList<Item> hwItems;
+	private static final double DELTA = 1e-15;
 	
 	@Before
 	public void setUp(){
@@ -300,5 +301,38 @@ public class CategoryTest {
 		assertEquals(11, cat.getNumOfItems());
 	}
 	
+	//test cases for getting the total earned grades.
+	@Test
+	public void testTotalEarnedGrades(){
+		double sumGrade = 0;
+		for(int i=1; i<=10; i++){
+			double tempGrade = Math.random() * 10;
+			this.hwItems.add(new Item("HW"+i, tempGrade+"", "10", 1));
+			sumGrade+=tempGrade;
+		}
+		Category cat = new Category("HW", this.hwItems, 10);
+		assertEquals(sumGrade, cat.getTotalEarnedPoints(), DELTA);
+	}
+	
+	@Test
+	public void testZeroTotalEarnedGrades(){
+		for(int i=1; i<=10; i++){
+			this.hwItems.add(new Item("HW"+i, "0", "10", 1));
+		}
+		Category cat = new Category("HW", this.hwItems, 10);
+		assertEquals(0.0, cat.getTotalEarnedPoints(), DELTA);
+	}
+	
+	@Test
+	public void testNegativeTotalEarnedGrades(){
+		double sumGrade = 0;
+		for(int i=1; i<=10; i++){
+			double tempGrade = Math.random() * -10;
+			this.hwItems.add(new Item("HW"+i, tempGrade+"", "10", 1));
+			sumGrade+=tempGrade;
+		}
+		Category cat = new Category("HW", this.hwItems, 10);
+		assertEquals(sumGrade, cat.getTotalEarnedPoints(), DELTA);
+	}
 
 }
