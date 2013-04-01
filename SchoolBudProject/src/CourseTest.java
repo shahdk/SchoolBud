@@ -108,4 +108,32 @@ public class CourseTest {
 	public void testSetNegativeCreditHourTwo(){
 		Course course = new Course("CSSE376");
 		course.setCreditHours(-5.5); }
+	
+	//test cases for adding and getting categories
+	@Test
+	public void testAddCategory(){
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		course.addCategory(cat);
+		assertEquals("HW", course.getCategories().get(0).getName());
+	}
+	
+	@Test
+	public void testAddCategoryTwo(){
+		Course course = new Course("CSSE376", 4.0);
+		course.addCategory(new Category("HW", 10.0));
+		course.addCategory(new Category("Quiz", 20.0));
+		course.addCategory(new Category("Exam", 40.0));
+		course.addCategory(new Category("Final", 30.0));
+		assertEquals("Final", course.getCategories().get(3).getName());
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testAddCategorThree(){
+		Course course = new Course("CSSE376", 4.0);
+		course.addCategory(new Category("HW", 10.0));
+		course.addCategory(new Category("Quiz", 20.0));
+		course.addCategory(new Category("Exam", 40.0));
+		course.addCategory(new Category("Final", 30.0));
+		course.addCategory(new Category("Final2", 30.0)); }
 }

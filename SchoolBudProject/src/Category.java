@@ -4,11 +4,11 @@ import java.util.ArrayList;
 public class Category {
 
 	private String catName;
-	private int weight;
+	private double weight;
 	private ArrayList<Item> items;
 	private int numOfItems;
 	
-	public Category(String name, int weight) {
+	public Category(String name, double weight) {
 		if (weight < 0 || weight > 100 || name.length() == 0) { 
 			throw new IllegalArgumentException();
 		}
@@ -18,7 +18,7 @@ public class Category {
 		this.numOfItems = this.items.size();
 	}
 
-	public Category(String name, ArrayList<Item> items, int weight) {
+	public Category(String name, ArrayList<Item> items, double weight) {
 		if (weight < 0 || weight > 100 || name.length() == 0) { 
 			throw new IllegalArgumentException();
 		}
@@ -39,7 +39,7 @@ public class Category {
 		return this.catName;
 	}
 
-	public int getWeight() {
+	public double getWeight() {
 		return this.weight;
 	}
 
