@@ -59,4 +59,53 @@ public class CourseTest {
 		Course course = new Course("CSSE376");
 		assertEquals(0.0, course.getCreditHours(), DELTA);
 	}
+	
+	//test cases for set methods
+	@Test
+	public void testSetNameOne(){
+		Course course = new Course("CSSE376");
+		course.setName("CSSE304");
+		assertEquals("CSSE304", course.getCourseName());
+	}
+	
+	@Test
+	public void testSetNameTwo(){
+		Course course = new Course("CSSE376", 4.0);
+		course.setName("CSSE304");
+		assertEquals("CSSE376", course.getCourseName());
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetEmptyName(){
+		Course course = new Course("CSSE376", 4.0);
+		course.setName(""); }
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetEmptyNameTwo(){
+		Course course = new Course("CSSE376");
+		course.setName(""); }
+	
+	@Test
+	public void testSetCreditHoursOne(){
+		Course course = new Course("CSSE376", 4.0);
+		course.setCreditHours(5.0);
+		assertEquals(5.0, course.getCreditHours(), DELTA);
+	}
+	
+	@Test
+	public void testSetCreditHoursTwo(){
+		Course course = new Course("CSSE376");
+		course.setCreditHours(4.0);
+		assertEquals(4.0, course.getCreditHours(), DELTA);
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetNegativeCreditHour(){
+		Course course = new Course("CSSE376", 4.0);
+		course.setCreditHour(-6.0); }
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testSetNegativeCreditHourTwo(){
+		Course course = new Course("CSSE376");
+		course.setCreditHour(-5.5); }
 }

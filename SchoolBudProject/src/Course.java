@@ -4,11 +4,17 @@ public class Course {
 	private double creditHours;
 
 	public Course(String name) {
+		if(name.length()==0){
+			throw new IllegalArgumentException();
+		}
 		this.courseName = name;
 		this.creditHours = 0.0;
 	}
 
 	public Course(String name, double creditHours) {
+		if(name.length()==0 || creditHours < 0){
+			throw new IllegalArgumentException();
+		}
 		this.courseName = name;
 		this.creditHours = creditHours;
 	}
