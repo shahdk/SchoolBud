@@ -72,7 +72,7 @@ public class CourseTest {
 	public void testSetNameTwo(){
 		Course course = new Course("CSSE376", 4.0);
 		course.setName("CSSE304");
-		assertEquals("CSSE376", course.getCourseName());
+		assertEquals("CSSE304", course.getCourseName());
 	}
 	
 	@Test(expected=IllegalArgumentException.class)
@@ -102,10 +102,10 @@ public class CourseTest {
 	@Test(expected=IllegalArgumentException.class)
 	public void testSetNegativeCreditHour(){
 		Course course = new Course("CSSE376", 4.0);
-		course.setCreditHour(-6.0); }
+		course.setCreditHours(-6.0); }
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void testSetNegativeCreditHourTwo(){
 		Course course = new Course("CSSE376");
-		course.setCreditHour(-5.5); }
+		course.setCreditHours(-5.5); }
 }

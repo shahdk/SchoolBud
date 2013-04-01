@@ -27,4 +27,18 @@ public class Course {
 		return this.creditHours;
 	}
 
+	public void setName(String name) {
+		if(name.length()==0){
+			throw new IllegalArgumentException();
+		}
+		this.courseName = name;
+	}
+
+	public void setCreditHours(double creditHours) {
+		if(creditHours < 0){
+			throw new IllegalArgumentException();
+		}
+		this.creditHours = creditHours;
+	}
+
 }
