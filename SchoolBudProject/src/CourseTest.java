@@ -22,6 +22,18 @@ public class CourseTest {
 	public void testInitializeTwo(){
 		assertNotNull(new Course("CSSE376", 4.0));
 	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testInitializeWithEmptyName(){
+		new Course("");	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testInitializeWithEmptyNameTwo(){
+		new Course("", 4.0);	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testInitializeWithNegativeCreditHours(){
+		new Course("CSSE376", -9.0);	}
 
 	//test case for get methods
 	@Test
