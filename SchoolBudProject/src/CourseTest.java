@@ -19,5 +19,10 @@ public class CourseTest {
 	public void testInitializeOne(){
 		assertNotNull(new Course("CSSE376"));
 	}
+	
+	@Test
+	public void testInitializeTwo(){
+		assertNotNull(new Course("CSSE376", 4.0));
+	}
 
 }
