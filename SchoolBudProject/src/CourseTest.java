@@ -1,13 +1,11 @@
 import static org.junit.Assert.*;
 
-import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import org.junit.Test;
 
 
 public class CourseTest {
+	
+	private static final double DELTA = 1e-15;
 
 	@Test
 	public void testJUnit() {
@@ -41,12 +39,12 @@ public class CourseTest {
 	@Test
 	public void testGetCreditHoursOne(){
 		Course course = new Course("CSSE376", 4.0);
-		assertEquals(4.0, course.getCreditHours());
+		assertEquals(4.0, course.getCreditHours(), DELTA);
 	}
 	
 	@Test
 	public void testGetCreditHoursTwo(){
 		Course course = new Course("CSSE376");
-		assertEquals(0.0, course.getCreditHours());
+		assertEquals(0.0, course.getCreditHours(), DELTA);
 	}
 }
