@@ -212,4 +212,31 @@ public class CourseTest {
 		course.addCategory(quiz);
 		assertEquals(91.67, course.getCourseGrade(), DELTA);
 	}
+	
+	//test cases for calculating course to acheive target grade
+	@Test
+	public void testNeededCourseGrades() {
+		Category item1 = new Category("HW", 1, 35.0);
+		Category item2 = new Category("Quiz", 1, 20.0);
+		Category item3 = new Category("Assignment", 1, 20.0);
+		Category item4 = new Category("Temp", 1, 5.0);
+		
+		
+		item1.getItemList().get(0).setEarnedPoints("86");
+		item1.getItemList().get(0).setTotalPoints("100");
+		item2.getItemList().get(0).setEarnedPoints("72");
+		item2.getItemList().get(0).setTotalPoints("100");
+		item3.getItemList().get(0).setEarnedPoints("92");
+		item3.getItemList().get(0).setTotalPoints("100");
+		item4.getItemList().get(0).setEarnedPoints("50");
+		item4.getItemList().get(0).setTotalPoints("100");
+		
+		Course course = new Course("CSSE376", 4.0);
+		course.addCategory(item1);
+		course.addCategory(item2);
+		course.addCategory(item3);
+		course.addCategory(item4);
+		course.setTargetGrade(82.40);
+		assertEquals(85, course.getNeededCourseGrade(), DELTA);
+	}
 }

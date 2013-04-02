@@ -8,7 +8,7 @@ public class Course {
 	private double targetGrade;
 
 	public Course(String name) {
-		if(name.length()==0){
+		if (name.length() == 0) {
 			throw new IllegalArgumentException();
 		}
 		this.courseName = name;
@@ -18,7 +18,7 @@ public class Course {
 	}
 
 	public Course(String name, double creditHours) {
-		if(name.length()==0 || creditHours < 0){
+		if (name.length() == 0 || creditHours < 0) {
 			throw new IllegalArgumentException();
 		}
 		this.courseName = name;
@@ -36,14 +36,14 @@ public class Course {
 	}
 
 	public void setName(String name) {
-		if(name.length()==0){
+		if (name.length() == 0) {
 			throw new IllegalArgumentException();
 		}
 		this.courseName = name;
 	}
 
 	public void setCreditHours(double creditHours) {
-		if(creditHours < 0){
+		if (creditHours < 0) {
 			throw new IllegalArgumentException();
 		}
 		this.creditHours = creditHours;
@@ -51,9 +51,9 @@ public class Course {
 
 	public void addCategory(Category cat) {
 		double weight = 0;
-		for (Category c: this.categories){
+		for (Category c : this.categories) {
 			weight += c.getWeight();
-			if(weight+cat.getWeight() > 100){
+			if (weight + cat.getWeight() > 100) {
 				throw new IllegalArgumentException();
 			}
 		}
@@ -67,15 +67,15 @@ public class Course {
 	public double getCourseGrade() {
 		double totalWeight = 0;
 		double totalGrade = 0;
-		
-		for(Category c: this.categories){
+
+		for (Category c : this.categories) {
 			totalWeight += c.getWeight();
 			totalGrade += (c.getTotalPoints() * c.getWeight());
 		}
-		
+
 		double courseGrade = totalGrade / totalWeight;
 		double percent = Math.round(courseGrade * 100.0);
-		return percent/100.0;
+		return percent / 100.0;
 	}
 
 	public double getTargetGrade() {
@@ -83,7 +83,7 @@ public class Course {
 	}
 
 	public void setTargetGrade(double targetGrade) {
-		if(targetGrade < 0 || targetGrade > 100){
+		if (targetGrade < 0 || targetGrade > 100) {
 			throw new IllegalArgumentException();
 		}
 		this.targetGrade = targetGrade;
