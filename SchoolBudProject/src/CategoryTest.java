@@ -122,7 +122,7 @@ public class CategoryTest {
 	@Test
 	public void testGetWeightOne() {
 		Category cat = new Category("HW", 10);
-		assertEquals(10, cat.getWeight());
+		assertEquals(10, cat.getWeight(), DELTA);
 	}
 
 	@Test
@@ -131,7 +131,7 @@ public class CategoryTest {
 			this.hwItems.add(new Item("HW" + i, 1));
 		}
 		Category cat = new Category("HW", this.hwItems, 10);
-		assertEquals(10, cat.getWeight());
+		assertEquals(10, cat.getWeight(), DELTA);
 	}
 
 	// test code for set methods
@@ -176,7 +176,7 @@ public class CategoryTest {
 	public void testSetWeightOne() {
 		Category cat = new Category("HW", 10);
 		cat.setWeight(20);
-		assertEquals(20, cat.getWeight());
+		assertEquals(20, cat.getWeight(), DELTA);
 	}
 
 	@Test
@@ -186,7 +186,7 @@ public class CategoryTest {
 		}
 		Category cat = new Category("HW", this.hwItems, 10);
 		cat.setWeight(20);
-		assertEquals(20, cat.getWeight());
+		assertEquals(20, cat.getWeight(), DELTA);
 	}
 
 	@Test(expected = IllegalArgumentException.class)

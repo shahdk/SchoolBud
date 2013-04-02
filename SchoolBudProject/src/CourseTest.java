@@ -1,5 +1,7 @@
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 
@@ -136,4 +138,34 @@ public class CourseTest {
 		course.addCategory(new Category("Exam", 40.0));
 		course.addCategory(new Category("Final", 30.0));
 		course.addCategory(new Category("Final2", 30.0)); }
+	
+	//test cases course grades
+	@Test
+	public void testCourseGrades(){
+		ArrayList<Item> hwItems = new ArrayList<Item>();
+		for (int i = 1; i <= 10; i++) {
+			hwItems.add(new Item("HW" + i, "8.5", "10", 1));
+		}
+		Category cat = new Category("HW", hwItems, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		course.addCategory(cat);
+		assertEquals(85.0, course.getCourseGrade(), DELTA);
+	}
+	
+	
+	@Test
+	public void testCourseGradesOne(){
+		ArrayList<Item> hwItems = new ArrayList<Item>();
+		ArrayList<Item> quizItems = new ArrayList<Item>();
+		for (int i = 1; i <= 10; i++) {
+			hwItems.add(new Item("HW" + i, "8.5", "10", 1));
+		}
+		for(int i=1; i<= 5 ; i++){
+			quizItems.add(new Item("Quiz"+i, "95", "100", 4));
+		}
+		Category cat = new Category("HW", hwItems, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		course.addCategory(cat);
+		assertEquals(91.67, course.getCourseGrade(), DELTA);
+	}
 }
