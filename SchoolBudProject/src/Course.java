@@ -61,4 +61,18 @@ public class Course {
 		return this.categories;
 	}
 
+	public double getCourseGrade() {
+		double totalWeight = 0;
+		double totalGrade = 0;
+		
+		for(Category c: this.categories){
+			totalWeight += c.getWeight();
+			totalGrade += (c.getTotalPoints() * c.getWeight());
+		}
+		
+		double courseGrade = totalGrade / totalWeight;
+		double percent = Math.round(courseGrade * 100.0);
+		return percent/100.0;
+	}
+
 }

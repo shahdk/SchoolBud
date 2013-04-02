@@ -163,9 +163,11 @@ public class CourseTest {
 		for(int i=1; i<= 5 ; i++){
 			quizItems.add(new Item("Quiz"+i, "95", "100", 4));
 		}
-		Category cat = new Category("HW", hwItems, 10.0);
+		Category hw = new Category("HW", hwItems, 10.0);
+		Category quiz = new Category("Quiz", quizItems, 20.0);
 		Course course = new Course("CSSE376", 4.0);
-		course.addCategory(cat);
+		course.addCategory(hw);
+		course.addCategory(quiz);
 		assertEquals(91.67, course.getCourseGrade(), DELTA);
 	}
 }

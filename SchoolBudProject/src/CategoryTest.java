@@ -311,6 +311,57 @@ public class CategoryTest {
 		cat.addItem(new Item("HW11", 1));
 		assertEquals(11, cat.getNumOfItems());
 	}
+	
+	@Test
+	public void testNumOfGradesEntered(){
+		ArrayList<Item> items = new ArrayList<Item>();
+		for (int i = 1; i <= 10; i++) {
+			items.add(new Item("HW" + i, 1));
+		}
+		Category cat = new Category("HW", items, 10);
+		assertEquals(0, cat.getNumOfGradesEntered());
+	}
+	
+	@Test
+	public void testNumOfGradesEnteredTwo(){
+		ArrayList<Item> items = new ArrayList<Item>();
+		for (int i = 1; i <= 10; i++) {
+			items.add(new Item("HW" + i, "10", 1));
+		}
+		Category cat = new Category("HW", items, 10);
+		assertEquals(0, cat.getNumOfGradesEntered());
+	}
+	
+	@Test
+	public void testNumOfGradesEnteredThree(){
+		ArrayList<Item> items = new ArrayList<Item>();
+		for (int i = 1; i <= 10; i++) {
+			items.add(new Item("HW" + i, "", "10", 1));
+		}
+		Category cat = new Category("HW", items, 10);
+		assertEquals(0, cat.getNumOfGradesEntered());
+	}
+	
+	@Test
+	public void testNumOfGradesEnteredFour(){
+		ArrayList<Item> items = new ArrayList<Item>();
+		for (int i = 1; i <= 10; i++) {
+			items.add(new Item("HW" + i, "8.5", "10", 1));
+		}
+		Category cat = new Category("HW", items, 10);
+		assertEquals(10, cat.getNumOfGradesEntered());
+	}
+	
+	@Test
+	public void testNumOfGradesEnteredFive(){
+		ArrayList<Item> items = new ArrayList<Item>();
+		for (int i = 1; i <= 10; i++) {
+			items.add(new Item("HW" + i, "", "10", 1));
+		}
+		Category cat = new Category("HW", items, 10);
+		cat.addItem(new Item("HW11", "9", "10", 1));
+		assertEquals(1, cat.getNumOfGradesEntered());
+	}
 
 	// test cases for getting the total earned grades.
 	@Test
