@@ -136,6 +136,52 @@ public class CourseTest {
 		course.addCategory(new Category("Final", 30.0));
 		course.addCategory(new Category("Final2", 30.0));	}
 
+	//test cases for getting and setting target grade
+	@Test
+	public void testTargetGradeMin(){
+		Course course = new Course("CSSE376", 4.0);
+		course.setTargetGrade(0.0);
+		assertEquals(0.0, course.getTargetGrade(), DELTA);
+	}
+	
+	@Test
+	public void testTargetMinPlus(){
+		Course course = new Course("CSSE376", 4.0);
+		course.setTargetGrade(10.0);
+		assertEquals(10.0, course.getTargetGrade(), DELTA);
+	}
+	
+	@Test
+	public void testTargetGradeNominal(){
+		Course course = new Course("CSSE376", 4.0);
+		course.setTargetGrade(50.0);
+		assertEquals(50.0, course.getTargetGrade(), DELTA);
+	}
+	
+	@Test
+	public void testTargetGradeMaxMinus(){
+		Course course = new Course("CSSE376", 4.0);
+		course.setTargetGrade(90.0);
+		assertEquals(90.0, course.getTargetGrade(), DELTA);
+	}
+	
+	@Test
+	public void testTargetGradeMax(){
+		Course course = new Course("CSSE376", 4.0);
+		course.setTargetGrade(100.0);
+		assertEquals(100.0, course.getTargetGrade(), DELTA);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testTargetGradeOverHundred(){
+		Course course = new Course("CSSE376", 4.0);
+		course.setTargetGrade(190.0);	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testTargetGradeNegative(){
+		Course course = new Course("CSSE376", 4.0);
+		course.setTargetGrade(-90.0);	}
+	
 	// test cases course grades
 	@Test
 	public void testCourseGrades() {
