@@ -4,6 +4,8 @@ import org.junit.Test;
 
 public class ItemTest {
 
+	private static final double DELTA = 1e-15;
+	
 	@Test
 	public void testJUnit() {
 		assertTrue("JUnit works!", true);
@@ -42,7 +44,7 @@ public class ItemTest {
 	@Test
 	public void testGetWeight(){
 		Item item = new Item("HW1", "8.5", "10", 10);
-		assertEquals(10, item.getWeight());
+		assertEquals(10, item.getWeight(), DELTA);
 	}
 	
 	@Test
@@ -69,7 +71,7 @@ public class ItemTest {
 	public void testSetWeight(){
 		Item item = new Item("HW1", "8.5", "10", 10);
 		item.setWeight(20);
-		assertEquals(20, item.getWeight());
+		assertEquals(20, item.getWeight(), DELTA);
 	}
 	
 	@Test
