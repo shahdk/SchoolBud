@@ -5,6 +5,7 @@ public class Course {
 	private String courseName;
 	private double creditHours;
 	private ArrayList<Category> categories;
+	private double targetGrade;
 
 	public Course(String name) {
 		if(name.length()==0){
@@ -13,6 +14,7 @@ public class Course {
 		this.courseName = name;
 		this.creditHours = 0.0;
 		this.categories = new ArrayList<Category>();
+		this.targetGrade = 0;
 	}
 
 	public Course(String name, double creditHours) {
@@ -22,6 +24,7 @@ public class Course {
 		this.courseName = name;
 		this.creditHours = creditHours;
 		this.categories = new ArrayList<Category>();
+		this.targetGrade = 0;
 	}
 
 	public String getCourseName() {
@@ -73,6 +76,17 @@ public class Course {
 		double courseGrade = totalGrade / totalWeight;
 		double percent = Math.round(courseGrade * 100.0);
 		return percent/100.0;
+	}
+
+	public double getTargetGrade() {
+		return this.targetGrade;
+	}
+
+	public void setTargetGrade(double targetGrade) {
+		if(targetGrade < 0 || targetGrade > 100){
+			throw new IllegalArgumentException();
+		}
+		this.targetGrade = targetGrade;
 	}
 
 }
