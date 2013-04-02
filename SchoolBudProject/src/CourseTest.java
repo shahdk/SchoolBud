@@ -237,6 +237,6 @@ public class CourseTest {
 		course.addCategory(item3);
 		course.addCategory(item4);
 		course.setTargetGrade(82.40);
-		assertEquals(85, course.getNeededCourseGrade(), DELTA);
+		assertEquals(85.0, course.getNeededCourseGrade(), DELTA);
 	}
 }

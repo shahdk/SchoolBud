@@ -89,4 +89,22 @@ public class Course {
 		this.targetGrade = targetGrade;
 	}
 
+	public double getNeededCourseGrade() {
+		double totalWeight = 0;
+		double totalGrade = 0;
+
+		for (Category c : this.categories) {
+			totalWeight += c.getWeight();
+			totalGrade += (c.getTotalPoints() * c.getWeight() / 100);
+		}
+		
+		double remainingWeight = (100 - totalWeight) / 100;
+		double remainingGrade = this.targetGrade - totalGrade;
+		
+		double neededGrade = remainingGrade / remainingWeight;
+		
+		double percent = Math.round(neededGrade * 100);
+		return percent/100;
+	}
+
 }
