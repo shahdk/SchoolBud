@@ -35,10 +35,7 @@ public class CategoryTest {
 
 	@Test
 	public void testCategoryInitializeWithItem() {
-		for (int i = 1; i <= 10; i++) {
-			this.hwItems.add(new Item("HW" + i, 1));
-		}
-		Category cat = new Category("HW", this.hwItems, 10);
+		Category cat = new Category("HW", 10, 10);
 		assertNotNull(cat);
 	}
 
@@ -46,56 +43,39 @@ public class CategoryTest {
 	@SuppressWarnings("unused")
 	@Test(expected = IllegalArgumentException.class)
 	public void testCategoryInitializeWithNegativeWeight() {
-		Category cat = new Category("HW", -10);
-	}
+		Category cat = new Category("HW", -10);	}
 
 	@SuppressWarnings("unused")
 	@Test(expected = IllegalArgumentException.class)
 	public void testCategoryInitializeWithItemAndNegativeWeight() {
-		for (int i = 1; i <= 10; i++) {
-			this.hwItems.add(new Item("HW" + i, 1));
-		}
-		Category cat = new Category("HW", this.hwItems, -10);
-	}
+		Category cat = new Category("HW", 10, -10);	}
 
 	@SuppressWarnings("unused")
 	@Test(expected = IllegalArgumentException.class)
 	public void testCategoryInitializeWithMaxPLusWeight() {
-		Category cat = new Category("HW", 101);
-	}
+		Category cat = new Category("HW", 101);	}
 
 	@SuppressWarnings("unused")
 	@Test(expected = IllegalArgumentException.class)
 	public void testCategoryInitializeWithItemAndMaxPLusWeight() {
-		for (int i = 1; i <= 10; i++) {
-			this.hwItems.add(new Item("HW" + i, 1));
-		}
-		Category cat = new Category("HW", this.hwItems, 101);
-	}
+		Category cat = new Category("HW", 10, 101);	}
 
 	@SuppressWarnings("unused")
 	@Test(expected = IllegalArgumentException.class)
 	public void testCategoryInitializeWithEmptyName() {
-		Category cat = new Category("", 10);
-	}
+		Category cat = new Category("", 10);	}
 
 	@SuppressWarnings("unused")
 	@Test(expected = IllegalArgumentException.class)
 	public void testCategoryInitializeWithItemAndEmptyName() {
-		for (int i = 1; i <= 10; i++) {
-			this.hwItems.add(new Item("HW" + i, 1));
-		}
-		Category cat = new Category("", this.hwItems, 10);
-	}
+		Category cat = new Category("", 10, 10);	}
 
 	// test code for get methods
 	@Test
 	public void testGetItemsOne() {
-		for (int i = 1; i <= 10; i++) {
-			this.hwItems.add(new Item("HW" + i, 1));
-		}
-		Category cat = new Category("HW", this.hwItems, 10);
-		assertEquals(this.hwItems, cat.getItemList());
+		Category cat = new Category("HW", 10, 10);
+		assertEquals("HW1", cat.getItemList().get(0).getName());
+		assertEquals(1.0, cat.getItemList().get(0).getWeight(), DELTA);
 	}
 
 	@Test
@@ -112,26 +92,20 @@ public class CategoryTest {
 
 	@Test
 	public void testGetNameTwo() {
-		for (int i = 1; i <= 10; i++) {
-			this.hwItems.add(new Item("HW" + i, 1));
-		}
-		Category cat = new Category("HW", this.hwItems, 10);
+		Category cat = new Category("HW", 10, 10);
 		assertEquals("HW", cat.getName());
 	}
 
 	@Test
 	public void testGetWeightOne() {
 		Category cat = new Category("HW", 10);
-		assertEquals(10, cat.getWeight());
+		assertEquals(10, cat.getWeight(), DELTA);
 	}
 
 	@Test
 	public void testGetWeightTwo() {
-		for (int i = 1; i <= 10; i++) {
-			this.hwItems.add(new Item("HW" + i, 1));
-		}
-		Category cat = new Category("HW", this.hwItems, 10);
-		assertEquals(10, cat.getWeight());
+		Category cat = new Category("HW", 10, 10);
+		assertEquals(10, cat.getWeight(), DELTA);
 	}
 
 	// test code for set methods
@@ -150,7 +124,7 @@ public class CategoryTest {
 		for (int i = 1; i <= 10; i++) {
 			this.hwItems.add(new Item("HW" + i, 1));
 		}
-		Category cat = new Category("HW", this.hwItems, 10);
+		Category cat = new Category("HW", 10, 10);
 		cat.setItemList(new ArrayList<Item>());
 		assertEquals(new ArrayList<Item>(), cat.getItemList());
 	}
@@ -164,10 +138,7 @@ public class CategoryTest {
 
 	@Test
 	public void testSetNameTwo() {
-		for (int i = 1; i <= 10; i++) {
-			this.hwItems.add(new Item("HW" + i, 1));
-		}
-		Category cat = new Category("HW", this.hwItems, 10);
+		Category cat = new Category("HW", 10, 10);
 		cat.setName("HomeWork");
 		assertEquals("HomeWork", cat.getName());
 	}
@@ -176,63 +147,46 @@ public class CategoryTest {
 	public void testSetWeightOne() {
 		Category cat = new Category("HW", 10);
 		cat.setWeight(20);
-		assertEquals(20, cat.getWeight());
+		assertEquals(20, cat.getWeight(), DELTA);
 	}
 
 	@Test
 	public void testSetWeightTwo() {
-		for (int i = 1; i <= 10; i++) {
-			this.hwItems.add(new Item("HW" + i, 1));
-		}
-		Category cat = new Category("HW", this.hwItems, 10);
+		Category cat = new Category("HW", 10, 10);
 		cat.setWeight(20);
-		assertEquals(20, cat.getWeight());
+		assertEquals(20, cat.getWeight(), DELTA);
+		assertEquals(2, cat.getItemList().get(0).getWeight(), DELTA);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testSetNegativeWeightOne() {
 		Category cat = new Category("HW", 10);
-		cat.setWeight(-20);
-	}
+		cat.setWeight(-20);	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testSeNegativetWeightTwo() {
-		for (int i = 1; i <= 10; i++) {
-			this.hwItems.add(new Item("HW" + i, 1));
-		}
-		Category cat = new Category("HW", this.hwItems, 10);
-		cat.setWeight(-20);
-	}
+		Category cat = new Category("HW", 10, 10);
+		cat.setWeight(-20);	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testSetMaxPlusWeightOne() {
 		Category cat = new Category("HW", 10);
-		cat.setWeight(101);
-	}
+		cat.setWeight(101); }
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testSetMaxPlusWeightTwo() {
-		for (int i = 1; i <= 10; i++) {
-			this.hwItems.add(new Item("HW" + i, 1));
-		}
-		Category cat = new Category("HW", this.hwItems, 10);
-		cat.setWeight(101);
-	}
+		Category cat = new Category("HW", 10, 10);
+		cat.setWeight(101);	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testSetEmptyNameOne() {
 		Category cat = new Category("HW", 10);
-		cat.setName("");
-	}
+		cat.setName("");	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testSetEmptyNameTwo() {
-		for (int i = 1; i <= 10; i++) {
-			this.hwItems.add(new Item("HW" + i, 1));
-		}
-		Category cat = new Category("HW", this.hwItems, 10);
-		cat.setName("");
-	}
+		Category cat = new Category("HW", 10, 10);
+		cat.setName("");	}
 
 	// test code for add items
 	@Test
@@ -240,19 +194,15 @@ public class CategoryTest {
 		Category cat = new Category("HW", 10);
 		cat.addItem(new Item("HW1", 1));
 		assertEquals("HW1", cat.getItemList().get(0).getName());
-		assertEquals(1, cat.getItemList().get(0).getWeight());
+		assertEquals(10, cat.getItemList().get(0).getWeight(), DELTA);
 	}
 
 	@Test
 	public void testAddItemTwo() {
-		for (int i = 1; i <= 10; i++) {
-			this.hwItems.add(new Item("HW" + i, 1));
-		}
-		Category cat = new Category("HW", this.hwItems, 10);
-		this.hwItems.add(new Item("HW11", 1));
+		Category cat = new Category("HW", 10, 10);
 		cat.addItem(new Item("HW11", 1));
 		assertEquals("HW11", cat.getItemList().get(10).getName());
-		assertEquals(1, cat.getItemList().get(10).getWeight());
+		assertEquals(0.91, cat.getItemList().get(10).getWeight(), DELTA);
 	}
 
 	// test code for calculating number of items in a category
@@ -264,10 +214,7 @@ public class CategoryTest {
 
 	@Test
 	public void testNumOfItemsTwo() {
-		for (int i = 1; i <= 10; i++) {
-			this.hwItems.add(new Item("HW" + i, 1));
-		}
-		Category cat = new Category("HW", this.hwItems, 10);
+		Category cat = new Category("HW", 10, 10);
 		assertEquals(10, cat.getNumOfItems());
 	}
 
@@ -284,11 +231,7 @@ public class CategoryTest {
 
 	@Test
 	public void testNumOfItemsFour() {
-		this.hwItems.clear();
-		for (int i = 1; i <= 10; i++) {
-			this.hwItems.add(new Item("HW" + i, 1));
-		}
-		Category cat = new Category("HW", this.hwItems, 10);
+		Category cat = new Category("HW", 10, 10);
 		cat.setItemList(new ArrayList<Item>());
 		assertEquals(0, cat.getNumOfItems());
 	}
@@ -302,60 +245,58 @@ public class CategoryTest {
 
 	@Test
 	public void testNumItemsWithAddItemTwo() {
-		ArrayList<Item> items = new ArrayList<Item>();
-		for (int i = 1; i <= 10; i++) {
-			items.add(new Item("HW" + i, 1));
-		}
-		Category cat = new Category("HW", items, 10);
-		items.add(new Item("HW11", 1));
+		Category cat = new Category("HW", 10, 10);
 		cat.addItem(new Item("HW11", 1));
 		assertEquals(11, cat.getNumOfItems());
-	}
+	}	
 
 	// test cases for getting the total earned grades.
 	@Test
 	public void testTotalEarnedGrades() {
 		double sumGrade = 0;
-		for (int i = 1; i <= 10; i++) {
+		Category cat = new Category("HW", 10, 10);
+		for (int i = 0; i < 10; i++) {
 			double tempGrade = Math.random() * 10;
-			this.hwItems.add(new Item("HW" + i, tempGrade + "", "10", 1));
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("10");
 			sumGrade += tempGrade;
 		}
-		Category cat = new Category("HW", this.hwItems, 10);
 		assertEquals(sumGrade, cat.getTotalEarnedPoints(), DELTA);
 	}
 
 	@Test
 	public void testZeroTotalEarnedGrades() {
-		for (int i = 1; i <= 10; i++) {
-			this.hwItems.add(new Item("HW" + i, "0", "10", 1));
+		Category cat = new Category("HW", 10, 10);
+		for (int i = 0; i < 10; i++) {
+			cat.getItemList().get(i).setEarnedPoints("0.0");
+			cat.getItemList().get(i).setTotalPoints("10");
 		}
-		Category cat = new Category("HW", this.hwItems, 10);
 		assertEquals(0.0, cat.getTotalEarnedPoints(), DELTA);
 	}
 
 	@Test
 	public void testNegativeTotalEarnedGrades() {
 		double sumGrade = 0;
-		for (int i = 1; i <= 10; i++) {
+		Category cat = new Category("HW", 10, 10);
+		for (int i = 0; i < 10; i++) {
 			double tempGrade = Math.random() * -10;
-			this.hwItems.add(new Item("HW" + i, tempGrade + "", "10", 1));
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("10");
 			sumGrade += tempGrade;
 		}
-		Category cat = new Category("HW", this.hwItems, 10);
 		assertEquals(sumGrade, cat.getTotalEarnedPoints(), DELTA);
 	}
 
 	// test cases for getting the total possible grades.
 	@Test
 	public void testTotalPossibleGrades() {
+		Category cat = new Category("HW", 10, 10);
 		double sumGrade = 0;
-		for (int i = 1; i <= 10; i++) {
+		for (int i = 0; i < 10; i++) {
 			double tempGrade = Math.random() * 10;
-			this.hwItems.add(new Item("HW" + i, tempGrade + "", 1));
+			cat.getItemList().get(i).setTotalPoints(tempGrade+"");
 			sumGrade += tempGrade;
 		}
-		Category cat = new Category("HW", this.hwItems, 10);
 		assertEquals(sumGrade, cat.getTotalPossiblePoints(), DELTA);
 	}
 
@@ -363,13 +304,14 @@ public class CategoryTest {
 	@Test
 	public void testTotalGradesOne() {
 		double sumGrade = 0;
-		for (int i = 1; i <= 10; i++) {
+		Category cat = new Category("HW", 10, 10);
+		for (int i = 0; i < 10; i++) {
 			double tempGrade = Math.random() * 10;
-			this.hwItems.add(new Item("HW" + i, tempGrade + "", "10", 1));
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("10");
 			sumGrade += tempGrade;
 		}
 		
-		Category cat = new Category("HW", this.hwItems, 10);
 		double answer = Math.round((sumGrade*100))/100.00;
 		assertEquals(answer, cat.getTotalPoints(), DELTA);
 	}
@@ -377,23 +319,24 @@ public class CategoryTest {
 	@Test
 	public void testTotalGradesTwo() {
 		double sumGrade = 0;
-		for (int i = 1; i <= 10; i++) {
+		Category cat = new Category("HW", 10, 10);
+		for (int i = 0; i < 10; i++) {
 			double tempGrade = Math.random() * -10;
-			this.hwItems.add(new Item("HW" + i, tempGrade + "", "10", 1));
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("10");
 			sumGrade += tempGrade;
-
 		}
-		Category cat = new Category("HW", this.hwItems, 10);
 		double answer = Math.round((sumGrade*100))/100.00;
 		assertEquals(answer, cat.getTotalPoints(), DELTA);
 	}
 
 	@Test
 	public void testTotalGradesThree() {
-		for (int i = 1; i <= 10; i++) {
-			this.hwItems.add(new Item("HW" + i, "0.0", "10", 1));
+		Category cat = new Category("HW", 10, 10);
+		for (int i = 0; i < 10; i++) {
+			cat.getItemList().get(i).setEarnedPoints("0.0");
+			cat.getItemList().get(i).setTotalPoints("10");
 		}
-		Category cat = new Category("HW", this.hwItems, 10);
 		assertEquals(0.0, cat.getTotalPoints(), DELTA);
 	}
 

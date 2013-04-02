@@ -1,12 +1,12 @@
 
 public class Item {
 	
-	private int weight = 0;
+	private double weight = 0;
 	private String earnedPoints = "";
 	private String totalPoints = "";
 	private String name = "";
 
-	public Item(String name, int weight) {
+	public Item(String name, double weight) {
 		if (weight < 0 || weight > 100 || name.length()==0) { 
 			throw new IllegalArgumentException();
 		}
@@ -14,7 +14,7 @@ public class Item {
 		this.weight = weight;
 	}
 
-	public Item(String name, String totalPoints, int weight) {
+	public Item(String name, String totalPoints, double weight) {
 		if (weight < 0 || weight > 100 || name.length()==0 || (!totalPoints.matches("([0-9]+(\\.[0-9]+)?)+"))) { 
 			throw new IllegalArgumentException();
 		}
@@ -31,7 +31,7 @@ public class Item {
 		}
 	}
 
-	public Item(String name, String earnedPoints, String totalPoints, int weight) {
+	public Item(String name, String earnedPoints, String totalPoints, double weight) {
 		if (weight<0 || weight > 100 || name.length()==0 || (!totalPoints.matches("([0-9]+(\\.[0-9]+)?)+"))) { 
 			throw new IllegalArgumentException();
 		}
@@ -57,7 +57,7 @@ public class Item {
 		return this.totalPoints;
 	}
 
-	public int getWeight() {
+	public double getWeight() {
 		return this.weight;
 	}
 
@@ -83,7 +83,7 @@ public class Item {
 		}
 	}
 
-	public void setWeight(int weight) {
+	public void setWeight(double weight) {
 		if(weight < 0 || weight > 100){
 			throw new IllegalArgumentException();
 		}
