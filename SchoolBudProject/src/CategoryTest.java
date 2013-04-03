@@ -251,21 +251,13 @@ public class CategoryTest {
 	}	
 
 	// test cases for getting the total earned grades.
-	@Test
-	public void testTotalEarnedGrades() {
-		double sumGrade = 0;
-		Category cat = new Category("HW", 10, 10);
-		for (int i = 0; i < 10; i++) {
-			double tempGrade = Math.random() * 10;
-			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
-			cat.getItemList().get(i).setTotalPoints("10");
-			sumGrade += tempGrade;
-		}
-		assertEquals(sumGrade, cat.getTotalEarnedPoints(), DELTA);
-	}
+	/**
+	 * For testing purposes only we consider min to be 0
+	 * and max to be 100.
+	 */
 
 	@Test
-	public void testZeroTotalEarnedGrades() {
+	public void testTotalEarnedGradesMin() {
 		Category cat = new Category("HW", 10, 10);
 		for (int i = 0; i < 10; i++) {
 			cat.getItemList().get(i).setEarnedPoints("0.0");
@@ -275,7 +267,7 @@ public class CategoryTest {
 	}
 
 	@Test
-	public void testNegativeTotalEarnedGrades() {
+	public void testTotalEarnedGradesMinMinus() {
 		double sumGrade = 0;
 		Category cat = new Category("HW", 10, 10);
 		for (int i = 0; i < 10; i++) {
@@ -287,9 +279,89 @@ public class CategoryTest {
 		assertEquals(sumGrade, cat.getTotalEarnedPoints(), DELTA);
 	}
 
-	// test cases for getting the total possible grades.
 	@Test
-	public void testTotalPossibleGrades() {
+	public void testTotalEarnedGradesMinPlus() {
+		double sumGrade = 0;
+		Category cat = new Category("HW", 10, 10);
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 10;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("10");
+			sumGrade += tempGrade;
+		}
+		assertEquals(sumGrade, cat.getTotalEarnedPoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalEarnedGradesNominal() {
+		double sumGrade = 0;
+		Category cat = new Category("HW", 10, 10);
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 50;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("10");
+			sumGrade += tempGrade;
+		}
+		assertEquals(sumGrade, cat.getTotalEarnedPoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalEarnedGradesMaxMinus() {
+		double sumGrade = 0;
+		Category cat = new Category("HW", 10, 10);
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 90;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("10");
+			sumGrade += tempGrade;
+		}
+		assertEquals(sumGrade, cat.getTotalEarnedPoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalEarnedGradesMax() {
+		double sumGrade = 0;
+		Category cat = new Category("HW", 10, 10);
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 100;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("10");
+			sumGrade += tempGrade;
+		}
+		assertEquals(sumGrade, cat.getTotalEarnedPoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalEarnedGradesMaxPlus() {
+		double sumGrade = 0;
+		Category cat = new Category("HW", 10, 10);
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 190;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("10");
+			sumGrade += tempGrade;
+		}
+		assertEquals(sumGrade, cat.getTotalEarnedPoints(), DELTA);
+	}
+	
+	// test cases for getting the total possible grades.
+	@Test(expected = IllegalArgumentException.class)
+	public void testTotalPossibleGradesMinMinus() {
+		Category cat = new Category("HW", 10, 10);
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * -10;
+			cat.getItemList().get(i).setTotalPoints(tempGrade+""); } }
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testTotalPossibleGradesMin() {
+		Category cat = new Category("HW", 10, 10);
+		for (int i = 0; i < 10; i++) {
+			cat.getItemList().get(i).setTotalPoints("0.0");
+		}
+	}
+	
+	@Test
+	public void testTotalPossibleGradesMinPlus() {
 		Category cat = new Category("HW", 10, 10);
 		double sumGrade = 0;
 		for (int i = 0; i < 10; i++) {
@@ -299,45 +371,656 @@ public class CategoryTest {
 		}
 		assertEquals(sumGrade, cat.getTotalPossiblePoints(), DELTA);
 	}
-
-	// test cases for getting the total possible grades.
+	
 	@Test
-	public void testTotalGradesOne() {
-		double sumGrade = 0;
+	public void testTotalPossibleGradesNominal() {
 		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
 		for (int i = 0; i < 10; i++) {
-			double tempGrade = Math.random() * 10;
-			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
-			cat.getItemList().get(i).setTotalPoints("10");
+			double tempGrade = Math.random() * 50;
+			cat.getItemList().get(i).setTotalPoints(tempGrade+"");
 			sumGrade += tempGrade;
 		}
-		
-		double answer = Math.round((sumGrade*100))/100.00;
-		assertEquals(answer, cat.getTotalPoints(), DELTA);
+		assertEquals(sumGrade, cat.getTotalPossiblePoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalPossibleGradesMaxMinus() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 90;
+			cat.getItemList().get(i).setTotalPoints(tempGrade+"");
+			sumGrade += tempGrade;
+		}
+		assertEquals(sumGrade, cat.getTotalPossiblePoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalPossibleGradesMax() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 100;
+			cat.getItemList().get(i).setTotalPoints(tempGrade+"");
+			sumGrade += tempGrade;
+		}
+		assertEquals(sumGrade, cat.getTotalPossiblePoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalPossibleGradesMaxPlus() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 110;
+			cat.getItemList().get(i).setTotalPoints(tempGrade+"");
+			sumGrade += tempGrade;
+		}
+		assertEquals(sumGrade, cat.getTotalPossiblePoints(), DELTA);
 	}
 
-	@Test
-	public void testTotalGradesTwo() {
-		double sumGrade = 0;
+	// test cases for getting the total possible grades.
+	@Test(expected = IllegalArgumentException.class)
+	public void testTotalGradesWithMinMinusEarnedMinMinusTotal() {
 		Category cat = new Category("HW", 10, 10);
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * -10;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("-10");	} }
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testTotalGradesWithMinMinusEarnedMinTotal() {
+		Category cat = new Category("HW", 10, 10);
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * -10;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("0");}	}
+
+	@Test
+	public void testTotalGradesWithMinMinusEarnedMinPlusTotal() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
 		for (int i = 0; i < 10; i++) {
 			double tempGrade = Math.random() * -10;
 			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
 			cat.getItemList().get(i).setTotalPoints("10");
 			sumGrade += tempGrade;
 		}
-		double answer = Math.round((sumGrade*100))/100.00;
-		assertEquals(answer, cat.getTotalPoints(), DELTA);
+		double answer = Math.round(((sumGrade/100)*100)*100);
+		assertEquals(answer/100, cat.getTotalPoints(), DELTA);
 	}
-
+	
 	@Test
-	public void testTotalGradesThree() {
+	public void testTotalGradesWithMinMinusEarnedNominalTotal() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * -10;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("50");
+			sumGrade += tempGrade;
+		}
+		double answer = Math.round(((sumGrade/500)*100)*100);
+		assertEquals(answer/100, cat.getTotalPoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalGradesWithMinMinusEarnedMaxMinusTotal() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * -10;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("90");
+			sumGrade += tempGrade;
+		}
+		double answer = Math.round(((sumGrade/900)*100)*100);
+		assertEquals(answer/100, cat.getTotalPoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalGradesWithMinMinusEarnedMaxTotal() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * -10;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("100");
+			sumGrade += tempGrade;
+		}
+		double answer = Math.round(((sumGrade/1000)*100)*100);
+		assertEquals(answer/100, cat.getTotalPoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalGradesWithMinMinusEarnedMaxPlusTotal() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * -10;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("110");
+			sumGrade += tempGrade;
+		}
+		double answer = Math.round(((sumGrade/1100)*100)*100);
+		assertEquals(answer/100, cat.getTotalPoints(), DELTA);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testTotalGradesWithMinEarnedMinMinusTotal() {
 		Category cat = new Category("HW", 10, 10);
 		for (int i = 0; i < 10; i++) {
-			cat.getItemList().get(i).setEarnedPoints("0.0");
+			double tempGrade = Math.random() * 0;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("-10");	} }
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testTotalGradesWithMinEarnedMinTotal() {
+		Category cat = new Category("HW", 10, 10);
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 0;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("0");}	}
+
+	@Test
+	public void testTotalGradesWithMinEarnedMinPlusTotal() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 0;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
 			cat.getItemList().get(i).setTotalPoints("10");
+			sumGrade += tempGrade;
 		}
-		assertEquals(0.0, cat.getTotalPoints(), DELTA);
+		double answer = Math.round(((sumGrade/100)*100)*100);
+		assertEquals(answer/100, cat.getTotalPoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalGradesWithMinEarnedNominalTotal() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 0;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("50");
+			sumGrade += tempGrade;
+		}
+		double answer = Math.round(((sumGrade/500)*100)*100);
+		assertEquals(answer/100, cat.getTotalPoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalGradesWithMinEarnedMaxMinusTotal() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 0;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("90");
+			sumGrade += tempGrade;
+		}
+		double answer = Math.round(((sumGrade/900)*100)*100);
+		assertEquals(answer/100, cat.getTotalPoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalGradesWithMinEarnedMaxTotal() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 0;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("100");
+			sumGrade += tempGrade;
+		}
+		double answer = Math.round(((sumGrade/1000)*100)*100);
+		assertEquals(answer/100, cat.getTotalPoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalGradesWithMinEarnedMaxPlusTotal() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 0;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("110");
+			sumGrade += tempGrade;
+		}
+		double answer = Math.round(((sumGrade/1100)*100)*100);
+		assertEquals(answer/100, cat.getTotalPoints(), DELTA);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testTotalGradesWithMinPlusEarnedMinMinusTotal() {
+		Category cat = new Category("HW", 10, 10);
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 10;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("-10");	} }
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testTotalGradesWithMinPlusEarnedMinTotal() {
+		Category cat = new Category("HW", 10, 10);
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 10;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("0");}	}
+
+	@Test
+	public void testTotalGradesWithMinPlusEarnedMinPlusTotal() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 10;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("10");
+			sumGrade += tempGrade;
+		}
+		double answer = Math.round(((sumGrade/100)*100)*100);
+		assertEquals(answer/100, cat.getTotalPoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalGradesWithMinPlusEarnedNominalTotal() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 10;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("50");
+			sumGrade += tempGrade;
+		}
+		double answer = Math.round(((sumGrade/500)*100)*100);
+		assertEquals(answer/100, cat.getTotalPoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalGradesWithMinPlusEarnedMaxMinusTotal() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 10;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("90");
+			sumGrade += tempGrade;
+		}
+		double answer = Math.round(((sumGrade/900)*100)*100);
+		assertEquals(answer/100, cat.getTotalPoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalGradesWithMinPlusEarnedMaxTotal() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 10;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("100");
+			sumGrade += tempGrade;
+		}
+		double answer = Math.round(((sumGrade/1000)*100)*100);
+		assertEquals(answer/100, cat.getTotalPoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalGradesWithMinPlusEarnedMaxPlusTotal() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 10;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("110");
+			sumGrade += tempGrade;
+		}
+		double answer = Math.round(((sumGrade/1100)*100)*100);
+		assertEquals(answer/100, cat.getTotalPoints(), DELTA);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testTotalGradesWithNominalEarnedMinMinusTotal() {
+		Category cat = new Category("HW", 10, 10);
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 50;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("-10");	} }
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testTotalGradesWithNominalEarnedMinTotal() {
+		Category cat = new Category("HW", 10, 10);
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 50;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("0");}	}
+
+	@Test
+	public void testTotalGradesWithNominalEarnedMinPlusTotal() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 50;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("10");
+			sumGrade += tempGrade;
+		}
+		double answer = Math.round(((sumGrade/100)*100)*100);
+		assertEquals(answer/100, cat.getTotalPoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalGradesWithNominalEarnedNominalTotal() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 50;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("50");
+			sumGrade += tempGrade;
+		}
+		double answer = Math.round(((sumGrade/500)*100)*100);
+		assertEquals(answer/100, cat.getTotalPoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalGradesWithNominalEarnedMaxMinusTotal() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 50;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("90");
+			sumGrade += tempGrade;
+		}
+		double answer = Math.round(((sumGrade/900)*100)*100);
+		assertEquals(answer/100, cat.getTotalPoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalGradesWithNominalEarnedMaxTotal() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 50;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("100");
+			sumGrade += tempGrade;
+		}
+		double answer = Math.round(((sumGrade/1000)*100)*100);
+		assertEquals(answer/100, cat.getTotalPoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalGradesWithNominalEarnedMaxPlusTotal() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 50;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("110");
+			sumGrade += tempGrade;
+		}
+		double answer = Math.round(((sumGrade/1100)*100)*100);
+		assertEquals(answer/100, cat.getTotalPoints(), DELTA);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testTotalGradesWithMaxMinusEarnedMinMinusTotal() {
+		Category cat = new Category("HW", 10, 10);
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 90;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("-10");	} }
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testTotalGradesWithMaxMinusEarnedMinTotal() {
+		Category cat = new Category("HW", 10, 10);
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 90;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("0");}	}
+
+	@Test
+	public void testTotalGradesWithMaxMinusEarnedMinPlusTotal() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 90;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("10");
+			sumGrade += tempGrade;
+		}
+		double answer = Math.round(((sumGrade/100)*100)*100);
+		assertEquals(answer/100, cat.getTotalPoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalGradesWithMaxMinusEarnedNominalTotal() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 90;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("50");
+			sumGrade += tempGrade;
+		}
+		double answer = Math.round(((sumGrade/500)*100)*100);
+		assertEquals(answer/100, cat.getTotalPoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalGradesWithMaxMinusEarnedMaxMinusTotal() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 90;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("90");
+			sumGrade += tempGrade;
+		}
+		double answer = Math.round(((sumGrade/900)*100)*100);
+		assertEquals(answer/100, cat.getTotalPoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalGradesWithMaxMinusEarnedMaxTotal() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 90;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("100");
+			sumGrade += tempGrade;
+		}
+		double answer = Math.round(((sumGrade/1000)*100)*100);
+		assertEquals(answer/100, cat.getTotalPoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalGradesWithMaxMinusEarnedMaxPlusTotal() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 90;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("110");
+			sumGrade += tempGrade;
+		}
+		double answer = Math.round(((sumGrade/1100)*100)*100);
+		assertEquals(answer/100, cat.getTotalPoints(), DELTA);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testTotalGradesWithMaxEarnedMinMinusTotal() {
+		Category cat = new Category("HW", 10, 10);
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 100;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("-10");	} }
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testTotalGradesWithMaxEarnedMinTotal() {
+		Category cat = new Category("HW", 10, 10);
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 100;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("0");}	}
+
+	@Test
+	public void testTotalGradesWithMaxEarnedMinPlusTotal() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 100;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("10");
+			sumGrade += tempGrade;
+		}
+		double answer = Math.round(((sumGrade/100)*100)*100);
+		assertEquals(answer/100, cat.getTotalPoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalGradesWithMaxEarnedNominalTotal() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 100;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("50");
+			sumGrade += tempGrade;
+		}
+		double answer = Math.round(((sumGrade/500)*100)*100);
+		assertEquals(answer/100, cat.getTotalPoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalGradesWithMaxEarnedMaxMinusTotal() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 100;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("90");
+			sumGrade += tempGrade;
+		}
+		double answer = Math.round(((sumGrade/900)*100)*100);
+		assertEquals(answer/100, cat.getTotalPoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalGradesWithMaxEarnedMaxTotal() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 100;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("100");
+			sumGrade += tempGrade;
+		}
+		double answer = Math.round(((sumGrade/1000)*100)*100);
+		assertEquals(answer/100, cat.getTotalPoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalGradesWithMaxEarnedMaxPlusTotal() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 100;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("110");
+			sumGrade += tempGrade;
+		}
+		double answer = Math.round(((sumGrade/1100)*100)*100);
+		assertEquals(answer/100, cat.getTotalPoints(), DELTA);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testTotalGradesWithMaxPlusEarnedMinMinusTotal() {
+		Category cat = new Category("HW", 10, 10);
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 110;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("-10");	} }
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testTotalGradesWithMaxPlusEarnedMinTotal() {
+		Category cat = new Category("HW", 10, 10);
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 110;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("0");}	}
+
+	@Test
+	public void testTotalGradesWithMaxPlusEarnedMinPlusTotal() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 110;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("10");
+			sumGrade += tempGrade;
+		}
+		double answer = Math.round(((sumGrade/100)*100)*100);
+		assertEquals(answer/100, cat.getTotalPoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalGradesWithMaxPlusEarnedNominalTotal() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 110;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("50");
+			sumGrade += tempGrade;
+		}
+		double answer = Math.round(((sumGrade/500)*100)*100);
+		assertEquals(answer/100, cat.getTotalPoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalGradesWithMaxPlusEarnedMaxMinusTotal() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 110;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("90");
+			sumGrade += tempGrade;
+		}
+		double answer = Math.round(((sumGrade/900)*100)*100);
+		assertEquals(answer/100, cat.getTotalPoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalGradesWithMaxPlusEarnedMaxTotal() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 110;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("100");
+			sumGrade += tempGrade;
+		}
+		double answer = Math.round(((sumGrade/1000)*100)*100);
+		assertEquals(answer/100, cat.getTotalPoints(), DELTA);
+	}
+	
+	@Test
+	public void testTotalGradesWithMaxPlusEarnedMaxPlusTotal() {
+		Category cat = new Category("HW", 10, 10);
+		double sumGrade = 0;
+		for (int i = 0; i < 10; i++) {
+			double tempGrade = Math.random() * 110;
+			cat.getItemList().get(i).setEarnedPoints(tempGrade+"");
+			cat.getItemList().get(i).setTotalPoints("110");
+			sumGrade += tempGrade;
+		}
+		double answer = Math.round(((sumGrade/1100)*100)*100);
+		assertEquals(answer/100, cat.getTotalPoints(), DELTA);
 	}
 
 }
