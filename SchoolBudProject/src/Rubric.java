@@ -1,13 +1,15 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
 public class Rubric {
-	
+
 	HashMap<String, ArrayList<Double>> grades;
-	
-	public Rubric(){
+
+	public Rubric() {
 		this.grades = new HashMap<String, ArrayList<Double>>();
+	}
+
+	public void setDefaults() {
 		this.addGrade("A", 90, 100, 4.0);
 		this.addGrade("B+", 85, 89, 3.50);
 		this.addGrade("B", 80, 84, 3.0);
@@ -18,7 +20,24 @@ public class Rubric {
 		this.addGrade("F", 0, 59, 0.0);
 	}
 
-	public void addGrade(String letterGrade, double lowerLimit, double upperLimit, double gpa) {
+	public void addGrade(String letterGrade, double lowerLimit,
+			double upperLimit, double gpa) {
+		if (lowerLimit > upperLimit) {
+			throw new IllegalArgumentException();
+		}
+
+		for (ArrayList<Double> x : this.grades.values()) {
+			if ((lowerLimit > x.get(0) && lowerLimit < x.get(1)) || lowerLimit == x.get(0)) {
+				throw new IllegalArgumentException();
+			}
+			if ((upperLimit > x.get(0) && upperLimit < x.get(1)) || upperLimit == x.get(1) || upperLimit > x.get(0)) {
+				throw new IllegalArgumentException();
+			}
+			if(gpa == x.get(2)){
+				throw new IllegalArgumentException();
+			}
+		}
+
 		ArrayList<Double> temp = new ArrayList<Double>();
 		temp.add(lowerLimit);
 		temp.add(upperLimit);
