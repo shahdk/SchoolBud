@@ -1,6 +1,4 @@
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,17 +12,36 @@ import java.util.Scanner;
  */
 public class FileParser {
 	private File currentFile;
-	private PrintWriter writer;
-	private Scanner reader;
-
+	private int rubricSize;
+	private int courseSize;
+	private int quarterSize;
+	private static int CONFIG_SIZE = 2;
+	
 	/**
 	 * TODO Put here a description of what this constructor does.
 	 * 
 	 * @param string
-	 * @throws IOException
+	 * @throws Exception 
 	 */
-	public FileParser() throws IOException {
-
+	public FileParser() throws Exception {
+		ArrayList<String> configData = this.readFile("config.txt", ";", CONFIG_SIZE);
+		int count = 0;
+		int size = configData.size();
+		while(count < size){
+			 if(configData.get(count).equals("Rubric")){
+				 this.rubricSize = Integer.parseInt(configData.get(count + 1));
+				 count = count + 2;
+			 }
+			else if(configData.get(count).equals("Quarter")){
+				this.quarterSize = Integer.parseInt(configData.get(count + 1));
+				count = count + 2;
+			}
+							
+			else{
+				this.courseSize = Integer.parseInt(configData.get(count + 1));
+				count = count + 2;
+			}
+		}
 	}
 
 	/**
@@ -75,7 +92,70 @@ public class FileParser {
 				line += data.get(i) + delimiter;
 			}
 		}
+		
 		writer.println(line);
 		writer.close();
+	}
+
+	/**
+	 * TODO Put here a description of what this method does.
+	 *
+	 * @param fileName
+	 * @param delimiter
+	 * @param length
+	 * @return 
+	 * @throws Exception 
+	 */
+	public ArrayList<String> readFile(String fileName, String delimiter, int length) throws Exception {
+		Scanner inScanner = new Scanner(new File(fileName));
+		ArrayList<String> dataFromFile = new ArrayList<String>();
+		int count = 0;
+		
+		while(inScanner.hasNext()){
+			String data = inScanner.next();
+			String[] splitData = data.split(delimiter);
+			
+			for (int k = 0; k < splitData.length; k++){
+				dataFromFile.add(splitData[k]);
+				count++;
+			}
+			
+			if(count == length){
+				count = 0;
+			}
+		}
+		
+		if(count != 0){
+			throw new Exception();
+		}
+		
+		return dataFromFile;
+	}
+
+	/**
+	 * TODO Put here a description of what this method does.
+	 *
+	 * @return
+	 */
+	public int getRubricSize() {
+		return this.rubricSize;
+	}
+
+	/**
+	 * TODO Put here a description of what this method does.
+	 *
+	 * @return
+	 */
+	public int getQuarterSize() {
+		return this.quarterSize;
+	}
+
+	/**
+	 * TODO Put here a description of what this method does.
+	 *
+	 * @return
+	 */
+	public int getCourseSize() {
+		return this.courseSize;
 	}
 }

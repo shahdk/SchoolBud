@@ -1,8 +1,11 @@
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -18,18 +21,18 @@ public class ParserTest {
 	}
 
 	@Test
-	public void testFileParserInitialize() throws IOException {
+	public void testFileParserInitialize() throws Exception {
 		FileParser parse = new FileParser();
 		assertNotNull(parse);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void testParserIntializesException() throws IOException {
+	public void testParserIntializesException() throws Exception {
 		FileParser parse = new FileParser();
 		parse.createFile("");}
 
 	@Test
-	public void testCreateFile() throws IOException {
+	public void testCreateFile() throws Exception {
 		FileParser parse = new FileParser();
 		File toBeDeleted = new File("test2.txt");
 		assertTrue(parse.createFile("test2.txt"));
@@ -37,7 +40,7 @@ public class ParserTest {
 	}
 
 	@Test
-	public void testCreateFileWithOnlyCharacters() throws IOException {
+	public void testCreateFileWithOnlyCharacters() throws Exception {
 		FileParser parse = new FileParser();
 		ArrayList<String> files = this.list("!.txt", "@.txt", "#.txt", "$.txt",
 				"%.txt", "^.txt", "&.txt", "(.txt", ").txt", "-.txt");
@@ -49,7 +52,7 @@ public class ParserTest {
 	}
 
 	@Test
-	public void testCreateFileWithOnlyCharacters2() throws IOException {
+	public void testCreateFileWithOnlyCharacters2() throws Exception {
 		FileParser parse = new FileParser();
 		ArrayList<String> files = this.list("_.txt", "+.txt", "=.txt", "`.txt",
 				"~.txt", "[.txt", "].txt", "{.txt", "}.txt");
@@ -67,6 +70,7 @@ public class ParserTest {
 		parse.createFile("test3.txt");
 		File fileWrittenTo = new File("test3.txt");
 		parse.writeFile("test3.txt", ";", data, 4);
+		assertEquals(data, parse.readFile("test3.txt", ";", 4));
 		fileWrittenTo.delete();
 	}
 	
@@ -74,8 +78,43 @@ public class ParserTest {
 	public void testWriteFileException() throws Exception {
 		FileParser parse = new FileParser();
 		ArrayList<String> data = this.list("A", "1", "B", "2");
-		parse.createFile("test3.txt");
-		parse.writeFile("test3.txt", " ", data, 5);}
+		parse.createFile("test4.txt");
+		parse.writeFile("test4.txt", " ", data, 5);}
+	
+	@Test
+	public void testReadFileConfig() throws Exception{
+		FileParser parse = new FileParser();
+		ArrayList<String> data = this.list("Rubric", "4", "Course", "5", "Quarter", "6");
+		Assert.assertEquals(data, parse.readFile("config.txt", ";", 2));
+	}
+	
+	@Test(expected = FileNotFoundException.class)
+	public void testReadFileExceptionFileNotFound() throws Exception{
+		FileParser parse = new FileParser();
+		parse.readFile("unnamed.txt", ";", 2);}
+	
+	@Test(expected = Exception.class)
+	public void testReadFileExceptionImproperFile() throws Exception{
+		FileParser parse = new FileParser();
+		parse.readFile("improperFile.txt", ";", 2);}
+	
+	@Test
+	public void testGetRubricSize() throws Exception{
+		FileParser parse = new FileParser();
+		assertEquals(parse.getRubricSize(), 4);
+	}
+	
+	@Test
+	public void testGetQuarterSize() throws Exception{
+		FileParser parse = new FileParser();
+		assertEquals(parse.getQuarterSize(), 6);
+	}
+	
+	@Test
+	public void testGetCourseSize() throws Exception{
+		FileParser parse = new FileParser();
+		assertEquals(parse.getCourseSize(), 5);
+	}
 
 	public ArrayList<String> list(String... words) {
 		ArrayList<String> temp = new ArrayList<String>();
