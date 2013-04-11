@@ -1,4 +1,0 @@
-Rubric;4
-Course;5
-Quarter;6
-
