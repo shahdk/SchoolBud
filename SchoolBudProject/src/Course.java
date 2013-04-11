@@ -53,7 +53,7 @@ public class Course {
 		double weight = 0;
 		for (Category c : this.categories) {
 			weight += c.getWeight();
-			if (weight + cat.getWeight() > 100) {
+			if (weight + cat.getWeight() > 100 || cat.getName().equals(c.getName())) {
 				throw new IllegalArgumentException();
 			}
 		}
