@@ -37,40 +37,53 @@ public class SchedulerCourseTester {
 		
 	}
 	
-//	@Test
-//	public void testTeacher() {
-//		ArrayList<Integer> hours1 = new ArrayList<Integer>();
-//		
-//		hours1.add(1);
-//		hours1.add(7);
-//		hours1.add(5);
-//		
-//		Class class1 = new Class("Math", "Mr. Man", hours1);
-//		
-//		assertEquals(class1.getTeacher(), "Mr. Man");
-//		class1.setTeacher("Mrs. Lady");
-//		assertEquals(class1.getTeacher(), "Mrs. Lady");
-//		
-//	}
-//	
-//	@Test
-//	public void testHours() {
-//		ArrayList<Integer> hours1 = new ArrayList<Integer>();
-//		
-//		hours1.add(1);
-//		hours1.add(7);
-//		hours1.add(5);
-//		
-//		Class class1 = new Class("Math", "Mr. Man", hours1);
-//		
-//		assertEquals(class1.getHours(), hours1);
-//		
-//		hours1.add(9);
-//		hours1.add(12);
-//		
-//		class1.setHours(hours1);
-//		assertEquals(class1.getHours(), hours1);
-//		
-//	}
+	@Test
+	public void testTeacher() {
+		ArrayList<Integer> hours1 = new ArrayList<Integer>();
+		
+		hours1.add(1);
+		hours1.add(7);
+		hours1.add(5);
+		
+		ArrayList<ArrayList<Integer>> sched = new ArrayList<ArrayList<Integer>>();
+		sched.add(hours1);
+		
+		SchedulerCourse class1 = new SchedulerCourse("Math", "Mr. Man", sched);
+		
+		assertEquals(class1.getTeacher(), "Mr. Man");
+		class1.setTeacher("Mrs. Lady");
+		assertEquals(class1.getTeacher(), "Mrs. Lady");
+		
+	}
+	
+	@Test
+	public void testHours() {
+		ArrayList<Integer> hours1 = new ArrayList<Integer>();
+		
+		hours1.add(1);
+		hours1.add(7);
+		hours1.add(5);
+		
+		ArrayList<ArrayList<Integer>> sched = new ArrayList<ArrayList<Integer>>();
+		sched.add(hours1);
+		
+		SchedulerCourse class1 = new SchedulerCourse("Math", "Mr. Man", sched);
+		
+		assertEquals(class1.getScheduleHours(), sched);
+		assertEquals(class1.getScheduleHours().get(0), hours1);
+		
+		ArrayList<Integer> hours2 = new ArrayList<Integer>();
+		hours2.add(9);
+		hours2.add(12);
+	
+		sched.add(hours2);
+		
+		SchedulerCourse class2 = new SchedulerCourse("Physics", "Mr. Mown", sched);
+		
+		assertEquals(class2.getScheduleHours(), sched);
+		assertEquals(class2.getScheduleHours().get(0), hours1);
+		assertEquals(class2.getScheduleHours().get(1), hours2);
+
+	}
 
 }
