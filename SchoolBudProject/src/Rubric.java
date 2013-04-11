@@ -22,7 +22,7 @@ public class Rubric {
 
 	public void addGrade(String letterGrade, double lowerLimit,
 			double upperLimit, double gpa) {
-		if (lowerLimit > upperLimit) {
+		if (lowerLimit > upperLimit || lowerLimit < 0 || lowerLimit > 100 || upperLimit < 0 || upperLimit > 100) {
 			throw new IllegalArgumentException();
 		}
 

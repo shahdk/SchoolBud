@@ -35,12 +35,22 @@ public class RubricTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testGetInvalidLowerLimit(){
 		Rubric rubric = new Rubric();
-		rubric.addGrade("A", 90, 100, 4.0);	}
+		rubric.addGrade("A", -90, 100, 4.0);	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testGetInvalidUpperLimit(){
 		Rubric rubric = new Rubric();
-		rubric.addGrade("A", 90, 100, 4.0);	}
+		rubric.addGrade("A", 90, 110, 4.0);	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testGetInvalidUpperLimitTwo(){
+		Rubric rubric = new Rubric();
+		rubric.addGrade("A", 90, -100, 4.0);	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testGetInvalidLowerLimitTwo(){
+		Rubric rubric = new Rubric();
+		rubric.addGrade("A", 190, 200, 4.0);	}
 	
 	@Test
 	public void testDefaults(){
