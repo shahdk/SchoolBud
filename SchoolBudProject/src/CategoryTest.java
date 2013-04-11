@@ -209,6 +209,12 @@ public class CategoryTest {
 	public void testAddItemSameName() {
 		Category cat = new Category("HW", 10, 10);
 		cat.addItem(new Item("HW10", 1));	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testAddItemSameNameTwo() {
+		Category cat = new Category("HW", 10);
+		cat.addItem(new Item("HW1", 1));
+		cat.addItem(new Item("HW1", 10)); }
 
 	// test code for calculating number of items in a category
 	@Test

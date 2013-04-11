@@ -77,6 +77,11 @@ public class Category {
 	}
 
 	public void addItem(Item item) {
+		for(Item i: this.items){
+			if(i.getName().equals(item.getName())){
+				throw new IllegalArgumentException();
+			}
+		}
 		this.items.add(item);
 		this.numOfItems = this.items.size();
 		if (this.numOfItems > 0) {
