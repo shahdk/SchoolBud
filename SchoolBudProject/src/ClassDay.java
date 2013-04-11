@@ -11,24 +11,26 @@ import java.util.ArrayList;
 public class ClassDay {
 
 	
-	private ArrayList<ArrayList<Integer>> hourSlots;
+	private ArrayList<Integer> hourSlots;
 	
-	public ClassDay(ArrayList<ArrayList<Integer>> hourSlots) {
+	public ClassDay(ArrayList<Integer> hourSlots) {
 		
-		this.hourSlots = hourSlots;
+		this.setHourSlots(hourSlots);
 	}
 
 	/**
 	 * @return the hourSlots
 	 */
-	public ArrayList<ArrayList<Integer>> getHourSlots() {
+	public ArrayList<Integer> getHourSlots() {
 		return hourSlots;
 	}
 
 	/**
 	 * @param hourSlots the hourSlots to set
 	 */
-	public void setHourSlots(ArrayList<ArrayList<Integer>> hourSlots) {
+	public void setHourSlots(ArrayList<Integer> hourSlots) {
 		this.hourSlots = hourSlots;
 	}
+
+
 }
