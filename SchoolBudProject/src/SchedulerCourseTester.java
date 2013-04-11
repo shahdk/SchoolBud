@@ -36,7 +36,7 @@ public class SchedulerCourseTester {
 		hours1.add(3);
 		hours1.add(6);
 		
-		ArrayList<ArrayList<Integer>> sched = this.createInitialized7DayList();
+		ArrayList<ArrayList<Integer>> sched = SchedulerCourseTester.createInitialized7DayList();
 		sched.set(2, hours1);
 
 		SchedulerCourse class1 = new SchedulerCourse("Math", "Mr. Man", sched);
@@ -55,7 +55,7 @@ public class SchedulerCourseTester {
 		hours1.add(3);
 		hours1.add(6);
 		
-		ArrayList<ArrayList<Integer>> sched = this.createInitialized7DayList();
+		ArrayList<ArrayList<Integer>> sched = SchedulerCourseTester.createInitialized7DayList();
 		sched.set(2, hours1);
 
 		SchedulerCourse class1 = new SchedulerCourse("Math", "Mr. Man", sched);
@@ -74,7 +74,7 @@ ArrayList<Integer> hours1 = new ArrayList<Integer>();
 		hours1.add(3);
 		hours1.add(6);
 		
-		ArrayList<ArrayList<Integer>> sched = this.createInitialized7DayList();
+		ArrayList<ArrayList<Integer>> sched = SchedulerCourseTester.createInitialized7DayList();
 		sched.set(2, hours1);
 
 		SchedulerCourse class1 = new SchedulerCourse("Math", "Mr. Man", sched);
@@ -96,7 +96,7 @@ ArrayList<Integer> hours1 = new ArrayList<Integer>();
 
 	}
 	
-	public ArrayList<ArrayList<Integer>> createInitialized7DayList() {
+	public static ArrayList<ArrayList<Integer>> createInitialized7DayList() {
 		ArrayList<ArrayList<Integer>> list = new ArrayList<ArrayList<Integer>>();
 		
 		for (int i = 0;  i < 7; i++) {

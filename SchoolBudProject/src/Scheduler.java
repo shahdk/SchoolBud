@@ -18,6 +18,7 @@ public class Scheduler {
 		this.numClassHours = classHours;
 		this.schedules = new ArrayList<ArrayList<ArrayList<SchedulerCourse>>>();
 		this.numClasses = this.classes.size();
+		this.aSchedule = new ArrayList<ArrayList<SchedulerCourse>>();
 	}
 
 	private void resetSchedule() {
@@ -76,8 +77,8 @@ public class Scheduler {
 //			
 //		}
 //		
-//		return this.schedules;
-//	}
+		return this.schedules;
+	}
 
 	public boolean isFull(Class[] theHours) {
 		int count = 0;
