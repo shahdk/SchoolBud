@@ -32,6 +32,24 @@ public class RubricTest {
 		assertEquals(100.0, rubric.getUpperLimit("A"), DELTA);
 	}
 	
+	@Test(expected = IllegalArgumentException.class)
+	public void testGetInvalidLowerLimit(){
+		Rubric rubric = new Rubric();
+		rubric.addGrade("A", 90, 100, 4.0);	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testGetInvalidUpperLimit(){
+		Rubric rubric = new Rubric();
+		rubric.addGrade("A", 90, 100, 4.0);	}
+	
+	@Test
+	public void testDefaults(){
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		assertEquals(4.0, rubric.getGPA("A"), DELTA);
+	}
+	
+	
 	@Test
 	public void testGetGPA(){
 		Rubric rubric = new Rubric();

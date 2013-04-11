@@ -356,9 +356,7 @@ public class CategoryTest {
 	public void testTotalPossibleGradesMin() {
 		Category cat = new Category("HW", 10, 10);
 		for (int i = 0; i < 10; i++) {
-			cat.getItemList().get(i).setTotalPoints("0.0");
-		}
-	}
+			cat.getItemList().get(i).setTotalPoints("0.0");	}	}
 	
 	@Test
 	public void testTotalPossibleGradesMinPlus() {
