@@ -3,7 +3,7 @@ import java.util.HashMap;
 
 public class Rubric {
 
-	HashMap<String, ArrayList<Double>> grades;
+	private HashMap<String, ArrayList<Double>> grades;
 
 	public Rubric() {
 		this.grades = new HashMap<String, ArrayList<Double>>();

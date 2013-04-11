@@ -1,81 +1,112 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="11.4">
-  <zoom_level>4</zoom_level>
+  <zoom_level>10</zoom_level>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>252</x>
-      <y>544</y>
-      <w>92</w>
-      <h>80</h>
+      <x>30</x>
+      <y>1360</y>
+      <w>270</w>
+      <h>340</h>
     </coordinates>
     <panel_attributes>Course
 --
--Properties
-title
-list of categories
-% weight for categories
-Grade in course
+-Constructor
+Course(String name)
+Course(String name, double creditHours)
 --
--Responsibilites
-get Grades
-get Categories
-get % weight for category
-calculate % needed for target score
-
-</panel_attributes>
+-Private Fields
+String courseName;
+double creditHours;
+ArrayList&lt;Category&gt; categories;
+double targetGrade;
+--
+-Public Methods
+String getCourseName()
+double getCreditHours()
+void setName(String name)
+void setCreditHours(double creditHours)
+void addCategory(Category cat)
+ArrayList&lt;Category&gt; getCategories()
+double getCourseGrade()
+double getTargetGrade()
+void setTargetGrade(double targetGrade)
+double getNeededCourseGrade()</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>264</x>
-      <y>764</y>
-      <w>64</w>
-      <h>64</h>
+      <x>0</x>
+      <y>2240</y>
+      <w>430</w>
+      <h>320</h>
     </coordinates>
     <panel_attributes>Item
 --
--Properties
-title
-earned points
-total points
+-Constructor
+Item(String name, double weight)
+Item(String name, String totalPoints, double weight)
+Item(String name, String earnedPoints, String totalPoints, double weight)
 --
--Responsibilites
-get earned points
-get total points</panel_attributes>
+-Private Fields
+double weight;
+String earnedPoints;
+String totalPoints;
+String name;
+--
+-Public Methods
+String getEarnedPoints()
+String getTotalPoints()
+double getWeight()
+String getName()
+void setEarnedPoints(String earnedPoints)
+void setTotalPoints(String totalPoints)
+void setWeight(double weight)
+void setName(String name)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>256</x>
-      <y>656</y>
-      <w>80</w>
-      <h>80</h>
+      <x>40</x>
+      <y>1790</y>
+      <w>350</w>
+      <h>360</h>
     </coordinates>
     <panel_attributes>Category
 --
--Properties
-title
-list of items
-% weight for items
-Grade for an item
+-Constructor
+Category(String name, double weight)
+Category(String name, int numOfItems, double weight)
 --
--Responsibilites
-get Grades for an item
-get total grade of the category
-get items
-get % weight for item</panel_attributes>
+-Private Fields
+String catName;
+double weight;
+ArrayList&lt;Item&gt; items;
+int numOfItems;
+--
+-Public Methods
+ArrayList&lt;Item&gt; getItemList()
+String getName()
+double getWeight()
+void setItemList(ArrayList&lt;Item&gt; items)
+void setName(String name)
+void setWeight(int weight)
+int getNumOfItems()
+void addItem(Item item)
+double getTotalEarnedPoints()
+double getTotalPossiblePoints()
+double getTotalPoints()</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>596</x>
-      <y>464</y>
-      <w>116</w>
-      <h>112</h>
+      <x>930</x>
+      <y>1160</y>
+      <w>290</w>
+      <h>320</h>
     </coordinates>
     <panel_attributes>FileParses
 --
@@ -83,52 +114,56 @@ get % weight for item</panel_attributes>
 FileParser()
 --
 -Private Fields
-PrintWriter writer
-Scanner reader
 File currentFile
+int rubricSize
+int courseSize
+int quarterSize
+int CONFIG_SIZE
 --
 -Public Methods
-void createFile(String filename)
+boolean createFile(String filename)
 void writeFile(String fileName, String delimiter, 
-ArrayList&lt;String&gt; data, int length)
-void writeFile(String fileName, String delimiter,
 ArrayList&lt;String&gt; data, int length)
 ArrayList&lt;String&gt; readFile(String filename, 
 String delimiter, int length)
+int getRubricSize()
+int getQuarterSize()
+int getCourseSize()
+
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>272</x>
-      <y>612</y>
-      <w>46</w>
-      <h>52</h>
+      <x>110</x>
+      <y>1670</y>
+      <w>120</w>
+      <h>130</h>
     </coordinates>
     <panel_attributes>Constructs
 lt=&lt;-</panel_attributes>
-    <additional_attributes>24;44;24;12</additional_attributes>
+    <additional_attributes>70;120;70;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>272</x>
-      <y>724</y>
-      <w>46</w>
-      <h>48</h>
+      <x>110</x>
+      <y>2120</y>
+      <w>120</w>
+      <h>130</h>
     </coordinates>
     <panel_attributes>Constructs
 lt=&lt;-</panel_attributes>
-    <additional_attributes>24;40;24;12</additional_attributes>
+    <additional_attributes>70;120;70;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>596</x>
-      <y>680</y>
-      <w>136</w>
-      <h>76</h>
+      <x>930</x>
+      <y>1700</y>
+      <w>340</w>
+      <h>190</h>
     </coordinates>
     <panel_attributes>GPACalculator
 --
@@ -148,28 +183,35 @@ double totalGPA
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>480</x>
-      <y>352</y>
-      <w>80</w>
-      <h>48</h>
+      <x>640</x>
+      <y>880</y>
+      <w>350</w>
+      <h>230</h>
     </coordinates>
     <panel_attributes>Rubric
 --
--Properties
-store the GPA for each grade.
+-Constructor
+Rubric()
 --
--Responsiblity
-Load and Save rubrics
-</panel_attributes>
+-Private Fields
+private HashMap&lt;String, ArrayList&lt;Double&gt;&gt; grades
+--
+-Public Methods
+void addGrade(String letterGrade, double lowerLimit,
+double upperLimit, double gpa)
+double getLowerLimit(String letterGrade)
+void setDefaults()
+double getUpperLimit(String letterGrade)
+double getGPA(String letterGrade)</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>256</x>
-      <y>436</y>
-      <w>108</w>
-      <h>48</h>
+      <x>80</x>
+      <y>1090</y>
+      <w>270</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>FrequencyCalculator
 --
@@ -185,10 +227,10 @@ on the frequency of assignments entered.
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>848</x>
-      <y>348</y>
-      <w>84</w>
-      <h>48</h>
+      <x>1560</x>
+      <y>870</y>
+      <w>210</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>GradeTrender
 --
@@ -204,10 +246,10 @@ current grades
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>608</x>
-      <y>84</y>
-      <w>104</w>
-      <h>60</h>
+      <x>960</x>
+      <y>210</y>
+      <w>260</w>
+      <h>150</h>
     </coordinates>
     <panel_attributes>SchoolBudGUI
 --
@@ -224,10 +266,10 @@ Display various components
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>380</x>
-      <y>264</y>
-      <w>108</w>
-      <h>48</h>
+      <x>390</x>
+      <y>660</y>
+      <w>270</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>DisplayGradesAndGPA
 --
@@ -243,10 +285,10 @@ Display and enable modification of grade
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>612</x>
+      <x>970</x>
       <y>0</y>
-      <w>96</w>
-      <h>40</h>
+      <w>240</w>
+      <h>100</h>
     </coordinates>
     <panel_attributes>Main
 --
@@ -261,22 +303,22 @@ create SchoolBudGUI
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>632</x>
-      <y>28</y>
-      <w>46</w>
-      <h>64</h>
+      <x>1010</x>
+      <y>70</y>
+      <w>120</w>
+      <h>150</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 Constructs</panel_attributes>
-    <additional_attributes>24;56;24;12</additional_attributes>
+    <additional_attributes>70;140;70;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>496</x>
-      <y>264</y>
-      <w>104</w>
-      <h>44</h>
+      <x>680</x>
+      <y>660</y>
+      <w>260</w>
+      <h>110</h>
     </coordinates>
     <panel_attributes>DisplayRubric
 --
@@ -291,10 +333,10 @@ Display and enable modification of rubric
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>732</x>
-      <y>260</y>
-      <w>112</w>
-      <h>48</h>
+      <x>1270</x>
+      <y>650</y>
+      <w>280</w>
+      <h>120</h>
     </coordinates>
     <panel_attributes>DisplayScheduler
 --
@@ -310,10 +352,10 @@ scheduler.
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>608</x>
-      <y>260</y>
-      <w>116</w>
-      <h>52</h>
+      <x>960</x>
+      <y>650</y>
+      <w>290</w>
+      <h>130</h>
     </coordinates>
     <panel_attributes>AddEditQuarter
 --
@@ -330,10 +372,10 @@ of quarters
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>852</x>
-      <y>260</y>
-      <w>92</w>
-      <h>40</h>
+      <x>1570</x>
+      <y>650</y>
+      <w>230</w>
+      <h>100</h>
     </coordinates>
     <panel_attributes>DisplayTrendsGraph
 --
@@ -348,220 +390,220 @@ Display the trends graph
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>420</x>
-      <y>132</y>
-      <w>252</w>
-      <h>140</h>
+      <x>490</x>
+      <y>330</y>
+      <w>630</w>
+      <h>350</h>
     </coordinates>
     <panel_attributes>lt=&lt;.</panel_attributes>
-    <additional_attributes>12;132;12;64;124;64;244;64;244;12</additional_attributes>
+    <additional_attributes>30;330;30;160;310;160;610;160;610;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>540</x>
-      <y>132</y>
-      <w>132</w>
-      <h>140</h>
+      <x>790</x>
+      <y>330</y>
+      <w>330</w>
+      <h>350</h>
     </coordinates>
     <panel_attributes>lt=&lt;.</panel_attributes>
-    <additional_attributes>12;132;12;64;124;64;124;12</additional_attributes>
+    <additional_attributes>30;330;30;160;310;160;310;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>652</x>
-      <y>132</y>
-      <w>20</w>
-      <h>136</h>
+      <x>1070</x>
+      <y>330</y>
+      <w>50</w>
+      <h>340</h>
     </coordinates>
     <panel_attributes>lt=&lt;.</panel_attributes>
-    <additional_attributes>12;128;12;12</additional_attributes>
+    <additional_attributes>30;320;30;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>652</x>
-      <y>132</y>
-      <w>140</w>
-      <h>136</h>
+      <x>1070</x>
+      <y>330</y>
+      <w>350</w>
+      <h>340</h>
     </coordinates>
     <panel_attributes>lt=&lt;.</panel_attributes>
-    <additional_attributes>132;128;132;64;12;64;12;12</additional_attributes>
+    <additional_attributes>330;320;330;160;30;160;30;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>652</x>
-      <y>132</y>
-      <w>248</w>
-      <h>136</h>
+      <x>1070</x>
+      <y>330</y>
+      <w>620</w>
+      <h>340</h>
     </coordinates>
     <panel_attributes>lt=&lt;.</panel_attributes>
-    <additional_attributes>240;128;240;64;12;64;12;12</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>512</x>
-      <y>296</y>
-      <w>44</w>
-      <h>64</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>12;56;12;36;36;36;36;12</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>752</x>
-      <y>296</y>
-      <w>44</w>
-      <h>60</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>12;52;12;36;36;36;36;12</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>872</x>
-      <y>288</y>
-      <w>28</w>
-      <h>68</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>12;60;12;40;20;40;20;12</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>652</x>
-      <y>300</y>
-      <w>20</w>
-      <h>172</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>12;164;12;12</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>332</x>
-      <y>300</y>
-      <w>108</w>
-      <h>324</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>12;316;100;316;100;304;100;12</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>420</x>
-      <y>300</y>
-      <w>184</w>
-      <h>428</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>176;420;12;420;12;12</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>332</x>
-      <y>300</y>
-      <w>108</w>
-      <h>292</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>12;284;100;284;100;12</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>332</x>
-      <y>452</y>
-      <w>136</w>
-      <h>120</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-
-fg=</panel_attributes>
-    <additional_attributes>32;12;128;12;128;112;12;112</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>332</x>
-      <y>496</y>
-      <w>272</w>
-      <h>56</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;.</panel_attributes>
-    <additional_attributes>264;12;200;12;200;48;12;48</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>536</x>
-      <y>388</y>
-      <w>68</w>
-      <h>128</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;.</panel_attributes>
-    <additional_attributes>60;120;12;120;12;12</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>472</x>
-      <y>388</y>
-      <w>132</w>
-      <h>376</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>12;12;12;368;124;368</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>332</x>
-      <y>588</y>
-      <w>340</w>
-      <h>100</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>12;12;68;12;68;68;304;68;332;68;332;92</additional_attributes>
-  </element>
-  <element>
-    <type>com.umlet.element.Relation</type>
-    <coordinates>
-      <x>332</x>
-      <y>384</y>
-      <w>560</w>
-      <h>216</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>12;208;552;204;552;12</additional_attributes>
+    <additional_attributes>600;320;600;160;30;160;30;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
       <x>720</x>
-      <y>384</y>
-      <w>172</w>
-      <h>304</h>
+      <y>740</y>
+      <w>110</w>
+      <h>160</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>12;296;164;296;164;12</additional_attributes>
+    <additional_attributes>30;140;30;90;90;90;90;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1320</x>
+      <y>740</y>
+      <w>100</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>30;130;30;90;90;90;90;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1620</x>
+      <y>720</y>
+      <w>60</w>
+      <h>160</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>30;150;30;100;50;100;50;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1070</x>
+      <y>750</y>
+      <w>50</w>
+      <h>430</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>30;410;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>270</x>
+      <y>750</y>
+      <w>270</w>
+      <h>810</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>30;790;250;790;250;760;250;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>490</x>
+      <y>750</y>
+      <w>460</w>
+      <h>1070</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>440;1050;30;1050;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>270</x>
+      <y>750</y>
+      <w>270</w>
+      <h>730</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>30;710;250;710;250;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>270</x>
+      <y>1130</y>
+      <w>340</w>
+      <h>300</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+fg=</panel_attributes>
+    <additional_attributes>80;30;320;30;320;280;30;280</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>270</x>
+      <y>1240</y>
+      <w>680</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>660;30;500;30;500;120;30;120</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>780</x>
+      <y>1080</y>
+      <w>170</w>
+      <h>210</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.</panel_attributes>
+    <additional_attributes>150;190;30;190;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>620</x>
+      <y>1080</y>
+      <w>330</w>
+      <h>830</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>30;30;30;810;310;810</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>270</x>
+      <y>1470</y>
+      <w>840</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>30;30;170;30;170;170;760;170;830;170;830;230</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>270</x>
+      <y>960</y>
+      <w>1400</w>
+      <h>610</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>30;590;1380;590;1380;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1240</x>
+      <y>960</y>
+      <w>420</w>
+      <h>750</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>30;740;410;740;410;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>732</x>
-      <y>464</y>
-      <w>136</w>
-      <h>108</h>
+      <x>1270</x>
+      <y>1160</y>
+      <w>340</w>
+      <h>270</h>
     </coordinates>
     <panel_attributes>Class
 --
@@ -586,10 +628,10 @@ public void setHours(ArrayList&lt;Integer&gt; hours)</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>688</x>
-      <y>348</y>
-      <w>152</w>
-      <h>92</h>
+      <x>1160</x>
+      <y>870</y>
+      <w>380</w>
+      <h>230</h>
     </coordinates>
     <panel_attributes>Scheduler
 --
@@ -612,12 +654,12 @@ ArrayList&lt;Class[]&gt; filterClassGaps(int position)</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>760</x>
-      <y>428</y>
-      <w>48</w>
-      <h>44</h>
+      <x>1340</x>
+      <y>1070</y>
+      <w>110</w>
+      <h>100</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>40;36;40;24;12;24;12;12</additional_attributes>
+    <additional_attributes>100;90;100;60;30;60;30;30</additional_attributes>
   </element>
 </diagram>
