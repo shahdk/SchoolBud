@@ -3,6 +3,8 @@ import static org.junit.Assert.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -80,11 +82,14 @@ public class ParserTest {
 	@Test
 	public void testReadFile() throws Exception{
 		FileParser parse = new FileParser();
-		ArrayList<String> data = this.list("A", "1", "B", "2");
-		parse.createFile("test5.txt");
-		File fileWrittenTo = new File("test5.txt");
-		parse.writeFile("test5.txt", ";", data, 4);
-		fileWrittenTo.delete();
+		ArrayList<String> data = this.list("Rubric", "4", "Course", "5", "Quarter", "6");
+		File fileWrittenTo = new File("config.txt");
+		Assert.assertEquals(parse.readFile("config.txt", ";", 2), data);
+	}
+	
+	@Test
+	public void testStoredValues(){
+		
 	}
 
 	public ArrayList<String> list(String... words) {

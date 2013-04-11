@@ -14,9 +14,6 @@ import java.util.Scanner;
  */
 public class FileParser {
 	private File currentFile;
-	private PrintWriter writer;
-	private Scanner reader;
-
 	/**
 	 * TODO Put here a description of what this constructor does.
 	 * 
@@ -77,5 +74,18 @@ public class FileParser {
 		}
 		writer.println(line);
 		writer.close();
+	}
+
+	/**
+	 * TODO Put here a description of what this method does.
+	 *
+	 * @param fileName
+	 * @param delimiter
+	 * @param length
+	 * @return 
+	 */
+	public ArrayList<String> readFile(String fileName, String delimiter, int length) {
+		// TODO Auto-generated method stub.
+		return null;
 	}
 }
