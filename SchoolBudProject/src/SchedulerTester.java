@@ -64,25 +64,32 @@ public class SchedulerTester {
 
 		Scheduler scheduler = new Scheduler(5, null);
 
-		assertEquals(this.resetSchedules(new ArrayList<ArrayList<SchedulerCourse>>()),
+		assertEquals(
+				this.resetSchedules(new ArrayList<ArrayList<SchedulerCourse>>()),
 				scheduler.permutateSchedules());
 	}
 
-	// @Test
-	// public void testScheduleOneClassZeroHours() {
-	//
-	// ArrayList<Integer> hours1 = new ArrayList<Integer>();
-	// Class class1 = new Class("Math", "Mr. Man", hours1);
-	// ArrayList<Class> classes = new ArrayList<Class>();
-	// classes.add(class1);
-	//
-	// Scheduler scheduler = new Scheduler(10, classes);
-	//
-	//
-	// assertEquals(new ArrayList<Class[]>(), scheduler.permutateSchedules());
-	// }
-	//
-	//
+	@Test
+	public void testScheduleOneClassZeroHours() {
+
+		ArrayList<Integer> hours1 = new ArrayList<Integer>();
+
+		ArrayList<ArrayList<Integer>> classSched = new ArrayList<ArrayList<Integer>>();
+		classSched.add(hours1);
+
+		SchedulerCourse class1 = new SchedulerCourse("Math", "Mr. Man",
+				classSched);
+
+		ArrayList<SchedulerCourse> classes = new ArrayList<SchedulerCourse>();
+		classes.add(class1);
+
+		Scheduler scheduler = new Scheduler(8, classes);
+
+		assertEquals(
+				this.resetSchedules(new ArrayList<ArrayList<SchedulerCourse>>()),
+				scheduler.permutateSchedules());
+	}
+
 	// @Test
 	// public void testScheduleOneClassOneHour() {
 	//
@@ -96,6 +103,7 @@ public class SchedulerTester {
 	//
 	// assertEquals(class1, scheduler.permutateSchedules().get(0)[3]);
 	// }
+
 	//
 	//
 	// @Test
@@ -286,7 +294,7 @@ public class SchedulerTester {
 		for (int i = 0; i < 6; i++) {
 			schedules.add(new ArrayList<SchedulerCourse>());
 		}
-		
+
 		return schedules;
 	}
 }
