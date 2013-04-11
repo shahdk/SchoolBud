@@ -135,7 +135,7 @@ public class FileParser {
 	/**
 	 * TODO Put here a description of what this method does.
 	 *
-	 * @return
+	 * @return this.rubricSize
 	 */
 	public int getRubricSize() {
 		return this.rubricSize;
@@ -144,16 +144,16 @@ public class FileParser {
 	/**
 	 * TODO Put here a description of what this method does.
 	 *
-	 * @return
+	 * @return this.quarterSize
 	 */
-	public int getQuarterSize() {
+	public int getQuarterSize() {  
 		return this.quarterSize;
 	}
 
 	/**
 	 * TODO Put here a description of what this method does.
 	 *
-	 * @return
+	 * @return this.courseSize
 	 */
 	public int getCourseSize() {
 		return this.courseSize;
