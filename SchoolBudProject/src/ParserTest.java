@@ -93,6 +93,11 @@ public class ParserTest {
 		FileParser parse = new FileParser();
 		parse.readFile("unnamed.txt", ";", 2);}
 	
+	@Test(expected = Exception.class)
+	public void testReadFileExceptionImproperFile() throws Exception{
+		FileParser parse = new FileParser();
+		parse.readFile("improperFile.txt", ";", 2);}
+	
 	@Test
 	public void testGetRubricSize() throws Exception{
 		FileParser parse = new FileParser();
