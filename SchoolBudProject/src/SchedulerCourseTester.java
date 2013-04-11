@@ -14,8 +14,18 @@ public class SchedulerCourseTester {
 	}
 	
 	@Test
-	public void testClassInitialization() {
-		assertNotNull(new SchedulerCourse("name", "teacher", new ArrayList<ArrayList<Integer>>()));
+	public void testClassInitializationEcceptionForInvalidArrayListLength() {
+		
+		boolean caught = false;
+		
+		try {
+			new SchedulerCourse("name", "teacher", new ArrayList<ArrayList<Integer>>());
+		}
+		catch (InstantiationError e) {
+			caught = true;
+		}
+		
+		assertTrue(caught);
 	}
 	
 	@Test
@@ -26,9 +36,9 @@ public class SchedulerCourseTester {
 		hours1.add(3);
 		hours1.add(6);
 		
-		ArrayList<ArrayList<Integer>> sched = new ArrayList<ArrayList<Integer>>();
-		sched.add(hours1);
-		
+		ArrayList<ArrayList<Integer>> sched = this.createInitialized7DayList();
+		sched.set(2, hours1);
+
 		SchedulerCourse class1 = new SchedulerCourse("Math", "Mr. Man", sched);
 		
 		assertEquals(class1.getCourseName(), "Math");
@@ -42,12 +52,12 @@ public class SchedulerCourseTester {
 		ArrayList<Integer> hours1 = new ArrayList<Integer>();
 		
 		hours1.add(1);
-		hours1.add(7);
-		hours1.add(5);
+		hours1.add(3);
+		hours1.add(6);
 		
-		ArrayList<ArrayList<Integer>> sched = new ArrayList<ArrayList<Integer>>();
-		sched.add(hours1);
-		
+		ArrayList<ArrayList<Integer>> sched = this.createInitialized7DayList();
+		sched.set(2, hours1);
+
 		SchedulerCourse class1 = new SchedulerCourse("Math", "Mr. Man", sched);
 		
 		assertEquals(class1.getTeacher(), "Mr. Man");
@@ -58,32 +68,42 @@ public class SchedulerCourseTester {
 	
 	@Test
 	public void testHours() {
-		ArrayList<Integer> hours1 = new ArrayList<Integer>();
+ArrayList<Integer> hours1 = new ArrayList<Integer>();
 		
 		hours1.add(1);
-		hours1.add(7);
-		hours1.add(5);
+		hours1.add(3);
+		hours1.add(6);
 		
-		ArrayList<ArrayList<Integer>> sched = new ArrayList<ArrayList<Integer>>();
-		sched.add(hours1);
-		
+		ArrayList<ArrayList<Integer>> sched = this.createInitialized7DayList();
+		sched.set(2, hours1);
+
 		SchedulerCourse class1 = new SchedulerCourse("Math", "Mr. Man", sched);
 		
 		assertEquals(class1.getScheduleHours(), sched);
-		assertEquals(class1.getScheduleHours().get(0), hours1);
+		assertEquals(class1.getScheduleHours().get(2), hours1);
 		
 		ArrayList<Integer> hours2 = new ArrayList<Integer>();
 		hours2.add(9);
 		hours2.add(12);
 	
-		sched.add(hours2);
+		sched.set(3,hours2);
 		
 		SchedulerCourse class2 = new SchedulerCourse("Physics", "Mr. Mown", sched);
 		
 		assertEquals(class2.getScheduleHours(), sched);
-		assertEquals(class2.getScheduleHours().get(0), hours1);
-		assertEquals(class2.getScheduleHours().get(1), hours2);
+		assertEquals(class2.getScheduleHours().get(2), hours1);
+		assertEquals(class2.getScheduleHours().get(3), hours2);
 
+	}
+	
+	public ArrayList<ArrayList<Integer>> createInitialized7DayList() {
+		ArrayList<ArrayList<Integer>> list = new ArrayList<ArrayList<Integer>>();
+		
+		for (int i = 0;  i < 7; i++) {
+			list.add(new ArrayList<Integer>());
+		}
+		
+		return list;
 	}
 
 }
