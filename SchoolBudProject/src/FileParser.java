@@ -146,7 +146,7 @@ public class FileParser {
 	 *
 	 * @return this.quarterSize
 	 */
-	public int getQuarterSize() { 
+	public int getQuarterSize() {  
 		return this.quarterSize;
 	}
 
