@@ -42,7 +42,18 @@ public class Scheduler {
 		//go through each class
 		for (SchedulerCourse course : this.classes) {
 			
-			//pick a day to temp "SET" for rest of schedule
+			//go through each class section
+			for (ArrayList<ClassDay> section : course.getScheduleHours()) {
+				
+				//go through each day
+				for (ClassDay day : section) {
+					
+					//compare each day's hours with the hours of
+					//every other class' section's hours and check for overlap
+					//when there is an overlap - skip that section
+					
+				}
+			}
 			
 		}
 		
