@@ -39,44 +39,13 @@ public class Scheduler {
 			return this.schedules;
 		}
 		
-//		ArrayList<Integer> taken = new ArrayList<Integer>();
-//		
-//		//iterate through each class
-//		for (SchedulerCourse course : this.classes) {
-//			
-//			//iterate through each class day for the week
-//			for (ArrayList<Integer> dayWithHours : course.getScheduleHours()) {
-//				
-//				//iterate through each hour as 'SET' for the rest of the week
-//				//to attempt to make a schedule based around that hour
-//				for (Integer hourOfDay : dayWithHours) {
-//					
-//					//compare through ALL other classes to compare
-//					
-////-----------------------------INNER------------------------------------------------------------------------------
-//					
-//					//iterate through each class
-//					for (SchedulerCourse courseInner : this.classes) {
-//						
-//						//iterate through each class day for the week
-//						for (ArrayList<Integer> dayWithHoursInner : courseInner.getScheduleHours()) {
-//							
-//							//iterate through each hour as 'SET' for the rest of the week
-//							//to attempt to make a schedule based around that hour
-//							for (Integer hourOfDayInner : dayWithHoursInner) {
-//								
-//								
-//								
-//							}
-//				}
-//			}
-//		}
-//		
-//		//iterate through days of the week
-//		for (int i = 0; i < 6; i++) {
-//			
-//		}
-//		
+		//go through each class
+		for (SchedulerCourse course : this.classes) {
+			
+			//pick 
+			
+		}
+		
 		return this.schedules;
 	}
 

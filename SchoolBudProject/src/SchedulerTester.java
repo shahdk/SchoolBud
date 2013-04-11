@@ -14,12 +14,13 @@ public class SchedulerTester {
 	public void testInitialize() {
 
 		ArrayList<Integer> hours1 = new ArrayList<Integer>();
-		
+
 		hours1.add(1);
 		hours1.add(3);
 		hours1.add(6);
-		
-		ArrayList<ArrayList<Integer>> sched = SchedulerCourseTester.createInitialized7DayList();
+
+		ArrayList<ArrayList<Integer>> sched = SchedulerCourseTester
+				.createInitialized7DayList();
 		sched.set(2, hours1);
 
 		SchedulerCourse class1 = new SchedulerCourse("Math", "Mr. Man", sched);
@@ -30,15 +31,12 @@ public class SchedulerTester {
 		assertNotNull(new Scheduler(5, classes));
 	}
 
-
-
 	@Test
 	public void testScheduleEmptyClasses() {
 
 		Scheduler scheduler = new Scheduler(5, new ArrayList<SchedulerCourse>());
 
-		assertEquals(
-				new ArrayList<ArrayList<ArrayList<SchedulerCourse>>>(),
+		assertEquals(new ArrayList<ArrayList<ArrayList<SchedulerCourse>>>(),
 				scheduler.permutateSchedules());
 	}
 
@@ -46,8 +44,9 @@ public class SchedulerTester {
 	public void testScheduleOneClassZeroHours() {
 
 		ArrayList<Integer> hours1 = new ArrayList<Integer>();
-		
-		ArrayList<ArrayList<Integer>> sched = SchedulerCourseTester.createInitialized7DayList();
+
+		ArrayList<ArrayList<Integer>> sched = SchedulerCourseTester
+				.createInitialized7DayList();
 		sched.set(2, hours1);
 
 		SchedulerCourse class1 = new SchedulerCourse("Math", "Mr. Man", sched);
@@ -62,26 +61,24 @@ public class SchedulerTester {
 
 	@Test
 	public void testScheduleOneClassOneHour() {
-
 		ArrayList<Integer> hours1 = new ArrayList<Integer>();
-		hours1.add(4);
 
-		ArrayList<ArrayList<Integer>> classSched = new ArrayList<ArrayList<Integer>>();
-		classSched.add(hours1);
+		hours1.add(6);
 
-		SchedulerCourse class1 = new SchedulerCourse("Math", "Mr. Man",
-				classSched);
+		ArrayList<ArrayList<Integer>> sched = SchedulerCourseTester
+				.createInitialized7DayList();
+		sched.set(2, hours1);
+
+		SchedulerCourse class1 = new SchedulerCourse("Math", "Mr. Man", sched);
 
 		ArrayList<SchedulerCourse> classes = new ArrayList<SchedulerCourse>();
 		classes.add(class1);
 
 		Scheduler scheduler = new Scheduler(8, classes);
 
-		ArrayList<ArrayList<SchedulerCourse>> schedules = this
-				.resetSchedules(new ArrayList<ArrayList<SchedulerCourse>>());
-		schedules.get(0).add(class1);
-
-		assertEquals(schedules, scheduler.permutateSchedules());
+		ArrayList<ArrayList<SchedulerCourse>> schedule = this.resetSchedules();
+		schedule.get(2).set(6, class1);
+		assertEquals(schedule, scheduler.permutateSchedules().get(0));
 	}
 
 	//
@@ -265,11 +262,9 @@ public class SchedulerTester {
 	// return count;
 	// }
 
-	private ArrayList<ArrayList<SchedulerCourse>> resetSchedules(
-			ArrayList<ArrayList<SchedulerCourse>> schedules) {
+	private ArrayList<ArrayList<SchedulerCourse>> resetSchedules(){
 
-		schedules.clear();
-
+		ArrayList<ArrayList<SchedulerCourse>> schedules = new ArrayList<ArrayList<SchedulerCourse>>();
 		// initialize 7 days of the week with an arrayList
 		for (int i = 0; i < 6; i++) {
 			schedules.add(new ArrayList<SchedulerCourse>());
