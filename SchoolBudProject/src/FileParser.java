@@ -83,9 +83,31 @@ public class FileParser {
 	 * @param delimiter
 	 * @param length
 	 * @return 
+	 * @throws Exception 
 	 */
-	public ArrayList<String> readFile(String fileName, String delimiter, int length) {
-		// TODO Auto-generated method stub.
-		return null;
+	public ArrayList<String> readFile(String fileName, String delimiter, int length) throws Exception {
+		Scanner inScanner = new Scanner(new File(fileName));
+		ArrayList<String> dataFromFile = new ArrayList<String>();
+		int count = 0;
+		
+		while(inScanner.hasNext()){
+			String data = inScanner.next();
+			String[] splitData = data.split(delimiter);
+			
+			for (int k = 0; k < splitData.length; k++){
+				dataFromFile.add(splitData[k]);
+				count++;
+			}
+			
+			if(count == length){
+				count = 0;
+			}
+		}
+		
+		if(count != 0){
+			throw new Exception();
+		}
+		
+		return dataFromFile;
 	}
 }

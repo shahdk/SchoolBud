@@ -1,6 +1,7 @@
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -80,17 +81,16 @@ public class ParserTest {
 		parse.writeFile("test4.txt", " ", data, 5);}
 	
 	@Test
-	public void testReadFile() throws Exception{
+	public void testReadFileConfig() throws Exception{
 		FileParser parse = new FileParser();
 		ArrayList<String> data = this.list("Rubric", "4", "Course", "5", "Quarter", "6");
-		File fileWrittenTo = new File("config.txt");
-		Assert.assertEquals(parse.readFile("config.txt", ";", 2), data);
+		Assert.assertEquals(data, parse.readFile("config.txt", ";", 2));
 	}
 	
-	@Test
-	public void testStoredValues(){
-		
-	}
+	@Test(expected = FileNotFoundException.class)
+	public void testReadFileExceptionFileNotFound() throws Exception{
+		FileParser parse = new FileParser();
+		parse.readFile("unnamed.txt", ";", 2);}
 
 	public ArrayList<String> list(String... words) {
 		ArrayList<String> temp = new ArrayList<String>();
