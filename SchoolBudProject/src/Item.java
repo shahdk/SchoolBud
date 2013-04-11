@@ -1,50 +1,47 @@
-
 public class Item {
-	
-	private double weight = 0;
+
 	private String earnedPoints = "";
 	private String totalPoints = "";
 	private String name = "";
 
-	public Item(String name, double weight) {
-		if (weight < 0 || weight > 100 || name.length()==0) { 
+	public Item(String name) {
+		if (name.length() == 0) {
 			throw new IllegalArgumentException();
 		}
 		this.name = name;
-		this.weight = weight;
 	}
 
-	public Item(String name, String totalPoints, double weight) {
-		if (weight < 0 || weight > 100 || name.length()==0 || (!totalPoints.matches("([0-9]+(\\.[0-9]+)?)+"))) { 
+	public Item(String name, String totalPoints) {
+		if (name.length() == 0
+				|| (!totalPoints.matches("([0-9]+(\\.[0-9]+)?)+"))) {
 			throw new IllegalArgumentException();
 		}
-		try{
+		try {
 			Double temp = Double.parseDouble(totalPoints);
-			if(temp.equals(new Double(0))){
+			if (temp.equals(new Double(0))) {
 				throw new IllegalArgumentException();
 			}
 			this.name = name;
-			this.weight = weight;
 			this.totalPoints = totalPoints;
-		}catch (Exception e){
+		} catch (Exception e) {
 			throw new IllegalArgumentException();
 		}
 	}
 
-	public Item(String name, String earnedPoints, String totalPoints, double weight) {
-		if (weight<0 || weight > 100 || name.length()==0 || (!totalPoints.matches("([0-9]+(\\.[0-9]+)?)+"))) { 
+	public Item(String name, String earnedPoints, String totalPoints) {
+		if (name.length() == 0
+				|| (!totalPoints.matches("([0-9]+(\\.[0-9]+)?)+"))) {
 			throw new IllegalArgumentException();
 		}
-		try{
+		try {
 			Double temp = Double.parseDouble(totalPoints);
-			if(temp.equals(new Double(0))){
+			if (temp.equals(new Double(0))) {
 				throw new IllegalArgumentException();
 			}
 			this.name = name;
-			this.weight = weight;
 			this.earnedPoints = earnedPoints;
 			this.totalPoints = totalPoints;
-		}catch (Exception e){
+		} catch (Exception e) {
 			throw new IllegalArgumentException();
 		}
 	}
@@ -57,10 +54,6 @@ public class Item {
 		return this.totalPoints;
 	}
 
-	public double getWeight() {
-		return this.weight;
-	}
-
 	public String getName() {
 		return this.name;
 	}
@@ -70,28 +63,22 @@ public class Item {
 	}
 
 	public void setTotalPoints(String totalPoints) {
-		if(!totalPoints.matches("([0-9]+(\\.[0-9]+)?)+")){
+		if (!totalPoints.matches("([0-9]+(\\.[0-9]+)?)+")) {
 			throw new IllegalArgumentException();
-		}try{
+		}
+		try {
 			Double temp = Double.parseDouble(totalPoints);
-			if(temp.equals(new Double(0))){
+			if (temp.equals(new Double(0))) {
 				throw new IllegalArgumentException();
 			}
 			this.totalPoints = totalPoints;
-		}catch (Exception e){
+		} catch (Exception e) {
 			throw new IllegalArgumentException();
 		}
-	}
-
-	public void setWeight(double weight) {
-		if(weight < 0 || weight > 100){
-			throw new IllegalArgumentException();
-		}
-		this.weight = weight;
 	}
 
 	public void setName(String name) {
-		if(name.length() == 0){
+		if (name.length() == 0) {
 			throw new IllegalArgumentException();
 		}
 		this.name = name;

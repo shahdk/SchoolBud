@@ -75,7 +75,6 @@ public class CategoryTest {
 	public void testGetItemsOne() {
 		Category cat = new Category("HW", 10, 10);
 		assertEquals("HW1", cat.getItemList().get(0).getName());
-		assertEquals(1.0, cat.getItemList().get(0).getWeight(), DELTA);
 	}
 
 	@Test
@@ -112,7 +111,7 @@ public class CategoryTest {
 	@Test
 	public void testSetItemsOne() {
 		for (int i = 1; i <= 10; i++) {
-			this.hwItems.add(new Item("HW" + i, 1));
+			this.hwItems.add(new Item("HW" + i));
 		}
 		Category cat = new Category("HW", 10);
 		cat.setItemList(this.hwItems);
@@ -122,7 +121,7 @@ public class CategoryTest {
 	@Test
 	public void testSetItemsTwo() {
 		for (int i = 1; i <= 10; i++) {
-			this.hwItems.add(new Item("HW" + i, 1));
+			this.hwItems.add(new Item("HW" + i));
 		}
 		Category cat = new Category("HW", 10, 10);
 		cat.setItemList(new ArrayList<Item>());
@@ -155,7 +154,6 @@ public class CategoryTest {
 		Category cat = new Category("HW", 10, 10);
 		cat.setWeight(20);
 		assertEquals(20, cat.getWeight(), DELTA);
-		assertEquals(2, cat.getItemList().get(0).getWeight(), DELTA);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -192,29 +190,27 @@ public class CategoryTest {
 	@Test
 	public void testAddItemOne() {
 		Category cat = new Category("HW", 10);
-		cat.addItem(new Item("HW1", 1));
+		cat.addItem(new Item("HW1"));
 		assertEquals("HW1", cat.getItemList().get(0).getName());
-		assertEquals(10, cat.getItemList().get(0).getWeight(), DELTA);
 	}
 
 	@Test
 	public void testAddItemTwo() {
 		Category cat = new Category("HW", 10, 10);
-		cat.addItem(new Item("HW11", 1));
+		cat.addItem(new Item("HW11"));
 		assertEquals("HW11", cat.getItemList().get(10).getName());
-		assertEquals(0.91, cat.getItemList().get(10).getWeight(), DELTA);
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testAddItemSameName() {
 		Category cat = new Category("HW", 10, 10);
-		cat.addItem(new Item("HW10", 1));	}
+		cat.addItem(new Item("HW10"));	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testAddItemSameNameTwo() {
 		Category cat = new Category("HW", 10);
-		cat.addItem(new Item("HW1", 1));
-		cat.addItem(new Item("HW1", 10)); }
+		cat.addItem(new Item("HW1"));
+		cat.addItem(new Item("HW1")); }
 
 	// test code for calculating number of items in a category
 	@Test
@@ -233,7 +229,7 @@ public class CategoryTest {
 	public void testNumOfItemsThree() {
 		this.hwItems.clear();
 		for (int i = 1; i <= 10; i++) {
-			this.hwItems.add(new Item("HW" + i, 1));
+			this.hwItems.add(new Item("HW" + i));
 		}
 		Category cat = new Category("HW", 10);
 		cat.setItemList(this.hwItems);
@@ -250,14 +246,14 @@ public class CategoryTest {
 	@Test
 	public void testNumItemsWithAddItemOne() {
 		Category cat = new Category("HW", 10);
-		cat.addItem(new Item("HW1", 1));
+		cat.addItem(new Item("HW1"));
 		assertEquals(1, cat.getNumOfItems());
 	}
 
 	@Test
 	public void testNumItemsWithAddItemTwo() {
 		Category cat = new Category("HW", 10, 10);
-		cat.addItem(new Item("HW11", 1));
+		cat.addItem(new Item("HW11"));
 		assertEquals(11, cat.getNumOfItems());
 	}	
 
