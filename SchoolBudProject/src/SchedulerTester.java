@@ -30,6 +30,32 @@ public class SchedulerTester {
 		assertNotNull(new Scheduler(5, classes));
 	}
 	
+	@Test
+	public void testSchedulerDaysAreInitialized() {
+		
+		ArrayList<Integer> hours1 = new ArrayList<Integer>();
+		
+		hours1.add(1);
+		hours1.add(3);
+		hours1.add(6);
+		
+		ArrayList<ArrayList<Integer>> classSched = new ArrayList<ArrayList<Integer>>();
+		classSched.add(hours1);
+		
+		SchedulerCourse class1 = new SchedulerCourse("Math", "Mr. Man", classSched);
+		
+		ArrayList<SchedulerCourse> classes = new ArrayList<SchedulerCourse>();
+		classes.add(class1);
+		
+		Scheduler scheduler = new Scheduler(3, classes);
+		
+		// check initialization for 7 days of the week with an arrayList
+		ArrayList<ArrayList<SchedulerCourse>> schedules = scheduler.permutateSchedules();
+		for (int i = 0; i < 6; i++) {
+			assertNotNull(schedules.get(i));
+		}
+	}
+	
 	
 //	@Test
 //	public void testScheduleNullClasses() {

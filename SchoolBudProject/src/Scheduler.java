@@ -15,6 +15,11 @@ public class Scheduler {
 		this.classes = classes;
 		this.numClassHours = classHours;
 		this.schedules = new ArrayList<ArrayList<SchedulerCourse>>();
+	}
+	
+	private void resetSchedules() {
+		
+		this.schedules.clear();
 		
 		//initialize 7 days of the week with an arrayList
 		for (int i = 0; i < 6; i++) {
@@ -22,10 +27,8 @@ public class Scheduler {
 		}
 	}
 	
-	
 	public ArrayList<ArrayList<SchedulerCourse>> permutateSchedules(){
-		
-		this.schedules.clear();
+		this.resetSchedules();
 		
 //		if (this.classes == null){
 //			return this.schedules;
