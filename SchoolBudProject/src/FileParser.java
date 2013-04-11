@@ -111,4 +111,34 @@ public class FileParser {
 		
 		return dataFromFile;
 	}
+
+	/**
+	 * TODO Put here a description of what this method does.
+	 *
+	 * @return
+	 */
+	public Object getRubricSize() {
+		// TODO Auto-generated method stub.
+		return null;
+	}
+
+	/**
+	 * TODO Put here a description of what this method does.
+	 *
+	 * @return
+	 */
+	public Object getQuarterSize() {
+		// TODO Auto-generated method stub.
+		return null;
+	}
+
+	/**
+	 * TODO Put here a description of what this method does.
+	 *
+	 * @return
+	 */
+	public Object getCourseSize() {
+		// TODO Auto-generated method stub.
+		return null;
+	}
 }

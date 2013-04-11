@@ -92,6 +92,24 @@ public class ParserTest {
 	public void testReadFileExceptionFileNotFound() throws Exception{
 		FileParser parse = new FileParser();
 		parse.readFile("unnamed.txt", ";", 2);}
+	
+	@Test
+	public void testGetRubricSize() throws IOException{
+		FileParser parse = new FileParser();
+		assertEquals(parse.getRubricSize(), 4);
+	}
+	
+	@Test
+	public void testGetQuarterSize() throws IOException{
+		FileParser parse = new FileParser();
+		assertEquals(parse.getQuarterSize(), 6);
+	}
+	
+	@Test
+	public void testGetCourseSize() throws IOException{
+		FileParser parse = new FileParser();
+		assertEquals(parse.getCourseSize(), 5);
+	}
 
 	public ArrayList<String> list(String... words) {
 		ArrayList<String> temp = new ArrayList<String>();
