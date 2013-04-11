@@ -135,6 +135,14 @@ public class CourseTest {
 		course.addCategory(new Category("Exam", 40.0));
 		course.addCategory(new Category("Final", 30.0));
 		course.addCategory(new Category("Final2", 30.0));	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testAddCategorFour() {
+		Course course = new Course("CSSE376", 4.0);
+		course.addCategory(new Category("HW", 10.0));
+		course.addCategory(new Category("HW", 20.0));
+		course.addCategory(new Category("Exam", 40.0));
+		course.addCategory(new Category("Final", 30.0)); }
 
 	//test cases for getting and setting target grade
 	@Test
