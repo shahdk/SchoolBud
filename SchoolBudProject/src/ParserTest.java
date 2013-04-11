@@ -74,8 +74,18 @@ public class ParserTest {
 	public void testWriteFileException() throws Exception {
 		FileParser parse = new FileParser();
 		ArrayList<String> data = this.list("A", "1", "B", "2");
-		parse.createFile("test3.txt");
-		parse.writeFile("test3.txt", " ", data, 5);}
+		parse.createFile("test4.txt");
+		parse.writeFile("test4.txt", " ", data, 5);}
+	
+	@Test
+	public void testReadFile() throws Exception{
+		FileParser parse = new FileParser();
+		ArrayList<String> data = this.list("A", "1", "B", "2");
+		parse.createFile("test5.txt");
+		File fileWrittenTo = new File("test5.txt");
+		parse.writeFile("test5.txt", ";", data, 4);
+		fileWrittenTo.delete();
+	}
 
 	public ArrayList<String> list(String... words) {
 		ArrayList<String> temp = new ArrayList<String>();
