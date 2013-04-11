@@ -59,7 +59,6 @@ public class RubricTest {
 		assertEquals(4.0, rubric.getGPA("A"), DELTA);
 	}
 	
-	
 	@Test
 	public void testGetGPA(){
 		Rubric rubric = new Rubric();

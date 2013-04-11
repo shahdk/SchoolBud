@@ -204,6 +204,11 @@ public class CategoryTest {
 		assertEquals("HW11", cat.getItemList().get(10).getName());
 		assertEquals(0.91, cat.getItemList().get(10).getWeight(), DELTA);
 	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testAddItemSameName() {
+		Category cat = new Category("HW", 10, 10);
+		cat.addItem(new Item("HW10", 1));	}
 
 	// test code for calculating number of items in a category
 	@Test
