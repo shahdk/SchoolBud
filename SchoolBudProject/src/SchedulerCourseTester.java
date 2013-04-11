@@ -15,7 +15,7 @@ public class SchedulerCourseTester {
 	
 	@Test
 	public void testClassInitialization() {
-		//assertNotNull(new SchedulerCourse("name", "teacher", new Array<ArrayList<Integer>>()));
+		assertNotNull(new SchedulerCourse("name", "teacher", new ArrayList<ArrayList<Integer>>()));
 	}
 	
 	@Test
