@@ -42,50 +42,47 @@ public class SchedulerTester {
 				scheduler.permutateSchedules());
 	}
 
-//	@Test
-//	public void testScheduleOneClassZeroHours() {
-//
-//		ArrayList<Integer> hours1 = new ArrayList<Integer>();
-//
-//		ArrayList<ArrayList<Integer>> classSched = new ArrayList<ArrayList<Integer>>();
-//		classSched.add(hours1);
-//
-//		SchedulerCourse class1 = new SchedulerCourse("Math", "Mr. Man",
-//				classSched);
-//
-//		ArrayList<SchedulerCourse> classes = new ArrayList<SchedulerCourse>();
-//		classes.add(class1);
-//
-//		Scheduler scheduler = new Scheduler(8, classes);
-//
-//		assertEquals(
-//				this.resetSchedules(new ArrayList<ArrayList<SchedulerCourse>>()),
-//				scheduler.permutateSchedules());
-//	}
-//
-//	@Test
-//	public void testScheduleOneClassOneHour() {
-//
-//		ArrayList<Integer> hours1 = new ArrayList<Integer>();
-//		hours1.add(4);
-//
-//		ArrayList<ArrayList<Integer>> classSched = new ArrayList<ArrayList<Integer>>();
-//		classSched.add(hours1);
-//
-//		SchedulerCourse class1 = new SchedulerCourse("Math", "Mr. Man",
-//				classSched);
-//
-//		ArrayList<SchedulerCourse> classes = new ArrayList<SchedulerCourse>();
-//		classes.add(class1);
-//
-//		Scheduler scheduler = new Scheduler(8, classes);
-//
-//		ArrayList<ArrayList<SchedulerCourse>> schedules = this
-//				.resetSchedules(new ArrayList<ArrayList<SchedulerCourse>>());
-//		schedules.get(0).add(class1);
-//
-//		assertEquals(schedules, scheduler.permutateSchedules());
-//	}
+	@Test
+	public void testScheduleOneClassZeroHours() {
+
+		ArrayList<Integer> hours1 = new ArrayList<Integer>();
+		
+		ArrayList<ArrayList<Integer>> sched = SchedulerCourseTester.createInitialized7DayList();
+		sched.set(2, hours1);
+
+		SchedulerCourse class1 = new SchedulerCourse("Math", "Mr. Man", sched);
+
+		ArrayList<SchedulerCourse> classes = new ArrayList<SchedulerCourse>();
+		classes.add(class1);
+
+		Scheduler scheduler = new Scheduler(8, classes);
+
+		assertEquals(0, scheduler.permutateSchedules().size());
+	}
+
+	@Test
+	public void testScheduleOneClassOneHour() {
+
+		ArrayList<Integer> hours1 = new ArrayList<Integer>();
+		hours1.add(4);
+
+		ArrayList<ArrayList<Integer>> classSched = new ArrayList<ArrayList<Integer>>();
+		classSched.add(hours1);
+
+		SchedulerCourse class1 = new SchedulerCourse("Math", "Mr. Man",
+				classSched);
+
+		ArrayList<SchedulerCourse> classes = new ArrayList<SchedulerCourse>();
+		classes.add(class1);
+
+		Scheduler scheduler = new Scheduler(8, classes);
+
+		ArrayList<ArrayList<SchedulerCourse>> schedules = this
+				.resetSchedules(new ArrayList<ArrayList<SchedulerCourse>>());
+		schedules.get(0).add(class1);
+
+		assertEquals(schedules, scheduler.permutateSchedules());
+	}
 
 	//
 	//
