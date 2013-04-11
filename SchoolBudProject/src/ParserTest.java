@@ -70,6 +70,7 @@ public class ParserTest {
 		parse.createFile("test3.txt");
 		File fileWrittenTo = new File("test3.txt");
 		parse.writeFile("test3.txt", ";", data, 4);
+		assertEquals(data, parse.readFile("test3.txt", ";", 4));
 		fileWrittenTo.delete();
 	}
 	

@@ -105,6 +105,7 @@ public class FileParser {
 		}
 		
 		if(count != 0){
+			System.out.println(count);
 			throw new Exception();
 		}
 		
