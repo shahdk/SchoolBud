@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="12.0">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>660</x>
+      <y>20</y>
+      <w>520</w>
+      <h>220</h>
+    </coordinates>
+    <panel_attributes>Scheduler
+--
+public Scheduler(int classHours, ArrayList&lt;Class&gt; classes)
+private ArrayList&lt;Class&gt; classes
+private ArrayList&lt;Class[]&gt; schedules
+private int classHours
+private ArrayList&lt;Boolean&gt; filters
+--
+public Scheduler(int classHours, ArrayList&lt;Class&gt; classes)
+ArrayList&lt;Class[]&gt; permutateSchedules()
+ArrayList&lt;Class[]&gt; filterClassPosition(int position)
+ArrayList&lt;Class[]&gt; filterClassGaps(int position)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>430</x>
+      <y>20</y>
+      <w>240</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;30;110;30;220;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>0</x>
+      <y>20</y>
+      <w>450</w>
+      <h>220</h>
+    </coordinates>
+    <panel_attributes>Class
+--
+public Class (String className, String teacherName, 
+      ArrayList&lt;ArrayList&lt;Integer&gt;&gt; daysOfHours)
+private String name
+private String teacher
+private ArrayList&lt;Integer&gt; hours
+--
+public String getName()
+public void setName(String name)
+public String getTeacher()
+public void setTeacher(String teacher)
+public ArrayList&lt;Integer&gt; getHours() {
+public void setHours(ArrayList&lt;Integer&gt; hours)</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
