@@ -14,20 +14,19 @@ public class SchedulerTester {
 	public void testInitialize() {
 
 		ArrayList<Integer> hours1 = new ArrayList<Integer>();
-
+		
 		hours1.add(1);
-		hours1.add(3);
-		hours1.add(6);
-
-		ArrayList<ArrayList<Integer>> sched = SchedulerCourseTester
-				.createInitialized7DayList();
-		sched.set(2, hours1);
+		
+		ClassDay day = new ClassDay(hours1);
+		
+		ArrayList<ClassDay> sched = SchedulerCourseTester.createInitialized7DayList();
+		sched.set(2, day);
 
 		SchedulerCourse class1 = new SchedulerCourse("Math", "Mr. Man", sched);
 
 		ArrayList<SchedulerCourse> classes = new ArrayList<SchedulerCourse>();
 		classes.add(class1);
-
+		
 		assertNotNull(new Scheduler(5, classes));
 	}
 
@@ -44,10 +43,11 @@ public class SchedulerTester {
 	public void testScheduleOneClassZeroHours() {
 
 		ArrayList<Integer> hours1 = new ArrayList<Integer>();
-
-		ArrayList<ArrayList<Integer>> sched = SchedulerCourseTester
-				.createInitialized7DayList();
-		sched.set(2, hours1);
+		
+		ClassDay day = new ClassDay(hours1);
+		
+		ArrayList<ClassDay> sched = SchedulerCourseTester.createInitialized7DayList();
+		sched.set(2, day);
 
 		SchedulerCourse class1 = new SchedulerCourse("Math", "Mr. Man", sched);
 
@@ -62,13 +62,11 @@ public class SchedulerTester {
 	@Test
 	public void testScheduleOneClassOneHour() {
 		ArrayList<Integer> hours1 = new ArrayList<Integer>();
-
-		hours1.add(6);
-
-		ArrayList<ArrayList<Integer>> sched = SchedulerCourseTester
-				.createInitialized7DayList();
-		sched.set(2, hours1);
-
+		hours1.add(1);
+		ClassDay day = new ClassDay(hours1);
+		
+		ArrayList<ClassDay> sched = SchedulerCourseTester.createInitialized7DayList();
+		sched.set(2, day);
 		SchedulerCourse class1 = new SchedulerCourse("Math", "Mr. Man", sched);
 
 		ArrayList<SchedulerCourse> classes = new ArrayList<SchedulerCourse>();
@@ -77,7 +75,7 @@ public class SchedulerTester {
 		Scheduler scheduler = new Scheduler(8, classes);
 
 		ArrayList<ArrayList<SchedulerCourse>> schedule = this.resetSchedules();
-		schedule.get(2).set(6, class1);
+		schedule.get(2).add(class1);
 		assertEquals(schedule, scheduler.permutateSchedules().get(0));
 	}
 

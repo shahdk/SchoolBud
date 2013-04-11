@@ -4,58 +4,92 @@
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>660</x>
-      <y>20</y>
-      <w>520</w>
-      <h>220</h>
+      <x>0</x>
+      <y>290</y>
+      <w>320</w>
+      <h>100</h>
     </coordinates>
-    <panel_attributes>Scheduler
+    <panel_attributes>ClassDay
 --
-public Scheduler(int classHours, ArrayList&lt;Class&gt; classes)
-private ArrayList&lt;Class&gt; classes
-private ArrayList&lt;Class[]&gt; schedules
-private int classHours
-private ArrayList&lt;Boolean&gt; filters
+private ArrayList&lt;Integer&gt; hourSlots
 --
-public Scheduler(int classHours, ArrayList&lt;Class&gt; classes)
-ArrayList&lt;Class[]&gt; permutateSchedules()
-ArrayList&lt;Class[]&gt; filterClassPosition(int position)
-ArrayList&lt;Class[]&gt; filterClassGaps(int position)</panel_attributes>
+public ClassDay(ArrayList&lt;Integer&gt; hourSlots)
+public void setHourSlots(ArrayList&lt;Integer&gt; hourSlots)
+</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>430</x>
-      <y>20</y>
-      <w>240</w>
+      <x>120</x>
+      <y>210</y>
+      <w>50</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;80;30;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>670</x>
+      <y>0</y>
+      <w>180</w>
       <h>50</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
-    <additional_attributes>30;30;110;30;220;30</additional_attributes>
+    <additional_attributes>30;30;160;30</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
       <x>0</x>
       <y>20</y>
-      <w>450</w>
+      <w>700</w>
       <h>220</h>
     </coordinates>
-    <panel_attributes>Class
+    <panel_attributes>SchedulerCourse
 --
-public Class (String className, String teacherName, 
-      ArrayList&lt;ArrayList&lt;Integer&gt;&gt; daysOfHours)
-private String name
-private String teacher
-private ArrayList&lt;Integer&gt; hours
+public SchedulerCourse(String className, String teacherName, ArrayList&lt;ClassDay&gt; scheduleHours)
+			throws InstantiationError {
+private String teacher;
+	private ArrayList&lt;ClassDay&gt; scheduleHours;
 --
-public String getName()
-public void setName(String name)
 public String getTeacher()
 public void setTeacher(String teacher)
-public ArrayList&lt;Integer&gt; getHours() {
-public void setHours(ArrayList&lt;Integer&gt; hours)</panel_attributes>
+public ArrayList&lt;Integer&gt; getScheduleHours() {
+public void setScheduleHours(ArrayList&lt;Integer&gt; hours)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>290</x>
+      <y>200</y>
+      <w>560</w>
+      <h>120</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;100;540;30</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>830</x>
+      <y>20</y>
+      <w>520</w>
+      <h>220</h>
+    </coordinates>
+    <panel_attributes>Scheduler
+--
+private ArrayList&lt;SchedulerCourse&gt; classes
+private ArrayList&lt;ArrayList&lt;ArrayList&lt;SchedulerCourse&gt;&gt;&gt; schedules
+private ArrayList&lt;ArrayList&lt;SchedulerCourse&gt;&gt; aSchedule
+private int numClassHours
+private int numClasses
+--
+public Scheduler(int classHours, ArrayList&lt;SchedulerCourse&gt; classes)
+public ArrayList&lt;ArrayList&lt;ArrayList&lt;SchedulerCourse&gt;&gt;&gt; permutateSchedules()</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>

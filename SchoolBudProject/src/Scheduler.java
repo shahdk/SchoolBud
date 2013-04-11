@@ -42,7 +42,7 @@ public class Scheduler {
 		//go through each class
 		for (SchedulerCourse course : this.classes) {
 			
-			//pick 
+			//pick a day to temp "SET" for rest of schedule
 			
 		}
 		
