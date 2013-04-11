@@ -1,6 +1,4 @@
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,14 +12,36 @@ import java.util.Scanner;
  */
 public class FileParser {
 	private File currentFile;
+	private int rubricSize;
+	private int courseSize;
+	private int quarterSize;
+	private static int CONFIG_SIZE = 2;
+	
 	/**
 	 * TODO Put here a description of what this constructor does.
 	 * 
 	 * @param string
-	 * @throws IOException
+	 * @throws Exception 
 	 */
-	public FileParser() throws IOException {
-
+	public FileParser() throws Exception {
+		ArrayList<String> configData = this.readFile("config.txt", ";", CONFIG_SIZE);
+		int count = 0;
+		int size = configData.size();
+		while(count < size){
+			 if(configData.get(count).equals("Rubric")){
+				 this.rubricSize = Integer.parseInt(configData.get(count + 1));
+				 count = count + 2;
+			 }
+			else if(configData.get(count).equals("Quarter")){
+				this.quarterSize = Integer.parseInt(configData.get(count + 1));
+				count = count + 2;
+			}
+							
+			else{
+				this.courseSize = Integer.parseInt(configData.get(count + 1));
+				count = count + 2;
+			}
+		}
 	}
 
 	/**
@@ -72,6 +92,7 @@ public class FileParser {
 				line += data.get(i) + delimiter;
 			}
 		}
+		
 		writer.println(line);
 		writer.close();
 	}
@@ -105,7 +126,6 @@ public class FileParser {
 		}
 		
 		if(count != 0){
-			System.out.println(count);
 			throw new Exception();
 		}
 		
@@ -117,9 +137,8 @@ public class FileParser {
 	 *
 	 * @return
 	 */
-	public Object getRubricSize() {
-		// TODO Auto-generated method stub.
-		return null;
+	public int getRubricSize() {
+		return this.rubricSize;
 	}
 
 	/**
@@ -127,9 +146,8 @@ public class FileParser {
 	 *
 	 * @return
 	 */
-	public Object getQuarterSize() {
-		// TODO Auto-generated method stub.
-		return null;
+	public int getQuarterSize() {
+		return this.quarterSize;
 	}
 
 	/**
@@ -137,8 +155,7 @@ public class FileParser {
 	 *
 	 * @return
 	 */
-	public Object getCourseSize() {
-		// TODO Auto-generated method stub.
-		return null;
+	public int getCourseSize() {
+		return this.courseSize;
 	}
 }

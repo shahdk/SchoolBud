@@ -21,18 +21,18 @@ public class ParserTest {
 	}
 
 	@Test
-	public void testFileParserInitialize() throws IOException {
+	public void testFileParserInitialize() throws Exception {
 		FileParser parse = new FileParser();
 		assertNotNull(parse);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void testParserIntializesException() throws IOException {
+	public void testParserIntializesException() throws Exception {
 		FileParser parse = new FileParser();
 		parse.createFile("");}
 
 	@Test
-	public void testCreateFile() throws IOException {
+	public void testCreateFile() throws Exception {
 		FileParser parse = new FileParser();
 		File toBeDeleted = new File("test2.txt");
 		assertTrue(parse.createFile("test2.txt"));
@@ -40,7 +40,7 @@ public class ParserTest {
 	}
 
 	@Test
-	public void testCreateFileWithOnlyCharacters() throws IOException {
+	public void testCreateFileWithOnlyCharacters() throws Exception {
 		FileParser parse = new FileParser();
 		ArrayList<String> files = this.list("!.txt", "@.txt", "#.txt", "$.txt",
 				"%.txt", "^.txt", "&.txt", "(.txt", ").txt", "-.txt");
@@ -52,7 +52,7 @@ public class ParserTest {
 	}
 
 	@Test
-	public void testCreateFileWithOnlyCharacters2() throws IOException {
+	public void testCreateFileWithOnlyCharacters2() throws Exception {
 		FileParser parse = new FileParser();
 		ArrayList<String> files = this.list("_.txt", "+.txt", "=.txt", "`.txt",
 				"~.txt", "[.txt", "].txt", "{.txt", "}.txt");
@@ -94,19 +94,19 @@ public class ParserTest {
 		parse.readFile("unnamed.txt", ";", 2);}
 	
 	@Test
-	public void testGetRubricSize() throws IOException{
+	public void testGetRubricSize() throws Exception{
 		FileParser parse = new FileParser();
 		assertEquals(parse.getRubricSize(), 4);
 	}
 	
 	@Test
-	public void testGetQuarterSize() throws IOException{
+	public void testGetQuarterSize() throws Exception{
 		FileParser parse = new FileParser();
 		assertEquals(parse.getQuarterSize(), 6);
 	}
 	
 	@Test
-	public void testGetCourseSize() throws IOException{
+	public void testGetCourseSize() throws Exception{
 		FileParser parse = new FileParser();
 		assertEquals(parse.getCourseSize(), 5);
 	}
