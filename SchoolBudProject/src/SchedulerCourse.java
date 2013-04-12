@@ -7,10 +7,10 @@ import java.util.ArrayList;
 public class SchedulerCourse extends Course {
 
 	private String teacher;
-	private ArrayList<ClassSection> sections;
+	private ClassSection sections;
 
 	public SchedulerCourse(String className, String teacherName,
-			ArrayList<ClassSection> sections) {
+			ClassSection sections) {
 		super(className);
 
 		this.teacher = teacherName;
@@ -28,7 +28,7 @@ public class SchedulerCourse extends Course {
 	/**
 	 * @return the sections
 	 */
-	public ArrayList<ClassSection> getSections() {
+	public ClassSection getSections() {
 		return sections;
 	}
 
@@ -36,7 +36,7 @@ public class SchedulerCourse extends Course {
 	 * @param sections
 	 *            the sections to set
 	 */
-	public void setSections(ArrayList<ClassSection> sections) {
+	public void setSections(ClassSection sections) {
 		this.sections = sections;
 	}
 

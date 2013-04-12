@@ -10,25 +10,26 @@ import java.util.ArrayList;
  */
 public class ClassSection {
 
-	private ArrayList<WeekSchedule> classes;
+	private ArrayList<WeekSchedule> sections;
 	
-	public ClassSection (ArrayList<SchedulerCourse> courses) {
-		
+	public ClassSection (ArrayList<WeekSchedule> sections) {
+		this.sections = sections;
 	}
 
 	/**
-	 * @return the classes
+	 * @return the sections
 	 */
-	public ArrayList<WeekSchedule> getClasses() {
-		return classes;
+	public ArrayList<WeekSchedule> getSections() {
+		return sections;
 	}
 
 	/**
-	 * @param classes the classes to set
+	 * @param sections the sections to set
 	 */
-	public void setClasses(ArrayList<WeekSchedule> classes) {
-		this.classes = classes;
+	public void setSections(ArrayList<WeekSchedule> sections) {
+		this.sections = sections;
 	}
+
 
 
 }
