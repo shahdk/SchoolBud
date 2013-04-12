@@ -31,7 +31,7 @@ public class SchedulerCourseTester {
 
 	@Test
 	public void testSetGetScheduleHours() {
-
+ 
 		ArrayList<ClassDay> days = WeekSchedule.create7DayArrayList();
 		ArrayList<Integer> hours = new ArrayList<Integer>();
 		hours.add(1);

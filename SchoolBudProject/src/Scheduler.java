@@ -9,7 +9,7 @@ public class Scheduler {
 
 	private ArrayList<SchedulerCourse> classes;
 	private ArrayList<ArrayList<ArrayList<SchedulerCourse>>> schedules;
-	private ArrayList<ArrayList<SchedulerCourse>> aSchedule;
+	private ArrayList<SchedulerCourse> aSchedule;
 	private int numClassHours;
 	private int numClasses;
 
@@ -18,7 +18,7 @@ public class Scheduler {
 		this.numClassHours = classHours;
 		this.schedules = new ArrayList<ArrayList<ArrayList<SchedulerCourse>>>();
 		this.numClasses = this.classes.size();
-		this.aSchedule = new ArrayList<ArrayList<SchedulerCourse>>();
+		this.aSchedule = new ArrayList<SchedulerCourse>();
 	}
 
 	private void resetSchedule() {
@@ -39,23 +39,128 @@ public class Scheduler {
 			return this.schedules;
 		}
 
-		// go through each class
+		// go through each course
 		for (SchedulerCourse course : this.classes) {
+			ClassSection sections = course.getSections();
 
-			// go through each class section
-			// for (ArrayList<ClassDay> section : course.getScheduleHours()) {
+			// go through each course section
+			for (WeekSchedule section : sections.getSections()) {
 
-			// go through each day
-//			for (ClassDay day : section) {
-//
-//				// compare each day's hours with the hours of
-//				// every other class' section's hours and check for overlap
-//				// when there is an overlap - skip that section
-//
-//			}
+				// -------------------------INNER----------------------------------------------------------
+
+				// go through ALL other courses
+				for (SchedulerCourse courseInner : this.classes) {
+					ClassSection sectionsInner = courseInner.getSections();
+
+					// go through ALL Other course sections
+					for (WeekSchedule sectionInner : sectionsInner
+							.getSections()) {
+
+						// compare ALL sections
+						if (!this.sectionOverlapWithSection(section,
+								sectionInner)) {
+
+							// add to course-section list
+							// then try to find the rest of the matching section
+							// for all the other courses
+						}
+					}
+				}
+			}
 		}
-		
+
 		return this.schedules;
 	}
 
+	public ArrayList<SchedulerCourse> findMatchingCoursesWithSections(
+			SchedulerCourse currentCourse, WeekSchedule currentSection) {
+
+		ArrayList<SchedulerCourse> theCourses = new ArrayList<SchedulerCourse>();
+		SchedulerCourse course;
+		boolean foundCourseMarch = false;
+
+		// go through each course
+		for (SchedulerCourse acourse : this.classes) {
+			ClassSection sections = acourse.getSections();
+
+			// go through each course section
+			for (WeekSchedule section : sections.getSections()) {
+				
+				if (acourse.equals(currentCourse)) {
+					break;
+				}
+
+				// -------------------------INNER----------------------------------------------------------
+
+				// go through ALL other courses
+				for (SchedulerCourse courseInner : this.classes) {
+					ClassSection sectionsInner = courseInner.getSections();
+
+					// go through ALL Other course sections
+					for (WeekSchedule sectionInner : sectionsInner
+							.getSections()) {
+						if (foundCourseMarch) {
+							foundCourseMarch = false;
+							break;
+						}
+
+						// compare ALL sections
+						if (!this.sectionOverlapWithSection(section,
+								sectionInner)) {
+							ArrayList<WeekSchedule> weeks = new ArrayList<WeekSchedule>();
+							weeks.add(sectionInner);
+							ClassSection sects = new ClassSection(weeks);
+							course = new SchedulerCourse(
+									courseInner.getCourseName(),
+									courseInner.getTeacher(), sects);
+							this.aSchedule.add(course);
+							foundCourseMarch = true;
+						}
+					}
+				}
+			}
+		}
+
+		return theCourses;
+
+	}
+
+	public boolean CourseOverlapWithCourse(ClassSection courseSections1,
+			ClassSection courseSections2) {
+
+		for (WeekSchedule sect : courseSections1.getSections()) {
+
+			for (WeekSchedule sect2 : courseSections2.getSections()) {
+
+				if (this.sectionOverlapWithSection(sect, sect2)) {
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
+
+	public boolean sectionOverlapWithSection(WeekSchedule section1,
+			WeekSchedule section2) {
+
+		for (ClassDay day : section1.getScheduleHours()) {
+
+			for (Integer hour : day.getHourSlots()) {
+
+				for (ClassDay day2 : section2.getScheduleHours()) {
+
+					for (Integer hour2 : day2.getHourSlots()) {
+
+						if (hour == hour2) {
+							return false;
+						}
+					}
+				}
+
+			}
+		}
+
+		return true;
+	}
 }
