@@ -28,18 +28,23 @@ public class Scheduler {
 	public ArrayList<ArrayList<SchedulerCourse>> permutateSchedules() {
 		this.schedules.clear();
 
-		if (this.classes == null) {
+		if (this.classes == null || this.classes.size() == 0) {
 			return this.schedules;
 		}
 
-		// go through each course
-		for (SchedulerCourse course : this.classes) {
-			ClassSection sections = course.getSections();
+//		// go through each course
+//		for (SchedulerCourse course : this.classes) {
+//			ClassSection sections = course.getSections();
+		
+		SchedulerCourse course = this.classes.get(0);
+		ClassSection sections = course.getSections();
+				
+
 			// go through each course section
 			for (WeekSchedule section : sections.getSections()) {
 
 				if (!isWeekSheduleEmpty(section)) {
-
+					
 					ArrayList<WeekSchedule> weeks = new ArrayList<WeekSchedule>();
 					weeks.add(section);
 					ClassSection sects = new ClassSection(weeks);
@@ -48,82 +53,70 @@ public class Scheduler {
 					ArrayList<SchedulerCourse> courses = new ArrayList<SchedulerCourse>();
 					courses.add(cour);
 
-					//System.out.println(section.getScheduleHours().get(0).getHourSlots().get(0));
-					this.findMatchingCoursesWithSections(courses);
+					//deep clone classes list
+					ArrayList<SchedulerCourse> coursesToCheck = new ArrayList<SchedulerCourse>();
+					for (SchedulerCourse c : this.classes) {
+						coursesToCheck.add(c);
+					}
+					
+					
+					// remove courses not to check
+					int index = this.classes.indexOf(course);
+					for (int i = 0; i <= index; i++) {
+						coursesToCheck.remove(i);
+					}
+					this.findMatchingCoursesWithSections(courses,
+							coursesToCheck);
 				}
 			}
-		}
+//		}
 
 		return this.schedules;
 	}
 
 	public void findMatchingCoursesWithSections(
-			ArrayList<SchedulerCourse> currSectionCourses) {
-		boolean foundCourseMarch = false;
+			ArrayList<SchedulerCourse> currSectionCourses,
+			ArrayList<SchedulerCourse> coursesToCheck) {
+		
+		
 
-		// go through each course
-		for (SchedulerCourse course : this.classes) {
-			ClassSection sections = course.getSections();
+		// Base case - when you run out of classes to check against
+		if (coursesToCheck.size() == 0) {
+			if (this.classes.size() == currSectionCourses.size()) {
+				this.schedules.add(currSectionCourses);
+			}
+			return;
+		}
 
-			// System.out.println(sections.getSections().size());
-			// go through each course section
-			for (WeekSchedule section : sections.getSections()) {
+		// go through JUST next course to check against
+		SchedulerCourse course = coursesToCheck.get(0);
+		ClassSection sections = course.getSections();
+		coursesToCheck.remove(0);
 
-				if (this.visitedCourses.contains(course)) {
-					break;
-				} else {
-					this.visitedCourses.add(course);
-				}
+		// go through each course section of JUST this course
+		for (WeekSchedule section : sections.getSections()) {
 
-				// -------------------------INNER----------------------------------------------------------
+			if (!isWeekSheduleEmpty(section)) {
 
-				// go through ALL other courses
-				for (SchedulerCourse courseInner : this.classes) {
-					if (isWeekSheduleEmpty(section)) {
-						break;
-					}
-
-					ClassSection sectionsInner = courseInner.getSections();
-
-					// go through ALL Other course sections
-					for (WeekSchedule sectionInner : sectionsInner
-							.getSections()) {
-						if (courseInner.equals(course)) {
-							break;
-						}
-						// if (foundCourseMarch) {
-						// foundCourseMarch = false;
-						// break;
-						// }
-
-						if (!isWeekSheduleEmpty(sectionInner)) {
-
-							// compare ALL sections to current built up list
-							for (SchedulerCourse sch : currSectionCourses) {
-								if (!this.sectionsOverlapWithnewSection(
-										sch.getSections(), sectionInner)) {
-									ArrayList<WeekSchedule> weeks = new ArrayList<WeekSchedule>();
-									weeks.add(sectionInner);
-									ClassSection sects = new ClassSection(weeks);
-									course = new SchedulerCourse(
-											courseInner.getCourseName(),
-											courseInner.getTeacher(), sects);
-									ArrayList<SchedulerCourse> newCourses = new ArrayList<SchedulerCourse>();
-									newCourses.addAll(currSectionCourses);
-									newCourses.add(course);
-									this.findMatchingCoursesWithSections(newCourses);
-									// foundCourseMarch = true;
-								}
-							}
-						}
-
+				// compare ALL sections to current built up list
+				for (SchedulerCourse currCourse : currSectionCourses) {
+					
+					if (!this.sectionsOverlapWithnewSection(currCourse.getSections(),section)) {
+						
+						ArrayList<WeekSchedule> weeks = new ArrayList<WeekSchedule>();
+						weeks.add(section);
+						ClassSection sects = new ClassSection(weeks);
+						SchedulerCourse newCourse = new SchedulerCourse(
+								course.getCourseName(),
+								course.getTeacher(), sects);
+						currSectionCourses.add(newCourse);
+			
+						this.findMatchingCoursesWithSections(currSectionCourses, coursesToCheck);
+						// foundCourseMarch = true;
 					}
 				}
 			}
-		}
 
-		if (this.classes.size() == currSectionCourses.size()) {
-			this.schedules.add(currSectionCourses);
 		}
 
 	}
@@ -190,12 +183,16 @@ public class Scheduler {
 
 		return true;
 	}
-	
-	public static void printSchedules(ArrayList<ArrayList<SchedulerCourse>> schedules) {
+
+	public static void printSchedules(
+			ArrayList<ArrayList<SchedulerCourse>> schedules) {
 		int count = 0;
 		for (ArrayList<SchedulerCourse> schedule : schedules) {
 			System.out.println();
-			System.out.println("#" + count + "-------------------------------------------------------------------");
+			System.out
+					.println("#"
+							+ count
+							+ "-------------------------------------------------------------------");
 			count++;
 			System.out.println();
 			for (SchedulerCourse course : schedule) {
@@ -203,7 +200,7 @@ public class Scheduler {
 				System.out.println();
 				System.out.println("COURSE");
 				for (WeekSchedule section : course.getSections().getSections()) {
-					for (ClassDay day : section.getScheduleHours()){
+					for (ClassDay day : section.getScheduleHours()) {
 						System.out.println();
 						System.out.print("DAY:");
 						for (Integer hour : day.getHourSlots()) {
