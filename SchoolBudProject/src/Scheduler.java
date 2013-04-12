@@ -46,42 +46,45 @@ public class Scheduler {
 		// go through each course
 		for (SchedulerCourse course : this.classes) {
 			ClassSection sections = course.getSections();
-			
 
 			// go through each course section
 			for (WeekSchedule section : sections.getSections()) {
-				ArrayList<WeekSchedule> weeks = new ArrayList<WeekSchedule>();
-				weeks.add(section);
-				ClassSection sects = new ClassSection(weeks);
-				SchedulerCourse cour = new SchedulerCourse(course.getCourseName(), 
-						course.getTeacher(), sects);
-				ArrayList<SchedulerCourse> courses = new ArrayList<SchedulerCourse>();
-				courses.add(cour);
 				
-				this.findMatchingCoursesWithSections(courses);
+				if (! isWeekSheduleEmpty(section)) {
+					ArrayList<WeekSchedule> weeks = new ArrayList<WeekSchedule>();
+					weeks.add(section);
+					ClassSection sects = new ClassSection(weeks);
+					SchedulerCourse cour = new SchedulerCourse(
+							course.getCourseName(), course.getTeacher(), sects);
+					ArrayList<SchedulerCourse> courses = new ArrayList<SchedulerCourse>();
+					courses.add(cour);
+
+					this.findMatchingCoursesWithSections(courses);
+				}
 			}
-//
-//				// -------------------------INNER----------------------------------------------------------
-//
-//				// go through ALL other courses
-//				for (SchedulerCourse courseInner : this.classes) {
-//					ClassSection sectionsInner = courseInner.getSections();
-//
-//					// go through ALL Other course sections
-//					for (WeekSchedule sectionInner : sectionsInner
-//							.getSections()) {
-//
-//						// compare ALL sections
-//						if (!this.sectionOverlapWithSection(section,
-//								sectionInner)) {
-//
-//							// add to course-section list
-//							// then try to find the rest of the matching section
-//							// for all the other courses
-//						}
-//					}
-//				}
-//			}
+			//
+			// //
+			// -------------------------INNER----------------------------------------------------------
+			//
+			// // go through ALL other courses
+			// for (SchedulerCourse courseInner : this.classes) {
+			// ClassSection sectionsInner = courseInner.getSections();
+			//
+			// // go through ALL Other course sections
+			// for (WeekSchedule sectionInner : sectionsInner
+			// .getSections()) {
+			//
+			// // compare ALL sections
+			// if (!this.sectionOverlapWithSection(section,
+			// sectionInner)) {
+			//
+			// // add to course-section list
+			// // then try to find the rest of the matching section
+			// // for all the other courses
+			// }
+			// }
+			// }
+			// }
 		}
 
 		return this.schedules;
@@ -109,6 +112,10 @@ public class Scheduler {
 
 				// go through ALL other courses
 				for (SchedulerCourse courseInner : this.classes) {
+					if (isWeekSheduleEmpty(section)) {
+						break;
+					}
+
 					ClassSection sectionsInner = courseInner.getSections();
 
 					// go through ALL Other course sections
@@ -122,21 +129,24 @@ public class Scheduler {
 						// break;
 						// }
 
-						// compare ALL sections to current built up list
-						for (SchedulerCourse sch : currSectionCourses) {
-							if (!this.sectionsOverlapWithnewSection(
-									sch.getSections(), sectionInner)) {
-								ArrayList<WeekSchedule> weeks = new ArrayList<WeekSchedule>();
-								weeks.add(sectionInner);
-								ClassSection sects = new ClassSection(weeks);
-								course = new SchedulerCourse(
-										courseInner.getCourseName(),
-										courseInner.getTeacher(), sects);
-								ArrayList<SchedulerCourse> newCourses = new ArrayList<SchedulerCourse>();
-								newCourses.addAll(currSectionCourses);
-								newCourses.add(course);
-								this.findMatchingCoursesWithSections(newCourses);
-								// foundCourseMarch = true;
+						if (! isWeekSheduleEmpty(sectionInner)) {
+
+							// compare ALL sections to current built up list
+							for (SchedulerCourse sch : currSectionCourses) {
+								if (!this.sectionsOverlapWithnewSection(
+										sch.getSections(), sectionInner)) {
+									ArrayList<WeekSchedule> weeks = new ArrayList<WeekSchedule>();
+									weeks.add(sectionInner);
+									ClassSection sects = new ClassSection(weeks);
+									course = new SchedulerCourse(
+											courseInner.getCourseName(),
+											courseInner.getTeacher(), sects);
+									ArrayList<SchedulerCourse> newCourses = new ArrayList<SchedulerCourse>();
+									newCourses.addAll(currSectionCourses);
+									newCourses.add(course);
+									this.findMatchingCoursesWithSections(newCourses);
+									// foundCourseMarch = true;
+								}
 							}
 						}
 
@@ -202,5 +212,15 @@ public class Scheduler {
 		}
 
 		return false;
+	}
+	
+	public boolean isWeekSheduleEmpty(WeekSchedule sched) {
+		for (ClassDay day : sched.getScheduleHours()) {
+			if (day.getHourSlots().size() > 0) {
+				return false;
+			}
+		}
+		
+		return true;
 	}
 }
