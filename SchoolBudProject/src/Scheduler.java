@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import sun.awt.geom.Curve;
+
 /* The Scheduler class finds all of the permutations of possible schedules
  * depending on a students entered classes and their respective hours 
  * 
@@ -8,7 +10,8 @@ import java.util.ArrayList;
 public class Scheduler {
 
 	private ArrayList<SchedulerCourse> classes;
-	private ArrayList<ArrayList<ArrayList<SchedulerCourse>>> schedules;
+	private ArrayList<SchedulerCourse> visitedCourses;
+	private ArrayList<ArrayList<SchedulerCourse>> schedules;
 	private ArrayList<SchedulerCourse> aSchedule;
 	private int numClassHours;
 	private int numClasses;
@@ -16,22 +19,23 @@ public class Scheduler {
 	public Scheduler(int classHours, ArrayList<SchedulerCourse> classes) {
 		this.classes = classes;
 		this.numClassHours = classHours;
-		this.schedules = new ArrayList<ArrayList<ArrayList<SchedulerCourse>>>();
+		this.schedules = new ArrayList<ArrayList<SchedulerCourse>>();
 		this.numClasses = this.classes.size();
 		this.aSchedule = new ArrayList<SchedulerCourse>();
+		this.visitedCourses = new ArrayList<SchedulerCourse>();
 	}
 
 	private void resetSchedule() {
 
 		this.aSchedule.clear();
 
-		// initialize 7 days of the week with an arrayList
-		for (int i = 0; i < 6; i++) {
-			this.aSchedule.add(new ArrayList<SchedulerCourse>());
-		}
+		// // initialize 7 days of the week with an arrayList
+		// for (int i = 0; i < 6; i++) {
+		// this.aSchedule.add(new ArrayList<SchedulerCourse>());
+		// }
 	}
 
-	public ArrayList<ArrayList<ArrayList<SchedulerCourse>>> permutateSchedules() {
+	public ArrayList<ArrayList<SchedulerCourse>> permutateSchedules() {
 		this.resetSchedule();
 		this.schedules.clear();
 
@@ -42,52 +46,63 @@ public class Scheduler {
 		// go through each course
 		for (SchedulerCourse course : this.classes) {
 			ClassSection sections = course.getSections();
+			
 
 			// go through each course section
 			for (WeekSchedule section : sections.getSections()) {
-
-				// -------------------------INNER----------------------------------------------------------
-
-				// go through ALL other courses
-				for (SchedulerCourse courseInner : this.classes) {
-					ClassSection sectionsInner = courseInner.getSections();
-
-					// go through ALL Other course sections
-					for (WeekSchedule sectionInner : sectionsInner
-							.getSections()) {
-
-						// compare ALL sections
-						if (!this.sectionOverlapWithSection(section,
-								sectionInner)) {
-
-							// add to course-section list
-							// then try to find the rest of the matching section
-							// for all the other courses
-						}
-					}
-				}
+				ArrayList<WeekSchedule> weeks = new ArrayList<WeekSchedule>();
+				weeks.add(section);
+				ClassSection sects = new ClassSection(weeks);
+				SchedulerCourse cour = new SchedulerCourse(course.getCourseName(), 
+						course.getTeacher(), sects);
+				ArrayList<SchedulerCourse> courses = new ArrayList<SchedulerCourse>();
+				courses.add(cour);
+				
+				this.findMatchingCoursesWithSections(courses);
 			}
+//
+//				// -------------------------INNER----------------------------------------------------------
+//
+//				// go through ALL other courses
+//				for (SchedulerCourse courseInner : this.classes) {
+//					ClassSection sectionsInner = courseInner.getSections();
+//
+//					// go through ALL Other course sections
+//					for (WeekSchedule sectionInner : sectionsInner
+//							.getSections()) {
+//
+//						// compare ALL sections
+//						if (!this.sectionOverlapWithSection(section,
+//								sectionInner)) {
+//
+//							// add to course-section list
+//							// then try to find the rest of the matching section
+//							// for all the other courses
+//						}
+//					}
+//				}
+//			}
 		}
 
 		return this.schedules;
 	}
 
-	public ArrayList<SchedulerCourse> findMatchingCoursesWithSections(
-			SchedulerCourse currentCourse, WeekSchedule currentSection) {
+	public void findMatchingCoursesWithSections(
+			ArrayList<SchedulerCourse> currSectionCourses) {
 
-		ArrayList<SchedulerCourse> theCourses = new ArrayList<SchedulerCourse>();
-		SchedulerCourse course;
 		boolean foundCourseMarch = false;
 
 		// go through each course
-		for (SchedulerCourse acourse : this.classes) {
-			ClassSection sections = acourse.getSections();
+		for (SchedulerCourse course : this.classes) {
+			ClassSection sections = course.getSections();
 
 			// go through each course section
 			for (WeekSchedule section : sections.getSections()) {
-				
-				if (acourse.equals(currentCourse)) {
+
+				if (this.visitedCourses.contains(course)) {
 					break;
+				} else {
+					this.visitedCourses.add(course);
 				}
 
 				// -------------------------INNER----------------------------------------------------------
@@ -99,29 +114,40 @@ public class Scheduler {
 					// go through ALL Other course sections
 					for (WeekSchedule sectionInner : sectionsInner
 							.getSections()) {
-						if (foundCourseMarch) {
-							foundCourseMarch = false;
+						if (courseInner.equals(course)) {
 							break;
 						}
+						// if (foundCourseMarch) {
+						// foundCourseMarch = false;
+						// break;
+						// }
 
-						// compare ALL sections
-						if (!this.sectionOverlapWithSection(section,
-								sectionInner)) {
-							ArrayList<WeekSchedule> weeks = new ArrayList<WeekSchedule>();
-							weeks.add(sectionInner);
-							ClassSection sects = new ClassSection(weeks);
-							course = new SchedulerCourse(
-									courseInner.getCourseName(),
-									courseInner.getTeacher(), sects);
-							this.aSchedule.add(course);
-							foundCourseMarch = true;
+						// compare ALL sections to current built up list
+						for (SchedulerCourse sch : currSectionCourses) {
+							if (!this.sectionsOverlapWithnewSection(
+									sch.getSections(), sectionInner)) {
+								ArrayList<WeekSchedule> weeks = new ArrayList<WeekSchedule>();
+								weeks.add(sectionInner);
+								ClassSection sects = new ClassSection(weeks);
+								course = new SchedulerCourse(
+										courseInner.getCourseName(),
+										courseInner.getTeacher(), sects);
+								ArrayList<SchedulerCourse> newCourses = new ArrayList<SchedulerCourse>();
+								newCourses.addAll(currSectionCourses);
+								newCourses.add(course);
+								this.findMatchingCoursesWithSections(newCourses);
+								// foundCourseMarch = true;
+							}
 						}
+
 					}
 				}
 			}
 		}
 
-		return theCourses;
+		if (this.classes.size() == currSectionCourses.size()) {
+			this.schedules.add(currSectionCourses);
+		}
 
 	}
 
@@ -153,7 +179,7 @@ public class Scheduler {
 					for (Integer hour2 : day2.getHourSlots()) {
 
 						if (hour == hour2) {
-							return false;
+							return true;
 						}
 					}
 				}
@@ -161,6 +187,20 @@ public class Scheduler {
 			}
 		}
 
-		return true;
+		return false;
+	}
+
+	public boolean sectionsOverlapWithnewSection(ClassSection sections,
+			WeekSchedule newSection) {
+
+		for (WeekSchedule sect : sections.getSections()) {
+
+			if (sectionOverlapWithSection(sect, newSection)) {
+				return true;
+			}
+
+		}
+
+		return false;
 	}
 }
