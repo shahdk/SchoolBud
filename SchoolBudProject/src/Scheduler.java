@@ -31,48 +31,31 @@ public class Scheduler {
 		}
 	}
 
-	public ArrayList<ArrayList<ArrayList<SchedulerCourse>>> permutateSchedules(){
+	public ArrayList<ArrayList<ArrayList<SchedulerCourse>>> permutateSchedules() {
 		this.resetSchedule();
 		this.schedules.clear();
-		
-		if (this.classes == null){
+
+		if (this.classes == null) {
 			return this.schedules;
 		}
-		
-		//go through each class
+
+		// go through each class
 		for (SchedulerCourse course : this.classes) {
-			
-			//go through each class section
-			for (ArrayList<ClassDay> section : course.getScheduleHours()) {
-				
-				//go through each day
-				for (ClassDay day : section) {
-					
-					//compare each day's hours with the hours of
-					//every other class' section's hours and check for overlap
-					//when there is an overlap - skip that section
-					
-				}
-			}
-			
+
+			// go through each class section
+			// for (ArrayList<ClassDay> section : course.getScheduleHours()) {
+
+			// go through each day
+//			for (ClassDay day : section) {
+//
+//				// compare each day's hours with the hours of
+//				// every other class' section's hours and check for overlap
+//				// when there is an overlap - skip that section
+//
+//			}
 		}
 		
 		return this.schedules;
-	}
-
-	public boolean isFull(Class[] theHours) {
-		int count = 0;
-		for (Class theClass : theHours) {
-			if (theClass != null) {
-				count++;
-			}
-			if (count == this.classes.size()) {
-				return true;
-			}
-		}
-
-		return false;
-
 	}
 
 }
