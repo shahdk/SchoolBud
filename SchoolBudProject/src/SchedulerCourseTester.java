@@ -11,22 +11,6 @@ import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 public class SchedulerCourseTester {
 	
 	@Test
-	public void testClassInitializationEcceptionForInvalidArrayListLength() {
-		
-		boolean caught = false;
-		ArrayList<ArrayList<ClassDay>> temp = new ArrayList<ArrayList<ClassDay>>();
-		temp.add(new ArrayList<ClassDay>());
-		try {
-			new SchedulerCourse("name", "teacher", temp);
-		}
-		catch (InstantiationError e) {
-			caught = true;
-		}
-		
-		assertTrue(caught);
-	}
-	
-	@Test
 	public void testName() {
 		ArrayList<ArrayList<ClassDay>> scheds = new ArrayList<ArrayList<ClassDay>>();
 		ArrayList<Integer> hours1 = new ArrayList<Integer>();

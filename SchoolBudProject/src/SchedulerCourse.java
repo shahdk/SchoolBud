@@ -7,20 +7,14 @@ import java.util.ArrayList;
 public class SchedulerCourse extends Course {
 
 	private String teacher;
-	private ArrayList<ArrayList<ClassDay>> scheduleHours;
+	private ArrayList<ClassSection> sections;
 
-	public SchedulerCourse(String className, String teacherName, ArrayList<ArrayList<ClassDay>> scheduleHours)
-			throws InstantiationError {
+	public SchedulerCourse(String className, String teacherName,
+			ArrayList<ClassSection> sections) {
 		super(className);
 
-		for (ArrayList<ClassDay> sched : scheduleHours) {
-			if (sched.size() != 7) {
-				throw new InstantiationError();
-			}
-		}
-		
 		this.teacher = teacherName;
-		this.setScheduleHours(scheduleHours);
+		this.sections = sections;
 	}
 
 	public String getTeacher() {
@@ -32,18 +26,18 @@ public class SchedulerCourse extends Course {
 	}
 
 	/**
-	 * @return the scheduleHours
+	 * @return the sections
 	 */
-	public ArrayList<ArrayList<ClassDay>> getScheduleHours() {
-		return scheduleHours;
+	public ArrayList<ClassSection> getSections() {
+		return sections;
 	}
 
 	/**
-	 * @param scheduleHours the scheduleHours to set
+	 * @param sections
+	 *            the sections to set
 	 */
-	public void setScheduleHours(ArrayList<ArrayList<ClassDay>> scheduleHours) {
-		this.scheduleHours = scheduleHours;
+	public void setSections(ArrayList<ClassSection> sections) {
+		this.sections = sections;
 	}
-
 
 }
