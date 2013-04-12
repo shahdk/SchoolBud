@@ -1,7 +1,5 @@
 import java.util.ArrayList;
 
-import sun.awt.geom.Curve;
-
 /* The Scheduler class finds all of the permutations of possible schedules
  * depending on a students entered classes and their respective hours 
  * 
@@ -32,44 +30,39 @@ public class Scheduler {
 			return this.schedules;
 		}
 
-//		// go through each course
-//		for (SchedulerCourse course : this.classes) {
-//			ClassSection sections = course.getSections();
-		
+		// // go through each course
+		// for (SchedulerCourse course : this.classes) {
+		// ClassSection sections = course.getSections();
+
 		SchedulerCourse course = this.classes.get(0);
 		ClassSection sections = course.getSections();
-				
 
-			// go through each course section
-			for (WeekSchedule section : sections.getSections()) {
+		// go through each course section
+		for (WeekSchedule section : sections.getSections()) {
 
-				if (!isWeekSheduleEmpty(section)) {
-					
-					ArrayList<WeekSchedule> weeks = new ArrayList<WeekSchedule>();
-					weeks.add(section);
-					ClassSection sects = new ClassSection(weeks);
-					SchedulerCourse cour = new SchedulerCourse(
-							course.getCourseName(), course.getTeacher(), sects);
-					ArrayList<SchedulerCourse> courses = new ArrayList<SchedulerCourse>();
-					courses.add(cour);
+			if (!isWeekSheduleEmpty(section)) {
 
-					//deep clone classes list
-					ArrayList<SchedulerCourse> coursesToCheck = new ArrayList<SchedulerCourse>();
-					for (SchedulerCourse c : this.classes) {
-						coursesToCheck.add(c);
-					}
-					
-					
-					// remove courses not to check
-					int index = this.classes.indexOf(course);
-					for (int i = 0; i <= index; i++) {
-						coursesToCheck.remove(i);
-					}
-					this.findMatchingCoursesWithSections(courses,
-							coursesToCheck);
+				ArrayList<WeekSchedule> weeks = new ArrayList<WeekSchedule>();
+				weeks.add(section);
+				ClassSection sects = new ClassSection(weeks);
+				SchedulerCourse cour = new SchedulerCourse(
+						course.getCourseName(), course.getTeacher(), sects);
+				ArrayList<SchedulerCourse> courses = new ArrayList<SchedulerCourse>();
+				courses.add(cour);
+
+				// deep clone classes list
+				ArrayList<SchedulerCourse> coursesToCheck = this
+						.cloneSchedulerCoursList(this.classes);
+
+				// remove courses not to check
+				int index = this.classes.indexOf(course);
+				for (int i = 0; i <= index; i++) {
+					coursesToCheck.remove(i);
 				}
+				this.findMatchingCoursesWithSections(courses, coursesToCheck);
 			}
-//		}
+		}
+		// }
 
 		return this.schedules;
 	}
@@ -77,46 +70,46 @@ public class Scheduler {
 	public void findMatchingCoursesWithSections(
 			ArrayList<SchedulerCourse> currSectionCourses,
 			ArrayList<SchedulerCourse> coursesToCheck) {
-		
-		
 
 		// Base case - when you run out of classes to check against
 		if (coursesToCheck.size() == 0) {
 			if (this.classes.size() == currSectionCourses.size()) {
 				this.schedules.add(currSectionCourses);
 			}
-			return;
-		}
+		} else {
+			// go through JUST next course to check against
+			SchedulerCourse course = coursesToCheck.get(0);
+			ClassSection sections = course.getSections();
+			coursesToCheck.remove(0);
 
-		// go through JUST next course to check against
-		SchedulerCourse course = coursesToCheck.get(0);
-		ClassSection sections = course.getSections();
-		coursesToCheck.remove(0);
+			// go through each course section of JUST this course
+			for (WeekSchedule section : sections.getSections()) {
 
-		// go through each course section of JUST this course
-		for (WeekSchedule section : sections.getSections()) {
+				if (!isWeekSheduleEmpty(section)) {
 
-			if (!isWeekSheduleEmpty(section)) {
+					// compare ALL sections to current built up list
+					for (SchedulerCourse currCourse : currSectionCourses) {
 
-				// compare ALL sections to current built up list
-				for (SchedulerCourse currCourse : currSectionCourses) {
-					
-					if (!this.sectionsOverlapWithnewSection(currCourse.getSections(),section)) {
-						
-						ArrayList<WeekSchedule> weeks = new ArrayList<WeekSchedule>();
-						weeks.add(section);
-						ClassSection sects = new ClassSection(weeks);
-						SchedulerCourse newCourse = new SchedulerCourse(
-								course.getCourseName(),
-								course.getTeacher(), sects);
-						currSectionCourses.add(newCourse);
-			
-						this.findMatchingCoursesWithSections(currSectionCourses, coursesToCheck);
-						// foundCourseMarch = true;
+						if (!this.sectionsOverlapWithnewSection(
+								currCourse.getSections(), section)) {
+
+							ArrayList<WeekSchedule> weeks = new ArrayList<WeekSchedule>();
+							weeks.add(section);
+							ClassSection sects = new ClassSection(weeks);
+							SchedulerCourse newCourse = new SchedulerCourse(
+									course.getCourseName(),
+									course.getTeacher(), sects);
+							ArrayList<SchedulerCourse> newCourses = this
+									.cloneSchedulerCoursList(currSectionCourses);
+							newCourses.add(newCourse);
+
+							this.findMatchingCoursesWithSections(newCourses,
+									coursesToCheck);
+						}
 					}
 				}
-			}
 
+			}
 		}
 
 	}
@@ -210,5 +203,36 @@ public class Scheduler {
 				}
 			}
 		}
+	}
+
+	public static ArrayList<Integer> getDayHoursLists(
+			ArrayList<ArrayList<SchedulerCourse>> schedules) {
+		
+			ArrayList<Integer> hours =  new ArrayList<Integer>();;
+
+		for (ArrayList<SchedulerCourse> schedule : schedules) {
+			for (SchedulerCourse course : schedule) {
+				for (WeekSchedule section : course.getSections().getSections()) {
+					for (ClassDay day : section.getScheduleHours()) {
+						for (Integer hour : day.getHourSlots()) {
+							hours.add(hour);
+						}
+					}
+				}
+			}
+		}
+		
+		return hours;
+	}
+
+	public ArrayList<SchedulerCourse> cloneSchedulerCoursList(
+			ArrayList<SchedulerCourse> classes) {
+
+		ArrayList<SchedulerCourse> courses = new ArrayList<SchedulerCourse>();
+		for (SchedulerCourse course : classes) {
+			courses.add(course);
+		}
+
+		return courses;
 	}
 }
