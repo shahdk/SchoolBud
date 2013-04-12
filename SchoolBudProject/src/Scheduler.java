@@ -48,32 +48,10 @@ public class Scheduler {
 					ArrayList<SchedulerCourse> courses = new ArrayList<SchedulerCourse>();
 					courses.add(cour);
 
+					//System.out.println(section.getScheduleHours().get(0).getHourSlots().get(0));
 					this.findMatchingCoursesWithSections(courses);
 				}
 			}
-			//
-			// //
-			// -------------------------INNER----------------------------------------------------------
-			//
-			// // go through ALL other courses
-			// for (SchedulerCourse courseInner : this.classes) {
-			// ClassSection sectionsInner = courseInner.getSections();
-			//
-			// // go through ALL Other course sections
-			// for (WeekSchedule sectionInner : sectionsInner
-			// .getSections()) {
-			//
-			// // compare ALL sections
-			// if (!this.sectionOverlapWithSection(section,
-			// sectionInner)) {
-			//
-			// // add to course-section list
-			// // then try to find the rest of the matching section
-			// // for all the other courses
-			// }
-			// }
-			// }
-			// }
 		}
 
 		return this.schedules;
@@ -211,5 +189,29 @@ public class Scheduler {
 		}
 
 		return true;
+	}
+	
+	public static void printSchedules(ArrayList<ArrayList<SchedulerCourse>> schedules) {
+		int count = 0;
+		for (ArrayList<SchedulerCourse> schedule : schedules) {
+			System.out.println();
+			System.out.println("#" + count + "-------------------------------------------------------------------");
+			count++;
+			System.out.println();
+			for (SchedulerCourse course : schedule) {
+				System.out.println();
+				System.out.println();
+				System.out.println("COURSE");
+				for (WeekSchedule section : course.getSections().getSections()) {
+					for (ClassDay day : section.getScheduleHours()){
+						System.out.println();
+						System.out.print("DAY:");
+						for (Integer hour : day.getHourSlots()) {
+							System.out.print(hour + ", ");
+						}
+					}
+				}
+			}
+		}
 	}
 }
