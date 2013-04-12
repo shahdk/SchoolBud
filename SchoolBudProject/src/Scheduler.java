@@ -25,18 +25,7 @@ public class Scheduler {
 		this.visitedCourses = new ArrayList<SchedulerCourse>();
 	}
 
-	private void resetSchedule() {
-
-		this.aSchedule.clear();
-
-		// // initialize 7 days of the week with an arrayList
-		// for (int i = 0; i < 6; i++) {
-		// this.aSchedule.add(new ArrayList<SchedulerCourse>());
-		// }
-	}
-
 	public ArrayList<ArrayList<SchedulerCourse>> permutateSchedules() {
-		this.resetSchedule();
 		this.schedules.clear();
 
 		if (this.classes == null) {
@@ -46,11 +35,11 @@ public class Scheduler {
 		// go through each course
 		for (SchedulerCourse course : this.classes) {
 			ClassSection sections = course.getSections();
-
 			// go through each course section
 			for (WeekSchedule section : sections.getSections()) {
-				
-				if (! isWeekSheduleEmpty(section)) {
+
+				if (!isWeekSheduleEmpty(section)) {
+
 					ArrayList<WeekSchedule> weeks = new ArrayList<WeekSchedule>();
 					weeks.add(section);
 					ClassSection sects = new ClassSection(weeks);
@@ -92,13 +81,13 @@ public class Scheduler {
 
 	public void findMatchingCoursesWithSections(
 			ArrayList<SchedulerCourse> currSectionCourses) {
-
 		boolean foundCourseMarch = false;
 
 		// go through each course
 		for (SchedulerCourse course : this.classes) {
 			ClassSection sections = course.getSections();
 
+			// System.out.println(sections.getSections().size());
 			// go through each course section
 			for (WeekSchedule section : sections.getSections()) {
 
@@ -129,7 +118,7 @@ public class Scheduler {
 						// break;
 						// }
 
-						if (! isWeekSheduleEmpty(sectionInner)) {
+						if (!isWeekSheduleEmpty(sectionInner)) {
 
 							// compare ALL sections to current built up list
 							for (SchedulerCourse sch : currSectionCourses) {
@@ -213,14 +202,14 @@ public class Scheduler {
 
 		return false;
 	}
-	
+
 	public boolean isWeekSheduleEmpty(WeekSchedule sched) {
 		for (ClassDay day : sched.getScheduleHours()) {
 			if (day.getHourSlots().size() > 0) {
 				return false;
 			}
 		}
-		
+
 		return true;
 	}
 }
