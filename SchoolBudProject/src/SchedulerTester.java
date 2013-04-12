@@ -354,29 +354,38 @@ public class SchedulerTester {
 
 		// input classes
 		ArrayList<SchedulerCourse> classes = new ArrayList<SchedulerCourse>();
-		//classes.add(class1);
+		classes.add(class1);
 		classes.add(class2);
 		classes.add(class3);
 		classes.add(class4);
 
 		Scheduler scheduler = new Scheduler(8, classes);
 
-		// Scheduler.printSchedules(scheduler.permutateSchedules());
-//		ArrayList<Integer> expected = new ArrayList<Integer>();
-//		expected.add(1);
-//		expected.add(3);
-//		expected.add(1);
-//		expected.add(4);
-//		expected.add(2);
-//		expected.add(3);
-//		expected.add(2);
-//		expected.add(4);
+		ArrayList<Integer> expected = new ArrayList<Integer>();
+		expected.add(1);
+		expected.add(4);
+		expected.add(1);
+		expected.add(4);
+		expected.add(2);
+		expected.add(3);
+		expected.add(2);
+		expected.add(4);
+		expected.add(1);
+		expected.add(3);
+		expected.add(1);
+		expected.add(4);
+		expected.add(2);
+		expected.add(3);
+		expected.add(2);
+		expected.add(4);
 
 		//Scheduler.getDayHoursLists(scheduler.permutateSchedules());
-		Scheduler.printSchedules(scheduler.permutateSchedules());
+		//Scheduler.printSchedules(scheduler.permutateSchedules());
 		assertEquals(18, scheduler.permutateSchedules().size());
 //		assertEquals(expected,
 //				Scheduler.getDayHoursLists(scheduler.permutateSchedules()));
 	}
+	
+	
 
 }
