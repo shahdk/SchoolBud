@@ -124,22 +124,6 @@ public class Scheduler {
 
 	}
 
-	public boolean CourseOverlapWithCourse(ClassSection courseSections1,
-			ClassSection courseSections2) {
-
-		for (WeekSchedule sect : courseSections1.getSections()) {
-
-			for (WeekSchedule sect2 : courseSections2.getSections()) {
-
-				if (this.sectionOverlapWithSection(sect, sect2)) {
-					return false;
-				}
-			}
-		}
-
-		return true;
-	}
-
 	public boolean sectionOverlapWithSection(WeekSchedule section1,
 			WeekSchedule section2) {
 
@@ -187,33 +171,33 @@ public class Scheduler {
 		return true;
 	}
 
-	public static void printSchedules(
-			ArrayList<ArrayList<SchedulerCourse>> schedules) {
-		int count = 0;
-		for (ArrayList<SchedulerCourse> schedule : schedules) {
-			System.out.println();
-			System.out
-					.println("#"
-							+ count
-							+ "-------------------------------------------------------------------");
-			count++;
-			System.out.println();
-			for (SchedulerCourse course : schedule) {
-				System.out.println();
-				System.out.println();
-				System.out.println("COURSE");
-				for (WeekSchedule section : course.getSections().getSections()) {
-					for (ClassDay day : section.getScheduleHours()) {
-						System.out.println();
-						System.out.print("DAY:");
-						for (Integer hour : day.getHourSlots()) {
-							System.out.print(hour + ", ");
-						}
-					}
-				}
-			}
-		}
-	}
+//	public static void printSchedules(
+//			ArrayList<ArrayList<SchedulerCourse>> schedules) {
+//		int count = 0;
+//		for (ArrayList<SchedulerCourse> schedule : schedules) {
+//			System.out.println();
+//			System.out
+//					.println("#"
+//							+ count
+//							+ "-------------------------------------------------------------------");
+//			count++;
+//			System.out.println();
+//			for (SchedulerCourse course : schedule) {
+//				System.out.println();
+//				System.out.println();
+//				System.out.println("COURSE");
+//				for (WeekSchedule section : course.getSections().getSections()) {
+//					for (ClassDay day : section.getScheduleHours()) {
+//						System.out.println();
+//						System.out.print("DAY:");
+//						for (Integer hour : day.getHourSlots()) {
+//							System.out.print(hour + ", ");
+//						}
+//					}
+//				}
+//			}
+//		}
+//	}
 
 	public static ArrayList<Integer> getDayHoursLists(
 			ArrayList<ArrayList<SchedulerCourse>> schedules) {
