@@ -9,12 +9,14 @@ public class Scheduler {
 
 	private ArrayList<SchedulerCourse> classes;
 	private ArrayList<ArrayList<SchedulerCourse>> schedules;
+	private ArrayList<ArrayList<SchedulerCourse>> filteredSchedules;
 	private int numClassHours;
 	private int numClasses;
 
 	public Scheduler(int classHours, ArrayList<SchedulerCourse> classes) {
 		this.classes = classes;
 		this.schedules = new ArrayList<ArrayList<SchedulerCourse>>();
+		this.filteredSchedules = new ArrayList<ArrayList<SchedulerCourse>>();
 		this.numClassHours = classHours;
 		this.numClasses = this.classes.size();
 	}
@@ -67,6 +69,7 @@ public class Scheduler {
 		if (coursesToCheck.size() == 0) {
 			if (this.classes.size() == currSectionCourses.size()) {
 				this.schedules.add(currSectionCourses);
+				this.filteredSchedules.add(currSectionCourses);
 			}
 		} else {
 			// go through JUST next course to check against
@@ -188,6 +191,18 @@ public class Scheduler {
 		}
 
 		return courses;
+	}
+	
+	//Filters out schedules that have a greater number of gaps between classes than
+	//the denoted OR that has the max number of gaps occur more than the denoted amount
+	public ArrayList<ArrayList<SchedulerCourse>> filterGaps(int maxNumOfGaps, int maxNumOfOccurences) {
+		ArrayList<ArrayList<SchedulerCourse>> filteredResults = new ArrayList<ArrayList<SchedulerCourse>>();
+		
+		return filteredResults;
+	}
+	
+	public ArrayList<ArrayList<SchedulerCourse>> getFilteredSchedules() {
+		return this.filteredSchedules;
 	}
 
 	public static void printSchedules(
