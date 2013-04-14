@@ -8,9 +8,7 @@ import java.util.ArrayList;
 public class Scheduler {
 
 	private ArrayList<SchedulerCourse> classes;
-	private ArrayList<SchedulerCourse> visitedCourses;
 	private ArrayList<ArrayList<SchedulerCourse>> schedules;
-	private ArrayList<SchedulerCourse> aSchedule;
 	private int numClassHours;
 	private int numClasses;
 
@@ -19,8 +17,6 @@ public class Scheduler {
 		this.numClassHours = classHours;
 		this.schedules = new ArrayList<ArrayList<SchedulerCourse>>();
 		this.numClasses = this.classes.size();
-		this.aSchedule = new ArrayList<SchedulerCourse>();
-		this.visitedCourses = new ArrayList<SchedulerCourse>();
 	}
 
 	public ArrayList<ArrayList<SchedulerCourse>> permutateSchedules() {
