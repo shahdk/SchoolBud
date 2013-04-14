@@ -143,6 +143,40 @@ public class CourseTest {
 		course.addCategory(new Category("HW", 20.0));
 		course.addCategory(new Category("Exam", 40.0));
 		course.addCategory(new Category("Final", 30.0)); }
+	
+	//test cases for removing categories
+	@Test
+	public void testRemoveCategoryOne() {
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		course.addCategory(cat);
+		assertTrue(course.removeCategory("HW"));
+	}
+
+	@Test
+	public void testRemoveCategoryTwo() {
+		Course course = new Course("CSSE376", 4.0);
+		course.addCategory(new Category("HW", 10.0));
+		course.addCategory(new Category("Quiz", 20.0));
+		course.addCategory(new Category("Exam", 40.0));
+		course.addCategory(new Category("Final", 30.0));
+		assertTrue(course.removeCategorie("Quiz"));
+		assertEquals("Exam", course.getCategories().get(1).getName());
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testRemoveCategoryThree() {
+		Course course = new Course("CSSE376", 4.0);
+		assertFalse(course.removeCategory("HW"));
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testRemoveCategoryFour() {
+		Course course = new Course("CSSE376", 4.0);
+		course.addCategory(new Category("HW", 10.0));
+		course.addCategory(new Category("Exam", 40.0));
+		assertFalse(course.removeCategory("Final"));
+	}
 
 	//test cases for getting and setting target grade
 	@Test
