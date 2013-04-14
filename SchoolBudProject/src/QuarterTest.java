@@ -14,5 +14,8 @@ public class QuarterTest {
 	public void testInitializeOne(){
 		assertNotNull(new Quarter("Spring2013"));
 	}
-
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testInitializeTwo(){
+		assertNotNull(new Quarter(""));	}
 }
