@@ -102,4 +102,24 @@ public class Category {
 		return (Math.round(totalPoints * 100)) / 100.0;
 	}
 
+	public boolean removeItem(String name) {
+		if(this.items.size() == 0){
+			return false;
+		}
+		int index = -1;
+		for(int i=0; i<this.items.size(); i++){
+			if(this.items.get(i).getName().equals(name)){
+				index = i;
+				break;
+			}
+		}
+		
+		if(index == -1){
+			return false;
+		}
+		
+		this.items.remove(index);
+		return true;
+	}
+
 }

@@ -226,7 +226,7 @@ public class CategoryTest {
 		Category cat = new Category("HW", 10, 10);
 		cat.addItem(new Item("HW11"));
 		assertTrue(cat.removeItem("HW1"));
-		assertEquals(0, cat.getItemList().size());
+		assertEquals(10, cat.getItemList().size());
 	}
 	
 	@Test
@@ -238,7 +238,7 @@ public class CategoryTest {
 	@Test
 	public void testRemoveItemFour() {
 		Category cat = new Category("HW", 10, 10);
-		assertFalse(cat.removeItem("HW1"));
+		assertFalse(cat.removeItem("HW11"));
 	}
 	
 	@Test
