@@ -107,4 +107,24 @@ public class Course {
 		return percent/100;
 	}
 
+	public boolean removeCategory(String name) {
+		if(this.categories.size() == 0){
+			return false;
+		}
+		int index = -1;
+		for(int i=0; i<this.categories.size(); i++){
+			if(this.categories.get(i).getName().equals(name)){
+				index = i;
+				break;
+			}
+		}
+		
+		if(index == -1){
+			return false;
+		}
+		
+		this.categories.remove(index);
+		return true;
+	}
+
 }

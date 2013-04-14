@@ -160,17 +160,17 @@ public class CourseTest {
 		course.addCategory(new Category("Quiz", 20.0));
 		course.addCategory(new Category("Exam", 40.0));
 		course.addCategory(new Category("Final", 30.0));
-		assertTrue(course.removeCategorie("Quiz"));
+		assertTrue(course.removeCategory("Quiz"));
 		assertEquals("Exam", course.getCategories().get(1).getName());
 	}
 
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testRemoveCategoryThree() {
 		Course course = new Course("CSSE376", 4.0);
 		assertFalse(course.removeCategory("HW"));
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testRemoveCategoryFour() {
 		Course course = new Course("CSSE376", 4.0);
 		course.addCategory(new Category("HW", 10.0));
