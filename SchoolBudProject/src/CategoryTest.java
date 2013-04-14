@@ -212,6 +212,51 @@ public class CategoryTest {
 		cat.addItem(new Item("HW1"));
 		cat.addItem(new Item("HW1")); }
 
+	//test cases for removing items
+	@Test
+	public void testRemoveItemOne() {
+		Category cat = new Category("HW", 10);
+		cat.addItem(new Item("HW1"));
+		assertTrue(cat.removeItem("HW1"));
+		assertEquals(0, cat.getItemList().size());
+	}
+
+	@Test
+	public void testRemoveItemTwo() {
+		Category cat = new Category("HW", 10, 10);
+		cat.addItem(new Item("HW11"));
+		assertTrue(cat.removeItem("HW1"));
+		assertEquals(0, cat.getItemList().size());
+	}
+	
+	@Test
+	public void testRemoveItemThree() {
+		Category cat = new Category("HW", 10);
+		assertFalse(cat.removeItem("HW1"));
+	}
+
+	@Test
+	public void testRemoveItemFour() {
+		Category cat = new Category("HW", 10, 10);
+		assertFalse(cat.removeItem("HW1"));
+	}
+	
+	@Test
+	public void testRemoveItemFive() {
+		Category cat = new Category("HW", 10);
+		cat.addItem(new Item("HW1"));
+		cat.addItem(new Item("HW2"));
+		cat.removeItem("HW1");
+		assertEquals("HW2", cat.getItemList().get(0).getName());
+	}
+
+	@Test
+	public void testRemoveItemSix() {
+		Category cat = new Category("HW", 10, 10);
+		cat.removeItem("HW1");
+		assertEquals("HW7", cat.getItemList().get(5).getName());
+	}
+	
 	// test code for calculating number of items in a category
 	@Test
 	public void testNUmOfItemsOne() {
