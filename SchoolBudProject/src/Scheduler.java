@@ -30,7 +30,7 @@ public class Scheduler {
 		SchedulerCourse course = this.classes.get(0);
 		ArrayList<ClassSection> sections = course.getSections();
 
-		// go through each course section
+		// go through each section
 		for (ClassSection section : sections) {
 
 			if (!isSectionEmpty(section)) {
@@ -70,11 +70,11 @@ public class Scheduler {
 			}
 		} else {
 			// go through JUST next course to check against
-			ArrayList<SchedulerCourse> tempCoursesToCheck = this
-					.cloneSchedulerCoursList(coursesToCheck);
+			ArrayList<SchedulerCourse> tempCoursesToCheck = this.cloneSchedulerCoursList(coursesToCheck);
 			SchedulerCourse course = tempCoursesToCheck.get(0);
 			ArrayList<ClassSection> sections = course.getSections();
 			tempCoursesToCheck.remove(0);
+	
 
 			// compile all sections of all current
 			// built up classes for later comparison
@@ -87,19 +87,22 @@ public class Scheduler {
 			}
 
 			// go through each course section of JUST this course
-			for (ClassSection section : currClassSections) {
+			for (ClassSection section : sections) {
 
 				if (!isSectionEmpty(section)) {
-
-					if (!this.sectionsOverlapWithnewSection(currClassSections, section)) {
+					if (!this.sectionsOverlapWithnewSection(currClassSections,
+							section)) {
 						ArrayList<ClassSection> newClassSections = new ArrayList<ClassSection>();
 						newClassSections.add(section);
 						SchedulerCourse newCourse = new SchedulerCourse(
-								course.getCourseName(), newClassSections, course.isOptional());
-						ArrayList<SchedulerCourse> newCourses = this.cloneSchedulerCoursList(currSectionCourses);
+								course.getCourseName(), newClassSections,
+								course.isOptional());
+						ArrayList<SchedulerCourse> newCourses = this
+								.cloneSchedulerCoursList(currSectionCourses);
 						newCourses.add(newCourse);
 
-						this.findMatchingCoursesWithSections(newCourses, tempCoursesToCheck);
+						this.findMatchingCoursesWithSections(newCourses,
+								tempCoursesToCheck);
 					}
 
 				}
@@ -187,32 +190,32 @@ public class Scheduler {
 		return courses;
 	}
 
-	// public static void printSchedules(
-	// ArrayList<ArrayList<SchedulerCourse>> schedules) {
-	// int count = 0;
-	// for (ArrayList<SchedulerCourse> schedule : schedules) {
-	// System.out.println();
-	// System.out
-	// .println("#"
-	// + count
-	// + "-------------------------------------------------------------------");
-	// count++;
-	// System.out.println();
-	// for (SchedulerCourse course : schedule) {
-	// System.out.println();
-	// System.out.println();
-	// System.out.println("COURSE");
-	// for (WeekSchedule section : course.getSections().getSections()) {
-	// for (ClassDay day : section.getScheduleHours()) {
-	// System.out.println();
-	// System.out.print("DAY:");
-	// for (Integer hour : day.getHourSlots()) {
-	// System.out.print(hour + ", ");
-	// }
-	// }
-	// }
-	// }
-	// }
-	// }
+	public static void printSchedules(
+			ArrayList<ArrayList<SchedulerCourse>> schedules) {
+		int count = 0;
+		for (ArrayList<SchedulerCourse> schedule : schedules) {
+			System.out.println();
+			System.out
+					.println("#"
+							+ count
+							+ "-------------------------------------------------------------------");
+			count++;
+			System.out.println();
+			for (SchedulerCourse course : schedule) {
+				System.out.println();
+				System.out.println();
+				System.out.println("COURSE");
+				for (ClassSection section : course.getSections()) {
+					for (ClassDay day : section.getClassDays()) {
+						System.out.println();
+						System.out.print("DAY:");
+						for (Integer hour : day.getHourSlots()) {
+							System.out.print(hour + ", ");
+						}
+					}
+				}
+			}
+		}
+	}
 
 }

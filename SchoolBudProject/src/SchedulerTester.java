@@ -63,89 +63,84 @@ public class SchedulerTester {
 		assertEquals(0, scheduler.permutateSchedules().size());
 	}
 
-//	@Test
-//	public void testScheduleOneClassOneHour() {
-//		ArrayList<ClassDay> days = ClassSection.create7DayArrayList();
-//		ArrayList<Integer> hours = new ArrayList<Integer>();
-//		hours.add(2);
-//		ClassDay day = new ClassDay(hours);
-//		days.set(0, day);
-//		ClassSection section = new ClassSection(days);
-//		ArrayList<ClassSection> sections = new ArrayList<ClassSection>();
-//		sections.add(section);
-//
-//		SchedulerCourse class1 = new SchedulerCourse("Math", "Mr. Man",
-//				sections);
-//
-//		ArrayList<SchedulerCourse> classes = new ArrayList<SchedulerCourse>();
-//		classes.add(class1);
-//
-//		Scheduler scheduler = new Scheduler(8, classes);
-//
-//		assertEquals(1, scheduler.permutateSchedules().size());
-//	}
-//
-//	@Test
-//	public void testScheduleOneClassTwoHoursOneSection() {
-//
-//		ArrayList<ClassDay> days = ClassSection.create7DayArrayList();
-//		ArrayList<Integer> hours = new ArrayList<Integer>();
-//		hours.add(2);
-//		hours.add(3);
-//		ClassDay day = new ClassDay(hours);
-//		days.set(0, day);
-//		ClassSection section = new ClassSection(days);
-//		ArrayList<ClassSection> sections = new ArrayList<ClassSection>();
-//		sections.add(section);
-//
-//		SchedulerCourse class1 = new SchedulerCourse("Math", "Mr. Man",
-//				sections);
-//
-//		ArrayList<SchedulerCourse> classes = new ArrayList<SchedulerCourse>();
-//		classes.add(class1);
-//
-//		Scheduler scheduler = new Scheduler(8, classes);
-//
-//		assertEquals(1, scheduler.permutateSchedules().size());
-//	}
-//
-//	@Test
-//	public void testScheduleTwoClassesWithOneHoursSectionEach() {
-//
-//		ArrayList<ClassDay> days = ClassSection.create7DayArrayList();
-//		ArrayList<Integer> hours = new ArrayList<Integer>();
-//		hours.add(2);
-//		ClassDay day = new ClassDay(hours);
-//		days.set(0, day);
-//		ClassSection section = new ClassSection(days);
-//		ArrayList<ClassSection> sections = new ArrayList<ClassSection>();
-//		sections.add(section);
-//
-//		SchedulerCourse class1 = new SchedulerCourse("Math", "Mr. Man",
-//				sections);
-//
-//		ArrayList<ClassDay> days2 = ClassSection.create7DayArrayList();
-//		ArrayList<Integer> hours2 = new ArrayList<Integer>();
-//		hours2.add(3);
-//		ClassDay day2 = new ClassDay(hours2);
-//		days2.set(0, day2);
-//		ClassSection section2 = new ClassSection(days2);
-//		ArrayList<ClassSection> sections2 = new ArrayList<ClassSection>();
-//		sections2.add(section2);
-//		ClassSection sectionHolder2 = new ClassSection(sections2);
-//
-//		SchedulerCourse class2 = new SchedulerCourse("Science", "Mr. Foley",
-//				sectionHolder2);
-//
-//		ArrayList<SchedulerCourse> classes = new ArrayList<SchedulerCourse>();
-//		classes.add(class1);
-//		classes.add(class2);
-//
-//		Scheduler scheduler = new Scheduler(8, classes);
-//
-//		assertEquals(1, scheduler.permutateSchedules().size());
-//	}
-//
+	@Test
+	public void testScheduleOneClassOneHour() {
+		ArrayList<ClassDay> days = ClassSection.create7DayArrayList();
+		ArrayList<Integer> hours = new ArrayList<Integer>();
+		hours.add(2);
+		ClassDay day = new ClassDay(hours);
+		days.set(0, day);
+		ClassSection section = new ClassSection("Mr. Man", days);
+		ArrayList<ClassSection> sections = new ArrayList<ClassSection>();
+		sections.add(section);
+
+		SchedulerCourse class1 = new SchedulerCourse("Math", sections, false);
+
+		ArrayList<SchedulerCourse> classes = new ArrayList<SchedulerCourse>();
+		classes.add(class1);
+
+		Scheduler scheduler = new Scheduler(8, classes);
+
+		assertEquals(1, scheduler.permutateSchedules().size());
+	}
+
+	@Test
+	public void testScheduleOneClassTwoHoursOneSection() {
+
+		ArrayList<ClassDay> days = ClassSection.create7DayArrayList();
+		ArrayList<Integer> hours = new ArrayList<Integer>();
+		hours.add(2);
+		hours.add(3);
+		ClassDay day = new ClassDay(hours);
+		days.set(0, day);
+		ClassSection section = new ClassSection("Mr. Man", days);
+		ArrayList<ClassSection> sections = new ArrayList<ClassSection>();
+		sections.add(section);
+
+		SchedulerCourse class1 = new SchedulerCourse("Math", sections, false);
+
+		ArrayList<SchedulerCourse> classes = new ArrayList<SchedulerCourse>();
+		classes.add(class1);
+
+		Scheduler scheduler = new Scheduler(8, classes);
+
+		assertEquals(1, scheduler.permutateSchedules().size());
+	}
+
+	@Test
+	public void testScheduleTwoClassesWithOneHoursSectionEach() {
+
+		ArrayList<ClassDay> days = ClassSection.create7DayArrayList();
+		ArrayList<Integer> hours = new ArrayList<Integer>();
+		hours.add(2);
+		ClassDay day = new ClassDay(hours);
+		days.set(0, day);
+		ClassSection section = new ClassSection("Mr. Man", days);
+		ArrayList<ClassSection> sections = new ArrayList<ClassSection>();
+		sections.add(section);
+
+		SchedulerCourse class1 = new SchedulerCourse("Math", sections, false);
+
+		ArrayList<ClassDay> days2 = ClassSection.create7DayArrayList();
+		ArrayList<Integer> hours2 = new ArrayList<Integer>();
+		hours2.add(3);
+		ClassDay day2 = new ClassDay(hours2);
+		days2.set(0, day2);
+		ClassSection section2 = new ClassSection("Mr. Moon", days2);
+		ArrayList<ClassSection> sections2 = new ArrayList<ClassSection>();
+		sections2.add(section2);
+
+		SchedulerCourse class2 = new SchedulerCourse("Science", sections2, false);
+
+		ArrayList<SchedulerCourse> classes = new ArrayList<SchedulerCourse>();
+		classes.add(class1);
+		classes.add(class2);
+
+		Scheduler scheduler = new Scheduler(8, classes);
+
+		assertEquals(1, scheduler.permutateSchedules().size());
+	}
+
 //	@Test
 //	public void testScheduleOneClassWithTwoSectionsOfOneHour() {
 //
