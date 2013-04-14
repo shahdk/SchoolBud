@@ -7,36 +7,40 @@ import java.util.ArrayList;
 public class SchedulerCourse extends Course {
 
 	private ArrayList<ClassSection> sections;
+	private boolean isOptional;
 
-	public SchedulerCourse(String className, String teacherName,
-			ClassSection sections) {
+	public SchedulerCourse(String className, ArrayList<ClassSection> sections,
+			boolean isOptional) {
 		super(className);
-
-		this.teacher = teacherName;
-		this.sections = sections;
-	}
-
-	public String getTeacher() {
-		return teacher;
-	}
-
-	public void setTeacher(String teacher) {
-		this.teacher = teacher;
+		this.setSections(sections);
+		this.setOptional(isOptional);
 	}
 
 	/**
 	 * @return the sections
 	 */
-	public ClassSection getSections() {
+	public ArrayList<ClassSection> getSections() {
 		return sections;
 	}
 
 	/**
-	 * @param sections
-	 *            the sections to set
+	 * @param sections the sections to set
 	 */
-	public void setSections(ClassSection sections) {
+	public void setSections(ArrayList<ClassSection> sections) {
 		this.sections = sections;
 	}
 
+	/**
+	 * @return the isOptional
+	 */
+	public boolean isOptional() {
+		return isOptional;
+	}
+
+	/**
+	 * @param isOptional the isOptional to set
+	 */
+	public void setOptional(boolean isOptional) {
+		this.isOptional = isOptional;
+	}
 }
