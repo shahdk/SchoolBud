@@ -31,7 +31,7 @@ public class SchedulerCourseHelperClassesTester {
 	}
 	
 	@Test
-	public void testWeekSchedule7DayExceptionLength() {
+	public void testSection7DayExceptionLength() {
 		ArrayList<ClassDay> days = new ArrayList<ClassDay>();
 		ArrayList<Integer> hours = new ArrayList<Integer>();
 		hours.add(1);
@@ -40,7 +40,7 @@ public class SchedulerCourseHelperClassesTester {
 		days.add(day);
 		boolean caught = false;
 		try {
-			WeekSchedule week = new WeekSchedule(days);
+			new ClassSection("Mrs. Healy", days);
 		}
 		catch (InstantiationError e){
 			caught = true;
@@ -50,43 +50,23 @@ public class SchedulerCourseHelperClassesTester {
 	}
 	
 	@Test
-	public void testWeekScheduleGetterSetter() {
-		ArrayList<ClassDay> days = WeekSchedule.create7DayArrayList();
+	public void testClassSectionGetterSetter() {
+		ArrayList<ClassDay> days = ClassSection.create7DayArrayList();
 		ArrayList<Integer> hours = new ArrayList<Integer>();
 		hours.add(1);
 		hours.add(5);
 		ClassDay day = new ClassDay(hours);
 		days.set(0, day);
 		
-		WeekSchedule week = new WeekSchedule(days);
-		assertEquals(days, week.getScheduleHours());
+		ClassSection section = new ClassSection("Mr. Taylor", days);
+		assertEquals(days, section.getClassDays());
 		
 		hours.add(7);
 		hours.add(9);
 		day.setHourSlots(hours);
 		days.add(day);
-		week.setScheduleHours(days);
+		section.setClassDays(days);
 		
-		assertEquals(days, week.getScheduleHours());
+		assertEquals(days, section.getClassDays());
 	}
-	
-	@Test
-	public void testClassSectionGetterSetter() {
-		ArrayList<ClassDay> days = WeekSchedule.create7DayArrayList();
-		ArrayList<Integer> hours = new ArrayList<Integer>();
-		hours.add(1);
-		hours.add(5);
-		ClassDay day = new ClassDay(hours);
-		days.set(0, day);
-		WeekSchedule week = new WeekSchedule(days);
-		ArrayList<WeekSchedule> sections = new ArrayList<WeekSchedule>();
-		sections.add(week);
-		
-		ClassSection sectionHolder = new ClassSection(sections);
-		assertEquals(sections, sectionHolder.getSections());
-		
-		sectionHolder.setSections(null);
-		assertNull(sectionHolder.getSections());
-	}
-
 }

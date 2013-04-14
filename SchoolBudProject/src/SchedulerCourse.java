@@ -6,8 +6,7 @@ import java.util.ArrayList;
 
 public class SchedulerCourse extends Course {
 
-	private String teacher;
-	private ClassSection sections;
+	private ArrayList<ClassSection> sections;
 
 	public SchedulerCourse(String className, String teacherName,
 			ClassSection sections) {
