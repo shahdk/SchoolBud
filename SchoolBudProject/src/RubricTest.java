@@ -174,6 +174,20 @@ public class RubricTest {
 		rubric.setLowerLimit("A", -10);}
 	
 	@Test(expected = IllegalArgumentException.class)
+	public void testsetLowerLimitExcpetionThree(){
+		Rubric rubric = new Rubric();
+		rubric.addGrade("A", 90, 100, 4.0);
+		rubric.addGrade("B", 80, 89, 3.0);
+		rubric.setLowerLimit("B", 95); }
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testsetLowerLimitExcpetionFour(){
+		Rubric rubric = new Rubric();
+		rubric.addGrade("A", 90, 100, 4.0);
+		rubric.addGrade("B", 80, 89, 3.0);
+		rubric.setLowerLimit("B", 90); }
+	
+	@Test(expected = IllegalArgumentException.class)
 	public void testsetUpperLimitExcpetionOne(){
 		Rubric rubric = new Rubric();
 		rubric.addGrade("A", 90, 100, 4.0);
