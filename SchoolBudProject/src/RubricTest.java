@@ -242,11 +242,10 @@ public class RubricTest {
 	//test cases for loading grades from a file, and saving the grades to a file.
 	@Test
 	public void testLoadSaveRubricOne() throws Exception{
-		FileParser rubricFile = new FileParser();
 		Rubric rubric = new Rubric();
 		rubric.setDefaults();
-		rubricFile.saveRubric();
-		rubricFile.loadFile();
+		rubric.saveRubric();
+		rubric.loadRubric();
 		assertEquals(4.0, rubric.getGPA("A"), DELTA);
 	}
 	
