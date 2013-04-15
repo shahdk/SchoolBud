@@ -201,4 +201,28 @@ public class RubricTest {
 		rubric.addGrade("B", 85, 89, 3.0);
 		rubric.setUpperLimit("B", 95);}
 	
+	//test cases for removing grade
+	@Test
+	public void testRemoveGrade(){
+		Rubric rubric = new Rubric();
+		rubric.addGrade("A", 90, 100, 4.0);
+		assertTrue(rubric.removeGrade("A"));
+	}
+	
+	@Test
+	public void testRemoveGradeTwo(){
+		Rubric rubric = new Rubric();
+		rubric.addGrade("A", 90, 100, 4.0);
+		rubric.addGrade("B", 80, 89, 4.0);
+		assertTrue(rubric.removeGrade("B"));
+		assertEquals(4.0, rubric.getGPA("A"), DELTA);
+	}
+	
+	@Test
+	public void testRemoveGradeThree(){
+		Rubric rubric = new Rubric();
+		rubric.addGrade("A", 90, 100, 4.0);
+		assertFalse(rubric.removeGrade("B"));
+	}
+	
 }
