@@ -94,4 +94,80 @@ public class RubricTest {
 		Rubric rubric = new Rubric();
 		rubric.addGrade("A", 90, 100, 4.0);
 		rubric.addGrade("B", 85, 89, 4.0);}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testAddSameGradeName(){
+		Rubric rubric = new Rubric();
+		rubric.addGrade("A", 90, 100, 4.0);
+		rubric.addGrade("A", 85, 89, 3.0);}
+	
+	@Test
+	public void testsetGPA(){
+		Rubric rubric = new Rubric();
+		rubric.addGrade("A", 90, 100, 4.0);
+		rubric.setGPA("A", 3.90);
+		assertEquals(3.90, rubric.getGPA("A"), DELTA);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testsetGPATwo(){
+		Rubric rubric = new Rubric();
+		rubric.addGrade("A", 90, 100, 4.0);
+		rubric.setGPA("A", -3.90);	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testsetGPAThree(){
+		Rubric rubric = new Rubric();
+		rubric.addGrade("A", 90, 100, 4.0);
+		rubric.addGrade("B", 85, 89, 3.0);
+		rubric.setGPA("A", 3.0);	}
+	
+	@Test
+	public void testsetLowerLimit(){
+		Rubric rubric = new Rubric();
+		rubric.addGrade("A", 90, 100, 4.0);
+		rubric.setLowerLimit("A", 95);
+		assertEquals(95, rubric.getLowerLimit("A"), DELTA);
+	}	
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testsetLowerLimitExceptionOne(){
+		Rubric rubric = new Rubric();
+		rubric.addGrade("A", 90, 100, 4.0);
+		rubric.setLowerLimit("A", 190);}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testsetLowerLimitExceptionTwo(){
+		Rubric rubric = new Rubric();
+		rubric.addGrade("A", 90, 100, 4.0);
+		rubric.setLowerLimit("A", -10);}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testsetUpperLimitExcpetionOne(){
+		Rubric rubric = new Rubric();
+		rubric.addGrade("A", 90, 100, 4.0);
+		rubric.addGrade("B", 80, 89, 3.0);
+		rubric.setUpperLimit("B", 190); }
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testsetUpperLimitExcpetionTwo(){
+		Rubric rubric = new Rubric();
+		rubric.addGrade("A", 90, 100, 4.0);
+		rubric.addGrade("B", 80, 89, 3.0);
+		rubric.setUpperLimit("B", 100); }
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testsetUpperLimitExcpetionThree(){
+		Rubric rubric = new Rubric();
+		rubric.addGrade("A", 90, 100, 4.0);
+		rubric.addGrade("B", 80, 89, 3.0);
+		rubric.setUpperLimit("B", -190); }
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testsetUpperLimitExceptionFour(){
+		Rubric rubric = new Rubric();
+		rubric.addGrade("A", 90, 100, 4.0);
+		rubric.addGrade("B", 85, 89, 3.0);
+		rubric.setUpperLimit("B", 95);}
+	
 }
