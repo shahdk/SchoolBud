@@ -109,4 +109,14 @@ public class Rubric {
 		this.grades.get(grade).set(1, upperLimit);
 	}
 
+	public void setLetterGrade(String old, String newGrade) {
+		if(this.grades.containsKey(newGrade) || newGrade.length()==0){
+			throw new IllegalArgumentException();
+		}
+		
+		ArrayList<Double> temp = this.grades.get(old);
+		this.grades.remove(old);
+		this.grades.put(newGrade, temp);
+	}
+
 }
