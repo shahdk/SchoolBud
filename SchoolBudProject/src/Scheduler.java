@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 
+
 /* The Scheduler class finds all of the permutations of possible schedules
  * depending on a students entered classes and their respective hours 
  * 
@@ -21,8 +22,12 @@ public class Scheduler {
 		this.numClasses = this.classes.size();
 	}
 
+	// ===========================================================================================
+	//
+
 	public ArrayList<ArrayList<SchedulerCourse>> permutateSchedules() {
 		this.schedules.clear();
+		this.filteredSchedules.clear();
 
 		if (this.classes == null || this.classes.size() == 0) {
 			return this.schedules;
@@ -61,6 +66,9 @@ public class Scheduler {
 		return this.schedules;
 	}
 
+	// ===========================================================================================
+	//
+
 	public void findMatchingCoursesWithSections(
 			ArrayList<SchedulerCourse> currSectionCourses,
 			ArrayList<SchedulerCourse> coursesToCheck) {
@@ -73,11 +81,11 @@ public class Scheduler {
 			}
 		} else {
 			// go through JUST next course to check against
-			ArrayList<SchedulerCourse> tempCoursesToCheck = this.cloneSchedulerCoursList(coursesToCheck);
+			ArrayList<SchedulerCourse> tempCoursesToCheck = this
+					.cloneSchedulerCoursList(coursesToCheck);
 			SchedulerCourse course = tempCoursesToCheck.get(0);
 			ArrayList<ClassSection> sections = course.getSections();
 			tempCoursesToCheck.remove(0);
-	
 
 			// compile all sections of all current
 			// built up classes for later comparison
@@ -115,6 +123,9 @@ public class Scheduler {
 
 	}
 
+	// ===========================================================================================
+	//
+
 	public boolean sectionOverlapWithSection(ClassSection section1,
 			ClassSection section2) {
 
@@ -138,6 +149,9 @@ public class Scheduler {
 		return false;
 	}
 
+	// ===========================================================================================
+	//
+
 	public boolean sectionsOverlapWithnewSection(
 			ArrayList<ClassSection> sections, ClassSection newSection) {
 
@@ -152,6 +166,10 @@ public class Scheduler {
 		return false;
 	}
 
+	// ===========================================================================================
+	//
+	// checks to see if a section does not have any class days with hours in
+	// them
 	public boolean isSectionEmpty(ClassSection section) {
 		for (ClassDay day : section.getClassDays()) {
 			if (day.getHourSlots().size() > 0) {
@@ -162,6 +180,9 @@ public class Scheduler {
 		return true;
 	}
 
+	// ===========================================================================================
+	//
+	// completely flattens out a list of schedules to an ArrayList of Integers
 	public static ArrayList<Integer> getDayHoursLists(
 			ArrayList<ArrayList<SchedulerCourse>> schedules) {
 
@@ -182,6 +203,9 @@ public class Scheduler {
 		return hours;
 	}
 
+	// ===========================================================================================
+	//
+	// makes a deeper clone of an arrayList of courses
 	public ArrayList<SchedulerCourse> cloneSchedulerCoursList(
 			ArrayList<SchedulerCourse> classes) {
 
@@ -192,15 +216,113 @@ public class Scheduler {
 
 		return courses;
 	}
-	
-	//Filters out schedules that have a greater number of gaps between classes than
-	//the denoted OR that has the max number of gaps occur more than the denoted amount
-	public ArrayList<ArrayList<SchedulerCourse>> filterGaps(int maxNumOfGaps, int maxNumOfOccurences) {
-		ArrayList<ArrayList<SchedulerCourse>> filteredResults = new ArrayList<ArrayList<SchedulerCourse>>();
+
+	// ===========================================================================================
+	//
+	// Filters out schedules that have a greater number of gaps between classes
+	// than
+	// the denoted OR that has the max number of gaps occur more than the
+	// denoted amount
+	public ArrayList<ArrayList<SchedulerCourse>> filterGaps(int maxNumOfGapHours,
+			int maxNumOfOccurences, boolean allowLessNumOfGaps,
+			ArrayList<Integer> ignoreDays) {
+		if (ignoreDays == null) {
+			ignoreDays = new ArrayList<Integer>();
+		}
+		int gapsOccurences = 0;
+		boolean isValid;
+		ArrayList<ArrayList<SchedulerCourse>> schedsToRemove = new ArrayList<ArrayList<SchedulerCourse>>();
+		// go through each schedule
+		for (ArrayList<SchedulerCourse> schedule : this.filteredSchedules) {
+			isValid = true;
+			// flatten out that schedule into a week of days of hours
+			ArrayList<ArrayList<Integer>> week = this
+					.flattenScheduleDays(schedule);
+			// go through each day and make desired filtration
+			for (int i = 0; i < 7; i++) {
+				if (!isValid) {
+					break;
+				}
+				// ignore days the user dose not want filter to apply to
+				if (!ignoreDays.contains(i)) {
+					ArrayList<Integer> day = week.get(i);
+					// go through each pair of hours
+					for (int h = 0; h < day.size(); h++) {
+						if (h + 1 >= day.size()) {
+							break;
+						}
+						
+						//subtract 1 to get ACTUAL NUM of HOURS GAP
+						int hourDiff = day.get(h + 1) - day.get(h) - 1;
+						if (hourDiff > maxNumOfGapHours
+								|| (hourDiff < maxNumOfGapHours && !allowLessNumOfGaps)) {
+							isValid = false;
+							break;
+						}
+						if (hourDiff == maxNumOfGapHours) {
+							if (gapsOccurences == maxNumOfOccurences) {
+								isValid = false;
+								break;
+							}
+							gapsOccurences++;
+
+						}
+					}
+				}
+			}
+
+			if (!isValid) {
+				schedsToRemove.add(schedule);
+			}
+
+		}
 		
-		return filteredResults;
+		//remove all found schedules
+		for (ArrayList<SchedulerCourse> sched: schedsToRemove) {
+			this.filteredSchedules.remove(sched);
+		}
+
+		return this.filteredSchedules;
 	}
-	
+
+	// ===========================================================================================
+	//
+	//
+	// Flattens our a single schedule (or list of scheduler classes with 1
+	// section each)
+	// so that it returns an ArrayList of 7 days, with all the hours
+	// respectively put into each day
+	public ArrayList<ArrayList<Integer>> flattenScheduleDays(
+			ArrayList<SchedulerCourse> courses) {
+		ArrayList<ArrayList<Integer>> week = new ArrayList<ArrayList<Integer>>();
+		// create seven days of the week
+		for (int i = 0; i < 7; i++) {
+			week.add(new ArrayList<Integer>());
+		}
+
+		// go through each course
+		for (SchedulerCourse course : courses) {
+			// get that courses 1 section
+			ClassSection section = course.getSections().get(0);
+
+			// go through days of that 1 section
+			for (int d = 0; d < 7; d++) {
+
+				// append each days hours onto the respective day
+				week.get(d)
+						.addAll(section.getClassDays().get(d).getHourSlots());
+			}
+		}
+
+		// sort each days hours
+		for (ArrayList<Integer> day : week) {
+			java.util.Collections.sort(day);
+		}
+		return week;
+	}
+
+	// =============================================================================================
+
 	public ArrayList<ArrayList<SchedulerCourse>> getFilteredSchedules() {
 		return this.filteredSchedules;
 	}
