@@ -22,18 +22,22 @@ public class Rubric {
 
 	public void addGrade(String letterGrade, double lowerLimit,
 			double upperLimit, double gpa) {
-		if (lowerLimit > upperLimit || lowerLimit < 0 || lowerLimit > 100 || upperLimit < 0 || upperLimit > 100) {
+		if (lowerLimit > upperLimit || lowerLimit < 0 || lowerLimit > 100
+				|| upperLimit < 0 || upperLimit > 100
+				|| this.grades.containsKey(letterGrade)) {
 			throw new IllegalArgumentException();
 		}
 
 		for (ArrayList<Double> x : this.grades.values()) {
-			if ((lowerLimit > x.get(0) && lowerLimit < x.get(1)) || lowerLimit == x.get(0)) {
+			if ((lowerLimit > x.get(0) && lowerLimit < x.get(1))
+					|| lowerLimit == x.get(0)) {
 				throw new IllegalArgumentException();
 			}
-			if ((upperLimit > x.get(0) && upperLimit < x.get(1)) || upperLimit == x.get(1) || upperLimit > x.get(0)) {
+			if ((upperLimit > x.get(0) && upperLimit < x.get(1))
+					|| upperLimit == x.get(1) || upperLimit > x.get(0)) {
 				throw new IllegalArgumentException();
 			}
-			if(gpa == x.get(2)){
+			if (gpa == x.get(2) || gpa < 0) {
 				throw new IllegalArgumentException();
 			}
 		}
@@ -58,6 +62,51 @@ public class Rubric {
 	public double getGPA(String letterGrade) {
 		ArrayList<Double> temp = this.grades.get(letterGrade);
 		return temp.get(2);
+	}
+
+	public void setGPA(String grade, double gpa) {
+		for (ArrayList<Double> x : this.grades.values()) {
+			if (gpa == x.get(2) || gpa < 0) {
+				throw new IllegalArgumentException();
+			}
+		}
+		this.grades.get(grade).set(2, gpa);
+	}
+
+	public void setLowerLimit(String grade, double lowerLimit) {
+		if (lowerLimit < 0 || lowerLimit > 100) {
+			throw new IllegalArgumentException();
+		}
+
+		for (String s : this.grades.keySet()) {
+			if (!s.equals(grade)) {
+				ArrayList<Double> x = this.grades.get(s);
+				if ((lowerLimit > x.get(0) && lowerLimit < x.get(1))
+						|| lowerLimit == x.get(0)) {
+					throw new IllegalArgumentException();
+				}
+			}
+		}
+
+		this.grades.get(grade).set(0, lowerLimit);
+	}
+
+	public void setUpperLimit(String grade, double upperLimit) {
+		if (upperLimit < 0 || upperLimit > 100) {
+			throw new IllegalArgumentException();
+		}
+
+		for (String s : this.grades.keySet()) {
+			if (!s.equals(grade)) {
+				ArrayList<Double> x = this.grades.get(s);
+				if ((upperLimit > x.get(0) && upperLimit < x.get(1))
+						|| upperLimit == x.get(1) || upperLimit > x.get(0)) {
+					throw new IllegalArgumentException();
+				}
+			}
+		}
+
+		this.grades.get(grade).set(1, upperLimit);
 	}
 
 }
