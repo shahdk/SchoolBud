@@ -101,6 +101,7 @@ public class RubricTest {
 		rubric.addGrade("A", 90, 100, 4.0);
 		rubric.addGrade("A", 85, 89, 3.0);}
 	
+	//test cases for setting letter grade, gpa, lower limit, and upper limit.
 	@Test
 	public void testsetGPA(){
 		Rubric rubric = new Rubric();
@@ -108,6 +109,28 @@ public class RubricTest {
 		rubric.setGPA("A", 3.90);
 		assertEquals(3.90, rubric.getGPA("A"), DELTA);
 	}
+	
+	@Test
+	public void testsetLetterGrade(){
+		Rubric rubric = new Rubric();
+		rubric.addGrade("A", 90, 100, 4.0);
+		rubric.setLetterGrade("A", "B");
+		assertEquals(4.0, rubric.getGPA("B"), DELTA);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testsetLetterGradeWithSameName(){
+		Rubric rubric = new Rubric();
+		rubric.addGrade("A", 90, 100, 4.0);
+		rubric.addGrade("B", 85, 89, 3.0);
+		rubric.setLetterGrade("A", "B");}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testsetLetterGradeWithEmptyName(){
+		Rubric rubric = new Rubric();
+		rubric.addGrade("A", 90, 100, 4.0);
+		rubric.addGrade("B", 85, 89, 3.0);
+		rubric.setLetterGrade("A", "");	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testsetGPATwo(){
@@ -128,7 +151,15 @@ public class RubricTest {
 		rubric.addGrade("A", 90, 100, 4.0);
 		rubric.setLowerLimit("A", 95);
 		assertEquals(95, rubric.getLowerLimit("A"), DELTA);
-	}	
+	}
+	
+	@Test
+	public void testsetUpperLimit(){
+		Rubric rubric = new Rubric();
+		rubric.addGrade("A", 90, 100, 4.0);
+		rubric.setUpperLimit("A", 95);
+		assertEquals(95, rubric.getUpperLimit("A"), DELTA);
+	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testsetLowerLimitExceptionOne(){
