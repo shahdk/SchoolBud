@@ -327,32 +327,32 @@ public class Scheduler {
 		return this.filteredSchedules;
 	}
 
-	public static void printSchedules(
-			ArrayList<ArrayList<SchedulerCourse>> schedules) {
-		int count = 0;
-		for (ArrayList<SchedulerCourse> schedule : schedules) {
-			System.out.println();
-			System.out
-					.println("#"
-							+ count
-							+ "-------------------------------------------------------------------");
-			count++;
-			System.out.println();
-			for (SchedulerCourse course : schedule) {
-				System.out.println();
-				System.out.println();
-				System.out.println("COURSE");
-				for (ClassSection section : course.getSections()) {
-					for (ClassDay day : section.getClassDays()) {
-						System.out.println();
-						System.out.print("DAY:");
-						for (Integer hour : day.getHourSlots()) {
-							System.out.print(hour + ", ");
-						}
-					}
-				}
-			}
-		}
-	}
+//	public static void printSchedules(
+//			ArrayList<ArrayList<SchedulerCourse>> schedules) {
+//		int count = 0;
+//		for (ArrayList<SchedulerCourse> schedule : schedules) {
+//			System.out.println();
+//			System.out
+//					.println("#"
+//							+ count
+//							+ "-------------------------------------------------------------------");
+//			count++;
+//			System.out.println();
+//			for (SchedulerCourse course : schedule) {
+//				System.out.println();
+//				System.out.println();
+//				System.out.println("COURSE");
+//				for (ClassSection section : course.getSections()) {
+//					for (ClassDay day : section.getClassDays()) {
+//						System.out.println();
+//						System.out.print("DAY:");
+//						for (Integer hour : day.getHourSlots()) {
+//							System.out.print(hour + ", ");
+//						}
+//					}
+//				}
+//			}
+//		}
+//	}
 
 }

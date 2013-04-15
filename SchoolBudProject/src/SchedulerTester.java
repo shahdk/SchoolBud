@@ -7,201 +7,206 @@ import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 public class SchedulerTester {
 
-	// @Test
-	// public void test() {
-	// assertTrue(true);
-	// }
-	//
-	// @Test
-	// public void testInitialize() {
-	//
-	// ArrayList<ClassDay> days = ClassSection.create7DayArrayList();
-	// ArrayList<Integer> hours = new ArrayList<Integer>();
-	// hours.add(1);
-	// hours.add(5);
-	// ClassDay day = new ClassDay(hours);
-	// days.set(0, day);
-	// ClassSection section = new ClassSection("Mr. Man", days);
-	// ArrayList<ClassSection> sections = new ArrayList<ClassSection>();
-	// sections.add(section);
-	//
-	// SchedulerCourse class1 = new SchedulerCourse("Math", sections, false);
-	//
-	// ArrayList<SchedulerCourse> classes = new ArrayList<SchedulerCourse>();
-	// classes.add(class1);
-	//
-	// Scheduler sched = new Scheduler(5, classes);
-	// assertNotNull(sched);
-	//
-	// // test filtering is not null
-	// assertNotNull(sched.getFilteredSchedules());
-	// assertNotNull(sched.filterGaps(2, 2, true, null));
-	// }
-	//
-	// @Test
-	// public void testScheduleEmptyClasses() {
-	//
-	// Scheduler scheduler = new Scheduler(5, new ArrayList<SchedulerCourse>());
-	//
-	// assertEquals(new ArrayList<ArrayList<ArrayList<SchedulerCourse>>>(),
-	// scheduler.permutateSchedules());
-	//
-	// // test empty filtering schedules
-	// assertEquals(new ArrayList<ArrayList<ArrayList<SchedulerCourse>>>(),
-	// scheduler.filterGaps(2, 2, true, null));
-	// }
-	//
-	// @Test
-	// public void testScheduleOneClassZeroHours() {
-	//
-	// ArrayList<ClassDay> days = ClassSection.create7DayArrayList();
-	// ArrayList<Integer> hours = new ArrayList<Integer>();
-	// ClassDay day = new ClassDay(hours);
-	// days.set(0, day);
-	// ClassSection section = new ClassSection("Mr. Man", days);
-	// ArrayList<ClassSection> sections = new ArrayList<ClassSection>();
-	// sections.add(section);
-	//
-	// SchedulerCourse class1 = new SchedulerCourse("Math", sections, false);
-	//
-	// ArrayList<SchedulerCourse> classes = new ArrayList<SchedulerCourse>();
-	// classes.add(class1);
-	//
-	// Scheduler scheduler = new Scheduler(8, classes);
-	//
-	// assertEquals(0, scheduler.permutateSchedules().size());
-	//
-	// // test filters
-	// assertEquals(0, scheduler.filterGaps(2, 2, true, null).size());
-	// }
-	//
-	// @Test
-	// public void testScheduleOneClassOneHour() {
-	// ArrayList<ClassDay> days = ClassSection.create7DayArrayList();
-	// ArrayList<Integer> hours = new ArrayList<Integer>();
-	// hours.add(2);
-	// ClassDay day = new ClassDay(hours);
-	// days.set(0, day);
-	// ClassSection section = new ClassSection("Mr. Man", days);
-	// ArrayList<ClassSection> sections = new ArrayList<ClassSection>();
-	// sections.add(section);
-	//
-	// SchedulerCourse class1 = new SchedulerCourse("Math", sections, false);
-	//
-	// ArrayList<SchedulerCourse> classes = new ArrayList<SchedulerCourse>();
-	// classes.add(class1);
-	//
-	// Scheduler scheduler = new Scheduler(8, classes);
-	//
-	// assertEquals(1, scheduler.permutateSchedules().size());
-	//
-	// // test filters
-	//
-	// // test gaps filter - should not be able to filter anything with just
-	// // one class
-	// assertEquals(1, scheduler.filterGaps(2, 2, true, null).size());
-	// }
-	//
-	// @Test
-	// public void testScheduleOneClassTwoHoursOneSection() {
-	//
-	// ArrayList<ClassDay> days = ClassSection.create7DayArrayList();
-	// ArrayList<Integer> hours = new ArrayList<Integer>();
-	// hours.add(2);
-	// hours.add(5);
-	// ClassDay day = new ClassDay(hours);
-	// days.set(0, day);
-	// ClassSection section = new ClassSection("Mr. Man", days);
-	// ArrayList<ClassSection> sections = new ArrayList<ClassSection>();
-	// sections.add(section);
-	//
-	// SchedulerCourse class1 = new SchedulerCourse("Math", sections, false);
-	//
-	// ArrayList<SchedulerCourse> classes = new ArrayList<SchedulerCourse>();
-	// classes.add(class1);
-	//
-	// Scheduler scheduler = new Scheduler(8, classes);
-	//
-	// assertEquals(1, scheduler.permutateSchedules().size());
-	//
-	// // test filters
-	//
-	// // test gaps filter - with only 2 Gaps allowed (exact) --> 1 answer
-	// assertEquals(1, scheduler.filterGaps(2, 1, false, null).size());
-	// // test gaps filter - with 4 Gaps max but less allowed) --> 1 answer
-	// assertEquals(1, scheduler.filterGaps(4, 1, true, null).size());
-	// // test gaps filter - with 4 Gaps Only) --> 0 answers
-	// assertEquals(0, scheduler.filterGaps(4, 1, false, null).size());
-	//
-	// }
-	//
-	// @Test
-	// public void testScheduleTwoClassesWithOneHoursSectionEach() {
-	//
-	// ArrayList<ClassDay> days = ClassSection.create7DayArrayList();
-	// ArrayList<Integer> hours = new ArrayList<Integer>();
-	// hours.add(2);
-	// ClassDay day = new ClassDay(hours);
-	// days.set(0, day);
-	// ClassSection section = new ClassSection("Mr. Man", days);
-	// ArrayList<ClassSection> sections = new ArrayList<ClassSection>();
-	// sections.add(section);
-	//
-	// SchedulerCourse class1 = new SchedulerCourse("Math", sections, false);
-	//
-	// ArrayList<ClassDay> days2 = ClassSection.create7DayArrayList();
-	// ArrayList<Integer> hours2 = new ArrayList<Integer>();
-	// hours2.add(3);
-	// ClassDay day2 = new ClassDay(hours2);
-	// days2.set(0, day2);
-	// ClassSection section2 = new ClassSection("Mr. Moon", days2);
-	// ArrayList<ClassSection> sections2 = new ArrayList<ClassSection>();
-	// sections2.add(section2);
-	//
-	// SchedulerCourse class2 = new SchedulerCourse("Science", sections2,
-	// false);
-	//
-	// ArrayList<SchedulerCourse> classes = new ArrayList<SchedulerCourse>();
-	// classes.add(class1);
-	// classes.add(class2);
-	//
-	// Scheduler scheduler = new Scheduler(8, classes);
-	//
-	// assertEquals(1, scheduler.permutateSchedules().size());
-	// }
-	//
-	// @Test
-	// public void testScheduleOneClassWithTwoSectionsOfOneHour() {
-	//
-	// ArrayList<ClassDay> days = ClassSection.create7DayArrayList();
-	// ArrayList<Integer> hours = new ArrayList<Integer>();
-	// ArrayList<ClassDay> days2 = ClassSection.create7DayArrayList();
-	// ArrayList<Integer> hours2 = new ArrayList<Integer>();
-	// hours.add(2);
-	// hours2.add(4);
-	// ClassDay day = new ClassDay(hours);
-	// ClassDay day2 = new ClassDay(hours2);
-	// days.set(0, day);
-	// days2.set(0, day2);
-	// ClassSection section = new ClassSection("Mr. Man", days);
-	// ClassSection section2 = new ClassSection("Mr. Moose", days2);
-	// ArrayList<ClassSection> sections = new ArrayList<ClassSection>();
-	// sections.add(section);
-	// sections.add(section2);
-	//
-	// SchedulerCourse class1 = new SchedulerCourse("Math", sections, false);
-	//
-	// ArrayList<SchedulerCourse> classes = new ArrayList<SchedulerCourse>();
-	// classes.add(class1);
-	//
-	// Scheduler scheduler = new Scheduler(8, classes);
-	//
-	// assertEquals(2, scheduler.permutateSchedules().size());
-	// assertEquals(1, scheduler.permutateSchedules().get(0).size());
-	// assertEquals(1, scheduler.permutateSchedules().get(1).size());
-	// assertEquals(hours, scheduler.permutateSchedules().get(0).get(0)
-	// .getSections().get(0).getClassDays().get(0).getHourSlots());
-	// }
+	 @Test
+	 public void test() {
+	 assertTrue(true);
+	 }
+	
+	 @Test
+	 public void testInitialize() {
+	
+	 ArrayList<ClassDay> days = ClassSection.create7DayArrayList();
+	 ArrayList<Integer> hours = new ArrayList<Integer>();
+	 hours.add(1);
+	 hours.add(5);
+	 ClassDay day = new ClassDay(hours);
+	 days.set(0, day);
+	 ClassSection section = new ClassSection("Mr. Man", days);
+	 ArrayList<ClassSection> sections = new ArrayList<ClassSection>();
+	 sections.add(section);
+	
+	 SchedulerCourse class1 = new SchedulerCourse("Math", sections, false);
+	
+	 ArrayList<SchedulerCourse> classes = new ArrayList<SchedulerCourse>();
+	 classes.add(class1);
+	
+	 Scheduler sched = new Scheduler(5, classes);
+	 assertNotNull(sched);
+	
+	 // test filtering is not null
+	 assertNotNull(sched.getFilteredSchedules());
+	 assertNotNull(sched.filterGaps(2, 2, true, null));
+	 }
+	
+	 @Test
+	 public void testScheduleEmptyClasses() {
+	
+	 Scheduler scheduler = new Scheduler(5, new ArrayList<SchedulerCourse>());
+	
+	 assertEquals(new ArrayList<ArrayList<ArrayList<SchedulerCourse>>>(),
+	 scheduler.permutateSchedules());
+	
+	 // test empty filtering schedules
+	 assertEquals(new ArrayList<ArrayList<ArrayList<SchedulerCourse>>>(),
+	 scheduler.filterGaps(2, 2, true, null));
+	 }
+	
+	 @Test
+	 public void testScheduleOneClassZeroHours() {
+	
+	 ArrayList<ClassDay> days = ClassSection.create7DayArrayList();
+	 ArrayList<Integer> hours = new ArrayList<Integer>();
+	 ClassDay day = new ClassDay(hours);
+	 days.set(0, day);
+	 ClassSection section = new ClassSection("Mr. Man", days);
+	 ArrayList<ClassSection> sections = new ArrayList<ClassSection>();
+	 sections.add(section);
+	
+	 SchedulerCourse class1 = new SchedulerCourse("Math", sections, false);
+	
+	 ArrayList<SchedulerCourse> classes = new ArrayList<SchedulerCourse>();
+	 classes.add(class1);
+	
+	 Scheduler scheduler = new Scheduler(8, classes);
+	
+	 assertEquals(0, scheduler.permutateSchedules().size());
+	
+	 // test filters
+	 assertEquals(0, scheduler.filterGaps(2, 2, true, null).size());
+	 }
+	
+	 @Test
+	 public void testScheduleOneClassOneHour() {
+	 ArrayList<ClassDay> days = ClassSection.create7DayArrayList();
+	 ArrayList<Integer> hours = new ArrayList<Integer>();
+	 hours.add(2);
+	 ClassDay day = new ClassDay(hours);
+	 days.set(0, day);
+	 ClassSection section = new ClassSection("Mr. Man", days);
+	 ArrayList<ClassSection> sections = new ArrayList<ClassSection>();
+	 sections.add(section);
+	
+	 SchedulerCourse class1 = new SchedulerCourse("Math", sections, false);
+	
+	 ArrayList<SchedulerCourse> classes = new ArrayList<SchedulerCourse>();
+	 classes.add(class1);
+	
+	 Scheduler scheduler = new Scheduler(8, classes);
+	
+	 assertEquals(1, scheduler.permutateSchedules().size());
+	
+	 // test filters
+	
+	 // test gaps filter - should not be able to filter anything with just
+	 // one class
+	 assertEquals(1, scheduler.filterGaps(2, 2, true, null).size());
+	 }
+	
+	 @Test
+	 public void testScheduleOneClassTwoHoursOneSection() {
+	
+	 ArrayList<ClassDay> days = ClassSection.create7DayArrayList();
+	 ArrayList<Integer> hours = new ArrayList<Integer>();
+	 hours.add(2);
+	 hours.add(5);
+	 ClassDay day = new ClassDay(hours);
+	 days.set(0, day);
+	 ClassSection section = new ClassSection("Mr. Man", days);
+	 ArrayList<ClassSection> sections = new ArrayList<ClassSection>();
+	 sections.add(section);
+	
+	 SchedulerCourse class1 = new SchedulerCourse("Math", sections, false);
+	
+	 ArrayList<SchedulerCourse> classes = new ArrayList<SchedulerCourse>();
+	 classes.add(class1);
+	
+	 Scheduler scheduler = new Scheduler(8, classes);
+	
+	 assertEquals(1, scheduler.permutateSchedules().size());
+	
+	 // test filters
+	
+	 // test gaps filter - with only 2 Gaps allowed (exact) --> 1 answer
+	 assertEquals(1, scheduler.filterGaps(2, 1, false, null).size());
+	 // test gaps filter - with 4 Gaps max but less allowed) --> 1 answer
+	 scheduler.permutateSchedules();
+	 assertEquals(1, scheduler.filterGaps(4, 1, true, null).size());
+	 // test gaps filter - with 4 Gaps Only) --> 0 answers
+	 scheduler.permutateSchedules();
+	 assertEquals(0, scheduler.filterGaps(4, 1, false, null).size());
+	 // test gaps filter - with 2 Gaps only, but zero occurrences) --> 0 answers
+	 scheduler.permutateSchedules();
+	 assertEquals(0, scheduler.filterGaps(2, 0, true, null).size());
+	
+	 }
+	
+	 @Test
+	 public void testScheduleTwoClassesWithOneHoursSectionEach() {
+	
+	 ArrayList<ClassDay> days = ClassSection.create7DayArrayList();
+	 ArrayList<Integer> hours = new ArrayList<Integer>();
+	 hours.add(2);
+	 ClassDay day = new ClassDay(hours);
+	 days.set(0, day);
+	 ClassSection section = new ClassSection("Mr. Man", days);
+	 ArrayList<ClassSection> sections = new ArrayList<ClassSection>();
+	 sections.add(section);
+	
+	 SchedulerCourse class1 = new SchedulerCourse("Math", sections, false);
+	
+	 ArrayList<ClassDay> days2 = ClassSection.create7DayArrayList();
+	 ArrayList<Integer> hours2 = new ArrayList<Integer>();
+	 hours2.add(3);
+	 ClassDay day2 = new ClassDay(hours2);
+	 days2.set(0, day2);
+	 ClassSection section2 = new ClassSection("Mr. Moon", days2);
+	 ArrayList<ClassSection> sections2 = new ArrayList<ClassSection>();
+	 sections2.add(section2);
+	
+	 SchedulerCourse class2 = new SchedulerCourse("Science", sections2,
+	 false);
+	
+	 ArrayList<SchedulerCourse> classes = new ArrayList<SchedulerCourse>();
+	 classes.add(class1);
+	 classes.add(class2);
+	
+	 Scheduler scheduler = new Scheduler(8, classes);
+	
+	 assertEquals(1, scheduler.permutateSchedules().size());
+	 }
+	
+	 @Test
+	 public void testScheduleOneClassWithTwoSectionsOfOneHour() {
+	
+	 ArrayList<ClassDay> days = ClassSection.create7DayArrayList();
+	 ArrayList<Integer> hours = new ArrayList<Integer>();
+	 ArrayList<ClassDay> days2 = ClassSection.create7DayArrayList();
+	 ArrayList<Integer> hours2 = new ArrayList<Integer>();
+	 hours.add(2);
+	 hours2.add(4);
+	 ClassDay day = new ClassDay(hours);
+	 ClassDay day2 = new ClassDay(hours2);
+	 days.set(0, day);
+	 days2.set(0, day2);
+	 ClassSection section = new ClassSection("Mr. Man", days);
+	 ClassSection section2 = new ClassSection("Mr. Moose", days2);
+	 ArrayList<ClassSection> sections = new ArrayList<ClassSection>();
+	 sections.add(section);
+	 sections.add(section2);
+	
+	 SchedulerCourse class1 = new SchedulerCourse("Math", sections, false);
+	
+	 ArrayList<SchedulerCourse> classes = new ArrayList<SchedulerCourse>();
+	 classes.add(class1);
+	
+	 Scheduler scheduler = new Scheduler(8, classes);
+	
+	 assertEquals(2, scheduler.permutateSchedules().size());
+	 assertEquals(1, scheduler.permutateSchedules().get(0).size());
+	 assertEquals(1, scheduler.permutateSchedules().get(1).size());
+	 assertEquals(hours, scheduler.permutateSchedules().get(0).get(0)
+	 .getSections().get(0).getClassDays().get(0).getHourSlots());
+	 }
 
 	@Test
 	public void testScheduleTwoClassesWithTwoSectionEach() {
@@ -271,6 +276,13 @@ public class SchedulerTester {
 		assertEquals(1, scheduler.filterGaps(3, 1, false, null).size());
 		assertEquals(SchedulerTester.createIntegerList(4, 8),
 				Scheduler.getDayHoursLists(scheduler.getFilteredSchedules()));
+		// test gaps filter - filter out lower than previous - zero because
+		// it has already been filtered) --> 0 answers
+		assertEquals(0, scheduler.filterGaps(1, 1, false, null).size());
+		// test gaps filter - SAME AS ABOVE - but filter was reset so it will
+		// produce 1 result --> 1 answers
+		scheduler.permutateSchedules();
+		assertEquals(1, scheduler.filterGaps(1, 1, false, null).size());
 	}
 
 	@Test
@@ -682,6 +694,11 @@ public class SchedulerTester {
 		assertEquals(8, scheduler.permutateSchedules().size());
 		assertEquals(expected,
 				Scheduler.getDayHoursLists(scheduler.permutateSchedules()));
+
+		// test filters
+
+		// test gaps filter - with only 1 Gaps allowed (exact) --> 0 answer
+		assertEquals(4, scheduler.filterGaps(3, 5, true, null).size());
 	}
 
 	public static ArrayList<Integer> createIntegerList(int... ints) {

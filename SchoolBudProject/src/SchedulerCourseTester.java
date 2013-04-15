@@ -8,7 +8,7 @@ import org.junit.Test;
 public class SchedulerCourseTester {
 
 	@Test
-	public void testName() {
+	public void testNameAndIsOptional() {
 		ArrayList<ClassDay> days = ClassSection.create7DayArrayList();
 		ArrayList<Integer> hours = new ArrayList<Integer>();
 		hours.add(1);
@@ -20,7 +20,7 @@ public class SchedulerCourseTester {
 		sections.add(section);
 
 		SchedulerCourse class1 = new SchedulerCourse("Math", sections, false);
-
+		assertFalse(class1.isOptional());
 		assertEquals(class1.getCourseName(), "Math");
 		class1.setName("Physics");
 		assertEquals(class1.getCourseName(), "Physics");
