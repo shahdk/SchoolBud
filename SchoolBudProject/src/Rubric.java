@@ -119,4 +119,12 @@ public class Rubric {
 		this.grades.put(newGrade, temp);
 	}
 
+	public boolean removeGrade(String letterGrade) {
+		if(!this.grades.containsKey(letterGrade)){
+			return false;
+		}
+		this.grades.remove(letterGrade);
+		return true;
+	}
+
 }

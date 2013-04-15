@@ -213,7 +213,7 @@ public class RubricTest {
 	public void testRemoveGradeTwo(){
 		Rubric rubric = new Rubric();
 		rubric.addGrade("A", 90, 100, 4.0);
-		rubric.addGrade("B", 80, 89, 4.0);
+		rubric.addGrade("B", 80, 89, 3.0);
 		assertTrue(rubric.removeGrade("B"));
 		assertEquals(4.0, rubric.getGPA("A"), DELTA);
 	}
