@@ -6,6 +6,7 @@ public class Course {
 	private double creditHours;
 	private ArrayList<Category> categories;
 	private double targetGrade;
+	private Rubric courseRubric;
 
 	public Course(String name) {
 		if (name.length() == 0) {
@@ -15,6 +16,7 @@ public class Course {
 		this.creditHours = 0.0;
 		this.categories = new ArrayList<Category>();
 		this.targetGrade = 0;
+		this.courseRubric = new Rubric();
 	}
 
 	public Course(String name, double creditHours) {
@@ -25,6 +27,7 @@ public class Course {
 		this.creditHours = creditHours;
 		this.categories = new ArrayList<Category>();
 		this.targetGrade = 0;
+		this.courseRubric = new Rubric();
 	}
 
 	public String getCourseName() {
@@ -125,6 +128,20 @@ public class Course {
 		
 		this.categories.remove(index);
 		return true;
+	}
+
+	public Rubric getRubric() {
+		return this.courseRubric;
+	}
+
+	public void setRubric(String fileName) throws Exception {
+		this.courseRubric.loadRubric(fileName);
+	}
+
+
+	public String getLetterGrade() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

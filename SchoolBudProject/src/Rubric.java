@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 public class Rubric {
 
@@ -152,6 +153,10 @@ public class Rubric {
 			temp.add(Double.parseDouble(data.get(i+3)));
 			this.grades.put(data.get(i), temp);
 		}
+	}
+
+	public Set<String> getGradeList() {
+		return this.grades.keySet();
 	}
 
 }
