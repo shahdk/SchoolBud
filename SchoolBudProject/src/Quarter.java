@@ -41,4 +41,12 @@ public class Quarter {
 		return this.courseList.remove(course);
 	}
 
+	public double getTotalCreditHours() {
+		double sum = 0;
+		for(Course c : this.courseList){
+			sum += c.getCreditHours();
+		}
+		return sum;
+	}
+
 }
