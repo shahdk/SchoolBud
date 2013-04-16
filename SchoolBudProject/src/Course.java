@@ -144,4 +144,9 @@ public class Course {
 		return null;
 	}
 
+	public double getCourseGPA() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

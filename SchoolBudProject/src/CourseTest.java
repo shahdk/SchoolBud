@@ -2095,4 +2095,84 @@ public class CourseTest {
 		course.addCategory(cat);
 		assertEquals("D", course.getLetterGrade());
 	}
+	
+	@Test
+	public void testALetterGPA(){
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("95");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		assertEquals(4.0, course.getCourseGPA(), DELTA);
+	}
+	
+	@Test
+	public void testBPlusLetterGPA(){
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("88");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		assertEquals(3.5, course.getCourseGPA(), DELTA);
+	}
+	
+	@Test
+	public void testBLetterGPA(){
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("82");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		assertEquals(3.0, course.getCourseGPA(), DELTA);
+	}
+	
+	@Test
+	public void testCPlusLetterGPA(){
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("78");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		assertEquals(2.5, course.getCourseGPA(), DELTA);
+	}
+	
+	@Test
+	public void testCLetterGPA(){
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("73");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		assertEquals(2.0, course.getCourseGPA(), DELTA);
+	}
+	
+	@Test
+	public void testDPlusLetterGPA(){
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("68");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		assertEquals(1.5, course.getCourseGPA(), DELTA);
+	}
+	
+	@Test
+	public void testDLetterGPA(){
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("62");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		assertEquals(1.0, course.getCourseGPA(), DELTA);
+	}
+	
+	@Test
+	public void testFLetterGPA(){
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("40");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		assertEquals(0.0, course.getCourseGPA(), DELTA);
+	}
 }
