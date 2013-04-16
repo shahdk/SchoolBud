@@ -33,5 +33,13 @@ public class Quarter {
 		return this.courseList;
 	}
 
+	public boolean removeCourse(Course course) {
+		if(this.courseList.isEmpty()){
+			return false;
+		}
+		
+		this.courseList.remove(course);
+		return true;
+	}
 
 }

@@ -54,12 +54,13 @@ public class QuarterTest {
 		Course course1 = new Course("CSSE290");
 		qt.addCourse(course);
 		qt.addCourse(course1);
-		assertTrue(qt.removeCourse());
+		assertTrue(qt.removeCourse(course1));
 	}
 	
 	@Test
 	public void testRemoveCourseTwo(){
 		Quarter qt = new Quarter("Spring2013");
-		assertFlase(qt.removeCourse());
+		Course course = new Course("CSSE376");
+		assertFalse(qt.removeCourse(course));
 	}
 }
