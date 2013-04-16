@@ -63,4 +63,24 @@ public class QuarterTest {
 		Course course = new Course("CSSE376");
 		assertFalse(qt.removeCourse(course));
 	}
+	
+	@Test
+	public void testRemoveCourseThree(){
+		Quarter qt = new Quarter("Spring2013");
+		Course course = new Course("CSSE376");
+		Course course1 = new Course("CSSE290");
+		qt.addCourse(course);
+		assertFalse(qt.removeCourse(course1));
+	}
+	
+	@Test
+	public void testRemoveCourseFour(){
+		Quarter qt = new Quarter("Spring2013");
+		Course course = new Course("CSSE376");
+		Course course1 = new Course("CSSE290");
+		qt.addCourse(course);
+		qt.addCourse(course1);
+		assertTrue(qt.removeCourse(course));
+		assertEquals("CSSE290", qt.getCourseList().get(0).getCourseName());
+	}
 }

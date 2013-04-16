@@ -38,8 +38,7 @@ public class Quarter {
 			return false;
 		}
 		
-		this.courseList.remove(course);
-		return true;
+		return this.courseList.remove(course);
 	}
 
 }
