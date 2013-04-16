@@ -1521,4 +1521,22 @@ public class CourseTest {
 		course.setTargetGrade(100);
 		assertEquals(60.0, course.getNeededCourseGrade(), DELTA);
 	}
+	
+	@Test
+	public void testSetrubricOne(){
+		Course course = new Course("CSSE376", 4.0);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals(4.0, course.getRubric().getGPA("A"));
+	}
+	
+	@Test
+	public void testSetrubricTwo(){
+		Course course = new Course("CSSE376");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals(4.0, course.getRubric().getGPA("A"));
+	}
 }
