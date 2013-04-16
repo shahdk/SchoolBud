@@ -18,4 +18,23 @@ public class QuarterTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testInitializeTwo(){
 		assertNotNull(new Quarter(""));	}
+	
+	//test cases for getting and setting quarter name.
+	@Test
+	public void testGetNameOne(){
+		Quarter qt = new Quarter("Spring2013");
+		assertEquals("Spring2013", qt.getName);
+	}
+	
+	@Test
+	public void testSetNameOne(){
+		Quarter qt = new Quarter("Spring2013");
+		qt.setName("Spring2012-13");
+		assertEquals("Spring2012-13", qt.getName);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testSetNameTwo(){
+		Quarter qt = new Quarter("Spring2013");
+		qt.setName("");	}
 }
