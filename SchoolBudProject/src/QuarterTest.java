@@ -43,6 +43,6 @@ public class QuarterTest {
 		Quarter qt = new Quarter("Spring2013");
 		Course course = new Course("CSSE376");
 		qt.addCourse(course);
-		assertEquals("CSSE376", qt.getCourseList().get(0).getName());
+		assertEquals("CSSE376", qt.getCourseList().get(0).getCourseName());
 	}
 }
