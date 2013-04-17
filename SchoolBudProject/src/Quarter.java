@@ -49,4 +49,16 @@ public class Quarter {
 		return sum;
 	}
 
+	public double getQuarterGPA() {
+		
+		double sumCreditHours = 0;
+		double totalCreditPoints = 0;
+		for(Course c: this.courseList){
+			sumCreditHours += c.getCreditHours();
+			totalCreditPoints += (c.getCourseGPA() * c.getCreditHours());
+		}
+		double gpa = Math.round((totalCreditPoints / sumCreditHours) * 100.0);
+		return gpa/100;
+	}
+
 }
