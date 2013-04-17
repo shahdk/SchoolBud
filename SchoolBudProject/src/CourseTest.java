@@ -1537,642 +1537,706 @@ public class CourseTest {
 	}
 	
 	@Test
-	public void testALetterGradesMinMinus() {
+	public void testALetterGradesMinMinus() throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("89.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("A", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testALetterGradesMin() {
+	public void testALetterGradesMin() throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("90.0");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("A", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testALetterGradesMinPlus() {
+	public void testALetterGradesMinPlus() throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("90.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("A", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testALetterGradesNominal() {
+	public void testALetterGradesNominal() throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("95.00");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("A", course.getLetterGrade());
 	}
 
 	@Test
-	public void testALetterGradesMaxMinus() {
+	public void testALetterGradesMaxMinus()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("99.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("A", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testALetterGradesMax() {
+	public void testALetterGradesMax()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("100");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("A", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testALetterGradesMaxPlus() {
+	public void testALetterGradesMaxPlus()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("100.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("A", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testBPlusLetterGradesMinMinus() {
+	public void testBPlusLetterGradesMinMinus()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("84.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("B+", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testBPlusLetterGradesMin() {
+	public void testBPlusLetterGradesMin() throws Exception{
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("85.0");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("B+", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testBPlusLetterGradesMinPlus() {
+	public void testBPlusLetterGradesMinPlus()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("85.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("B+", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testBPlusLetterGradesNominal() {
+	public void testBPlusLetterGradesNominal()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("87.00");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("B+", course.getLetterGrade());
 	}
 
 	@Test
-	public void testBPlusLetterGradesMaxMinus() {
+	public void testBPlusLetterGradesMaxMinus()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("88.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("B+", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testBPlusLetterGradesMax() {
+	public void testBPlusLetterGradesMax()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("89");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("B+", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testBPlusLetterGradesMaxPlus() {
+	public void testBPlusLetterGradesMaxPlus()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("89.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("A", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testBLetterGradesMinMinus() {
+	public void testBLetterGradesMinMinus()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("79.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("B", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testBLetterGradesMin() {
+	public void testBLetterGradesMin()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("80.0");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("B", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testBLetterGradesMinPlus() {
+	public void testBLetterGradesMinPlus()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("80.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("B", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testBLetterGradesNominal() {
+	public void testBLetterGradesNominal()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("82.00");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("B", course.getLetterGrade());
 	}
 
 	@Test
-	public void testBLetterGradesMaxMinus() {
+	public void testBLetterGradesMaxMinus()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("83.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("B", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testBLetterGradesMax() {
+	public void testBLetterGradesMax()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("84");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("B", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testBLetterGradesMaxPlus() {
+	public void testBLetterGradesMaxPlus()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("84.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("B+", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testCLetterGradesMinMinus() {
+	public void testCLetterGradesMinMinus()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("69.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("C", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testCLetterGradesMin() {
+	public void testCLetterGradesMin()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("70.0");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("C", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testCLetterGradesMinPlus() {
+	public void testCLetterGradesMinPlus()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("70.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("C", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testCLetterGradesNominal() {
+	public void testCLetterGradesNominal()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("72.00");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("C", course.getLetterGrade());
 	}
 
 	@Test
-	public void testCLetterGradesMaxMinus() {
+	public void testCLetterGradesMaxMinus()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("73.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("C", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testCLetterGradesMax() {
+	public void testCLetterGradesMax()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("74");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("C", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testCLetterGradesMaxPlus() {
+	public void testCLetterGradesMaxPlus()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("74.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("C+", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testCPlusLetterGradesMinMinus() {
+	public void testCPlusLetterGradesMinMinus()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("74.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("C+", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testCPlusLetterGradesMin() {
+	public void testCPlusLetterGradesMin()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("75.0");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("C+", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testCPlusLetterGradesMinPlus() {
+	public void testCPlusLetterGradesMinPlus()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("75.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("C+", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testCPlusLetterGradesNominal() {
+	public void testCPlusLetterGradesNominal()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("77.00");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("C+", course.getLetterGrade());
 	}
 
 	@Test
-	public void testCPlusLetterGradesMaxMinus() {
+	public void testCPlusLetterGradesMaxMinus()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("78.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("C+", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testCPlusLetterGradesMax() {
+	public void testCPlusLetterGradesMax()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("79");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("C+", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testCPlusLetterGradesMaxPlus() {
+	public void testCPlusLetterGradesMaxPlus()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("79.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("B", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testDPlusLetterGradesMinMinus() {
+	public void testDPlusLetterGradesMinMinus() throws Exception{
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("64.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("D+", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testDPlusLetterGradesMin() {
+	public void testDPlusLetterGradesMin()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("65.0");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("D+", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testDPLusLetterGradesMinPlus() {
+	public void testDPLusLetterGradesMinPlus()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("65.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		assertEquals("DPlus", course.getLetterGrade());
+		course.setRubric("rubric.txt");
+		assertEquals("D+", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testDPlusLetterGradesNominal() {
+	public void testDPlusLetterGradesNominal()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("67.00");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("D+", course.getLetterGrade());
 	}
 
 	@Test
-	public void testDPlusLetterGradesMaxMinus() {
+	public void testDPlusLetterGradesMaxMinus()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("68.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("D+", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testDPlusLetterGradesMax() {
+	public void testDPlusLetterGradesMax()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("69");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("D+", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testDPlusLetterGradesMaxPlus() {
+	public void testDPlusLetterGradesMaxPlus()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("69.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("C", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testDLetterGradesMinMinus() {
+	public void testDLetterGradesMinMinus()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("59.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("D", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testDLetterGradesMin() {
+	public void testDLetterGradesMin()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("60.0");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("D", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testDLetterGradesMinPlus() {
+	public void testDLetterGradesMinPlus()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("60.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("D", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testDLetterGradesNominal() {
+	public void testDLetterGradesNominal()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("62.00");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("D", course.getLetterGrade());
 	}
 
 	@Test
-	public void testDLetterGradesMaxMinus() {
+	public void testDLetterGradesMaxMinus()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("63.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("D", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testDLetterGradesMax() {
+	public void testDLetterGradesMax()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("64");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("D", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testDLetterGradesMaxPlus() {
+	public void testDLetterGradesMaxPlus()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("64.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("D+", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testFLetterGradesMinMinus() {
+	public void testFLetterGradesMinMinus()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("-89.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("F", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testFLetterGradesMin() {
+	public void testFLetterGradesMin()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("0.0");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("F", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testFLetterGradesMinPlus() {
+	public void testFLetterGradesMinPlus() throws Exception{
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("0.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("F", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testFLetterGradesNominal() {
+	public void testFLetterGradesNominal()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("30.00");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("F", course.getLetterGrade());
 	}
 
 	@Test
-	public void testFLetterGradesMaxMinus() {
+	public void testFLetterGradesMaxMinus()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("54.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("F", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testFLetterGradesMax() {
+	public void testFLetterGradesMax()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("59");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("F", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testFLetterGradesMaxPlus() {
+	public void testFLetterGradesMaxPlus()throws Exception {
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("59.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals("D", course.getLetterGrade());
 	}
 	
 	@Test
-	public void testALetterGPA(){
+	public void testALetterGPA()throws Exception{
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("95");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals(4.0, course.getCourseGPA(), DELTA);
 	}
 	
 	@Test
-	public void testBPlusLetterGPA(){
+	public void testBPlusLetterGPA()throws Exception{
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("88");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals(3.5, course.getCourseGPA(), DELTA);
 	}
 	
 	@Test
-	public void testBLetterGPA(){
+	public void testBLetterGPA()throws Exception{
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("82");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals(3.0, course.getCourseGPA(), DELTA);
 	}
 	
 	@Test
-	public void testCPlusLetterGPA(){
+	public void testCPlusLetterGPA()throws Exception{
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("78");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals(2.5, course.getCourseGPA(), DELTA);
 	}
 	
 	@Test
-	public void testCLetterGPA(){
+	public void testCLetterGPA()throws Exception{
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("73");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals(2.0, course.getCourseGPA(), DELTA);
 	}
 	
 	@Test
-	public void testDPlusLetterGPA(){
+	public void testDPlusLetterGPA()throws Exception{
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("68");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals(1.5, course.getCourseGPA(), DELTA);
 	}
 	
 	@Test
-	public void testDLetterGPA(){
+	public void testDLetterGPA()throws Exception{
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("62");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals(1.0, course.getCourseGPA(), DELTA);
 	}
 	
 	@Test
-	public void testFLetterGPA(){
+	public void testFLetterGPA()throws Exception{
 		Category cat = new Category("HW", 1, 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		cat.getItemList().get(0).setEarnedPoints("40");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
+		course.setRubric("rubric.txt");
 		assertEquals(0.0, course.getCourseGPA(), DELTA);
 	}
 }
