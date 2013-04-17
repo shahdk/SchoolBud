@@ -124,4 +124,84 @@ public class QuarterTest {
 		qt.removeCourse(course1);
 		assertEquals(3.0, qt.getTotalCreditHours(), DELTA);
 	}
+	
+	@Test
+	public void testGetQuarterGPAOne()throws Exception{
+		Quarter qt = new Quarter("Spring2013");
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("95");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		course.setRubric("rubric.txt");
+		
+		Category cat1 = new Category("HW", 1, 10.0);
+		Course course1 = new Course("CSSE376", 4.0);
+		cat1.getItemList().get(0).setEarnedPoints("95");
+		cat1.getItemList().get(0).setTotalPoints("100");
+		course1.addCategory(cat);
+		course1.setRubric("rubric.txt");
+		
+		assertEquals(4.0, qt.getQuarterGPA(), DELTA);
+	}
+	
+	@Test
+	public void testGetQuarterGPATwo()throws Exception{
+		Quarter qt = new Quarter("Spring2013");
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("95");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		course.setRubric("rubric.txt");
+		
+		Category cat1 = new Category("HW", 1, 10.0);
+		Course course1 = new Course("CSSE376", 3.0);
+		cat1.getItemList().get(0).setEarnedPoints("95");
+		cat1.getItemList().get(0).setTotalPoints("100");
+		course1.addCategory(cat);
+		course1.setRubric("rubric.txt");
+		
+		assertEquals(4.0, qt.getQuarterGPA(), DELTA);
+	}
+	
+	@Test
+	public void testGetQuarterGPAThree()throws Exception{
+		Quarter qt = new Quarter("Spring2013");
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("95");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		course.setRubric("rubric.txt");
+		
+		Category cat1 = new Category("HW", 1, 10.0);
+		Course course1 = new Course("CSSE376", 4.0);
+		cat1.getItemList().get(0).setEarnedPoints("80");
+		cat1.getItemList().get(0).setTotalPoints("100");
+		course1.addCategory(cat);
+		course1.setRubric("rubric.txt");
+		
+		assertEquals(3.5, qt.getQuarterGPA(), DELTA);
+	}
+	
+	@Test
+	public void testGetQuarterGPAFour()throws Exception{
+		Quarter qt = new Quarter("Spring2013");
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("95");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		course.setRubric("rubric.txt");
+		
+		Category cat1 = new Category("HW", 1, 10.0);
+		Course course1 = new Course("CSSE376", 3.0);
+		cat1.getItemList().get(0).setEarnedPoints("80");
+		cat1.getItemList().get(0).setTotalPoints("100");
+		course1.addCategory(cat);
+		course1.setRubric("rubric.txt");
+		
+		assertEquals(3.57, qt.getQuarterGPA(), DELTA);
+	}
 }
