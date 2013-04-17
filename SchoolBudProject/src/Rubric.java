@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 public class Rubric {
 
@@ -141,10 +142,10 @@ public class Rubric {
 		rubric.writeFile("rubric.txt", ";", data, 4);
 	}
 
-	public void loadRubric() throws Exception {
+	public void loadRubric(String fileName) throws Exception {
 		this.grades.clear();
 		FileParser rubric = new FileParser();
-		ArrayList<String> data = rubric.readFile("rubric.txt", ";", 4);
+		ArrayList<String> data = rubric.readFile(fileName, ";", 4);
 		for(int i=0; i<data.size(); i+=4){
 			ArrayList<Double> temp = new ArrayList<Double>();
 			temp.add(Double.parseDouble(data.get(i+1)));
@@ -152,6 +153,10 @@ public class Rubric {
 			temp.add(Double.parseDouble(data.get(i+3)));
 			this.grades.put(data.get(i), temp);
 		}
+	}
+
+	public Set<String> getGradeList() {
+		return this.grades.keySet();
 	}
 
 }

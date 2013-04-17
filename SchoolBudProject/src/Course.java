@@ -6,6 +6,7 @@ public class Course {
 	private double creditHours;
 	private ArrayList<Category> categories;
 	private double targetGrade;
+	private Rubric courseRubric;
 
 	public Course(String name) {
 		if (name.length() == 0) {
@@ -15,6 +16,7 @@ public class Course {
 		this.creditHours = 0.0;
 		this.categories = new ArrayList<Category>();
 		this.targetGrade = 0;
+		this.courseRubric = new Rubric();
 	}
 
 	public Course(String name, double creditHours) {
@@ -25,6 +27,7 @@ public class Course {
 		this.creditHours = creditHours;
 		this.categories = new ArrayList<Category>();
 		this.targetGrade = 0;
+		this.courseRubric = new Rubric();
 	}
 
 	public String getCourseName() {
@@ -53,7 +56,8 @@ public class Course {
 		double weight = 0;
 		for (Category c : this.categories) {
 			weight += c.getWeight();
-			if (weight + cat.getWeight() > 100 || cat.getName().equals(c.getName())) {
+			if (weight + cat.getWeight() > 100
+					|| cat.getName().equals(c.getName())) {
 				throw new IllegalArgumentException();
 			}
 		}
@@ -97,34 +101,59 @@ public class Course {
 			totalWeight += c.getWeight();
 			totalGrade += (c.getTotalPoints() * c.getWeight() / 100);
 		}
-		
+
 		double remainingWeight = (100 - totalWeight) / 100;
 		double remainingGrade = this.targetGrade - totalGrade;
-		
+
 		double neededGrade = remainingGrade / remainingWeight;
-		
+
 		double percent = Math.round(neededGrade * 100);
-		return percent/100;
+		return percent / 100;
 	}
 
 	public boolean removeCategory(String name) {
-		if(this.categories.size() == 0){
+		if (this.categories.size() == 0) {
 			return false;
 		}
 		int index = -1;
-		for(int i=0; i<this.categories.size(); i++){
-			if(this.categories.get(i).getName().equals(name)){
+		for (int i = 0; i < this.categories.size(); i++) {
+			if (this.categories.get(i).getName().equals(name)) {
 				index = i;
 				break;
 			}
 		}
-		
-		if(index == -1){
+
+		if (index == -1) {
 			return false;
 		}
-		
+
 		this.categories.remove(index);
 		return true;
+	}
+
+	public Rubric getRubric() {
+		return this.courseRubric;
+	}
+
+	public void setRubric(String fileName) throws Exception {
+		this.courseRubric.loadRubric(fileName);
+	}
+
+	public String getLetterGrade() {
+
+		double courseGrade = ((int) (this.getCourseGrade()+0.5));
+		for (String grade : this.courseRubric.getGradeList()) {
+			double lower = this.courseRubric.getLowerLimit(grade);
+			double upper = this.courseRubric.getUpperLimit(grade);
+			if((upper == 100 && courseGrade > upper) || (lower == 0 && courseGrade < lower) || (courseGrade >= lower && courseGrade <= upper)){
+				return grade;
+			}
+		}
+		return "";
+	}
+
+	public double getCourseGPA() {
+		return this.courseRubric.getGPA(this.getLetterGrade());
 	}
 
 }
