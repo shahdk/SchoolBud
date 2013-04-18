@@ -30,8 +30,8 @@ public class Scheduler {
 	//
 
 	public ArrayList<ArrayList<SchedulerCourse>> permutateSchedules() {
-		
-		//reset instance variables
+
+		// reset instance variables
 		this.schedules.clear();
 		this.filteredSchedules.clear();
 		this.nonOptionalClasses.clear();
@@ -111,7 +111,7 @@ public class Scheduler {
 			SchedulerCourse course = tempCoursesToCheck.get(0);
 			ArrayList<ClassSection> sections = course.getSections();
 			tempCoursesToCheck.remove(0);
-
+			boolean notAlreadyFound = true;
 			// compile all sections of all current
 			// built up classes for later comparison
 			// compare ALL sections to current built up list
@@ -138,6 +138,12 @@ public class Scheduler {
 						newCourses.add(newCourse);
 
 						this.findMatchingCoursesWithSections(newCourses,
+								tempCoursesToCheck);
+						
+					//check for optional course
+					} else if (course.isOptional() && notAlreadyFound) {
+						notAlreadyFound = false;
+						this.findMatchingCoursesWithSections(currSectionCourses,
 								tempCoursesToCheck);
 					}
 
