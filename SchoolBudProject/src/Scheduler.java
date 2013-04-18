@@ -13,15 +13,11 @@ public class Scheduler {
 	private ArrayList<ArrayList<SchedulerCourse>> schedules;
 	private ArrayList<ArrayList<SchedulerCourse>> filteredSchedules;
 	private ArrayList<SchedulerCourse> nonOptionalClasses;
-	private int numClassHours;
-	private int numClasses;
 
 	public Scheduler(int classHours, ArrayList<SchedulerCourse> classes) {
 		this.classes = classes;
 		this.schedules = new ArrayList<ArrayList<SchedulerCourse>>();
 		this.filteredSchedules = new ArrayList<ArrayList<SchedulerCourse>>();
-		this.numClassHours = classHours;
-		this.numClasses = this.classes.size();
 		this.nonOptionalClasses = new ArrayList<SchedulerCourse>();
 
 	}
@@ -94,6 +90,9 @@ public class Scheduler {
 		return (count == total);
 	}
 
+	// ===========================================================================================
+	//
+
 	public void findMatchingCoursesWithSections(
 			ArrayList<SchedulerCourse> currSectionCourses,
 			ArrayList<SchedulerCourse> coursesToCheck) {
@@ -121,12 +120,12 @@ public class Scheduler {
 					currClassSections.add(classSect);
 				}
 			}
-			
-			//check for optional classes
+
+			// check for optional classes
 			if (course.isOptional()) {
 				notAlreadyFound = false;
-				this.findMatchingCoursesWithSections(
-						currSectionCourses, tempCoursesToCheck);
+				this.findMatchingCoursesWithSections(currSectionCourses,
+						tempCoursesToCheck);
 			}
 
 			// go through each course section of JUST this course
@@ -375,6 +374,75 @@ public class Scheduler {
 
 	// ===========================================================================================
 	//
+	// Filters out schedules that are not contained within the min / max
+	// enclosing
+	// unless they are an ignored day
+	public ArrayList<ArrayList<SchedulerCourse>> filterHoursConcentration(
+			int minStartHour, int maxEndHour, ArrayList<Integer> ignoreDays) {
+
+		if (ignoreDays == null) {
+			ignoreDays = new ArrayList<Integer>();
+		}
+
+		boolean isValid;
+		ArrayList<ArrayList<SchedulerCourse>> schedsToRemove = new ArrayList<ArrayList<SchedulerCourse>>();
+
+		// go through each schedule
+		for (ArrayList<SchedulerCourse> schedule : this.filteredSchedules) {
+			// reset values for each new schedule
+			isValid = true;
+
+			// flatten out that schedule into a week of days of hours
+			ArrayList<ArrayList<Integer>> week = this
+					.flattenScheduleDays(schedule);
+
+			// go through each day and make desired filtration
+			for (int i = 0; i < 7; i++) {
+				if (!isValid) {
+					break;
+				}
+				// ignore days the user dose not want filter to apply to
+				if (!ignoreDays.contains(i)) {
+					ArrayList<Integer> day = week.get(i);
+					int startHour;
+					int endHour;
+					
+					// check beginning and start hours
+					//check for properly filled days
+					if (day.size() == 0) {
+						continue;
+					}
+					else if (day.size() == 1) {
+						startHour =  endHour = day.get(0);
+					}
+					else {
+						startHour = day.get(0);
+						endHour = day.get(day.size() - 1);
+					}
+					
+					//compare start / end hours
+					if (startHour < minStartHour || endHour > maxEndHour) {
+						isValid = false;
+					}
+
+				}
+			}
+
+			if (!isValid) {
+				schedsToRemove.add(schedule);
+			}
+		}
+
+		// remove all found schedules
+		for (ArrayList<SchedulerCourse> sched : schedsToRemove) {
+			this.filteredSchedules.remove(sched);
+		}
+
+		return this.filteredSchedules;
+	}
+
+	// ===========================================================================================
+	//
 	//
 	// Flattens our a single schedule (or list of scheduler classes with 1
 	// section each)
@@ -415,32 +483,32 @@ public class Scheduler {
 		return this.filteredSchedules;
 	}
 
-//	public static void printSchedules(
-//			ArrayList<ArrayList<SchedulerCourse>> schedules) {
-//		int count = 0;
-//		for (ArrayList<SchedulerCourse> schedule : schedules) {
-//			System.out.println();
-//			System.out
-//					.println("#"
-//							+ count
-//							+ "-------------------------------------------------------------------");
-//			count++;
-//			System.out.println();
-//			for (SchedulerCourse course : schedule) {
-//				System.out.println();
-//				System.out.println();
-//				System.out.println("COURSE");
-//				for (ClassSection section : course.getSections()) {
-//					for (ClassDay day : section.getClassDays()) {
-//						System.out.println();
-//						System.out.print("DAY:");
-//						for (Integer hour : day.getHourSlots()) {
-//							System.out.print(hour + ", ");
-//						}
-//					}
-//				}
-//			}
-//		}
-//	}
+	 public static void printSchedules(
+	 ArrayList<ArrayList<SchedulerCourse>> schedules) {
+	 int count = 0;
+	 for (ArrayList<SchedulerCourse> schedule : schedules) {
+	 System.out.println();
+	 System.out
+	 .println("#"
+	 + count
+	 + "-------------------------------------------------------------------");
+	 count++;
+	 System.out.println();
+	 for (SchedulerCourse course : schedule) {
+	 System.out.println();
+	 System.out.println();
+	 System.out.println("COURSE");
+	 for (ClassSection section : course.getSections()) {
+	 for (ClassDay day : section.getClassDays()) {
+	 System.out.println();
+	 System.out.print("DAY:");
+	 for (Integer hour : day.getHourSlots()) {
+	 System.out.print(hour + ", ");
+	 }
+	 }
+	 }
+	 }
+	 }
+	 }
 
 }
