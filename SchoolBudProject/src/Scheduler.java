@@ -225,7 +225,7 @@ public class Scheduler {
 	public ArrayList<ArrayList<SchedulerCourse>> filterGaps(
 			int maxNumOfGapHours, int maxNumOfOccurencesMax,
 			int minNumOfGapHours, int maxNumOfOccurencesMin,
-			int maxNumExceptions, boolean exactGaps,
+			int maxNumOfOccurencesMid,int maxNumExceptions,
 			ArrayList<Integer> ignoreDays) {
 
 		if (ignoreDays == null) {
@@ -234,6 +234,7 @@ public class Scheduler {
 
 		int gapsOccurencesMax;
 		int gapsOccurencesMin;
+		int gapsOccurencesMid;
 		int occuredExceptions;
 		boolean isValid;
 		ArrayList<ArrayList<SchedulerCourse>> schedsToRemove = new ArrayList<ArrayList<SchedulerCourse>>();
@@ -244,6 +245,7 @@ public class Scheduler {
 			isValid = true;
 			gapsOccurencesMax = 0;
 			gapsOccurencesMin = 0;
+			gapsOccurencesMid = 0;
 			occuredExceptions = 0;
 			// flatten out that schedule into a week of days of hours
 			ArrayList<ArrayList<Integer>> week = this
@@ -264,9 +266,10 @@ public class Scheduler {
 
 						// subtract 1 to get ACTUAL NUM of HOURS GAP
 						int hourDiff = day.get(h + 1) - day.get(h) - 1;
-						if (hourDiff > maxNumOfGapHours
-								|| (hourDiff < minNumOfGapHours)
-								|| (exactGaps && (hourDiff < maxNumOfGapHours) && (hourDiff > minNumOfGapHours))) {
+
+						// check out of range
+						if ((hourDiff > maxNumOfGapHours)
+								|| (hourDiff < minNumOfGapHours)) {
 
 							if (occuredExceptions == maxNumExceptions) {
 								isValid = false;
@@ -275,8 +278,24 @@ public class Scheduler {
 								occuredExceptions++;
 							}
 						}
+
+						// check gaps in between min / max
+						else if ((hourDiff < maxNumOfGapHours)
+							&& (hourDiff > minNumOfGapHours)) {
+							if (gapsOccurencesMid >= maxNumOfOccurencesMid) {
+								if (occuredExceptions == maxNumExceptions) {
+									isValid = false;
+									break;
+								} else {
+									occuredExceptions++;
+								}
+							}
+							gapsOccurencesMid++;
+
+						}
+
 						// check Max allowed gaps
-						if (hourDiff == maxNumOfGapHours) {
+						else if (hourDiff == maxNumOfGapHours) {
 							if (gapsOccurencesMax >= maxNumOfOccurencesMax) {
 								if (occuredExceptions == maxNumExceptions) {
 									isValid = false;
@@ -290,7 +309,7 @@ public class Scheduler {
 						}
 
 						// check Min allowed gaps
-						if (hourDiff == minNumOfGapHours) {
+						else if (hourDiff == minNumOfGapHours) {
 							if (gapsOccurencesMin >= maxNumOfOccurencesMin) {
 								if (occuredExceptions == maxNumExceptions) {
 									isValid = false;
@@ -301,7 +320,6 @@ public class Scheduler {
 							}
 							gapsOccurencesMin++;
 						}
-
 					}
 				}
 			}
