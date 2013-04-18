@@ -774,7 +774,6 @@ public class SchedulerTester {
 						SchedulerTester.createIntegerList(0, 1, 2, 3, 4, 5, 6))
 						.size());
 		scheduler.permutateSchedules();
-		Scheduler.printSchedules(scheduler.permutateSchedules());
 
 		// test Hours Concentration Filter
 		// test small opening / closing gap where only 1 passes through
@@ -789,6 +788,21 @@ public class SchedulerTester {
 		// test small gap so that NO classes pass through
 		assertEquals(0, scheduler.filterHoursConcentration(3, 6, null).size());
 		scheduler.permutateSchedules();
+		// test small gap but ignore all days except Friday = 3 results
+		assertEquals(
+				4,
+				scheduler.filterHoursConcentration(4, 4,
+						SchedulerTester.createIntegerList(0, 1, 2, 3, 5, 6))
+						.size());
+		scheduler.permutateSchedules();
+
+		// test two previous filters in combination
+		scheduler.filterHoursConcentration(2, 8, null);
+		assertEquals(
+				1,
+				scheduler.filterHoursConcentration(4, 4,
+						SchedulerTester.createIntegerList(0, 1, 2, 3, 5, 6))
+						.size());
 	}
 
 	@Test
