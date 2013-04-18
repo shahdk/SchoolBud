@@ -225,7 +225,7 @@ public class Scheduler {
 	public ArrayList<ArrayList<SchedulerCourse>> filterGaps(
 			int maxNumOfGapHours, int maxNumOfOccurencesMax,
 			int minNumOfGapHours, int maxNumOfOccurencesMin,
-			int maxNumOfOccurencesMid,int maxNumExceptions,
+			int maxNumOfOccurencesMid, int maxNumExceptions,
 			ArrayList<Integer> ignoreDays) {
 
 		if (ignoreDays == null) {
@@ -237,6 +237,7 @@ public class Scheduler {
 		int gapsOccurencesMid;
 		int occuredExceptions;
 		boolean isValid;
+		boolean checked = false;
 		ArrayList<ArrayList<SchedulerCourse>> schedsToRemove = new ArrayList<ArrayList<SchedulerCourse>>();
 
 		// go through each schedule
@@ -247,6 +248,7 @@ public class Scheduler {
 			gapsOccurencesMin = 0;
 			gapsOccurencesMid = 0;
 			occuredExceptions = 0;
+
 			// flatten out that schedule into a week of days of hours
 			ArrayList<ArrayList<Integer>> week = this
 					.flattenScheduleDays(schedule);
@@ -281,7 +283,7 @@ public class Scheduler {
 
 						// check gaps in between min / max
 						else if ((hourDiff < maxNumOfGapHours)
-							&& (hourDiff > minNumOfGapHours)) {
+								&& (hourDiff > minNumOfGapHours)) {
 							if (gapsOccurencesMid >= maxNumOfOccurencesMid) {
 								if (occuredExceptions == maxNumExceptions) {
 									isValid = false;
