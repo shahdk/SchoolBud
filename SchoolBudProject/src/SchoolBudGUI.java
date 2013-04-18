@@ -157,7 +157,7 @@ public class SchoolBudGUI extends JFrame{
         
         setJMenuBar(menubar);
         
-        setTitle("SchoolBud");
+        setTitle("SchoolBud by Reverse Oreo");
         pack();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);

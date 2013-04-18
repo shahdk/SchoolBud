@@ -28,23 +28,23 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener{
 		
 		String[] quarterStrings = { "Select Quarter", "Summer", "Fall", "Winter", "Spring"};
 		
-		quarterList = new JComboBox(quarterStrings);
-        quarterList.setSelectedIndex(0);
-        quarterList.addActionListener(this);
+		this.quarterList = new JComboBox(quarterStrings);
+        this.quarterList.setSelectedIndex(0);
+        this.quarterList.addActionListener(this);
         
-        classList = new JComboBox();
-        classList.setPrototypeDisplayValue("XXXXXXXXXX");
+        this.classList = new JComboBox();
+        this.classList.setPrototypeDisplayValue("XXXXXXXXXX");
         
         this.picture = new JLabel();
         this.picture.setFont(this.picture.getFont().deriveFont(Font.ITALIC));
         this.picture.setHorizontalAlignment(JLabel.CENTER);
-        updateLabel(quarterStrings[quarterList.getSelectedIndex()]);
+        updateLabel(quarterStrings[this.quarterList.getSelectedIndex()]);
         this.picture.setBorder(BorderFactory.createEmptyBorder(10,0,0,0));
         
         this.picture.setPreferredSize(new Dimension(300, 310));
         
-        add(quarterList, BorderLayout.PAGE_START);
-        add(classList, BorderLayout.CENTER);
+        add(this.quarterList, BorderLayout.PAGE_START);
+        add(this.classList, BorderLayout.CENTER);
         add(this.picture, BorderLayout.PAGE_END);
         setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
 		
@@ -65,23 +65,23 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener{
 		String picName = "";
 		if(name.equals("Spring")){
 			picName = "elephant.gif";
-			classList.setModel(new DefaultComboBoxModel(spring));
+			this.classList.setModel(new DefaultComboBoxModel(spring));
 		}
 		else if(name.equals("Fall")){
 			picName = "tiger.gif";
-			classList.setModel(new DefaultComboBoxModel(fall));
+			this.classList.setModel(new DefaultComboBoxModel(fall));
 		}
 		else if(name.equals("Winter")){
 			picName = "whale.gif";
-			classList.setModel(new DefaultComboBoxModel(winter));
+			this.classList.setModel(new DefaultComboBoxModel(winter));
 		}
 		else if(name.equals("Summer")){
 			picName = "whaleRider.gif";
-			classList.setModel(new DefaultComboBoxModel(summer));
+			this.classList.setModel(new DefaultComboBoxModel(summer));
 		}
 		else{
 			picName = "rose.gif";
-			classList.setModel(new DefaultComboBoxModel(empty));
+			this.classList.setModel(new DefaultComboBoxModel(empty));
 		}
 		
 		ImageIcon icon = new ImageIcon(picName);
