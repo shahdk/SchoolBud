@@ -98,6 +98,20 @@ public class ParserTest {
 		assertEquals(data, parse.readFile("test3.txt", ";", 4));
 		fileWrittenTo.delete();
 	}
+	
+	@Test
+	public void testWriteFileAppend() throws Exception {
+		FileParser parse = new FileParser();
+		ArrayList<String> data = this.list("A", "1", "B", "2");
+		parse.createFile("test5.txt");
+		File fileWrittenTo = new File("test5.txt");
+		parse.writeFile("test5.txt", ";", data, 4);
+		ArrayList<String> data2 = this.list("C", "3", "D", "4");
+		parse.writeFile("test5.txt", ";", data2, 4);
+		ArrayList<String> data3 = this.list("A", "1", "B", "2", "C", "3", "D", "4");
+		assertEquals(data3, parse.readFile("test5.txt", ";", 4));
+		fileWrittenTo.delete();
+	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testWriteFileException() throws Exception {
