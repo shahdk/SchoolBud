@@ -35,7 +35,7 @@ public class SchedulerTester {
 	
 	 // test filtering is not null
 	 assertNotNull(sched.getFilteredSchedules());
-	 assertNotNull(sched.filterGaps(2, 2, true, null));
+	 assertNotNull(sched.filterGaps(2, 2, 2, 2, true, null));
 	 }
 	
 	 @Test
@@ -48,7 +48,7 @@ public class SchedulerTester {
 	
 	 // test empty filtering schedules
 	 assertEquals(new ArrayList<ArrayList<ArrayList<SchedulerCourse>>>(),
-	 scheduler.filterGaps(2, 2, true, null));
+	 scheduler.filterGaps(2, 2, 2, 2, true, null));
 	 }
 	
 	 @Test
@@ -72,7 +72,7 @@ public class SchedulerTester {
 	 assertEquals(0, scheduler.permutateSchedules().size());
 	
 	 // test filters
-	 assertEquals(0, scheduler.filterGaps(2, 2, true, null).size());
+	 assertEquals(0, scheduler.filterGaps(2, 2, 2, 2, true, null).size());
 	 }
 	
 	 @Test
@@ -99,7 +99,7 @@ public class SchedulerTester {
 	
 	 // test gaps filter - should not be able to filter anything with just
 	 // one class
-	 assertEquals(1, scheduler.filterGaps(2, 2, true, null).size());
+	 assertEquals(1, scheduler.filterGaps(2, 2, 2, 2, true, null).size());
 	 }
 	
 	 @Test
@@ -127,16 +127,16 @@ public class SchedulerTester {
 	 // test filters
 	
 	 // test gaps filter - with only 2 Gaps allowed (exact) --> 1 answer
-	 assertEquals(1, scheduler.filterGaps(2, 1, false, null).size());
+	 assertEquals(1, scheduler.filterGaps(2, 1, 0, 3, true, null).size());
 	 // test gaps filter - with 4 Gaps max but less allowed) --> 1 answer
 	 scheduler.permutateSchedules();
-	 assertEquals(1, scheduler.filterGaps(4, 1, true, null).size());
+	 assertEquals(1, scheduler.filterGaps(4, 1, 0, 3, false, null).size());
 	 // test gaps filter - with 4 Gaps Only) --> 0 answers
 	 scheduler.permutateSchedules();
-	 assertEquals(0, scheduler.filterGaps(4, 1, false, null).size());
+	 assertEquals(0, scheduler.filterGaps(4, 2, 0, 3, true, null).size());
 	 // test gaps filter - with 2 Gaps only, but zero occurrences) --> 0 answers
 	 scheduler.permutateSchedules();
-	 assertEquals(0, scheduler.filterGaps(2, 0, true, null).size());
+	 assertEquals(0, scheduler.filterGaps(2, 0, 2, 0, true, null).size());
 	
 	 }
 	
@@ -267,22 +267,22 @@ public class SchedulerTester {
 		// test filters
 
 		// test gaps filter - with only 1 Gaps allowed (exact) --> 1 answer
-		assertEquals(1, scheduler.filterGaps(1, 1, false, null).size());
+		assertEquals(1, scheduler.filterGaps(1, 1, 1, 1, true, null).size());
 		// test gaps filter - with 4 Gaps max but less allowed) --> 3 answer
 		scheduler.permutateSchedules();
-		assertEquals(3, scheduler.filterGaps(4, 1, true, null).size());
+		assertEquals(3, scheduler.filterGaps(4, 1, 0, 3, false, null).size());
 		// test gaps filter - with 3 Gaps Only) --> 1 answers
 		scheduler.permutateSchedules();
-		assertEquals(1, scheduler.filterGaps(3, 1, false, null).size());
+		assertEquals(1, scheduler.filterGaps(3, 1, 3, 1, true, null).size());
 		assertEquals(SchedulerTester.createIntegerList(4, 8),
 				Scheduler.getDayHoursLists(scheduler.getFilteredSchedules()));
 		// test gaps filter - filter out lower than previous - zero because
 		// it has already been filtered) --> 0 answers
-		assertEquals(0, scheduler.filterGaps(1, 1, false, null).size());
+		assertEquals(0, scheduler.filterGaps(1, 1, 0, 1, false, null).size());
 		// test gaps filter - SAME AS ABOVE - but filter was reset so it will
 		// produce 1 result --> 1 answers
 		scheduler.permutateSchedules();
-		assertEquals(1, scheduler.filterGaps(1, 1, false, null).size());
+		assertEquals(1, scheduler.filterGaps(1, 1, 0, 1, false, null).size());
 	}
 
 	@Test
@@ -697,8 +697,7 @@ public class SchedulerTester {
 
 		// test filters
 
-		// test gaps filter - with only 1 Gaps allowed (exact) --> 0 answer
-		assertEquals(4, scheduler.filterGaps(3, 5, true, null).size());
+		
 	}
 
 	public static ArrayList<Integer> createIntegerList(int... ints) {

@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 
-
 /* The Scheduler class finds all of the permutations of possible schedules
  * depending on a students entered classes and their respective hours 
  * 
@@ -223,15 +222,20 @@ public class Scheduler {
 	// than
 	// the denoted OR that has the max number of gaps occur more than the
 	// denoted amount
-	public ArrayList<ArrayList<SchedulerCourse>> filterGaps(int maxNumOfGapHours,
-			int maxNumOfOccurences, boolean allowLessNumOfGaps,
+	public ArrayList<ArrayList<SchedulerCourse>> filterGaps(
+			int maxNumOfGapHours, int maxNumOfOccurencesMax,
+			int minNumOfGapHours, int maxNumOfOccurencesMin, boolean exactGaps,
 			ArrayList<Integer> ignoreDays) {
+
 		if (ignoreDays == null) {
 			ignoreDays = new ArrayList<Integer>();
 		}
-		int gapsOccurences = 0;
+
+		int gapsOccurencesMax = 0;
+		int gapsOccurencesMin = 0;
 		boolean isValid;
 		ArrayList<ArrayList<SchedulerCourse>> schedsToRemove = new ArrayList<ArrayList<SchedulerCourse>>();
+
 		// go through each schedule
 		for (ArrayList<SchedulerCourse> schedule : this.filteredSchedules) {
 			isValid = true;
@@ -251,22 +255,33 @@ public class Scheduler {
 						if (h + 1 >= day.size()) {
 							break;
 						}
-						
-						//subtract 1 to get ACTUAL NUM of HOURS GAP
+
+						// subtract 1 to get ACTUAL NUM of HOURS GAP
 						int hourDiff = day.get(h + 1) - day.get(h) - 1;
 						if (hourDiff > maxNumOfGapHours
-								|| (hourDiff < maxNumOfGapHours && !allowLessNumOfGaps)) {
+								|| (hourDiff < minNumOfGapHours)
+								|| (exactGaps && (hourDiff < maxNumOfGapHours) && (hourDiff > minNumOfGapHours))) {
 							isValid = false;
 							break;
 						}
+						// check Max allowed gaps
 						if (hourDiff == maxNumOfGapHours) {
-							if (gapsOccurences == maxNumOfOccurences) {
+							if (gapsOccurencesMax == maxNumOfOccurencesMax) {
 								isValid = false;
 								break;
 							}
-							gapsOccurences++;
+							gapsOccurencesMax++;
 
 						}
+						// check Min allowed gaps
+						if (hourDiff == minNumOfGapHours) {
+							if (gapsOccurencesMin == maxNumOfOccurencesMin) {
+								isValid = false;
+								break;
+							}
+							gapsOccurencesMin++;
+						}
+
 					}
 				}
 			}
@@ -276,9 +291,9 @@ public class Scheduler {
 			}
 
 		}
-		
-		//remove all found schedules
-		for (ArrayList<SchedulerCourse> sched: schedsToRemove) {
+
+		// remove all found schedules
+		for (ArrayList<SchedulerCourse> sched : schedsToRemove) {
 			this.filteredSchedules.remove(sched);
 		}
 
@@ -327,32 +342,32 @@ public class Scheduler {
 		return this.filteredSchedules;
 	}
 
-//	public static void printSchedules(
-//			ArrayList<ArrayList<SchedulerCourse>> schedules) {
-//		int count = 0;
-//		for (ArrayList<SchedulerCourse> schedule : schedules) {
-//			System.out.println();
-//			System.out
-//					.println("#"
-//							+ count
-//							+ "-------------------------------------------------------------------");
-//			count++;
-//			System.out.println();
-//			for (SchedulerCourse course : schedule) {
-//				System.out.println();
-//				System.out.println();
-//				System.out.println("COURSE");
-//				for (ClassSection section : course.getSections()) {
-//					for (ClassDay day : section.getClassDays()) {
-//						System.out.println();
-//						System.out.print("DAY:");
-//						for (Integer hour : day.getHourSlots()) {
-//							System.out.print(hour + ", ");
-//						}
-//					}
-//				}
-//			}
-//		}
-//	}
+	// public static void printSchedules(
+	// ArrayList<ArrayList<SchedulerCourse>> schedules) {
+	// int count = 0;
+	// for (ArrayList<SchedulerCourse> schedule : schedules) {
+	// System.out.println();
+	// System.out
+	// .println("#"
+	// + count
+	// + "-------------------------------------------------------------------");
+	// count++;
+	// System.out.println();
+	// for (SchedulerCourse course : schedule) {
+	// System.out.println();
+	// System.out.println();
+	// System.out.println("COURSE");
+	// for (ClassSection section : course.getSections()) {
+	// for (ClassDay day : section.getClassDays()) {
+	// System.out.println();
+	// System.out.print("DAY:");
+	// for (Integer hour : day.getHourSlots()) {
+	// System.out.print(hour + ", ");
+	// }
+	// }
+	// }
+	// }
+	// }
+	// }
 
 }
