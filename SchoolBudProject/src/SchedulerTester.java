@@ -775,6 +775,155 @@ public class SchedulerTester {
 		scheduler.permutateSchedules();
 
 	}
+	
+	@Test
+	public void testOptionalClassesScheduleFourClassesWithVaryingSectionsWithOverlapDifferentDaysWithMultiHour() {
+
+		// class 1
+		ArrayList<ClassDay> days11 = ClassSection.create7DayArrayList();
+		ArrayList<Integer> hours11 = new ArrayList<Integer>();
+		ArrayList<ClassDay> days12 = ClassSection.create7DayArrayList();
+		ArrayList<Integer> hours12 = new ArrayList<Integer>();
+		ArrayList<Integer> hours13 = new ArrayList<Integer>();
+		hours11.add(1);
+		hours12.add(2);
+		hours13.add(2);
+		hours13.add(3);
+		ClassDay day11 = new ClassDay(hours11);
+		ClassDay day12 = new ClassDay(hours12);
+		ClassDay day13 = new ClassDay(hours13);
+		days11.set(0, day11);
+		days11.set(1, day11);
+		days11.set(3, day11);
+		days12.set(0, day12);
+		days12.set(1, day12);
+		days12.set(3, day12);
+		days12.set(2, day13);
+		days11.set(2, day13);
+		ClassSection section11 = new ClassSection("Mr. Man", days11);
+		ClassSection section12 = new ClassSection("Mr. Manny", days12);
+		ArrayList<ClassSection> sections1 = new ArrayList<ClassSection>();
+		sections1.add(section11);
+		sections1.add(section12);
+
+		SchedulerCourse class1 = new SchedulerCourse("Math", sections1, false);
+
+		// class 2
+		ArrayList<ClassDay> days21 = ClassSection.create7DayArrayList();
+		ArrayList<Integer> hours21 = new ArrayList<Integer>();
+		ArrayList<ClassDay> days22 = ClassSection.create7DayArrayList();
+		ArrayList<Integer> hours22 = new ArrayList<Integer>();
+		ArrayList<ClassDay> days23 = ClassSection.create7DayArrayList();
+		ArrayList<Integer> hours23 = new ArrayList<Integer>();
+		hours21.add(1);
+		hours22.add(4);
+		hours23.add(7);
+		ClassDay day21 = new ClassDay(hours21);
+		ClassDay day22 = new ClassDay(hours22);
+		ClassDay day23 = new ClassDay(hours23);
+		days21.set(0, day21);
+		days21.set(1, day21);
+		days21.set(3, day21);
+		days21.set(4, day21);
+		days22.set(0, day22);
+		days22.set(1, day22);
+		days22.set(3, day22);
+		days22.set(4, day22);
+		days23.set(0, day23);
+		days23.set(1, day23);
+		days23.set(3, day23);
+		days23.set(4, day23);
+		ClassSection section21 = new ClassSection("Mr. Moose", days21);
+		ClassSection section22 = new ClassSection("Mr. Mucher", days22);
+		ClassSection section23 = new ClassSection("Mr. Moocher", days23);
+		ArrayList<ClassSection> sections2 = new ArrayList<ClassSection>();
+		sections2.add(section21);
+		sections2.add(section22);
+		sections2.add(section23);
+
+		SchedulerCourse class2 = new SchedulerCourse("Math", sections2, false);
+
+		// class 3
+		ArrayList<ClassDay> days31 = ClassSection.create7DayArrayList();
+		ArrayList<Integer> hours31 = new ArrayList<Integer>();
+		ArrayList<ClassDay> days32 = ClassSection.create7DayArrayList();
+		ArrayList<Integer> hours32 = new ArrayList<Integer>();
+		hours31.add(7);
+		hours31.add(8);
+		hours32.add(8);
+		hours32.add(9);
+		ClassDay day31 = new ClassDay(hours31);
+		ClassDay day32 = new ClassDay(hours32);
+		days31.set(0, day31);
+		days31.set(1, day31);
+		days32.set(0, day32);
+		days32.set(1, day32);
+		ClassSection section31 = new ClassSection("Mr. Mike", days31);
+		ClassSection section32 = new ClassSection("Mr. Sike", days32);
+		ArrayList<ClassSection> sections3 = new ArrayList<ClassSection>();
+		sections3.add(section31);
+		sections3.add(section32);
+
+		SchedulerCourse class3 = new SchedulerCourse("Math", sections3, false);
+
+		// class 4
+		ArrayList<ClassDay> days41 = ClassSection.create7DayArrayList();
+		ArrayList<Integer> hours41 = new ArrayList<Integer>();
+		ArrayList<ClassDay> days42 = ClassSection.create7DayArrayList();
+		ArrayList<Integer> hours42 = new ArrayList<Integer>();
+		hours41.add(1);
+		hours41.add(2);
+		hours42.add(5);
+		hours42.add(6);
+		ClassDay day41 = new ClassDay(hours41);
+		ClassDay day42 = new ClassDay(hours42);
+		days41.set(2, day41);
+		days42.set(2, day42);
+		ClassSection section41 = new ClassSection("Mr. Bike", days41);
+		ClassSection section42 = new ClassSection("Mr. Like", days42);
+		ArrayList<ClassSection> sections4 = new ArrayList<ClassSection>();
+		sections4.add(section41);
+		sections4.add(section42);
+
+		SchedulerCourse class4 = new SchedulerCourse("Math", sections4, false);
+
+		// input classes
+		ArrayList<SchedulerCourse> classes = new ArrayList<SchedulerCourse>();
+		classes.add(class1);
+		classes.add(class2);
+		classes.add(class3);
+		classes.add(class4);
+
+		Scheduler scheduler = new Scheduler(8, classes);
+
+		ArrayList<Integer> expected = SchedulerTester.createIntegerList(1, 1,
+				2, 3, 1, 4, 4, 4, 4, 7, 8, 7, 8, 5, 6, 1, 1, 2, 3, 1, 4, 4, 4,
+				4, 8, 9, 8, 9, 5, 6, 1, 1, 2, 3, 1, 7, 7, 7, 7, 8, 9, 8, 9, 5,
+				6, 2, 2, 2, 3, 2, 1, 1, 1, 1, 7, 8, 7, 8, 5, 6, 2, 2, 2, 3, 2,
+				1, 1, 1, 1, 8, 9, 8, 9, 5, 6, 2, 2, 2, 3, 2, 4, 4, 4, 4, 7, 8,
+				7, 8, 5, 6, 2, 2, 2, 3, 2, 4, 4, 4, 4, 8, 9, 8, 9, 5, 6, 2, 2,
+				2, 3, 2, 7, 7, 7, 7, 8, 9, 8, 9, 5, 6);
+
+		assertEquals(8, scheduler.permutateSchedules().size());
+		assertEquals(expected,
+				Scheduler.getDayHoursLists(scheduler.permutateSchedules()));
+
+		// test filters
+
+		// test Gap Filter
+		// zero gaps = 0 schedules
+		assertEquals(0, scheduler.filterGaps(0, 5, 0, 5, 5, 1, null).size());
+		scheduler.permutateSchedules();
+
+		// skipping All should return all schedules with ZERO GAPS
+		assertEquals(
+				8,
+				scheduler.filterGaps(0, 5, 0, 5, 5, 1,
+						SchedulerTester.createIntegerList(0, 1, 2, 3, 4, 5, 6))
+						.size());
+		scheduler.permutateSchedules();
+
+	}
 
 	public static ArrayList<Integer> createIntegerList(int... ints) {
 		ArrayList<Integer> intList = new ArrayList<Integer>();

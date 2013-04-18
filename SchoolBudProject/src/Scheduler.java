@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 
+import com.sun.org.apache.xerces.internal.dom.DeepNodeListImpl;
+
 /* The Scheduler class finds all of the permutations of possible schedules
  * depending on a students entered classes and their respective hours 
  * 
@@ -10,6 +12,7 @@ public class Scheduler {
 	private ArrayList<SchedulerCourse> classes;
 	private ArrayList<ArrayList<SchedulerCourse>> schedules;
 	private ArrayList<ArrayList<SchedulerCourse>> filteredSchedules;
+	private ArrayList<SchedulerCourse> nonOptionalClasses;
 	private int numClassHours;
 	private int numClasses;
 
@@ -19,17 +22,29 @@ public class Scheduler {
 		this.filteredSchedules = new ArrayList<ArrayList<SchedulerCourse>>();
 		this.numClassHours = classHours;
 		this.numClasses = this.classes.size();
+		this.nonOptionalClasses = new ArrayList<SchedulerCourse>();
+
 	}
 
 	// ===========================================================================================
 	//
 
 	public ArrayList<ArrayList<SchedulerCourse>> permutateSchedules() {
+		
+		//reset instance variables
 		this.schedules.clear();
 		this.filteredSchedules.clear();
+		this.nonOptionalClasses.clear();
 
 		if (this.classes == null || this.classes.size() == 0) {
 			return this.schedules;
+		}
+
+		// find NON-optional classes
+		for (SchedulerCourse course : this.classes) {
+			if (!course.isOptional()) {
+				this.nonOptionalClasses.add(course);
+			}
 		}
 
 		// fixate one course to create branches from
@@ -68,13 +83,24 @@ public class Scheduler {
 	// ===========================================================================================
 	//
 
+	private boolean containsAllClasses(ArrayList<SchedulerCourse> classes) {
+		int total = this.nonOptionalClasses.size();
+		int count = 0;
+		for (SchedulerCourse course : classes) {
+			if (!course.isOptional()) {
+				count++;
+			}
+		}
+		return (count == total);
+	}
+
 	public void findMatchingCoursesWithSections(
 			ArrayList<SchedulerCourse> currSectionCourses,
 			ArrayList<SchedulerCourse> coursesToCheck) {
 
 		// Base case - when you run out of classes to check against
 		if (coursesToCheck.size() == 0) {
-			if (this.classes.size() == currSectionCourses.size()) {
+			if (this.containsAllClasses(currSectionCourses)) {
 				this.schedules.add(currSectionCourses);
 				this.filteredSchedules.add(currSectionCourses);
 			}
@@ -237,7 +263,6 @@ public class Scheduler {
 		int gapsOccurencesMid;
 		int occuredExceptions;
 		boolean isValid;
-		boolean checked = false;
 		ArrayList<ArrayList<SchedulerCourse>> schedsToRemove = new ArrayList<ArrayList<SchedulerCourse>>();
 
 		// go through each schedule
@@ -280,7 +305,6 @@ public class Scheduler {
 								occuredExceptions++;
 							}
 						}
-
 						// check gaps in between min / max
 						else if ((hourDiff < maxNumOfGapHours)
 								&& (hourDiff > minNumOfGapHours)) {

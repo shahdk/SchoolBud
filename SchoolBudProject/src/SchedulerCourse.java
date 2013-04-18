@@ -15,7 +15,7 @@ public class SchedulerCourse extends Course {
 		this.setSections(sections);
 		this.setOptional(isOptional);
 	}
-
+	
 	/**
 	 * @return the sections
 	 */
