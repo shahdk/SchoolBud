@@ -114,7 +114,7 @@ public class Rubric {
 		if(this.grades.containsKey(newGrade) || newGrade.length()==0){
 			throw new IllegalArgumentException();
 		}
-		
+
 		ArrayList<Double> temp = this.grades.get(old);
 		this.grades.remove(old);
 		this.grades.put(newGrade, temp);
@@ -138,8 +138,8 @@ public class Rubric {
 			data.add(temp.get(1)+"");
 			data.add(temp.get(2)+"");
 		}
-		
-		rubric.writeFile("rubric.txt", ";", data, 4);
+
+		rubric.writeFile("rubric.txt", "\t", data, 4);
 	}
 
 	public void loadRubric(String fileName) throws Exception {
