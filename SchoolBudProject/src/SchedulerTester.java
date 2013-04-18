@@ -858,28 +858,37 @@ public class SchedulerTester {
 
 		ArrayList<Integer> expected = SchedulerTester.createIntegerList(2, 2,
 				2, 3, 3, 3, 3, 2, 2, 2, 4, 4, 4, 4, 2, 2, 2, 4, 4, 4, 4, 3, 3,
-				3, 3, 3, 4, 4, 4, 4, 2, 2, 3, 3, 3, 4, 4, 4, 4);
+				3, 3, 3, 4, 4, 4, 4, 3, 3, 3, 4, 4, 4, 4, 2, 2);
 
 		assertEquals(5, scheduler.permutateSchedules().size());
 		 assertEquals(expected,
 		 Scheduler.getDayHoursLists(scheduler.permutateSchedules()));
 
 	}
-	
+
 	@Test
 	public void testOptionalClassesUnforcedScheduleFourClassesWithVaryingSectionsWithOverlapDifferentDaysWithMultiHour() {
 
 		// class 1
 		ArrayList<ClassDay> days11 = ClassSection.create7DayArrayList();
 		ArrayList<Integer> hours11 = new ArrayList<Integer>();
+		ArrayList<ClassDay> days12 = ClassSection.create7DayArrayList();
+		ArrayList<Integer> hours12 = new ArrayList<Integer>();
 		hours11.add(2);
+		hours12.add(3);
 		ClassDay day11 = new ClassDay(hours11);
+		ClassDay day12 = new ClassDay(hours12);
 		days11.set(0, day11);
 		days11.set(1, day11);
 		days11.set(3, day11);
+		days12.set(0, day12);
+		days12.set(1, day12);
+		days12.set(3, day12);
 		ClassSection section11 = new ClassSection("Mr. Man", days11);
+		ClassSection section12 = new ClassSection("Mr. Manny", days12);
 		ArrayList<ClassSection> sections1 = new ArrayList<ClassSection>();
 		sections1.add(section11);
+		sections1.add(section12);
 
 		SchedulerCourse class1 = new SchedulerCourse("Math", sections1, false);
 
@@ -911,21 +920,13 @@ public class SchedulerTester {
 		// class 3
 		ArrayList<ClassDay> days31 = ClassSection.create7DayArrayList();
 		ArrayList<Integer> hours31 = new ArrayList<Integer>();
-		ArrayList<ClassDay> days32 = ClassSection.create7DayArrayList();
-		ArrayList<Integer> hours32 = new ArrayList<Integer>();
 		hours31.add(2);
-		hours32.add(3);
 		ClassDay day31 = new ClassDay(hours31);
-		ClassDay day32 = new ClassDay(hours32);
 		days31.set(0, day31);
 		days31.set(1, day31);
-		days32.set(0, day32);
-		days32.set(1, day32);
 		ClassSection section31 = new ClassSection("Mr. Mike", days31);
-		ClassSection section32 = new ClassSection("Mr. Sike", days32);
 		ArrayList<ClassSection> sections3 = new ArrayList<ClassSection>();
 		sections3.add(section31);
-		sections3.add(section32);
 		SchedulerCourse class3 = new SchedulerCourse("Math", sections3, true);
 
 		// input classes
@@ -937,13 +938,12 @@ public class SchedulerTester {
 		Scheduler scheduler = new Scheduler(8, classes);
 
 		ArrayList<Integer> expected = SchedulerTester.createIntegerList(2, 2,
-				2, 3, 3, 3, 3, 2, 2, 2, 4, 4, 4, 4, 2, 2, 2, 4, 4, 4, 4, 3, 3,
-				3, 3, 3, 4, 4, 4, 4, 2, 2, 3, 3, 3, 4, 4, 4, 4);
+				2, 3, 3, 3, 3, 2, 2, 2, 4, 4, 4, 4, 3, 3, 3, 4, 4, 4, 4, 3, 3,
+				3, 4, 4, 4, 4, 2, 2);
 
-		Scheduler.printSchedules(scheduler.permutateSchedules());
 		assertEquals(4, scheduler.permutateSchedules().size());
-//		 assertEquals(expected,
-//		 Scheduler.getDayHoursLists(scheduler.permutateSchedules()));
+		assertEquals(expected,
+				Scheduler.getDayHoursLists(scheduler.permutateSchedules()));
 
 	}
 

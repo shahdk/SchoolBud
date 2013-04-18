@@ -121,6 +121,13 @@ public class Scheduler {
 					currClassSections.add(classSect);
 				}
 			}
+			
+			//check for optional classes
+			if (course.isOptional()) {
+				notAlreadyFound = false;
+				this.findMatchingCoursesWithSections(
+						currSectionCourses, tempCoursesToCheck);
+			}
 
 			// go through each course section of JUST this course
 			for (ClassSection section : sections) {
@@ -128,6 +135,7 @@ public class Scheduler {
 				if (!isSectionEmpty(section)) {
 					if (!this.sectionsOverlapWithnewSection(currClassSections,
 							section)) {
+
 						ArrayList<ClassSection> newClassSections = new ArrayList<ClassSection>();
 						newClassSections.add(section);
 						SchedulerCourse newCourse = new SchedulerCourse(
@@ -139,12 +147,7 @@ public class Scheduler {
 
 						this.findMatchingCoursesWithSections(newCourses,
 								tempCoursesToCheck);
-						
-					//check for optional course
-					} else if (course.isOptional() && notAlreadyFound) {
-						notAlreadyFound = false;
-						this.findMatchingCoursesWithSections(currSectionCourses,
-								tempCoursesToCheck);
+
 					}
 
 				}
@@ -412,32 +415,32 @@ public class Scheduler {
 		return this.filteredSchedules;
 	}
 
-	public static void printSchedules(
-			ArrayList<ArrayList<SchedulerCourse>> schedules) {
-		int count = 0;
-		for (ArrayList<SchedulerCourse> schedule : schedules) {
-			System.out.println();
-			System.out
-					.println("#"
-							+ count
-							+ "-------------------------------------------------------------------");
-			count++;
-			System.out.println();
-			for (SchedulerCourse course : schedule) {
-				System.out.println();
-				System.out.println();
-				System.out.println("COURSE");
-				for (ClassSection section : course.getSections()) {
-					for (ClassDay day : section.getClassDays()) {
-						System.out.println();
-						System.out.print("DAY:");
-						for (Integer hour : day.getHourSlots()) {
-							System.out.print(hour + ", ");
-						}
-					}
-				}
-			}
-		}
-	}
+//	public static void printSchedules(
+//			ArrayList<ArrayList<SchedulerCourse>> schedules) {
+//		int count = 0;
+//		for (ArrayList<SchedulerCourse> schedule : schedules) {
+//			System.out.println();
+//			System.out
+//					.println("#"
+//							+ count
+//							+ "-------------------------------------------------------------------");
+//			count++;
+//			System.out.println();
+//			for (SchedulerCourse course : schedule) {
+//				System.out.println();
+//				System.out.println();
+//				System.out.println("COURSE");
+//				for (ClassSection section : course.getSections()) {
+//					for (ClassDay day : section.getClassDays()) {
+//						System.out.println();
+//						System.out.print("DAY:");
+//						for (Integer hour : day.getHourSlots()) {
+//							System.out.print(hour + ", ");
+//						}
+//					}
+//				}
+//			}
+//		}
+//	}
 
 }
