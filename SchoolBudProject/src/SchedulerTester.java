@@ -502,25 +502,37 @@ public class SchedulerTester {
 
 		// tests Gap Filter
 		// test with 4 max (exact) 0 min (exact) - nothing in between - produces
-		// 1 schedule
-		assertEquals(1, scheduler.filterGaps(4, 3, 0, 3, true, null).size());
+		// 2 schedules
+		assertEquals(2, scheduler.filterGaps(4, 3, 0, 3, 0, true, null).size());
 		scheduler.permutateSchedules();
+
 		// test with 2 max / 1 min (in between does not matter) - multiple
 		// occurrences - produces 2
 		assertEquals(SchedulerTester.createIntegerList(1, 4, 7, 9, 2, 4, 7, 9),
-				(Scheduler.getDayHoursLists(scheduler.filterGaps(2, 3, 1, 3,
+				(Scheduler.getDayHoursLists(scheduler.filterGaps(2, 3, 1, 3, 0,
 						false, null))));
 		scheduler.permutateSchedules();
+
 		// test with 2 max / 1 min (in between does not matter) - multiple
-		// occurrences - produces 2
-		assertEquals(SchedulerTester.createIntegerList(1, 4, 7, 9, 2, 4, 7, 9),
-				(Scheduler.getDayHoursLists(scheduler.filterGaps(2, 3, 1, 3,
+		// occurrences - HOWEVER with restricted occurrences - produces 1
+		assertEquals(SchedulerTester.createIntegerList(2, 4, 7, 9),
+				(Scheduler.getDayHoursLists(scheduler.filterGaps(2, 1, 1, 2, 0,
 						false, null))));
 		scheduler.permutateSchedules();
-		// // test with 6 max / 3 min - produces
-		// assertEquals(1, scheduler.filterGaps(6, 3, 3, 3, false,
-		// null).size());
-		// scheduler.permutateSchedules();
+
+		// test with 6 max / 3 min - relaxed - produces 0
+		assertEquals(0, scheduler.filterGaps(6, 3, 3, 3, 0, false, null).size());
+		scheduler.permutateSchedules();
+
+		// test with ONLY gaps of ZERO - with 1 exception allowed - this will
+		// provide for schedules with zero gaps and 1 gap break - produces 0
+		assertEquals(4, scheduler.filterGaps(0, 5, 0, 5, 1, false, null).size());
+		scheduler.permutateSchedules();
+		assertEquals(SchedulerTester.createIntegerList(1, 7, 8, 9, 2, 3, 8, 9,
+				2, 7, 8, 9, 3, 4, 7, 8, 9),
+				(Scheduler.getDayHoursLists(scheduler.filterGaps(0, 5, 0, 5, 1,
+						false, null))));
+		scheduler.permutateSchedules();
 	}
 
 	// @Test

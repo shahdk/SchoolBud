@@ -224,7 +224,8 @@ public class Scheduler {
 	// denoted amount
 	public ArrayList<ArrayList<SchedulerCourse>> filterGaps(
 			int maxNumOfGapHours, int maxNumOfOccurencesMax,
-			int minNumOfGapHours, int maxNumOfOccurencesMin, boolean exactGaps,
+			int minNumOfGapHours, int maxNumOfOccurencesMin,
+			int maxNumExceptions, boolean exactGaps,
 			ArrayList<Integer> ignoreDays) {
 
 		if (ignoreDays == null) {
@@ -233,14 +234,17 @@ public class Scheduler {
 
 		int gapsOccurencesMax;
 		int gapsOccurencesMin;
+		int occuredExceptions;
 		boolean isValid;
 		ArrayList<ArrayList<SchedulerCourse>> schedsToRemove = new ArrayList<ArrayList<SchedulerCourse>>();
 
 		// go through each schedule
 		for (ArrayList<SchedulerCourse> schedule : this.filteredSchedules) {
+			// reset values for each new schedule
 			isValid = true;
 			gapsOccurencesMax = 0;
 			gapsOccurencesMin = 0;
+			occuredExceptions = 0;
 			// flatten out that schedule into a week of days of hours
 			ArrayList<ArrayList<Integer>> week = this
 					.flattenScheduleDays(schedule);
@@ -263,24 +267,37 @@ public class Scheduler {
 						if (hourDiff > maxNumOfGapHours
 								|| (hourDiff < minNumOfGapHours)
 								|| (exactGaps && (hourDiff < maxNumOfGapHours) && (hourDiff > minNumOfGapHours))) {
-							isValid = false;
-							break;
+
+							if (occuredExceptions == maxNumExceptions) {
+								isValid = false;
+								break;
+							} else {
+								occuredExceptions++;
+							}
 						}
 						// check Max allowed gaps
 						if (hourDiff == maxNumOfGapHours) {
-							if (gapsOccurencesMax == maxNumOfOccurencesMax) {
-								isValid = false;
-								break;
+							if (gapsOccurencesMax >= maxNumOfOccurencesMax) {
+								if (occuredExceptions == maxNumExceptions) {
+									isValid = false;
+									break;
+								} else {
+									occuredExceptions++;
+								}
 							}
 							gapsOccurencesMax++;
 
 						}
-						
+
 						// check Min allowed gaps
 						if (hourDiff == minNumOfGapHours) {
-							if (gapsOccurencesMin == maxNumOfOccurencesMin) {
-								isValid = false;
-								break;
+							if (gapsOccurencesMin >= maxNumOfOccurencesMin) {
+								if (occuredExceptions == maxNumExceptions) {
+									isValid = false;
+									break;
+								} else {
+									occuredExceptions++;
+								}
 							}
 							gapsOccurencesMin++;
 						}
@@ -345,32 +362,32 @@ public class Scheduler {
 		return this.filteredSchedules;
 	}
 
-	 public static void printSchedules(
-	 ArrayList<ArrayList<SchedulerCourse>> schedules) {
-	 int count = 0;
-	 for (ArrayList<SchedulerCourse> schedule : schedules) {
-	 System.out.println();
-	 System.out
-	 .println("#"
-	 + count
-	 + "-------------------------------------------------------------------");
-	 count++;
-	 System.out.println();
-	 for (SchedulerCourse course : schedule) {
-	 System.out.println();
-	 System.out.println();
-	 System.out.println("COURSE");
-	 for (ClassSection section : course.getSections()) {
-	 for (ClassDay day : section.getClassDays()) {
-	 System.out.println();
-	 System.out.print("DAY:");
-	 for (Integer hour : day.getHourSlots()) {
-	 System.out.print(hour + ", ");
-	 }
-	 }
-	 }
-	 }
-	 }
-	 }
+	public static void printSchedules(
+			ArrayList<ArrayList<SchedulerCourse>> schedules) {
+		int count = 0;
+		for (ArrayList<SchedulerCourse> schedule : schedules) {
+			System.out.println();
+			System.out
+					.println("#"
+							+ count
+							+ "-------------------------------------------------------------------");
+			count++;
+			System.out.println();
+			for (SchedulerCourse course : schedule) {
+				System.out.println();
+				System.out.println();
+				System.out.println("COURSE");
+				for (ClassSection section : course.getSections()) {
+					for (ClassDay day : section.getClassDays()) {
+						System.out.println();
+						System.out.print("DAY:");
+						for (Integer hour : day.getHourSlots()) {
+							System.out.print(hour + ", ");
+						}
+					}
+				}
+			}
+		}
+	}
 
 }
