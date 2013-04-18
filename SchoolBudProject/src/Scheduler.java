@@ -231,14 +231,16 @@ public class Scheduler {
 			ignoreDays = new ArrayList<Integer>();
 		}
 
-		int gapsOccurencesMax = 0;
-		int gapsOccurencesMin = 0;
+		int gapsOccurencesMax;
+		int gapsOccurencesMin;
 		boolean isValid;
 		ArrayList<ArrayList<SchedulerCourse>> schedsToRemove = new ArrayList<ArrayList<SchedulerCourse>>();
 
 		// go through each schedule
 		for (ArrayList<SchedulerCourse> schedule : this.filteredSchedules) {
 			isValid = true;
+			gapsOccurencesMax = 0;
+			gapsOccurencesMin = 0;
 			// flatten out that schedule into a week of days of hours
 			ArrayList<ArrayList<Integer>> week = this
 					.flattenScheduleDays(schedule);
@@ -273,6 +275,7 @@ public class Scheduler {
 							gapsOccurencesMax++;
 
 						}
+						
 						// check Min allowed gaps
 						if (hourDiff == minNumOfGapHours) {
 							if (gapsOccurencesMin == maxNumOfOccurencesMin) {
