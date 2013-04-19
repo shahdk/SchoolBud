@@ -1525,14 +1525,18 @@ public class CourseTest {
 	@Test
 	public void testSetrubricOne() throws Exception{
 		Course course = new Course("CSSE376", 4.0);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals(4.0, course.getRubric().getGPA("A"), DELTA);
 	}
 	
 	@Test
 	public void testSetrubricTwo() throws Exception{
 		Course course = new Course("CSSE376");
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals(4.0, course.getRubric().getGPA("A"), DELTA);
 	}
 	
@@ -1543,7 +1547,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("89.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("A", course.getLetterGrade());
 	}
 	
@@ -1554,7 +1560,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("90.0");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("A", course.getLetterGrade());
 	}
 	
@@ -1565,7 +1573,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("90.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("A", course.getLetterGrade());
 	}
 	
@@ -1576,7 +1586,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("95.00");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("A", course.getLetterGrade());
 	}
 
@@ -1587,7 +1599,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("99.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("A", course.getLetterGrade());
 	}
 	
@@ -1598,7 +1612,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("100");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("A", course.getLetterGrade());
 	}
 	
@@ -1609,7 +1625,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("100.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("A", course.getLetterGrade());
 	}
 	
@@ -1620,7 +1638,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("84.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("B+", course.getLetterGrade());
 	}
 	
@@ -1631,7 +1651,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("85.0");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("B+", course.getLetterGrade());
 	}
 	
@@ -1642,7 +1664,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("85.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("B+", course.getLetterGrade());
 	}
 	
@@ -1653,7 +1677,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("87.00");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("B+", course.getLetterGrade());
 	}
 
@@ -1664,7 +1690,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("88.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("B+", course.getLetterGrade());
 	}
 	
@@ -1675,7 +1703,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("89");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("B+", course.getLetterGrade());
 	}
 	
@@ -1686,7 +1716,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("89.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("A", course.getLetterGrade());
 	}
 	
@@ -1697,7 +1729,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("79.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("B", course.getLetterGrade());
 	}
 	
@@ -1708,7 +1742,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("80.0");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("B", course.getLetterGrade());
 	}
 	
@@ -1719,7 +1755,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("80.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("B", course.getLetterGrade());
 	}
 	
@@ -1730,7 +1768,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("82.00");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("B", course.getLetterGrade());
 	}
 
@@ -1741,7 +1781,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("83.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("B", course.getLetterGrade());
 	}
 	
@@ -1752,7 +1794,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("84");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("B", course.getLetterGrade());
 	}
 	
@@ -1763,7 +1807,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("84.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("B+", course.getLetterGrade());
 	}
 	
@@ -1774,7 +1820,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("69.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("C", course.getLetterGrade());
 	}
 	
@@ -1785,7 +1833,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("70.0");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("C", course.getLetterGrade());
 	}
 	
@@ -1796,7 +1846,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("70.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("C", course.getLetterGrade());
 	}
 	
@@ -1807,7 +1859,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("72.00");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("C", course.getLetterGrade());
 	}
 
@@ -1818,7 +1872,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("73.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("C", course.getLetterGrade());
 	}
 	
@@ -1829,7 +1885,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("74");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("C", course.getLetterGrade());
 	}
 	
@@ -1840,7 +1898,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("74.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("C+", course.getLetterGrade());
 	}
 	
@@ -1851,7 +1911,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("74.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("C+", course.getLetterGrade());
 	}
 	
@@ -1862,7 +1924,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("75.0");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("C+", course.getLetterGrade());
 	}
 	
@@ -1873,7 +1937,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("75.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("C+", course.getLetterGrade());
 	}
 	
@@ -1884,7 +1950,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("77.00");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("C+", course.getLetterGrade());
 	}
 
@@ -1895,7 +1963,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("78.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("C+", course.getLetterGrade());
 	}
 	
@@ -1906,7 +1976,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("79");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("C+", course.getLetterGrade());
 	}
 	
@@ -1917,7 +1989,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("79.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("B", course.getLetterGrade());
 	}
 	
@@ -1928,7 +2002,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("64.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("D+", course.getLetterGrade());
 	}
 	
@@ -1939,7 +2015,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("65.0");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("D+", course.getLetterGrade());
 	}
 	
@@ -1950,7 +2028,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("65.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("D+", course.getLetterGrade());
 	}
 	
@@ -1961,7 +2041,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("67.00");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("D+", course.getLetterGrade());
 	}
 
@@ -1972,7 +2054,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("68.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("D+", course.getLetterGrade());
 	}
 	
@@ -1983,7 +2067,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("69");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("D+", course.getLetterGrade());
 	}
 	
@@ -1994,7 +2080,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("69.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("C", course.getLetterGrade());
 	}
 	
@@ -2005,7 +2093,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("59.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("D", course.getLetterGrade());
 	}
 	
@@ -2016,7 +2106,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("60.0");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("D", course.getLetterGrade());
 	}
 	
@@ -2027,7 +2119,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("60.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("D", course.getLetterGrade());
 	}
 	
@@ -2038,7 +2132,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("62.00");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("D", course.getLetterGrade());
 	}
 
@@ -2049,7 +2145,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("63.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("D", course.getLetterGrade());
 	}
 	
@@ -2060,7 +2158,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("64");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("D", course.getLetterGrade());
 	}
 	
@@ -2071,7 +2171,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("64.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("D+", course.getLetterGrade());
 	}
 	
@@ -2082,7 +2184,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("-89.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("F", course.getLetterGrade());
 	}
 	
@@ -2093,7 +2197,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("0.0");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("F", course.getLetterGrade());
 	}
 	
@@ -2104,7 +2210,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("0.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("F", course.getLetterGrade());
 	}
 	
@@ -2115,7 +2223,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("30.00");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("F", course.getLetterGrade());
 	}
 
@@ -2126,7 +2236,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("54.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("F", course.getLetterGrade());
 	}
 	
@@ -2137,7 +2249,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("59");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("F", course.getLetterGrade());
 	}
 	
@@ -2148,7 +2262,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("59.99");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals("D", course.getLetterGrade());
 	}
 	
@@ -2159,7 +2275,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("95");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals(4.0, course.getCourseGPA(), DELTA);
 	}
 	
@@ -2170,7 +2288,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("88");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals(3.5, course.getCourseGPA(), DELTA);
 	}
 	
@@ -2181,7 +2301,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("82");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals(3.0, course.getCourseGPA(), DELTA);
 	}
 	
@@ -2192,7 +2314,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("78");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals(2.5, course.getCourseGPA(), DELTA);
 	}
 	
@@ -2203,7 +2327,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("73");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals(2.0, course.getCourseGPA(), DELTA);
 	}
 	
@@ -2214,7 +2340,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("68");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals(1.5, course.getCourseGPA(), DELTA);
 	}
 	
@@ -2225,7 +2353,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("62");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals(1.0, course.getCourseGPA(), DELTA);
 	}
 	
@@ -2236,7 +2366,9 @@ public class CourseTest {
 		cat.getItemList().get(0).setEarnedPoints("40");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		assertEquals(0.0, course.getCourseGPA(), DELTA);
 	}
 }

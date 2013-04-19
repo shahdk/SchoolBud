@@ -133,15 +133,16 @@ public class QuarterTest {
 		cat.getItemList().get(0).setEarnedPoints("95");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		
 		Category cat1 = new Category("HW", 1, 10.0);
 		Course course1 = new Course("CSSE376", 4.0);
 		cat1.getItemList().get(0).setEarnedPoints("95");
 		cat1.getItemList().get(0).setTotalPoints("100");
 		course1.addCategory(cat1);
-		course1.setRubric("rubric.txt");
-		
+		course1.setRubric(rubric);
 		qt.addCourse(course);
 		qt.addCourse(course1);
 		assertEquals(4.0, qt.getQuarterGPA(), DELTA);
@@ -155,14 +156,16 @@ public class QuarterTest {
 		cat.getItemList().get(0).setEarnedPoints("95");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		
 		Category cat1 = new Category("HW", 1, 10.0);
 		Course course1 = new Course("CSSE376", 3.0);
 		cat1.getItemList().get(0).setEarnedPoints("95");
 		cat1.getItemList().get(0).setTotalPoints("100");
 		course1.addCategory(cat1);
-		course1.setRubric("rubric.txt");
+		course1.setRubric(rubric);
 		
 		qt.addCourse(course);
 		qt.addCourse(course1);
@@ -177,14 +180,16 @@ public class QuarterTest {
 		cat.getItemList().get(0).setEarnedPoints("95");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		
 		Category cat1 = new Category("HW", 1, 10.0);
 		Course course1 = new Course("CSSE376", 4.0);
 		cat1.getItemList().get(0).setEarnedPoints("80");
 		cat1.getItemList().get(0).setTotalPoints("100");
 		course1.addCategory(cat1);
-		course1.setRubric("rubric.txt");
+		course1.setRubric(rubric);
 		
 		qt.addCourse(course);
 		qt.addCourse(course1);
@@ -199,14 +204,16 @@ public class QuarterTest {
 		cat.getItemList().get(0).setEarnedPoints("95");
 		cat.getItemList().get(0).setTotalPoints("100");
 		course.addCategory(cat);
-		course.setRubric("rubric.txt");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
 		
 		Category cat1 = new Category("HW", 1, 10.0);
 		Course course1 = new Course("CSSE376", 3.0);
 		cat1.getItemList().get(0).setEarnedPoints("80");
 		cat1.getItemList().get(0).setTotalPoints("100");
 		course1.addCategory(cat1);
-		course1.setRubric("rubric.txt");
+		course1.setRubric(rubric);
 		
 		qt.addCourse(course);
 		qt.addCourse(course1);		
