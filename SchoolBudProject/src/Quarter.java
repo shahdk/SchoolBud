@@ -48,9 +48,9 @@ public class Quarter {
 		}
 		return sum;
 	}
-	
-	public double getQuarterGPA() {
 
+	public double getQuarterGPA() {
+		
 		double sumCreditHours = 0;
 		double totalCreditPoints = 0;
 		for(Course c: this.courseList){
