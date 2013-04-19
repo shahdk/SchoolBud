@@ -24,9 +24,8 @@ public class Category {
 		this.catName = name;
 		this.weight = weight;
 		this.items = new ArrayList<Item>();
-		double eachWeight = weight / numOfItems;
 		for (int i = 0; i < numOfItems; i++) {
-			this.items.add(new Item(name + (i + 1), eachWeight));
+			this.items.add(new Item(name + (i + 1)));
 		}
 		this.numOfItems = this.items.size();
 	}
@@ -62,13 +61,6 @@ public class Category {
 		if (weight < 0 || weight > 100) {
 			throw new IllegalArgumentException();
 		}
-
-		if (this.numOfItems > 0) {
-			double eachWeight = weight / this.numOfItems;
-			for (int i = 0; i < numOfItems; i++) {
-				this.items.get(i).setWeight(eachWeight);
-			}
-		}
 		this.weight = weight;
 	}
 
@@ -77,15 +69,13 @@ public class Category {
 	}
 
 	public void addItem(Item item) {
-		this.items.add(item);
-		this.numOfItems = this.items.size();
-		if (this.numOfItems > 0) {
-			double eachWeight = this.weight / this.numOfItems;
-			eachWeight = Math.round(eachWeight * 100) / 100.00;
-			for (int i = 0; i < this.numOfItems; i++) {
-				this.items.get(i).setWeight(eachWeight);
+		for(Item i: this.items){
+			if(i.getName().equals(item.getName())){
+				throw new IllegalArgumentException();
 			}
 		}
+		this.items.add(item);
+		this.numOfItems = this.items.size();
 	}
 
 	public double getTotalEarnedPoints() {
@@ -110,6 +100,26 @@ public class Category {
 		double totalPoints = (this.getTotalEarnedPoints() / this
 				.getTotalPossiblePoints()) * 100;
 		return (Math.round(totalPoints * 100)) / 100.0;
+	}
+
+	public boolean removeItem(String name) {
+		if(this.items.size() == 0){
+			return false;
+		}
+		int index = -1;
+		for(int i=0; i<this.items.size(); i++){
+			if(this.items.get(i).getName().equals(name)){
+				index = i;
+				break;
+			}
+		}
+		
+		if(index == -1){
+			return false;
+		}
+		
+		this.items.remove(index);
+		return true;
 	}
 
 }

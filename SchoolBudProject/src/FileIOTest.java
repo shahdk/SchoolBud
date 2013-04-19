@@ -1,6 +1,4 @@
 import static org.junit.Assert.*;
-
-import java.io.File;
 import java.io.IOException;
 
 import org.junit.Test;
@@ -37,6 +35,7 @@ public class FileIOTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testFileintializesException() throws IOException {
+		@SuppressWarnings("unused")
 		FileIO temp = new FileIO("");
 	}
 
@@ -78,6 +77,7 @@ public class FileIOTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testcreateFileWithSpecialCharsForName4() throws IOException {
+		@SuppressWarnings("unused")
 		FileIO temp = new FileIO("*");
 	}
 
