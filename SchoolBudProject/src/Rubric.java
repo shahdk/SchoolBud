@@ -11,6 +11,7 @@ public class Rubric {
 	}
 
 	public void setDefaults() {
+		this.grades.clear();
 		this.addGrade("A", 90, 100, 4.0);
 		this.addGrade("B+", 85, 89, 3.50);
 		this.addGrade("B", 80, 84, 3.0);
@@ -35,7 +36,7 @@ public class Rubric {
 				throw new IllegalArgumentException();
 			}
 			if ((upperLimit > x.get(0) && upperLimit < x.get(1))
-					|| upperLimit == x.get(1) || upperLimit > x.get(0)) {
+					|| upperLimit == x.get(1)) {
 				throw new IllegalArgumentException();
 			}
 			if (gpa == x.get(2) || gpa < 0) {

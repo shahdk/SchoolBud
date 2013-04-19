@@ -135,8 +135,11 @@ public class Course {
 		return this.courseRubric;
 	}
 
-	public void setRubric(String fileName) throws Exception {
-		this.courseRubric.loadRubric(fileName);
+	public void setRubric(Rubric rubric){
+		for(String s: rubric.getGradeList()){
+			this.courseRubric.addGrade(s, rubric.getLowerLimit(s), rubric.getUpperLimit(s), rubric.getGPA(s));
+		}
+//		this.courseRubric = rubric;
 	}
 
 	public String getLetterGrade() {
