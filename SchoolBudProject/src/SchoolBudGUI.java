@@ -101,7 +101,7 @@ public class SchoolBudGUI extends JFrame{
                 int result = JOptionPane.showConfirmDialog(null, myPanel, 
                          "New Item", JOptionPane.OK_CANCEL_OPTION);
                 if (result == JOptionPane.OK_OPTION) {
-                	Item newItem = new Item(nameField.getText(), Integer.parseInt(weightField.getText()));
+                	Item newItem = new Item(nameField.getText());
                 }
             }
 
