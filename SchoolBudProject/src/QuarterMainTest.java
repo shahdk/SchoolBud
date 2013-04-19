@@ -50,7 +50,7 @@ public class QuarterMainTest {
 		assertTrue(qtMain.removeQuarter("Fall2012"));
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testremoveQuarterTwo(){
 		QuarterMain qtMain = new QuarterMain();
 		Quarter qt1 = new Quarter("Fall2012");
@@ -61,13 +61,13 @@ public class QuarterMainTest {
 		assertEquals("Winter2012", qtMain.getQuarterList().get(0).getName());
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testremoveQuarterThree(){
 		QuarterMain qtMain = new QuarterMain();
 		assertFalse(qtMain.removeQuarter("Fall2012"));
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
+	@Test
 	public void testremoveQuarterFour(){
 		QuarterMain qtMain = new QuarterMain();
 		Quarter qt2 = new Quarter("Winter2012");
@@ -75,8 +75,8 @@ public class QuarterMainTest {
 		assertFalse(qtMain.removeQuarter("Fall2012"));
 	}
 	
-	@Test(expected = IllegalArgumentException.class)
-	public void testremoveQuarterFour(){
+	@Test
+	public void testremoveQuarterFive(){
 		QuarterMain qtMain = new QuarterMain();
 		Quarter qt2 = new Quarter("Winter2012");
 		qtMain.addQuarter(qt2);
