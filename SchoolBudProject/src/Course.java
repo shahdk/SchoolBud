@@ -136,10 +136,10 @@ public class Course {
 	}
 
 	public void setRubric(Rubric rubric){
-//		for(String s: rubric.getGradeList()){
-//			this.courseRubric.addGrade(s, rubric.getLowerLimit(s), rubric.getUpperLimit(s), rubric.getGPA(s));
-//		}
-		this.courseRubric = rubric;
+		for(String s: rubric.getGradeList()){
+			this.courseRubric.addGrade(s, rubric.getLowerLimit(s), rubric.getUpperLimit(s), rubric.getGPA(s));
+		}
+//		this.courseRubric = rubric;
 	}
 
 	public String getLetterGrade() {
