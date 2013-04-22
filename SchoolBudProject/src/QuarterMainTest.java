@@ -124,6 +124,9 @@ public class QuarterMainTest {
 		assertEquals("Fall2012", qtMain.getQuarterList().get(0).getName());
 		assertEquals("Winter2012", qtMain.getQuarterList().get(1).getName());
 		assertEquals("Spring2013", qtMain.getQuarterList().get(2).getName());
+		
+		assertFalse(qtMain.getQuarterList().get(2).removeCourse(course1));
+		assertFalse(qtMain.getQuarterList().get(2).removeCourse(course));
 
 		// check for all courses in all quarters
 		assertEquals("CSSE376", qtMain.getQuarterList().get(0).getCourseList()

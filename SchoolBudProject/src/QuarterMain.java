@@ -7,6 +7,8 @@ import java.util.ArrayList;
 public class QuarterMain {
 
 	private ArrayList<Quarter> quarterList;
+	private final String objectDelimiter = "\t";
+	private final String elementDelimiter = ";";
 
 	public QuarterMain() {
 		this.quarterList = new ArrayList<Quarter>();
@@ -44,22 +46,26 @@ public class QuarterMain {
 		for (Quarter q : this.quarterList) {
 			writer.println(q.getName());
 			for (Course c : q.getCourseList()) {
-				writer.print("\t" + c.getCourseName() + ";"
-						+ c.getCreditHours() + ";");
+				writer.print(this.objectDelimiter + c.getCourseName()
+						+ this.elementDelimiter + c.getCreditHours()
+						+ this.elementDelimiter);
 				Rubric r = c.getRubric();
 				for (String grade : r.getGradeList()) {
-					writer.print(grade + ";");
-					writer.print(r.getLowerLimit(grade) + ";");
-					writer.print(r.getUpperLimit(grade) + ";");
-					writer.print(r.getGPA(grade) + ";");
+					writer.print(grade + this.elementDelimiter);
+					writer.print(r.getLowerLimit(grade) + this.elementDelimiter);
+					writer.print(r.getUpperLimit(grade) + this.elementDelimiter);
+					writer.print(r.getGPA(grade) + this.elementDelimiter);
 				}
 				writer.print("\n");
 				for (Category cat : c.getCategories()) {
-					writer.println("\t\t" + cat.getName() + ";"
+					writer.println(this.objectDelimiter + this.objectDelimiter
+							+ cat.getName() + this.elementDelimiter
 							+ cat.getWeight());
 					for (Item i : cat.getItemList()) {
-						writer.println("\t\t\t" + i.getName() + ";"
-								+ i.getEarnedPoints() + ";"
+						writer.println(this.objectDelimiter
+								+ this.objectDelimiter + this.objectDelimiter
+								+ i.getName() + this.elementDelimiter
+								+ i.getEarnedPoints() + this.elementDelimiter
 								+ i.getTotalPoints());
 					}
 				}
@@ -79,7 +85,7 @@ public class QuarterMain {
 		BufferedReader bReader = new BufferedReader(new FileReader(fileName));
 		String line;
 		while ((line = bReader.readLine()) != null) {
-			String data[] = line.split("\t");
+			String data[] = line.split(this.objectDelimiter);
 			if (!data[0].equals("")) {
 				this.quarterList.add(new Quarter(data[0]));
 				courseCount = 0;
@@ -87,7 +93,7 @@ public class QuarterMain {
 				qtCount++;
 			}
 			if (data[0].equals("") && !data[1].equals("")) {
-				String courseData[] = data[1].split(";");
+				String courseData[] = data[1].split(this.elementDelimiter);
 				Course c;
 				if (courseData[1].equals("")) {
 					c = new Course(courseData[0]);
@@ -108,7 +114,7 @@ public class QuarterMain {
 				courseCount++;
 			}
 			if (data[0].equals("") && data[1].equals("") && !data[2].equals("")) {
-				String categoryData[] = data[2].split(";");
+				String categoryData[] = data[2].split(this.elementDelimiter);
 				Category cat = new Category(categoryData[0],
 						Double.parseDouble(categoryData[1]));
 				this.quarterList.get(qtCount - 1).getCourseList()
@@ -116,7 +122,7 @@ public class QuarterMain {
 				catCount++;
 			}
 			if (data[0].equals("") && data[1].equals("") && data[2].equals("")) {
-				String itemData[] = data[3].split(";");
+				String itemData[] = data[3].split(this.elementDelimiter);
 				Item i;
 				if (itemData[1].equals("") && itemData[2].equals("")) {
 					i = new Item(itemData[0]);
