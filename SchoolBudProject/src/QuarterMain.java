@@ -2,7 +2,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class QuarterMain {
 
@@ -57,6 +59,7 @@ public class QuarterMain {
 					writer.print(r.getGPA(grade) + this.elementDelimiter);
 				}
 				writer.print("\n");
+
 				for (Category cat : c.getCategories()) {
 					writer.println(this.objectDelimiter + this.objectDelimiter
 							+ cat.getName() + this.elementDelimiter
@@ -66,7 +69,7 @@ public class QuarterMain {
 								+ this.objectDelimiter + this.objectDelimiter
 								+ i.getName() + this.elementDelimiter
 								+ i.getEarnedPoints() + this.elementDelimiter
-								+ i.getTotalPoints());
+								+ i.getTotalPoints() + this.elementDelimiter + i.getCreationDate());
 					}
 				}
 			}
@@ -124,12 +127,14 @@ public class QuarterMain {
 			if (data[0].equals("") && data[1].equals("") && data[2].equals("")) {
 				String itemData[] = data[3].split(this.elementDelimiter);
 				Item i;
+				String date = itemData[3];
+				Date creationDate = new SimpleDateFormat("MM/dd/yyyy").parse(date);
 				if (itemData[1].equals("") && itemData[2].equals("")) {
-					i = new Item(itemData[0]);
+					i = new Item(itemData[0], creationDate);
 				} else if (itemData[1].equals("") && !itemData[2].equals("")) {
-					i = new Item(itemData[0], itemData[2]);
+					i = new Item(itemData[0], itemData[2], creationDate);
 				} else {
-					i = new Item(itemData[0], itemData[1], itemData[2]);
+					i = new Item(itemData[0], itemData[1], itemData[2], creationDate);
 				}
 				this.quarterList.get(qtCount - 1).getCourseList()
 						.get(courseCount - 1).getCategories().get(catCount - 1)

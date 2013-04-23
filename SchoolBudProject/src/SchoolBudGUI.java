@@ -1,5 +1,6 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
 
 import javax.swing.Box;
 import javax.swing.JComponent;
@@ -101,7 +102,7 @@ public class SchoolBudGUI extends JFrame{
                 int result = JOptionPane.showConfirmDialog(null, myPanel, 
                          "New Item", JOptionPane.OK_CANCEL_OPTION);
                 if (result == JOptionPane.OK_OPTION) {
-                	Item newItem = new Item(nameField.getText());
+                	Item newItem = new Item(nameField.getText(), new Date());
                 }
             }
 
