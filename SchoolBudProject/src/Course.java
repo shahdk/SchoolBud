@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Course {
 
@@ -7,6 +8,7 @@ public class Course {
 	private ArrayList<Category> categories;
 	private double targetGrade;
 	private Rubric courseRubric;
+	private Date startDate, endDate;
 
 	public Course(String name) {
 		if (name.length() == 0) {
@@ -157,6 +159,36 @@ public class Course {
 
 	public double getCourseGPA() {
 		return this.courseRubric.getGPA(this.getLetterGrade());
+	}
+	
+	public void setEndDate(Date dt){
+		if(this.startDate == null){
+			this.endDate = dt;
+			return;
+		}
+		if(dt.before(this.startDate)){
+			throw new IllegalArgumentException();
+		}
+		this.endDate = dt;
+	}
+	
+	public void setStartDate(Date dt){
+		if(this.endDate == null){
+			this.startDate = dt;
+			return;
+		}
+		if(dt.after(this.endDate)){
+			throw new IllegalArgumentException();
+		}
+		this.startDate = dt;
+	}
+	
+	public Date getStartDate(){
+		return this.startDate;
+	}
+	
+	public Date getEndDate(){
+		return this.endDate;
 	}
 
 }

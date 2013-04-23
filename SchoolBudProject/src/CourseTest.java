@@ -1,5 +1,8 @@
 import static org.junit.Assert.*;
 
+import java.util.Date;
+import java.text.SimpleDateFormat;
+
 import org.junit.Test;
 
 public class CourseTest {
@@ -2371,4 +2374,102 @@ public class CourseTest {
 		course.setRubric(rubric);
 		assertEquals(0.0, course.getCourseGPA(), DELTA);
 	}
+	
+	@Test
+	public void testSetAndGetDateOne() throws Exception {
+		Course course = new Course("CSSE376");
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date d = sdf.parse("04/08/2013");
+		course.setStartDate(d);
+		assertEquals(d, course.getStartDate());
+	}
+	
+	@Test
+	public void testSetAndGetDateTwo() throws Exception {
+		Course course = new Course("CSSE376");
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date d = sdf.parse("04/08/2013");
+		course.setStartDate(d);
+		Date temp = sdf.parse("04/22/2013");
+		course.setEndDate(temp);
+		assertEquals(d, course.getStartDate());
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testSetAndGetDateThree() throws Exception {
+		Course course = new Course("CSSE376");
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date d = sdf.parse("04/08/2013");
+		course.setStartDate(d);
+		Date temp = sdf.parse("04/05/2013");
+		course.setEndDate(temp);}
+	
+	@Test
+	public void testSetAndGetDateFour() throws Exception {
+		Course course = new Course("CSSE376");
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date d = sdf.parse("04/08/2013");
+		course.setEndDate(d);
+		assertEquals(d, course.getEndDate());
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testSetAndGetDateFive() throws Exception {
+		Course course = new Course("CSSE376");
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date d = sdf.parse("04/08/2013");
+		course.setEndDate(d);
+		Date temp = sdf.parse("04/22/2013");
+		course.setStartDate(temp);	}
+	
+	@Test
+	public void testSetAndGetDateSix() throws Exception {
+		Course course = new Course("CSSE376");
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date d = sdf.parse("04/08/2013");
+		course.setEndDate(d);
+		Date temp = sdf.parse("04/05/2013");
+		course.setStartDate(temp);
+		assertEquals(d, course.getEndDate());
+	}
+	
+//	@Test
+//	public void testFrequencyCalculatorMin(){
+//		Category cat = new Category("HW", 10.0);
+//		Course course = new Course("CSSE376", 4.0);
+//		course.addCategory(cat);
+//		assertEquals(0, cat.getItemFrequency().get("HW"));
+//	}
+//	
+//	@Test
+//	public void testFrequencyCalculatorMinPlus(){
+//		Category cat = new Category("HW", 1, 10.0);
+//		assertEquals(1, cat.getItemFrequency().get("HW"));
+//	}
+//	
+//	@Test
+//	public void testFrequencyCalculatorNominal(){
+//		Category cat = new Category("HW", 10.0);
+//		String[] date = {"4/20/2013", "4/20/2013", "4/21/2013", "4/22/2013", "4/22/2013", "4/23/2013", "4/24/2013", "4/25/2013", "4/26/2013", "4/27/2013"}; 
+//		for(int i=0; i<10; i++){
+//			int rand = (int) Math.random() * 10;
+//			Item i = new Item("HW"+i, date[rand]);
+//		}
+//		assertEquals(0, cat.getItemFrequency());
+//	}
+//	
+//	@Test
+//	public void testFrequencyCalculatorMaxMinus(){
+//		
+//	}
+//	
+//	@Test
+//	public void testFrequencyCalculatorMax(){
+//		
+//	}
+//	
+//	@Test
+//	public void testFrequencyCalculatorMaxPlus(){
+//		
+//	}
 }

@@ -15,7 +15,6 @@ public class Item {
 		}
 		this.name = name;
 		this.creationDate = this.dtFormat.format(creationDate);
-		System.out.println(this.creationDate);
 	}
 
 	public Item(String name, String totalPoints, Date creationDate) {

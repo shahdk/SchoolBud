@@ -7,6 +7,7 @@ public class Category {
 	private double weight;
 	private ArrayList<Item> items;
 	private int numOfItems;
+	
 
 	public Category(String name, double weight) {
 		if (weight < 0 || weight > 100 || name.length() == 0) {
@@ -122,5 +123,7 @@ public class Category {
 		this.items.remove(index);
 		return true;
 	}
+	
+	
 
 }
