@@ -65,11 +65,12 @@ public class QuarterMain {
 							+ cat.getName() + this.elementDelimiter
 							+ cat.getWeight());
 					for (Item i : cat.getItemList()) {
+						String creationDate = new SimpleDateFormat("MM/dd/yyyy").format(i.getCreationDate());
 						writer.println(this.objectDelimiter
 								+ this.objectDelimiter + this.objectDelimiter
 								+ i.getName() + this.elementDelimiter
 								+ i.getEarnedPoints() + this.elementDelimiter
-								+ i.getTotalPoints() + this.elementDelimiter + i.getCreationDate());
+								+ i.getTotalPoints() + this.elementDelimiter + creationDate);
 					}
 				}
 			}

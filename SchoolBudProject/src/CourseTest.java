@@ -2433,43 +2433,719 @@ public class CourseTest {
 		assertEquals(d, course.getEndDate());
 	}
 	
-//	@Test
-//	public void testFrequencyCalculatorMin(){
-//		Category cat = new Category("HW", 10.0);
-//		Course course = new Course("CSSE376", 4.0);
-//		course.addCategory(cat);
-//		assertEquals(0, cat.getItemFrequency().get("HW"));
-//	}
-//	
-//	@Test
-//	public void testFrequencyCalculatorMinPlus(){
-//		Category cat = new Category("HW", 1, 10.0);
-//		assertEquals(1, cat.getItemFrequency().get("HW"));
-//	}
-//	
-//	@Test
-//	public void testFrequencyCalculatorNominal(){
-//		Category cat = new Category("HW", 10.0);
-//		String[] date = {"4/20/2013", "4/20/2013", "4/21/2013", "4/22/2013", "4/22/2013", "4/23/2013", "4/24/2013", "4/25/2013", "4/26/2013", "4/27/2013"}; 
-//		for(int i=0; i<10; i++){
-//			int rand = (int) Math.random() * 10;
-//			Item i = new Item("HW"+i, date[rand]);
-//		}
-//		assertEquals(0, cat.getItemFrequency());
-//	}
-//	
-//	@Test
-//	public void testFrequencyCalculatorMaxMinus(){
-//		
-//	}
-//	
-//	@Test
-//	public void testFrequencyCalculatorMax(){
-//		
-//	}
-//	
-//	@Test
-//	public void testFrequencyCalculatorMaxPlus(){
-//		
-//	}
+	@Test(expected = IllegalArgumentException.class)
+	public void testFrequencyCalculatorAssignmentMinLimitMinMinus(){
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/05/2013");
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(0, course.getItemFrequency(limit).get("HW"));	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMinLimitMin(){
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/08/2013");
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(0, course.getItemFrequency(limit).get("HW"));
+	}
+
+	@Test
+	public void testFrequencyCalculatorAssignmentMinLimitMinPlus(){
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/09/2013");
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(0, course.getItemFrequency(limit).get("HW"));
+	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMinLimitNominal(){
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/15/2013");
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(0, course.getItemFrequency(limit).get("HW"));
+	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMinLimitMaxMinus(){
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/21/2013");
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(0, course.getItemFrequency(limit).get("HW"));
+	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMinLimitMax(){
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/22/2013");
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(0, course.getItemFrequency(limit).get("HW"));
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testFrequencyCalculatorAssignmentMinLimitMaxPlus(){
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/23/2013");
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(0, course.getItemFrequency(limit).get("HW"));	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testFrequencyCalculatorAssignmentMinPlusLimitMinMinus(){
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/05/2013");
+
+		Item it = new Item("HW1", sdf.parse("04/08/2013"));
+		
+		cat.addItem(it);
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(1, course.getItemFrequency(limit).get("HW"));	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMinPlusLimitMin(){
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/08/2013");
+
+		Item it = new Item("HW1", sdf.parse("04/08/2013"));
+		
+		cat.addItem(it);
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(1, course.getItemFrequency(limit).get("HW"));	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMinPlusLimitMinPlus(){
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/09/2013");
+
+		Item it = new Item("HW1", sdf.parse("04/08/2013"));
+		
+		cat.addItem(it);
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(1, course.getItemFrequency(limit).get("HW"));	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMinPlusLimitNominal(){
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/15/2013");
+
+		Item it = new Item("HW1", sdf.parse("04/08/2013"));
+		
+		cat.addItem(it);
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(1, course.getItemFrequency(limit).get("HW"));	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMinPlusLimitMaxMinus(){
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/21/2013");
+
+		Item it = new Item("HW1", sdf.parse("04/08/2013"));
+		
+		cat.addItem(it);
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(1, course.getItemFrequency(limit).get("HW"));	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMinPlusLimitMax(){
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/22/2013");
+
+		Item it = new Item("HW1", sdf.parse("04/08/2013"));
+		
+		cat.addItem(it);
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(1, course.getItemFrequency(limit).get("HW"));	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testFrequencyCalculatorAssignmentMinPlusLimitMaxPlus(){
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/23/2013");
+
+		Item it = new Item("HW1", sdf.parse("04/08/2013"));
+		
+		cat.addItem(it);
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(1, course.getItemFrequency(limit).get("HW"));	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testFrequencyCalculatorAssignmentNominalLimitMinMinus(){
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013", "4/12/2013", "4/13/2013", "4/14/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/05/2013");
+		
+		for(int i=0; i<10; i++){
+			int rand = (int) Math.random() * 7;
+			Item it = new Item("HW"+i, sdf.parse(date[rand]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(10, cat.getItemFrequency(limit));	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentNominalLimitMin(){
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/08/2013");
+		
+		for(int i=0; i<10; i++){
+			Item it = new Item("HW"+i, sdf.parse(date[0]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(10, cat.getItemFrequency(limit));
+	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentNominalLimitMinPlus(){
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013", "4/09/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/09/2013");
+		
+		for(int i=0; i<10; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("HW"+i, sdf.parse(date[rand]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(10, cat.getItemFrequency(limit));	
+	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentNominalLimitNominal(){
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013", "4/12/2013", "4/13/2013", "4/14/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/05/2013");
+		
+		for(int i=0; i<10; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("HW"+i, sdf.parse(date[rand]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(10, cat.getItemFrequency(limit));
+	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentNominalLimitMaxMinus(){
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013", "4/12/2013", "4/13/2013", "4/14/2013",
+				"4/15/2013", "4/16/2013", "4/17/2013", "4/18/2013", "4/19/2013", "4/20/2013", "4/21/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/21/2013");
+		
+		for(int i=0; i<10; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("HW"+i, sdf.parse(date[rand]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(10, cat.getItemFrequency(limit));
+	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentNominalLimitMax(){
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013", "4/12/2013", "4/13/2013", "4/14/2013",
+				"4/15/2013", "4/16/2013", "4/17/2013", "4/18/2013", "4/19/2013", "4/20/2013", "4/21/2013", "4/22/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/22/2013");
+		
+		for(int i=0; i<10; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("HW"+i, sdf.parse(date[rand]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(10, cat.getItemFrequency(limit));	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testFrequencyCalculatorAssignmentNominalLimitMaxPlus(){
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013", "4/12/2013", "4/13/2013", "4/14/2013",
+				"4/15/2013", "4/16/2013", "4/17/2013", "4/18/2013", "4/19/2013", "4/20/2013", "4/21/2013", "4/22/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/23/2013");
+		
+		for(int i=0; i<10; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("HW"+i, sdf.parse(date[rand]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(10, cat.getItemFrequency(limit));	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testFrequencyCalculatorAssignmentMaxMinusLimitMinMinus(){
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013", "4/12/2013", "4/13/2013", "4/14/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/05/2013");
+		
+		for(int i=0; i<19; i++){
+			int rand = (int) Math.random() * 7;
+			Item it = new Item("HW"+i, sdf.parse(date[rand]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(19, cat.getItemFrequency(limit));	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMaxMinusLimitMin(){
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/08/2013");
+		
+		for(int i=0; i<19; i++){
+			Item it = new Item("HW"+i, sdf.parse(date[0]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(19, cat.getItemFrequency(limit));
+	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMaxMinusLimitMinPlus(){
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013", "4/09/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/09/2013");
+		
+		for(int i=0; i<19; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("HW"+i, sdf.parse(date[rand]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(19, cat.getItemFrequency(limit));	
+	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMaxMinusLimitNominal(){
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013", "4/12/2013", "4/13/2013", "4/14/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/05/2013");
+		
+		for(int i=0; i<19; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("HW"+i, sdf.parse(date[rand]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(19, cat.getItemFrequency(limit));
+	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMaxMinusLimitMaxMinus(){
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013", "4/12/2013", "4/13/2013", "4/14/2013",
+				"4/15/2013", "4/16/2013", "4/17/2013", "4/18/2013", "4/19/2013", "4/20/2013", "4/21/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/21/2013");
+		
+		for(int i=0; i<19; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("HW"+i, sdf.parse(date[rand]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(19, cat.getItemFrequency(limit));
+	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMaxMinusLimitMax(){
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013", "4/12/2013", "4/13/2013", "4/14/2013",
+				"4/15/2013", "4/16/2013", "4/17/2013", "4/18/2013", "4/19/2013", "4/20/2013", "4/21/2013", "4/22/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/22/2013");
+		
+		for(int i=0; i<19; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("HW"+i, sdf.parse(date[rand]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(19, cat.getItemFrequency(limit));	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testFrequencyCalculatorAssignmentMaxMinusLimitMaxPlus(){
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013", "4/12/2013", "4/13/2013", "4/14/2013",
+				"4/15/2013", "4/16/2013", "4/17/2013", "4/18/2013", "4/19/2013", "4/20/2013", "4/21/2013", "4/22/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/23/2013");
+		
+		for(int i=0; i<19; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("HW"+i, sdf.parse(date[rand]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(19, cat.getItemFrequency(limit));	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testFrequencyCalculatorAssignmentMaxLimitMinMinus(){
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013", "4/12/2013", "4/13/2013", "4/14/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/05/2013");
+		
+		for(int i=0; i<20; i++){
+			int rand = (int) Math.random() * 7;
+			Item it = new Item("HW"+i, sdf.parse(date[rand]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(20, cat.getItemFrequency(limit));	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMaxLimitMin(){
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/08/2013");
+		
+		for(int i=0; i<20; i++){
+			Item it = new Item("HW"+i, sdf.parse(date[0]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(20, cat.getItemFrequency(limit));
+	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMaxLimitMinPlus(){
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013", "4/09/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/09/2013");
+		
+		for(int i=0; i<20; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("HW"+i, sdf.parse(date[rand]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(20, cat.getItemFrequency(limit));	
+	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMaxLimitNominal(){
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013", "4/12/2013", "4/13/2013", "4/14/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/05/2013");
+		
+		for(int i=0; i<20; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("HW"+i, sdf.parse(date[rand]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(20, cat.getItemFrequency(limit));
+	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMaxLimitMaxMinus(){
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013", "4/12/2013", "4/13/2013", "4/14/2013",
+				"4/15/2013", "4/16/2013", "4/17/2013", "4/18/2013", "4/19/2013", "4/20/2013", "4/21/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/21/2013");
+		
+		for(int i=0; i<20; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("HW"+i, sdf.parse(date[rand]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(20, cat.getItemFrequency(limit));
+	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMaxLimitMax(){
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013", "4/12/2013", "4/13/2013", "4/14/2013",
+				"4/15/2013", "4/16/2013", "4/17/2013", "4/18/2013", "4/19/2013", "4/20/2013", "4/21/2013", "4/22/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/22/2013");
+		
+		for(int i=0; i<20; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("HW"+i, sdf.parse(date[rand]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(20, cat.getItemFrequency(limit));	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testFrequencyCalculatorAssignmentMaxLimitMaxPlus(){
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013", "4/12/2013", "4/13/2013", "4/14/2013",
+				"4/15/2013", "4/16/2013", "4/17/2013", "4/18/2013", "4/19/2013", "4/20/2013", "4/21/2013", "4/22/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/23/2013");
+		
+		for(int i=0; i<20; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("HW"+i, sdf.parse(date[rand]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(20, cat.getItemFrequency(limit));	}
 }

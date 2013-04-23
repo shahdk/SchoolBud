@@ -139,11 +139,11 @@ public class ItemTest {
 		Date date = new Date();
 		SimpleDateFormat dtFormat = new SimpleDateFormat("MM/dd/yyyy");
 		Item item = new Item("HW1", date);
-		assertEquals(dtFormat.format(date), item.getCreationDate());
+		assertEquals(date, item.getCreationDate());
 		
 		String newDate = "04/25/2013";
 		Date newDt = dtFormat.parse(newDate);
 		item.setCreationdate(newDt);
-		assertEquals(newDate, item.getCreationDate());
+		assertEquals(newDt, item.getCreationDate());
 	}
 }

@@ -214,5 +214,4 @@ public class QuarterMainTest {
 	public void testLoadAndSaveQuarterThree() throws Exception {
 		QuarterMain qtMain = new QuarterMain();
 		qtMain.loadFile(""); }
-
 }

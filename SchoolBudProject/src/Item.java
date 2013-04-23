@@ -6,15 +6,14 @@ public class Item {
 	private String earnedPoints = "";
 	private String totalPoints = "";
 	private String name = "";
-	private String creationDate;
-	private SimpleDateFormat dtFormat = new SimpleDateFormat("MM/dd/yyyy");
+	private Date creationDate;
 
 	public Item(String name, Date creationDate) {
 		if (name.length() == 0) {
 			throw new IllegalArgumentException();
 		}
 		this.name = name;
-		this.creationDate = this.dtFormat.format(creationDate);
+		this.creationDate = creationDate;
 	}
 
 	public Item(String name, String totalPoints, Date creationDate) {
@@ -29,7 +28,7 @@ public class Item {
 			}
 			this.name = name;
 			this.totalPoints = totalPoints;
-			this.creationDate = this.dtFormat.format(creationDate);
+			this.creationDate = creationDate;
 		} catch (Exception e) {
 			throw new IllegalArgumentException();
 		}
@@ -48,7 +47,7 @@ public class Item {
 			this.name = name;
 			this.earnedPoints = earnedPoints;
 			this.totalPoints = totalPoints;
-			this.creationDate = this.dtFormat.format(creationDate);
+			this.creationDate = creationDate;
 		} catch (Exception e) {
 			throw new IllegalArgumentException();
 		}
@@ -66,12 +65,12 @@ public class Item {
 		return this.name;
 	}
 	
-	public String getCreationDate(){
+	public Date getCreationDate(){
 		return this.creationDate;
 	}
 	
 	public void setCreationdate(Date creationDate){
-		this.creationDate = this.dtFormat.format(creationDate);
+		this.creationDate = creationDate;
 	}
 
 	public void setEarnedPoints(String earnedPoints) {
