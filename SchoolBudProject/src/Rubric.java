@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 public class Rubric {
 
@@ -10,6 +11,7 @@ public class Rubric {
 	}
 
 	public void setDefaults() {
+		this.grades.clear();
 		this.addGrade("A", 90, 100, 4.0);
 		this.addGrade("B+", 85, 89, 3.50);
 		this.addGrade("B", 80, 84, 3.0);
@@ -34,7 +36,7 @@ public class Rubric {
 				throw new IllegalArgumentException();
 			}
 			if ((upperLimit > x.get(0) && upperLimit < x.get(1))
-					|| upperLimit == x.get(1) || upperLimit > x.get(0)) {
+					|| upperLimit == x.get(1)) {
 				throw new IllegalArgumentException();
 			}
 			if (gpa == x.get(2) || gpa < 0) {
@@ -113,7 +115,7 @@ public class Rubric {
 		if(this.grades.containsKey(newGrade) || newGrade.length()==0){
 			throw new IllegalArgumentException();
 		}
-		
+
 		ArrayList<Double> temp = this.grades.get(old);
 		this.grades.remove(old);
 		this.grades.put(newGrade, temp);
@@ -137,14 +139,14 @@ public class Rubric {
 			data.add(temp.get(1)+"");
 			data.add(temp.get(2)+"");
 		}
-		
-		rubric.writeFile("rubric.txt", ";", data, 4);
+
+		rubric.writeFile("rubric.txt", "\t", data, 4);
 	}
 
-	public void loadRubric() throws Exception {
+	public void loadRubric(String fileName) throws Exception {
 		this.grades.clear();
 		FileParser rubric = new FileParser();
-		ArrayList<String> data = rubric.readFile("rubric.txt", ";", 4);
+		ArrayList<String> data = rubric.readFile(fileName, ";", 4);
 		for(int i=0; i<data.size(); i+=4){
 			ArrayList<Double> temp = new ArrayList<Double>();
 			temp.add(Double.parseDouble(data.get(i+1)));
@@ -152,6 +154,10 @@ public class Rubric {
 			temp.add(Double.parseDouble(data.get(i+3)));
 			this.grades.put(data.get(i), temp);
 		}
+	}
+
+	public Set<String> getGradeList() {
+		return this.grades.keySet();
 	}
 
 }

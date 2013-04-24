@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Category {
 
@@ -6,6 +7,7 @@ public class Category {
 	private double weight;
 	private ArrayList<Item> items;
 	private int numOfItems;
+	
 
 	public Category(String name, double weight) {
 		if (weight < 0 || weight > 100 || name.length() == 0) {
@@ -25,7 +27,7 @@ public class Category {
 		this.weight = weight;
 		this.items = new ArrayList<Item>();
 		for (int i = 0; i < numOfItems; i++) {
-			this.items.add(new Item(name + (i + 1)));
+			this.items.add(new Item(name + (i + 1), new Date()));
 		}
 		this.numOfItems = this.items.size();
 	}
@@ -121,5 +123,7 @@ public class Category {
 		this.items.remove(index);
 		return true;
 	}
+	
+	
 
 }

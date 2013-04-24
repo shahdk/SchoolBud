@@ -1,5 +1,8 @@
 import static org.junit.Assert.*;
 
+import java.util.Date;
+import java.text.SimpleDateFormat;
+
 import org.junit.Test;
 
 public class CourseTest {
@@ -1521,4 +1524,1658 @@ public class CourseTest {
 		course.setTargetGrade(100);
 		assertEquals(60.0, course.getNeededCourseGrade(), DELTA);
 	}
+	
+	@Test
+	public void testSetrubricOne() throws Exception{
+		Course course = new Course("CSSE376", 4.0);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals(4.0, course.getRubric().getGPA("A"), DELTA);
+	}
+	
+	@Test
+	public void testSetrubricTwo() throws Exception{
+		Course course = new Course("CSSE376");
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals(4.0, course.getRubric().getGPA("A"), DELTA);
+	}
+	
+	@Test
+	public void testALetterGradesMinMinus() throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("89.99");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("A", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testALetterGradesMin() throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("90.0");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("A", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testALetterGradesMinPlus() throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("90.99");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("A", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testALetterGradesNominal() throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("95.00");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("A", course.getLetterGrade());
+	}
+
+	@Test
+	public void testALetterGradesMaxMinus()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("99.99");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("A", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testALetterGradesMax()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("100");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("A", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testALetterGradesMaxPlus()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("100.99");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("A", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testBPlusLetterGradesMinMinus()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("84.99");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("B+", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testBPlusLetterGradesMin() throws Exception{
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("85.0");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("B+", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testBPlusLetterGradesMinPlus()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("85.99");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("B+", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testBPlusLetterGradesNominal()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("87.00");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("B+", course.getLetterGrade());
+	}
+
+	@Test
+	public void testBPlusLetterGradesMaxMinus()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("88.99");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("B+", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testBPlusLetterGradesMax()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("89");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("B+", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testBPlusLetterGradesMaxPlus()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("89.99");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("A", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testBLetterGradesMinMinus()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("79.99");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("B", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testBLetterGradesMin()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("80.0");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("B", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testBLetterGradesMinPlus()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("80.99");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("B", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testBLetterGradesNominal()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("82.00");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("B", course.getLetterGrade());
+	}
+
+	@Test
+	public void testBLetterGradesMaxMinus()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("83.99");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("B", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testBLetterGradesMax()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("84");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("B", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testBLetterGradesMaxPlus()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("84.99");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("B+", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testCLetterGradesMinMinus()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("69.99");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("C", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testCLetterGradesMin()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("70.0");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("C", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testCLetterGradesMinPlus()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("70.99");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("C", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testCLetterGradesNominal()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("72.00");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("C", course.getLetterGrade());
+	}
+
+	@Test
+	public void testCLetterGradesMaxMinus()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("73.99");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("C", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testCLetterGradesMax()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("74");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("C", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testCLetterGradesMaxPlus()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("74.99");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("C+", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testCPlusLetterGradesMinMinus()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("74.99");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("C+", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testCPlusLetterGradesMin()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("75.0");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("C+", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testCPlusLetterGradesMinPlus()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("75.99");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("C+", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testCPlusLetterGradesNominal()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("77.00");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("C+", course.getLetterGrade());
+	}
+
+	@Test
+	public void testCPlusLetterGradesMaxMinus()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("78.99");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("C+", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testCPlusLetterGradesMax()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("79");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("C+", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testCPlusLetterGradesMaxPlus()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("79.99");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("B", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testDPlusLetterGradesMinMinus() throws Exception{
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("64.99");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("D+", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testDPlusLetterGradesMin()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("65.0");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("D+", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testDPLusLetterGradesMinPlus()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("65.99");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("D+", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testDPlusLetterGradesNominal()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("67.00");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("D+", course.getLetterGrade());
+	}
+
+	@Test
+	public void testDPlusLetterGradesMaxMinus()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("68.99");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("D+", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testDPlusLetterGradesMax()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("69");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("D+", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testDPlusLetterGradesMaxPlus()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("69.99");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("C", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testDLetterGradesMinMinus()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("59.99");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("D", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testDLetterGradesMin()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("60.0");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("D", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testDLetterGradesMinPlus()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("60.99");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("D", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testDLetterGradesNominal()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("62.00");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("D", course.getLetterGrade());
+	}
+
+	@Test
+	public void testDLetterGradesMaxMinus()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("63.99");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("D", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testDLetterGradesMax()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("64");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("D", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testDLetterGradesMaxPlus()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("64.99");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("D+", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testFLetterGradesMinMinus()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("-89.99");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("F", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testFLetterGradesMin()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("0.0");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("F", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testFLetterGradesMinPlus() throws Exception{
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("0.99");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("F", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testFLetterGradesNominal()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("30.00");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("F", course.getLetterGrade());
+	}
+
+	@Test
+	public void testFLetterGradesMaxMinus()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("54.99");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("F", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testFLetterGradesMax()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("59");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("F", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testFLetterGradesMaxPlus()throws Exception {
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("59.99");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals("D", course.getLetterGrade());
+	}
+	
+	@Test
+	public void testALetterGPA()throws Exception{
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("95");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals(4.0, course.getCourseGPA(), DELTA);
+	}
+	
+	@Test
+	public void testBPlusLetterGPA()throws Exception{
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("88");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals(3.5, course.getCourseGPA(), DELTA);
+	}
+	
+	@Test
+	public void testBLetterGPA()throws Exception{
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("82");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals(3.0, course.getCourseGPA(), DELTA);
+	}
+	
+	@Test
+	public void testCPlusLetterGPA()throws Exception{
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("78");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals(2.5, course.getCourseGPA(), DELTA);
+	}
+	
+	@Test
+	public void testCLetterGPA()throws Exception{
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("73");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals(2.0, course.getCourseGPA(), DELTA);
+	}
+	
+	@Test
+	public void testDPlusLetterGPA()throws Exception{
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("68");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals(1.5, course.getCourseGPA(), DELTA);
+	}
+	
+	@Test
+	public void testDLetterGPA()throws Exception{
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("62");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals(1.0, course.getCourseGPA(), DELTA);
+	}
+	
+	@Test
+	public void testFLetterGPA()throws Exception{
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		cat.getItemList().get(0).setEarnedPoints("40");
+		cat.getItemList().get(0).setTotalPoints("100");
+		course.addCategory(cat);
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		course.setRubric(rubric);
+		assertEquals(0.0, course.getCourseGPA(), DELTA);
+	}
+	
+	@Test
+	public void testSetAndGetDateOne() throws Exception {
+		Course course = new Course("CSSE376");
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date d = sdf.parse("04/08/2013");
+		course.setStartDate(d);
+		assertEquals(d, course.getStartDate());
+	}
+	
+	@Test
+	public void testSetAndGetDateTwo() throws Exception {
+		Course course = new Course("CSSE376");
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date d = sdf.parse("04/08/2013");
+		course.setStartDate(d);
+		Date temp = sdf.parse("04/22/2013");
+		course.setEndDate(temp);
+		assertEquals(d, course.getStartDate());
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testSetAndGetDateThree() throws Exception {
+		Course course = new Course("CSSE376");
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date d = sdf.parse("04/08/2013");
+		course.setStartDate(d);
+		Date temp = sdf.parse("04/05/2013");
+		course.setEndDate(temp);}
+	
+	@Test
+	public void testSetAndGetDateFour() throws Exception {
+		Course course = new Course("CSSE376");
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date d = sdf.parse("04/08/2013");
+		course.setEndDate(d);
+		assertEquals(d, course.getEndDate());
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testSetAndGetDateFive() throws Exception {
+		Course course = new Course("CSSE376");
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date d = sdf.parse("04/08/2013");
+		course.setEndDate(d);
+		Date temp = sdf.parse("04/22/2013");
+		course.setStartDate(temp);	}
+	
+	@Test
+	public void testSetAndGetDateSix() throws Exception {
+		Course course = new Course("CSSE376");
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date d = sdf.parse("04/08/2013");
+		course.setEndDate(d);
+		Date temp = sdf.parse("04/05/2013");
+		course.setStartDate(temp);
+		assertEquals(d, course.getEndDate());
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testFrequencyCalculatorAssignmentMinLimitMinMinus()throws Exception{
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/05/2013");
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(0, course.getItemFrequency(limit).get("HW").intValue());	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMinLimitMin()throws Exception{
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/08/2013");
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(0, course.getItemFrequency(limit).get("HW").intValue());
+	}
+
+	@Test
+	public void testFrequencyCalculatorAssignmentMinLimitMinPlus()throws Exception{
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/09/2013");
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(0, course.getItemFrequency(limit).get("HW").intValue());
+	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMinLimitNominal()throws Exception{
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/15/2013");
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(0, course.getItemFrequency(limit).get("HW").intValue());
+	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMinLimitMaxMinus()throws Exception{
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/21/2013");
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(0, course.getItemFrequency(limit).get("HW").intValue());
+	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMinLimitMax()throws Exception{
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/22/2013");
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(0, course.getItemFrequency(limit).get("HW").intValue());
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testFrequencyCalculatorAssignmentMinLimitMaxPlus()throws Exception{
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/23/2013");
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(0, course.getItemFrequency(limit).get("HW").intValue());	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testFrequencyCalculatorAssignmentMinPlusLimitMinMinus()throws Exception{
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/05/2013");
+
+		Item it = new Item("HW1", sdf.parse("04/08/2013"));
+		
+		cat.addItem(it);
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(1, course.getItemFrequency(limit).get("HW").intValue());	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMinPlusLimitMin()throws Exception{
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/08/2013");
+
+		Item it = new Item("HW1", sdf.parse("04/08/2013"));
+		
+		cat.addItem(it);
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(1, course.getItemFrequency(limit).get("HW").intValue());	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMinPlusLimitMinPlus()throws Exception{
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/09/2013");
+
+		Item it = new Item("HW1", sdf.parse("04/08/2013"));
+		
+		cat.addItem(it);
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(1, course.getItemFrequency(limit).get("HW").intValue());	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMinPlusLimitNominal()throws Exception{
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/15/2013");
+
+		Item it = new Item("HW1", sdf.parse("04/08/2013"));
+		
+		cat.addItem(it);
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(1, course.getItemFrequency(limit).get("HW").intValue());	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMinPlusLimitMaxMinus()throws Exception{
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/21/2013");
+
+		Item it = new Item("HW1", sdf.parse("04/08/2013"));
+		
+		cat.addItem(it);
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(1, course.getItemFrequency(limit).get("HW").intValue());	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMinPlusLimitMax()throws Exception{
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/22/2013");
+
+		Item it = new Item("HW1", sdf.parse("04/08/2013"));
+		
+		cat.addItem(it);
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(1, course.getItemFrequency(limit).get("HW").intValue());	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testFrequencyCalculatorAssignmentMinPlusLimitMaxPlus()throws Exception{
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/23/2013");
+
+		Item it = new Item("HW1", sdf.parse("04/08/2013"));
+		
+		cat.addItem(it);
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(1, course.getItemFrequency(limit).get("HW").intValue());	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testFrequencyCalculatorAssignmentNominalLimitMinMinus()throws Exception{
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013", "4/12/2013", "4/13/2013", "4/14/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/05/2013");
+		
+		for(int i=0; i<10; i++){
+			int rand = (int) Math.random() * 7;
+			Item it = new Item("HW"+i, sdf.parse(date[rand]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(10, course.getItemFrequency(limit).get("HW").intValue());	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentNominalLimitMin()throws Exception{
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/08/2013");
+		
+		for(int i=0; i<10; i++){
+			Item it = new Item("HW"+i, sdf.parse(date[0]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(10, course.getItemFrequency(limit).get("HW").intValue());
+	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentNominalLimitMinPlus()throws Exception{
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013", "4/09/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/09/2013");
+		
+		for(int i=0; i<10; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("HW"+i, sdf.parse(date[rand]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(10, course.getItemFrequency(limit).get("HW").intValue());	
+	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentNominalLimitNominal()throws Exception{
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013", "4/12/2013", "4/13/2013", "4/14/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/15/2013");
+		
+		for(int i=0; i<10; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("HW"+i, sdf.parse(date[rand]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(10, course.getItemFrequency(limit).get("HW").intValue());
+	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentNominalLimitMaxMinus()throws Exception{
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013", "4/12/2013", "4/13/2013", "4/14/2013",
+				"4/15/2013", "4/16/2013", "4/17/2013", "4/18/2013", "4/19/2013", "4/20/2013", "4/21/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/21/2013");
+		
+		for(int i=0; i<10; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("HW"+i, sdf.parse(date[rand]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(10, course.getItemFrequency(limit).get("HW").intValue());
+	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentNominalLimitMax()throws Exception{
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013", "4/12/2013", "4/13/2013", "4/14/2013",
+				"4/15/2013", "4/16/2013", "4/17/2013", "4/18/2013", "4/19/2013", "4/20/2013", "4/21/2013", "4/22/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/22/2013");
+		
+		for(int i=0; i<10; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("HW"+i, sdf.parse(date[rand]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(10, course.getItemFrequency(limit).get("HW").intValue());	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testFrequencyCalculatorAssignmentNominalLimitMaxPlus()throws Exception{
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013", "4/12/2013", "4/13/2013", "4/14/2013",
+				"4/15/2013", "4/16/2013", "4/17/2013", "4/18/2013", "4/19/2013", "4/20/2013", "4/21/2013", "4/22/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/23/2013");
+		
+		for(int i=0; i<10; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("HW"+i, sdf.parse(date[rand]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(10, course.getItemFrequency(limit).get("HW").intValue());	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testFrequencyCalculatorAssignmentMaxMinusLimitMinMinus()throws Exception{
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013", "4/12/2013", "4/13/2013", "4/14/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/05/2013");
+		
+		for(int i=0; i<19; i++){
+			int rand = (int) Math.random() * 7;
+			Item it = new Item("HW"+i, sdf.parse(date[rand]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(19, course.getItemFrequency(limit).get("HW").intValue());	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMaxMinusLimitMin()throws Exception{
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/08/2013");
+		
+		for(int i=0; i<19; i++){
+			Item it = new Item("HW"+i, sdf.parse(date[0]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(19, course.getItemFrequency(limit).get("HW").intValue());
+	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMaxMinusLimitMinPlus()throws Exception{
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013", "4/09/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/09/2013");
+		
+		for(int i=0; i<19; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("HW"+i, sdf.parse(date[rand]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(19, course.getItemFrequency(limit).get("HW").intValue());	
+	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMaxMinusLimitNominal()throws Exception{
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013", "4/12/2013", "4/13/2013", "4/14/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/15/2013");
+		
+		for(int i=0; i<19; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("HW"+i, sdf.parse(date[rand]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(19, course.getItemFrequency(limit).get("HW").intValue());
+	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMaxMinusLimitMaxMinus()throws Exception{
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013", "4/12/2013", "4/13/2013", "4/14/2013",
+				"4/15/2013", "4/16/2013", "4/17/2013", "4/18/2013", "4/19/2013", "4/20/2013", "4/21/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/21/2013");
+		
+		for(int i=0; i<19; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("HW"+i, sdf.parse(date[rand]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(19, course.getItemFrequency(limit).get("HW").intValue());
+	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMaxMinusLimitMax()throws Exception{
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013", "4/12/2013", "4/13/2013", "4/14/2013",
+				"4/15/2013", "4/16/2013", "4/17/2013", "4/18/2013", "4/19/2013", "4/20/2013", "4/21/2013", "4/22/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/22/2013");
+		
+		for(int i=0; i<19; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("HW"+i, sdf.parse(date[rand]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(19, course.getItemFrequency(limit).get("HW").intValue());	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testFrequencyCalculatorAssignmentMaxMinusLimitMaxPlus()throws Exception{
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013", "4/12/2013", "4/13/2013", "4/14/2013",
+				"4/15/2013", "4/16/2013", "4/17/2013", "4/18/2013", "4/19/2013", "4/20/2013", "4/21/2013", "4/22/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/23/2013");
+		
+		for(int i=0; i<19; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("HW"+i, sdf.parse(date[rand]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(19, course.getItemFrequency(limit).get("HW").intValue());	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testFrequencyCalculatorAssignmentMaxLimitMinMinus()throws Exception{
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013", "4/12/2013", "4/13/2013", "4/14/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/05/2013");
+		
+		for(int i=0; i<20; i++){
+			int rand = (int) Math.random() * 7;
+			Item it = new Item("HW"+i, sdf.parse(date[rand]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(20, course.getItemFrequency(limit).get("HW").intValue());	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMaxLimitMin()throws Exception{
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/08/2013");
+		
+		for(int i=0; i<20; i++){
+			Item it = new Item("HW"+i, sdf.parse(date[0]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(20, course.getItemFrequency(limit).get("HW").intValue());
+	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMaxLimitMinPlus()throws Exception{
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013", "4/09/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/09/2013");
+		
+		for(int i=0; i<20; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("HW"+i, sdf.parse(date[rand]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(20, course.getItemFrequency(limit).get("HW").intValue());	
+	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMaxLimitNominal()throws Exception{
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013", "4/12/2013", "4/13/2013", "4/14/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/15/2013");
+		
+		for(int i=0; i<20; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("HW"+i, sdf.parse(date[rand]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(20, course.getItemFrequency(limit).get("HW").intValue());
+	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMaxLimitMaxMinus()throws Exception{
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013", "4/12/2013", "4/13/2013", "4/14/2013",
+				"4/15/2013", "4/16/2013", "4/17/2013", "4/18/2013", "4/19/2013", "4/20/2013", "4/21/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/21/2013");
+		
+		for(int i=0; i<20; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("HW"+i, sdf.parse(date[rand]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(20, course.getItemFrequency(limit).get("HW").intValue());
+	}
+	
+	@Test
+	public void testFrequencyCalculatorAssignmentMaxLimitMax() throws Exception{
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013", "4/12/2013", "4/13/2013", "4/14/2013",
+				"4/15/2013", "4/16/2013", "4/17/2013", "4/18/2013", "4/19/2013", "4/20/2013", "4/21/2013", "4/22/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/22/2013");
+		
+		for(int i=0; i<20; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("HW"+i, sdf.parse(date[rand]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(20, course.getItemFrequency(limit).get("HW").intValue());	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testFrequencyCalculatorAssignmentMaxLimitMaxPlus() throws Exception{
+		Category cat = new Category("HW", 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013", "4/12/2013", "4/13/2013", "4/14/2013",
+				"4/15/2013", "4/16/2013", "4/17/2013", "4/18/2013", "4/19/2013", "4/20/2013", "4/21/2013", "4/22/2013"}; 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		Date limit = sdf.parse("04/23/2013");
+		
+		for(int i=0; i<20; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("HW"+i, sdf.parse(date[rand]));
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(20, course.getItemFrequency(limit).get("HW").intValue());	}
+	
+	@Test
+	public void testResettingItemDate() throws Exception{
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy"); 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		
+		course.addCategory(cat);
+		course.getCategories().get(0).getItemList().get(0).setCreationdate(sdf.parse("4/05/2013"));
+		
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(start, course.getCategories().get(0).getItemList().get(0).getCreationDate());	}
+	
+	@Test
+	public void testResettingItemDateTwo() throws Exception{
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy"); 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(end, course.getCategories().get(0).getItemList().get(0).getCreationDate());	}
 }

@@ -1,6 +1,7 @@
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 import org.junit.After;
 import org.junit.Before;
@@ -111,7 +112,7 @@ public class CategoryTest {
 	@Test
 	public void testSetItemsOne() {
 		for (int i = 1; i <= 10; i++) {
-			this.hwItems.add(new Item("HW" + i));
+			this.hwItems.add(new Item("HW" + i, new Date()));
 		}
 		Category cat = new Category("HW", 10);
 		cat.setItemList(this.hwItems);
@@ -121,7 +122,7 @@ public class CategoryTest {
 	@Test
 	public void testSetItemsTwo() {
 		for (int i = 1; i <= 10; i++) {
-			this.hwItems.add(new Item("HW" + i));
+			this.hwItems.add(new Item("HW" + i, new Date()));
 		}
 		Category cat = new Category("HW", 10, 10);
 		cat.setItemList(new ArrayList<Item>());
@@ -190,33 +191,33 @@ public class CategoryTest {
 	@Test
 	public void testAddItemOne() {
 		Category cat = new Category("HW", 10);
-		cat.addItem(new Item("HW1"));
+		cat.addItem(new Item("HW1", new Date()));
 		assertEquals("HW1", cat.getItemList().get(0).getName());
 	}
 
 	@Test
 	public void testAddItemTwo() {
 		Category cat = new Category("HW", 10, 10);
-		cat.addItem(new Item("HW11"));
+		cat.addItem(new Item("HW11", new Date()));
 		assertEquals("HW11", cat.getItemList().get(10).getName());
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testAddItemSameName() {
 		Category cat = new Category("HW", 10, 10);
-		cat.addItem(new Item("HW10"));	}
+		cat.addItem(new Item("HW10", new Date()));	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testAddItemSameNameTwo() {
 		Category cat = new Category("HW", 10);
-		cat.addItem(new Item("HW1"));
-		cat.addItem(new Item("HW1")); }
+		cat.addItem(new Item("HW1", new Date()));
+		cat.addItem(new Item("HW1", new Date())); }
 
 	//test cases for removing items
 	@Test
 	public void testRemoveItemOne() {
 		Category cat = new Category("HW", 10);
-		cat.addItem(new Item("HW1"));
+		cat.addItem(new Item("HW1", new Date()));
 		assertTrue(cat.removeItem("HW1"));
 		assertEquals(0, cat.getItemList().size());
 	}
@@ -224,7 +225,7 @@ public class CategoryTest {
 	@Test
 	public void testRemoveItemTwo() {
 		Category cat = new Category("HW", 10, 10);
-		cat.addItem(new Item("HW11"));
+		cat.addItem(new Item("HW11", new Date()));
 		assertTrue(cat.removeItem("HW1"));
 		assertEquals(10, cat.getItemList().size());
 	}
@@ -244,8 +245,8 @@ public class CategoryTest {
 	@Test
 	public void testRemoveItemFive() {
 		Category cat = new Category("HW", 10);
-		cat.addItem(new Item("HW1"));
-		cat.addItem(new Item("HW2"));
+		cat.addItem(new Item("HW1", new Date()));
+		cat.addItem(new Item("HW2", new Date()));
 		cat.removeItem("HW1");
 		assertEquals("HW2", cat.getItemList().get(0).getName());
 	}
@@ -274,7 +275,7 @@ public class CategoryTest {
 	public void testNumOfItemsThree() {
 		this.hwItems.clear();
 		for (int i = 1; i <= 10; i++) {
-			this.hwItems.add(new Item("HW" + i));
+			this.hwItems.add(new Item("HW" + i, new Date()));
 		}
 		Category cat = new Category("HW", 10);
 		cat.setItemList(this.hwItems);
@@ -291,14 +292,14 @@ public class CategoryTest {
 	@Test
 	public void testNumItemsWithAddItemOne() {
 		Category cat = new Category("HW", 10);
-		cat.addItem(new Item("HW1"));
+		cat.addItem(new Item("HW1", new Date()));
 		assertEquals(1, cat.getNumOfItems());
 	}
 
 	@Test
 	public void testNumItemsWithAddItemTwo() {
 		Category cat = new Category("HW", 10, 10);
-		cat.addItem(new Item("HW11"));
+		cat.addItem(new Item("HW11", new Date()));
 		assertEquals(11, cat.getNumOfItems());
 	}	
 

@@ -245,8 +245,17 @@ public class RubricTest {
 		Rubric rubric = new Rubric();
 		rubric.setDefaults();
 		rubric.saveRubric();
-		rubric.loadRubric();
+		rubric.loadRubric("rubric.txt");
 		assertEquals(4.0, rubric.getGPA("A"), DELTA);
+	}
+	
+	@Test
+	public void testGetGradeListOne() throws Exception{
+		Rubric rubric = new Rubric();
+		rubric.setDefaults();
+		rubric.saveRubric();
+		rubric.loadRubric("rubric.txt");
+		assertTrue(rubric.getGradeList().contains("A"));
 	}
 	
 }
