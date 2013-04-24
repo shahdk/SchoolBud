@@ -7,7 +7,7 @@ public class Category {
 	private double weight;
 	private ArrayList<Item> items;
 	private int numOfItems;
-	
+	private Date startDate, endDate;
 
 	public Category(String name, double weight) {
 		if (weight < 0 || weight > 100 || name.length() == 0) {
@@ -27,9 +27,32 @@ public class Category {
 		this.weight = weight;
 		this.items = new ArrayList<Item>();
 		for (int i = 0; i < numOfItems; i++) {
-			this.items.add(new Item(name + (i + 1), new Date()));
+			Date date = new Date();
+			this.items.add(new Item(name + (i + 1), date));
 		}
 		this.numOfItems = this.items.size();
+		this.checkItemCreationDate();
+	}
+	
+	public void checkItemCreationDate(){
+		for (Item i : this.items) {
+			if (this.startDate != null && i.getCreationDate().before(this.startDate)) {
+				i.setCreationdate(this.startDate);
+			}
+			else if (this.endDate!= null && i.getCreationDate().after(this.endDate)) {
+				i.setCreationdate(this.endDate);
+			}
+		}
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;	
+		this.checkItemCreationDate();
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+		this.checkItemCreationDate();
 	}
 
 	public ArrayList<Item> getItemList() {
@@ -71,8 +94,8 @@ public class Category {
 	}
 
 	public void addItem(Item item) {
-		for(Item i: this.items){
-			if(i.getName().equals(item.getName())){
+		for (Item i : this.items) {
+			if (i.getName().equals(item.getName())) {
 				throw new IllegalArgumentException();
 			}
 		}
@@ -105,25 +128,23 @@ public class Category {
 	}
 
 	public boolean removeItem(String name) {
-		if(this.items.size() == 0){
+		if (this.items.size() == 0) {
 			return false;
 		}
 		int index = -1;
-		for(int i=0; i<this.items.size(); i++){
-			if(this.items.get(i).getName().equals(name)){
+		for (int i = 0; i < this.items.size(); i++) {
+			if (this.items.get(i).getName().equals(name)) {
 				index = i;
 				break;
 			}
 		}
-		
-		if(index == -1){
+
+		if (index == -1) {
 			return false;
 		}
-		
+
 		this.items.remove(index);
 		return true;
 	}
-	
-	
 
 }
