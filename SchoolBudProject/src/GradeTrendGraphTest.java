@@ -33,7 +33,23 @@ public class GradeTrendGraphTest {
 	}
 	
 	@Test
-	public void test() {
+	public void testAllUserEnteredVariablesGettersAndSetters() {
+		
+		GradeTrendGraph graph = new GradeTrendGraph(null, 1, 5);
+		
+		//test getters
+		assertNull(graph.getCourse());
+		assertEquals(1, graph.getClassDifficulty_1_5());
+		assertEquals(5, graph.getFutureWorkRate_neg5_pos5());
+		
+		//test setters
+		graph.setClassDifficulty_1_5(3);
+		graph.setFutureWorkRate_neg5_pos5(-3);
+		graph.setCourse(new Course("science"));
+		
+		assertNotNull(graph.getCourse());
+		assertEquals(3, graph.getClassDifficulty_1_5());
+		assertEquals(-3, graph.getFutureWorkRate_neg5_pos5());
 		
 	}
 
