@@ -169,13 +169,8 @@ public class Course {
 		}
 		
 		this.endDate = dt;
-		
 		for(Category cat: this.categories){
-			for(Item i: cat.getItemList()){
-				if(i.getCreationDate().after(dt)){
-					i.setCreationdate(dt);
-				}
-			}
+			cat.setEndDate(this.endDate);
 		}
 	}
 	
@@ -186,13 +181,8 @@ public class Course {
 		}
 		
 		this.startDate = dt;
-		
 		for(Category cat: this.categories){
-			for(Item i: cat.getItemList()){
-				if(i.getCreationDate().before(dt)){
-					i.setCreationdate(dt);
-				}
-			}
+			cat.setStartDate(this.startDate);
 		}
 	}
 	
