@@ -2434,7 +2434,7 @@ public class CourseTest {
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void testFrequencyCalculatorAssignmentMinLimitMinMinus(){
+	public void testFrequencyCalculatorAssignmentMinLimitMinMinus()throws Exception{
 		Category cat = new Category("HW", 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -2446,10 +2446,10 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(0, course.getItemFrequency(limit).get("HW"));	}
+		assertEquals(0, course.getItemFrequency(limit).get("HW").intValue());	}
 	
 	@Test
-	public void testFrequencyCalculatorAssignmentMinLimitMin(){
+	public void testFrequencyCalculatorAssignmentMinLimitMin()throws Exception{
 		Category cat = new Category("HW", 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -2461,11 +2461,11 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(0, course.getItemFrequency(limit).get("HW"));
+		assertEquals(0, course.getItemFrequency(limit).get("HW").intValue());
 	}
 
 	@Test
-	public void testFrequencyCalculatorAssignmentMinLimitMinPlus(){
+	public void testFrequencyCalculatorAssignmentMinLimitMinPlus()throws Exception{
 		Category cat = new Category("HW", 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -2477,11 +2477,11 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(0, course.getItemFrequency(limit).get("HW"));
+		assertEquals(0, course.getItemFrequency(limit).get("HW").intValue());
 	}
 	
 	@Test
-	public void testFrequencyCalculatorAssignmentMinLimitNominal(){
+	public void testFrequencyCalculatorAssignmentMinLimitNominal()throws Exception{
 		Category cat = new Category("HW", 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -2493,11 +2493,11 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(0, course.getItemFrequency(limit).get("HW"));
+		assertEquals(0, course.getItemFrequency(limit).get("HW").intValue());
 	}
 	
 	@Test
-	public void testFrequencyCalculatorAssignmentMinLimitMaxMinus(){
+	public void testFrequencyCalculatorAssignmentMinLimitMaxMinus()throws Exception{
 		Category cat = new Category("HW", 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -2509,11 +2509,11 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(0, course.getItemFrequency(limit).get("HW"));
+		assertEquals(0, course.getItemFrequency(limit).get("HW").intValue());
 	}
 	
 	@Test
-	public void testFrequencyCalculatorAssignmentMinLimitMax(){
+	public void testFrequencyCalculatorAssignmentMinLimitMax()throws Exception{
 		Category cat = new Category("HW", 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -2525,11 +2525,11 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(0, course.getItemFrequency(limit).get("HW"));
+		assertEquals(0, course.getItemFrequency(limit).get("HW").intValue());
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void testFrequencyCalculatorAssignmentMinLimitMaxPlus(){
+	public void testFrequencyCalculatorAssignmentMinLimitMaxPlus()throws Exception{
 		Category cat = new Category("HW", 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -2541,10 +2541,10 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(0, course.getItemFrequency(limit).get("HW"));	}
+		assertEquals(0, course.getItemFrequency(limit).get("HW").intValue());	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void testFrequencyCalculatorAssignmentMinPlusLimitMinMinus(){
+	public void testFrequencyCalculatorAssignmentMinPlusLimitMinMinus()throws Exception{
 		Category cat = new Category("HW", 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -2559,10 +2559,10 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(1, course.getItemFrequency(limit).get("HW"));	}
+		assertEquals(1, course.getItemFrequency(limit).get("HW").intValue());	}
 	
 	@Test
-	public void testFrequencyCalculatorAssignmentMinPlusLimitMin(){
+	public void testFrequencyCalculatorAssignmentMinPlusLimitMin()throws Exception{
 		Category cat = new Category("HW", 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -2577,10 +2577,10 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(1, course.getItemFrequency(limit).get("HW"));	}
+		assertEquals(1, course.getItemFrequency(limit).get("HW").intValue());	}
 	
 	@Test
-	public void testFrequencyCalculatorAssignmentMinPlusLimitMinPlus(){
+	public void testFrequencyCalculatorAssignmentMinPlusLimitMinPlus()throws Exception{
 		Category cat = new Category("HW", 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -2595,10 +2595,10 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(1, course.getItemFrequency(limit).get("HW"));	}
+		assertEquals(1, course.getItemFrequency(limit).get("HW").intValue());	}
 	
 	@Test
-	public void testFrequencyCalculatorAssignmentMinPlusLimitNominal(){
+	public void testFrequencyCalculatorAssignmentMinPlusLimitNominal()throws Exception{
 		Category cat = new Category("HW", 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -2613,10 +2613,10 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(1, course.getItemFrequency(limit).get("HW"));	}
+		assertEquals(1, course.getItemFrequency(limit).get("HW").intValue());	}
 	
 	@Test
-	public void testFrequencyCalculatorAssignmentMinPlusLimitMaxMinus(){
+	public void testFrequencyCalculatorAssignmentMinPlusLimitMaxMinus()throws Exception{
 		Category cat = new Category("HW", 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -2631,10 +2631,10 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(1, course.getItemFrequency(limit).get("HW"));	}
+		assertEquals(1, course.getItemFrequency(limit).get("HW").intValue());	}
 	
 	@Test
-	public void testFrequencyCalculatorAssignmentMinPlusLimitMax(){
+	public void testFrequencyCalculatorAssignmentMinPlusLimitMax()throws Exception{
 		Category cat = new Category("HW", 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -2649,10 +2649,10 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(1, course.getItemFrequency(limit).get("HW"));	}
+		assertEquals(1, course.getItemFrequency(limit).get("HW").intValue());	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void testFrequencyCalculatorAssignmentMinPlusLimitMaxPlus(){
+	public void testFrequencyCalculatorAssignmentMinPlusLimitMaxPlus()throws Exception{
 		Category cat = new Category("HW", 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -2667,10 +2667,10 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(1, course.getItemFrequency(limit).get("HW"));	}
+		assertEquals(1, course.getItemFrequency(limit).get("HW").intValue());	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void testFrequencyCalculatorAssignmentNominalLimitMinMinus(){
+	public void testFrequencyCalculatorAssignmentNominalLimitMinMinus()throws Exception{
 		Category cat = new Category("HW", 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -2689,10 +2689,10 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(10, cat.getItemFrequency(limit));	}
+		assertEquals(10, course.getItemFrequency(limit).get("HW").intValue());	}
 	
 	@Test
-	public void testFrequencyCalculatorAssignmentNominalLimitMin(){
+	public void testFrequencyCalculatorAssignmentNominalLimitMin()throws Exception{
 		Category cat = new Category("HW", 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -2710,11 +2710,11 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(10, cat.getItemFrequency(limit));
+		assertEquals(10, course.getItemFrequency(limit).get("HW").intValue());
 	}
 	
 	@Test
-	public void testFrequencyCalculatorAssignmentNominalLimitMinPlus(){
+	public void testFrequencyCalculatorAssignmentNominalLimitMinPlus()throws Exception{
 		Category cat = new Category("HW", 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -2733,18 +2733,18 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(10, cat.getItemFrequency(limit));	
+		assertEquals(10, course.getItemFrequency(limit).get("HW").intValue());	
 	}
 	
 	@Test
-	public void testFrequencyCalculatorAssignmentNominalLimitNominal(){
+	public void testFrequencyCalculatorAssignmentNominalLimitNominal()throws Exception{
 		Category cat = new Category("HW", 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013", "4/12/2013", "4/13/2013", "4/14/2013"}; 
 		Date start = sdf.parse("04/08/2013");
 		Date end = sdf.parse("04/22/2013");
-		Date limit = sdf.parse("04/05/2013");
+		Date limit = sdf.parse("04/15/2013");
 		
 		for(int i=0; i<10; i++){
 			int rand = (int) Math.random() * date.length;
@@ -2756,11 +2756,11 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(10, cat.getItemFrequency(limit));
+		assertEquals(10, course.getItemFrequency(limit).get("HW").intValue());
 	}
 	
 	@Test
-	public void testFrequencyCalculatorAssignmentNominalLimitMaxMinus(){
+	public void testFrequencyCalculatorAssignmentNominalLimitMaxMinus()throws Exception{
 		Category cat = new Category("HW", 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -2780,11 +2780,11 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(10, cat.getItemFrequency(limit));
+		assertEquals(10, course.getItemFrequency(limit).get("HW").intValue());
 	}
 	
 	@Test
-	public void testFrequencyCalculatorAssignmentNominalLimitMax(){
+	public void testFrequencyCalculatorAssignmentNominalLimitMax()throws Exception{
 		Category cat = new Category("HW", 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -2804,10 +2804,10 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(10, cat.getItemFrequency(limit));	}
+		assertEquals(10, course.getItemFrequency(limit).get("HW").intValue());	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void testFrequencyCalculatorAssignmentNominalLimitMaxPlus(){
+	public void testFrequencyCalculatorAssignmentNominalLimitMaxPlus()throws Exception{
 		Category cat = new Category("HW", 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -2827,10 +2827,10 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(10, cat.getItemFrequency(limit));	}
+		assertEquals(10, course.getItemFrequency(limit).get("HW").intValue());	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void testFrequencyCalculatorAssignmentMaxMinusLimitMinMinus(){
+	public void testFrequencyCalculatorAssignmentMaxMinusLimitMinMinus()throws Exception{
 		Category cat = new Category("HW", 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -2849,10 +2849,10 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(19, cat.getItemFrequency(limit));	}
+		assertEquals(19, course.getItemFrequency(limit).get("HW").intValue());	}
 	
 	@Test
-	public void testFrequencyCalculatorAssignmentMaxMinusLimitMin(){
+	public void testFrequencyCalculatorAssignmentMaxMinusLimitMin()throws Exception{
 		Category cat = new Category("HW", 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -2870,11 +2870,11 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(19, cat.getItemFrequency(limit));
+		assertEquals(19, course.getItemFrequency(limit).get("HW").intValue());
 	}
 	
 	@Test
-	public void testFrequencyCalculatorAssignmentMaxMinusLimitMinPlus(){
+	public void testFrequencyCalculatorAssignmentMaxMinusLimitMinPlus()throws Exception{
 		Category cat = new Category("HW", 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -2893,18 +2893,18 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(19, cat.getItemFrequency(limit));	
+		assertEquals(19, course.getItemFrequency(limit).get("HW").intValue());	
 	}
 	
 	@Test
-	public void testFrequencyCalculatorAssignmentMaxMinusLimitNominal(){
+	public void testFrequencyCalculatorAssignmentMaxMinusLimitNominal()throws Exception{
 		Category cat = new Category("HW", 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013", "4/12/2013", "4/13/2013", "4/14/2013"}; 
 		Date start = sdf.parse("04/08/2013");
 		Date end = sdf.parse("04/22/2013");
-		Date limit = sdf.parse("04/05/2013");
+		Date limit = sdf.parse("04/15/2013");
 		
 		for(int i=0; i<19; i++){
 			int rand = (int) Math.random() * date.length;
@@ -2916,11 +2916,11 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(19, cat.getItemFrequency(limit));
+		assertEquals(19, course.getItemFrequency(limit).get("HW").intValue());
 	}
 	
 	@Test
-	public void testFrequencyCalculatorAssignmentMaxMinusLimitMaxMinus(){
+	public void testFrequencyCalculatorAssignmentMaxMinusLimitMaxMinus()throws Exception{
 		Category cat = new Category("HW", 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -2940,11 +2940,11 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(19, cat.getItemFrequency(limit));
+		assertEquals(19, course.getItemFrequency(limit).get("HW").intValue());
 	}
 	
 	@Test
-	public void testFrequencyCalculatorAssignmentMaxMinusLimitMax(){
+	public void testFrequencyCalculatorAssignmentMaxMinusLimitMax()throws Exception{
 		Category cat = new Category("HW", 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -2964,10 +2964,10 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(19, cat.getItemFrequency(limit));	}
+		assertEquals(19, course.getItemFrequency(limit).get("HW").intValue());	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void testFrequencyCalculatorAssignmentMaxMinusLimitMaxPlus(){
+	public void testFrequencyCalculatorAssignmentMaxMinusLimitMaxPlus()throws Exception{
 		Category cat = new Category("HW", 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -2987,10 +2987,10 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(19, cat.getItemFrequency(limit));	}
+		assertEquals(19, course.getItemFrequency(limit).get("HW").intValue());	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void testFrequencyCalculatorAssignmentMaxLimitMinMinus(){
+	public void testFrequencyCalculatorAssignmentMaxLimitMinMinus()throws Exception{
 		Category cat = new Category("HW", 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -3009,10 +3009,10 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(20, cat.getItemFrequency(limit));	}
+		assertEquals(20, course.getItemFrequency(limit).get("HW").intValue());	}
 	
 	@Test
-	public void testFrequencyCalculatorAssignmentMaxLimitMin(){
+	public void testFrequencyCalculatorAssignmentMaxLimitMin()throws Exception{
 		Category cat = new Category("HW", 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -3030,11 +3030,11 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(20, cat.getItemFrequency(limit));
+		assertEquals(20, course.getItemFrequency(limit).get("HW").intValue());
 	}
 	
 	@Test
-	public void testFrequencyCalculatorAssignmentMaxLimitMinPlus(){
+	public void testFrequencyCalculatorAssignmentMaxLimitMinPlus()throws Exception{
 		Category cat = new Category("HW", 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -3053,18 +3053,18 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(20, cat.getItemFrequency(limit));	
+		assertEquals(20, course.getItemFrequency(limit).get("HW").intValue());	
 	}
 	
 	@Test
-	public void testFrequencyCalculatorAssignmentMaxLimitNominal(){
+	public void testFrequencyCalculatorAssignmentMaxLimitNominal()throws Exception{
 		Category cat = new Category("HW", 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013", "4/12/2013", "4/13/2013", "4/14/2013"}; 
 		Date start = sdf.parse("04/08/2013");
 		Date end = sdf.parse("04/22/2013");
-		Date limit = sdf.parse("04/05/2013");
+		Date limit = sdf.parse("04/15/2013");
 		
 		for(int i=0; i<20; i++){
 			int rand = (int) Math.random() * date.length;
@@ -3076,11 +3076,11 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(20, cat.getItemFrequency(limit));
+		assertEquals(20, course.getItemFrequency(limit).get("HW").intValue());
 	}
 	
 	@Test
-	public void testFrequencyCalculatorAssignmentMaxLimitMaxMinus(){
+	public void testFrequencyCalculatorAssignmentMaxLimitMaxMinus()throws Exception{
 		Category cat = new Category("HW", 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -3100,11 +3100,11 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(20, cat.getItemFrequency(limit));
+		assertEquals(20, course.getItemFrequency(limit).get("HW").intValue());
 	}
 	
 	@Test
-	public void testFrequencyCalculatorAssignmentMaxLimitMax(){
+	public void testFrequencyCalculatorAssignmentMaxLimitMax() throws Exception{
 		Category cat = new Category("HW", 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -3124,10 +3124,10 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(20, cat.getItemFrequency(limit));	}
+		assertEquals(20, course.getItemFrequency(limit).get("HW").intValue());	}
 	
 	@Test(expected = IllegalArgumentException.class)
-	public void testFrequencyCalculatorAssignmentMaxLimitMaxPlus(){
+	public void testFrequencyCalculatorAssignmentMaxLimitMaxPlus() throws Exception{
 		Category cat = new Category("HW", 10.0);
 		Course course = new Course("CSSE376", 4.0);
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -3147,5 +3147,35 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(20, cat.getItemFrequency(limit));	}
+		assertEquals(20, course.getItemFrequency(limit).get("HW").intValue());	}
+	
+	@Test
+	public void testResettingItemDate() throws Exception{
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy"); 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		
+		course.addCategory(cat);
+		course.getCategories().get(0).getItemList().get(0).setCreationdate(sdf.parse("4/05/2013"));
+		
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(start, course.getCategories().get(0).getItemList().get(0).getCreationDate());	}
+	
+	@Test
+	public void testResettingItemDateTwo() throws Exception{
+		Category cat = new Category("HW", 1, 10.0);
+		Course course = new Course("CSSE376", 4.0);
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy"); 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		
+		course.addCategory(cat);
+		course.setStartDate(start);
+		course.setEndDate(end);
+		
+		assertEquals(end, course.getCategories().get(0).getItemList().get(0).getCreationDate());	}
 }

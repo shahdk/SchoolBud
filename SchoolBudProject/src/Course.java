@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 public class Course {
 
@@ -162,25 +163,37 @@ public class Course {
 	}
 	
 	public void setEndDate(Date dt){
-		if(this.startDate == null){
-			this.endDate = dt;
-			return;
-		}
-		if(dt.before(this.startDate)){
+		
+		if(this.startDate != null && dt.before(this.startDate)){
 			throw new IllegalArgumentException();
 		}
+		
 		this.endDate = dt;
+		
+		for(Category cat: this.categories){
+			for(Item i: cat.getItemList()){
+				if(i.getCreationDate().after(dt)){
+					i.setCreationdate(dt);
+				}
+			}
+		}
 	}
 	
 	public void setStartDate(Date dt){
-		if(this.endDate == null){
-			this.startDate = dt;
-			return;
-		}
-		if(dt.after(this.endDate)){
+
+		if(this.endDate != null && dt.after(this.endDate)){
 			throw new IllegalArgumentException();
 		}
+		
 		this.startDate = dt;
+		
+		for(Category cat: this.categories){
+			for(Item i: cat.getItemList()){
+				if(i.getCreationDate().before(dt)){
+					i.setCreationdate(dt);
+				}
+			}
+		}
 	}
 	
 	public Date getStartDate(){
@@ -189,6 +202,27 @@ public class Course {
 	
 	public Date getEndDate(){
 		return this.endDate;
+	}
+
+	public HashMap<String, Integer> getItemFrequency(Date limit) {
+		HashMap<String, Integer> frequencies = new HashMap<String, Integer>();
+		
+		if(limit.before(this.startDate) || limit.after(this.endDate)){
+			throw new IllegalArgumentException();
+		}
+		
+		for(Category cat: this.categories){
+			int count = 0;
+			for(Item i: cat.getItemList()){
+				Date creationDate = i.getCreationDate();
+				if(creationDate.before(limit) || creationDate.equals(limit)){
+					count++;
+				}
+			}
+			frequencies.put(cat.getName(), count);
+		}
+		
+		return frequencies;
 	}
 
 }
