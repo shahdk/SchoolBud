@@ -1,5 +1,8 @@
 import static org.junit.Assert.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.junit.Test;
 
 public class QuarterMainTest {
@@ -102,6 +105,16 @@ public class QuarterMainTest {
 		cat.getItemList().get(0).setTotalPoints("100");
 		cat1.getItemList().get(0).setEarnedPoints("95");
 		cat1.getItemList().get(0).setTotalPoints("100");
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy"); 
+		Date dt = sdf.parse("04/08/2013");
+		Date dt2 = sdf.parse("04/22/2013");
+		
+		course.setStartDate(dt);
+		course1.setStartDate(dt);
+		
+		course.setEndDate(dt2);
+		course1.setEndDate(dt2);
 
 		course.addCategory(cat);
 		course1.addCategory(cat);
@@ -142,6 +155,9 @@ public class QuarterMainTest {
 				.get(0).getCourseName());
 		assertEquals(3.0, qtMain.getQuarterList().get(1).getCourseList().get(0)
 				.getCreditHours(), DELTA);
+		
+		assertEquals(dt, qtMain.getQuarterList().get(0).getCourseList().get(0).getStartDate());
+		assertEquals(dt2, qtMain.getQuarterList().get(0).getCourseList().get(0).getEndDate());
 
 		// check for all categories in all courses
 		assertEquals("HW", qtMain.getQuarterList().get(0).getCourseList()
