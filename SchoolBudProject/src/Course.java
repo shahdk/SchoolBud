@@ -32,6 +32,32 @@ public class Course {
 		this.targetGrade = 0;
 		this.courseRubric = new Rubric();
 	}
+	
+	public Course(String name, double creditHours, Date startDate, Date endDate){
+		if (name.length() == 0) {
+			throw new IllegalArgumentException();
+		}
+		this.courseName = name;
+		this.creditHours = creditHours;
+		this.categories = new ArrayList<Category>();
+		this.targetGrade = 0;
+		this.courseRubric = new Rubric();
+		this.setStartDate(startDate);
+		this.setEndDate(endDate);
+	}
+	
+	public Course(String name, Date startDate, Date endDate){
+		if (name.length() == 0) {
+			throw new IllegalArgumentException();
+		}
+		this.courseName = name;
+		this.creditHours = 0.0;
+		this.categories = new ArrayList<Category>();
+		this.targetGrade = 0;
+		this.courseRubric = new Rubric();
+		this.setStartDate(startDate);
+		this.setEndDate(endDate);
+	}
 
 	public String getCourseName() {
 		return this.courseName;
