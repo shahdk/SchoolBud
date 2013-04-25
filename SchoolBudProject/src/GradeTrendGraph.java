@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 
 /**
  * 
@@ -21,6 +23,7 @@ public class GradeTrendGraph {
 	private double predictedBestCaseGrade;
 	private double predictedWorstCaseGrade;
 	private ArrayList<Item> dateOrderedItemList;
+	private HashMap<String, Integer> itemFrequencies;
 
 	// Evaluated Trends (list of points)
 	// (X Y) points purely for graphing
@@ -51,6 +54,7 @@ public class GradeTrendGraph {
 		this.classDifficulty_1_5 = classDifficulty_1_5;
 		this.futureWorkRate_neg5_pos5 = futureWorkRate_neg5_pos5;
 		this.course = course;
+		this.dateOrderedItemList = new ArrayList<Item>();
 
 	}
 
@@ -58,14 +62,69 @@ public class GradeTrendGraph {
 	// and trends in accordance with the most up to date course items
 	public void updateGraph() {
 
-		// first update the Item List
+		// update current average
+		this.currentAverage = this.course.getCourseGrade();
+
+		// update item frequencies up to current date
+		this.itemFrequencies = this.course.getItemFrequency(new Date());
+
+		// update the Item List
 		this.updateAndOrganizeItemListByDate();
 
+		// take shorter half of item grades towards
+		// current date compared to average for adjustment
+
+	}
+
+	// Recursively find place to insert item
+	public void insertItemIntoItemDateList(Item item, int minIndex, int index) {
+
+		//check for empty list
+		
+		
+		int newIndex;
+		int offset;
+		int compared = item.getCreationDate().compareTo(
+				this.dateOrderedItemList.get(index).getCreationDate());
+
+		if (compared == 0 || minIndex == index) {
+			this.dateOrderedItemList.add(index, item);
+		} else if (compared > 0) {
+			if (minIndex == index) {
+				this.dateOrderedItemList.add(index + 1, item);
+			} else {
+				offset = this.dateOrderedItemList.size() - index - 1;
+				newIndex = (offset / 2) + (offset % 2) + index;
+				this.insertItemIntoItemDateList(item, index, newIndex);
+			}
+		} else {
+			if (minIndex == index) {
+				this.dateOrderedItemList.add(index, item);
+			} else {
+				offset = index - minIndex;
+				newIndex = (offset / 2) + minIndex;
+				this.insertItemIntoItemDateList(item, minIndex, newIndex);
+			}
+
+		}
 	}
 
 	// Abstracts ALL current items (assignments) out of the given
 	// course into once big list ordered by date
 	public void updateAndOrganizeItemListByDate() {
+		this.dateOrderedItemList.clear();
+
+		// go through each category
+		for (Category category : this.course.getCategories()) {
+
+			// go through each item
+			for (Item item : category.getItemList()) {
+
+				// insert into item list by date
+				this.insertItemIntoItemDateList(item, 0, 
+						(this.dateOrderedItemList.size() / 2) + (this.dateOrderedItemList.size() % 2));
+			}
+		}
 
 	}
 
@@ -112,6 +171,14 @@ public class GradeTrendGraph {
 	 */
 	public void setCourse(Course course) {
 		this.course = course;
+	}
+	
+	/**
+	 *
+	 *get
+	 */
+	public ArrayList<Item> getDateOrderedItemsList() {
+		return this.dateOrderedItemList;
 	}
 
 }
