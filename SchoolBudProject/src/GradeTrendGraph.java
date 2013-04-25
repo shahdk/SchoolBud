@@ -67,12 +67,22 @@ public class GradeTrendGraph {
 
 		// update item frequencies up to current date
 		this.itemFrequencies = this.course.getItemFrequency(new Date());
+	
 
 		// update the Item List
 		this.updateAndOrganizeItemListByDate();
 
 		// take shorter half of item grades towards
 		// current date compared to average for adjustment
+		
+		//use item frequencies to predict max / min variations 
+		//for best / worst / average cases
+		
+		
+		//update trends
+		
+		
+		//use updated trends to update PREDICTED best / worst / average grades
 
 	}
 
@@ -80,14 +90,17 @@ public class GradeTrendGraph {
 	public void insertItemIntoItemDateList(Item item, int minIndex, int index) {
 
 		//check for empty list
-		
+		if (this.dateOrderedItemList.isEmpty()) {
+			this.dateOrderedItemList.add(item);
+			return;
+		}
 		
 		int newIndex;
 		int offset;
 		int compared = item.getCreationDate().compareTo(
 				this.dateOrderedItemList.get(index).getCreationDate());
 
-		if (compared == 0 || minIndex == index) {
+		if (compared == 0) {
 			this.dateOrderedItemList.add(index, item);
 		} else if (compared > 0) {
 			if (minIndex == index) {
@@ -122,7 +135,7 @@ public class GradeTrendGraph {
 
 				// insert into item list by date
 				this.insertItemIntoItemDateList(item, 0, 
-						(this.dateOrderedItemList.size() / 2) + (this.dateOrderedItemList.size() % 2));
+						this.dateOrderedItemList.size() / 2);
 			}
 		}
 
@@ -180,5 +193,21 @@ public class GradeTrendGraph {
 	public ArrayList<Item> getDateOrderedItemsList() {
 		return this.dateOrderedItemList;
 	}
+
+	/**
+	 * @return the currentAverage
+	 */
+	public double getCurrentAverage() {
+		return this.currentAverage;
+	}
+	
+	/**
+	 * @return the currentAverage
+	 */
+	public HashMap<String, Integer> getItemFrequencies() {
+		return this.itemFrequencies;
+	}
+
+
 
 }
