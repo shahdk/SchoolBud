@@ -20,6 +20,7 @@ public class GradeTrendGraph {
 	private double predictedGrade;
 	private double predictedBestCaseGrade;
 	private double predictedWorstCaseGrade;
+	private ArrayList<Item> dateOrderedItemList;
 
 	// Evaluated Trends (list of points)
 	// (X Y) points purely for graphing
@@ -31,10 +32,9 @@ public class GradeTrendGraph {
 	private int classDifficulty_1_5;
 	private int futureWorkRate_neg5_pos5;
 	private Course course;
-	
 
-	public GradeTrendGraph(Course course, int classDifficulty_1_5, int futureWorkRate_neg5_pos5)
-			throws InstantiationError {
+	public GradeTrendGraph(Course course, int classDifficulty_1_5,
+			int futureWorkRate_neg5_pos5) throws InstantiationError {
 
 		// check for valid parameter entries
 		// check class difficulty between 1 and 5
@@ -48,12 +48,26 @@ public class GradeTrendGraph {
 					"Future work rate must be and integer -5 to 5");
 		}
 
-		this.setClassDifficulty_1_5(classDifficulty_1_5);
-		this.setFutureWorkRate_neg5_pos5(futureWorkRate_neg5_pos5);
-		this.setCourse(course);
+		this.classDifficulty_1_5 = classDifficulty_1_5;
+		this.futureWorkRate_neg5_pos5 = futureWorkRate_neg5_pos5;
+		this.course = course;
 
 	}
 
+	// Updates all instance variables, averages, predictions, data points
+	// and trends in accordance with the most up to date course items
+	public void updateGraph() {
+
+		// first update the Item List
+		this.updateAndOrganizeItemListByDate();
+
+	}
+
+	// Abstracts ALL current items (assignments) out of the given
+	// course into once big list ordered by date
+	public void updateAndOrganizeItemListByDate() {
+
+	}
 
 	/**
 	 * @return the classDifficulty_1_5
@@ -62,14 +76,13 @@ public class GradeTrendGraph {
 		return classDifficulty_1_5;
 	}
 
-
 	/**
-	 * @param classDifficulty_1_5 the classDifficulty_1_5 to set
+	 * @param classDifficulty_1_5
+	 *            the classDifficulty_1_5 to set
 	 */
 	public void setClassDifficulty_1_5(int classDifficulty_1_5) {
 		this.classDifficulty_1_5 = classDifficulty_1_5;
 	}
-
 
 	/**
 	 * @return the futureWorkRate_neg5_pos5
@@ -78,14 +91,13 @@ public class GradeTrendGraph {
 		return futureWorkRate_neg5_pos5;
 	}
 
-
 	/**
-	 * @param futureWorkRate_neg5_pos5 the futureWorkRate_neg5_pos5 to set
+	 * @param futureWorkRate_neg5_pos5
+	 *            the futureWorkRate_neg5_pos5 to set
 	 */
 	public void setFutureWorkRate_neg5_pos5(int futureWorkRate_neg5_pos5) {
 		this.futureWorkRate_neg5_pos5 = futureWorkRate_neg5_pos5;
 	}
-
 
 	/**
 	 * @return the course
@@ -94,9 +106,9 @@ public class GradeTrendGraph {
 		return course;
 	}
 
-
 	/**
-	 * @param course the course to set
+	 * @param course
+	 *            the course to set
 	 */
 	public void setCourse(Course course) {
 		this.course = course;
