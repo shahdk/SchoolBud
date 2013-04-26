@@ -17,6 +17,58 @@ import org.junit.Test;
  */
 public class GradeTrendGraphTest {
 
+	// test internal helper methods
+
+	// TEST Compare Item Lists
+	@Test
+	public void testInternalHelperMethods() throws ParseException {
+		SimpleDateFormat dtFormat = new SimpleDateFormat("MM/dd/yyyy");
+
+		// initialize items
+		String newDate1 = "07/25/2012";
+		Date newDt1 = dtFormat.parse(newDate1);
+		Item item1 = new Item("exam1", newDt1);
+
+		String newDate2 = "05/21/2012";
+		Date newDt2 = dtFormat.parse(newDate2);
+		Item item2 = new Item("exam2", newDt2);
+
+		String newDate3 = "04/29/2012";
+		Date newDt3 = dtFormat.parse(newDate3);
+		Item item3 = new Item("hwk1", newDt3);
+
+		String newDate4 = "05/21/2012";
+		Date newDt4 = dtFormat.parse(newDate4);
+		Item item4 = new Item("hwk2", newDt4);
+
+		ArrayList<Item> itemByDateList = new ArrayList<Item>();
+		itemByDateList.add(item3);
+		itemByDateList.add(item4);
+		itemByDateList.add(item2);
+		itemByDateList.add(item1);
+
+		ArrayList<Item> itemByDateList2 = new ArrayList<Item>();
+		itemByDateList2.add(item3);
+		itemByDateList2.add(item4);
+		itemByDateList2.add(item1);
+		itemByDateList2.add(item2);
+
+		ArrayList<Item> itemByDateList3 = new ArrayList<Item>();
+		itemByDateList3.add(item3);
+		itemByDateList3.add(item4);
+		itemByDateList3.add(item2);
+
+		// test true for equal lists
+		assertTrue(this.compareItemLists(itemByDateList, itemByDateList));
+
+		// test false for unequal same size lists
+		assertFalse(this.compareItemLists(itemByDateList, itemByDateList2));
+
+		// test false for different size lists
+		assertFalse(this.compareItemLists(itemByDateList, itemByDateList3));
+
+	}
+
 	// Test DataPoint Helper Class
 	@Test
 	public void testDataPointHelperClass() {
@@ -140,7 +192,6 @@ public class GradeTrendGraphTest {
 		graph.getCourse().getCategories().get(0).getItemList().add(item5);
 		graph.updateAndOrganizeItemListByDate();
 		itemByDateList.add(item5);
-		System.out.println(graph.getDateOrderedItemsList().size());
 		assertTrue(this.compareItemLists(itemByDateList,
 				graph.getDateOrderedItemsList()));
 
@@ -166,20 +217,21 @@ public class GradeTrendGraphTest {
 		return true;
 	}
 
-//	public boolean compareDateLists(ArrayList<Date> list1, ArrayList<Date> list2) {
-//
-//		if (list1.size() != list2.size()) {
-//			return false;
-//		}
-//
-//		for (Date date1 : list1) {
-//			for (Date date2 : list2) {
-//				if (date1.compareTo(date2) != 0) {
-//					return false;
-//				}
-//			}
-//		}
-//
-//		return true;
-//	}
+	// public boolean compareDateLists(ArrayList<Date> list1, ArrayList<Date>
+	// list2) {
+	//
+	// if (list1.size() != list2.size()) {
+	// return false;
+	// }
+	//
+	// for (Date date1 : list1) {
+	// for (Date date2 : list2) {
+	// if (date1.compareTo(date2) != 0) {
+	// return false;
+	// }
+	// }
+	// }
+	//
+	// return true;
+	// }
 }

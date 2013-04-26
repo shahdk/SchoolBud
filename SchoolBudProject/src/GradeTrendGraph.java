@@ -58,43 +58,56 @@ public class GradeTrendGraph {
 
 	}
 
+/*
 	// Updates all instance variables, averages, predictions, data points
-	// and trends in accordance with the most up to date course items
+	// and trends in accordance with the most up to date course items.
+	// Takes in various factors which will all be used to decide the
+	// Steepness Factor ==> which is the overall neg or pos variation between
+	// data points, STARTING at the actual current average as the initial fixed
+	// point
 	public void updateGraph() {
 
 		// update current average
 		this.currentAverage = this.course.getCourseGrade();
+		
+		//update and sort item list by date
+		this.updateAndOrganizeItemListByDate();
 
 		// update item frequencies up to current date
 		this.itemFrequencies = this.course.getItemFrequency(new Date());
-	
-
-		// update the Item List
-		this.updateAndOrganizeItemListByDate();
 
 		// take shorter half of item grades towards
-		// current date compared to average for adjustment
-		
-		//use item frequencies to predict max / min variations 
-		//for best / worst / average cases
-		
-		
-		//update trends
-		
-		
-		//use updated trends to update PREDICTED best / worst / average grades
+		// current date compared to average for trend adjustment
+
+		// take into account user given class difficulty to affect
+		// the steepness factor
+
+		// take into account user given future work rate to affect
+		// the steepness factor
+
+		// use item frequencies to predict max / min variations
+		// for POSSIBLE EXTREMES for best / worst / average grade cases
+
+
+		// Update trends and create their respective data points
+		// ---Data points X and Y are affected by an overall steepness factor
+		// (determined by ALL of these calculated and given factors)
+		// which will be used to determine the rise / run variations of each
+		// point separation
+
+		// use updated trends to update PREDICTED best / worst / average grades
 
 	}
-
+*/
 	// Recursively find place to insert item
 	public void insertItemIntoItemDateList(Item item, int minIndex, int index) {
 
-		//check for empty list
+		// check for empty list
 		if (this.dateOrderedItemList.isEmpty()) {
 			this.dateOrderedItemList.add(item);
 			return;
 		}
-		
+
 		int newIndex;
 		int offset;
 		int compared = item.getCreationDate().compareTo(
@@ -134,7 +147,7 @@ public class GradeTrendGraph {
 			for (Item item : category.getItemList()) {
 
 				// insert into item list by date
-				this.insertItemIntoItemDateList(item, 0, 
+				this.insertItemIntoItemDateList(item, 0,
 						this.dateOrderedItemList.size() / 2);
 			}
 		}
@@ -185,29 +198,13 @@ public class GradeTrendGraph {
 	public void setCourse(Course course) {
 		this.course = course;
 	}
-	
+
 	/**
-	 *
-	 *get
+	 * 
+	 * get
 	 */
 	public ArrayList<Item> getDateOrderedItemsList() {
 		return this.dateOrderedItemList;
 	}
-
-	/**
-	 * @return the currentAverage
-	 */
-	public double getCurrentAverage() {
-		return this.currentAverage;
-	}
-	
-	/**
-	 * @return the currentAverage
-	 */
-	public HashMap<String, Integer> getItemFrequencies() {
-		return this.itemFrequencies;
-	}
-
-
 
 }
