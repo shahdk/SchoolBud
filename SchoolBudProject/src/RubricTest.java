@@ -239,23 +239,4 @@ public class RubricTest {
 		assertFalse(rubric.removeGrade("B"));
 	}
 	
-	//test cases for loading grades from a file, and saving the grades to a file.
-	@Test
-	public void testLoadSaveRubricOne() throws Exception{
-		Rubric rubric = new Rubric();
-		rubric.setDefaults();
-		rubric.saveRubric();
-		rubric.loadRubric("rubric.txt");
-		assertEquals(4.0, rubric.getGPA("A"), DELTA);
-	}
-	
-	@Test
-	public void testGetGradeListOne() throws Exception{
-		Rubric rubric = new Rubric();
-		rubric.setDefaults();
-		rubric.saveRubric();
-		rubric.loadRubric("rubric.txt");
-		assertTrue(rubric.getGradeList().contains("A"));
-	}
-	
 }

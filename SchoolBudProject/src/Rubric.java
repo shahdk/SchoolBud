@@ -129,33 +129,6 @@ public class Rubric {
 		return true;
 	}
 
-	public void saveRubric() throws Exception {
-		FileParser rubric = new FileParser();
-		ArrayList<String> data = new ArrayList<String>();		
-		for(String key: this.grades.keySet()){
-			data.add(key);
-			ArrayList<Double> temp = this.grades.get(key);
-			data.add(temp.get(0)+"");
-			data.add(temp.get(1)+"");
-			data.add(temp.get(2)+"");
-		}
-
-		rubric.writeFile("rubric.txt", "\t", data, 4);
-	}
-
-	public void loadRubric(String fileName) throws Exception {
-		this.grades.clear();
-		FileParser rubric = new FileParser();
-		ArrayList<String> data = rubric.readFile(fileName, ";", 4);
-		for(int i=0; i<data.size(); i+=4){
-			ArrayList<Double> temp = new ArrayList<Double>();
-			temp.add(Double.parseDouble(data.get(i+1)));
-			temp.add(Double.parseDouble(data.get(i+2)));
-			temp.add(Double.parseDouble(data.get(i+3)));
-			this.grades.put(data.get(i), temp);
-		}
-	}
-
 	public Set<String> getGradeList() {
 		return this.grades.keySet();
 	}
