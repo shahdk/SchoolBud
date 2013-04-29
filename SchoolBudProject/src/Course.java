@@ -246,6 +246,12 @@ public class Course {
 		return percent / 100;
 	}
 
+	/**
+	 * Removes the given category from the list of categories in the course.
+	 * 
+	 * @param name
+	 * @return true if successfully removed
+	 */
 	public boolean removeCategory(String name) {
 		if (this.categories.size() == 0) {
 			return false;
@@ -266,18 +272,33 @@ public class Course {
 		return true;
 	}
 
+	/**
+	 * Returns the rubric associated with the course
+	 * 
+	 * @return Rubric
+	 */
 	public Rubric getRubric() {
 		return this.courseRubric;
 	}
 
+	/**
+	 * Sets the course rubric to the given rubric
+	 * 
+	 * @param rubric
+	 */
 	public void setRubric(Rubric rubric) {
 		for (String s : rubric.getGradeList()) {
 			this.courseRubric.addGrade(s, rubric.getLowerLimit(s),
 					rubric.getUpperLimit(s), rubric.getGPA(s));
 		}
-		// this.courseRubric = rubric;
 	}
 
+	/**
+	 * Calculates the letter grade for the course based on the percent earned
+	 * and the associated rubric.
+	 * 
+	 * @return String letter grade
+	 */
 	public String getLetterGrade() {
 
 		double courseGrade = ((int) (this.getCourseGrade() + 0.5));
@@ -293,10 +314,21 @@ public class Course {
 		return "";
 	}
 
+	/**
+	 * Calculates the GPA for the course based on the percent earned and the
+	 * associated rubric.
+	 * 
+	 * @return double course GPA
+	 */
 	public double getCourseGPA() {
 		return this.courseRubric.getGPA(this.getLetterGrade());
 	}
 
+	/**
+	 * Sets the end date for the course to the given end date
+	 * 
+	 * @param dt
+	 */
 	public void setEndDate(Date dt) {
 
 		if (this.startDate != null && dt.before(this.startDate)) {
@@ -309,6 +341,11 @@ public class Course {
 		}
 	}
 
+	/**
+	 * Sets the start date of a course to the given start date.
+	 * 
+	 * @param dt
+	 */
 	public void setStartDate(Date dt) {
 
 		if (this.endDate != null && dt.after(this.endDate)) {
@@ -321,14 +358,31 @@ public class Course {
 		}
 	}
 
+	/**
+	 * Returns the start date of the course
+	 * 
+	 * @return Date start date
+	 */
 	public Date getStartDate() {
 		return this.startDate;
 	}
 
+	/**
+	 * Returns the end date of the course
+	 * 
+	 * @return Date end date
+	 */
 	public Date getEndDate() {
 		return this.endDate;
 	}
 
+	/**
+	 * Calculates the frequencies of the items from the start of the course to
+	 * the given date.
+	 * 
+	 * @param limit
+	 * @return HashMap<String, Integer> frequency of items.
+	 */
 	public HashMap<String, Integer> getItemFrequency(Date limit) {
 		HashMap<String, Integer> frequencies = new HashMap<String, Integer>();
 
