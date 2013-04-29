@@ -6,20 +6,51 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * QuaterMain is the class that contains the list of all quarters. It allows a
+ * user to add, edit and remove quarters.
+ * 
+ * @author shahdk
+ * 
+ */
 public class QuarterMain {
 
+	/**
+	 * List of all Quarters
+	 */
 	private ArrayList<Quarter> quarterList;
+	/**
+	 * Delimiter used to separate Quarters, courses, categories and items.
+	 */
 	private final String objectDelimiter = "\t";
+	/**
+	 * Delimiter used to separate the details of various objects. For example,
+	 * course name, and credit hours in a course.
+	 */
 	private final String elementDelimiter = ";";
 
+	/**
+	 * Constructor to initialize the list of quarters.
+	 */
 	public QuarterMain() {
 		this.quarterList = new ArrayList<Quarter>();
 	}
 
+	/**
+	 * Returns the list of quarters.
+	 * 
+	 * @return an array list of quarters
+	 */
 	public ArrayList<Quarter> getQuarterList() {
 		return this.quarterList;
 	}
 
+	/**
+	 * Removes a quarter from the list of quarters
+	 * 
+	 * @param name
+	 * @return true if successful in removing a quarter
+	 */
 	public boolean removeQuarter(String name) {
 		for (int i = 0; i < this.quarterList.size(); i++) {
 			if (this.quarterList.get(i).getName().equals(name)) {
@@ -30,6 +61,11 @@ public class QuarterMain {
 		return false;
 	}
 
+	/**
+	 * Adds a quarter to the list of quarters
+	 * 
+	 * @param q1
+	 */
 	public void addQuarter(Quarter q1) {
 		for (Quarter q : this.quarterList) {
 			if (q.getName().equals(q1.getName())) {
@@ -39,6 +75,12 @@ public class QuarterMain {
 		this.quarterList.add(q1);
 	}
 
+	/**
+	 * Saves all the information in a txt file with a given file name.
+	 * 
+	 * @param fileName
+	 * @throws Exception
+	 */
 	public void saveFile(String fileName) throws Exception {
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 		if (fileName.equals("")) {
@@ -51,7 +93,9 @@ public class QuarterMain {
 			for (Course c : q.getCourseList()) {
 				writer.print(this.objectDelimiter + c.getCourseName()
 						+ this.elementDelimiter + c.getCreditHours()
-						+ this.elementDelimiter + sdf.format(c.getStartDate()) + this.elementDelimiter + sdf.format(c.getEndDate()) + this.elementDelimiter);
+						+ this.elementDelimiter + sdf.format(c.getStartDate())
+						+ this.elementDelimiter + sdf.format(c.getEndDate())
+						+ this.elementDelimiter);
 				Rubric r = c.getRubric();
 				for (String grade : r.getGradeList()) {
 					writer.print(grade + this.elementDelimiter);
@@ -66,12 +110,14 @@ public class QuarterMain {
 							+ cat.getName() + this.elementDelimiter
 							+ cat.getWeight());
 					for (Item i : cat.getItemList()) {
-						String creationDate = new SimpleDateFormat("MM/dd/yyyy").format(i.getCreationDate());
+						String creationDate = new SimpleDateFormat("MM/dd/yyyy")
+								.format(i.getUpdateDate());
 						writer.println(this.objectDelimiter
 								+ this.objectDelimiter + this.objectDelimiter
 								+ i.getName() + this.elementDelimiter
 								+ i.getEarnedPoints() + this.elementDelimiter
-								+ i.getTotalPoints() + this.elementDelimiter + creationDate);
+								+ i.getTotalPoints() + this.elementDelimiter
+								+ creationDate);
 					}
 				}
 			}
@@ -79,6 +125,13 @@ public class QuarterMain {
 		writer.close();
 	}
 
+	/**
+	 * Loads the information about the quarters courses, categories, etc. from
+	 * the given file.
+	 * 
+	 * @param fileName
+	 * @throws Exception
+	 */
 	public void loadFile(String fileName) throws Exception {
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 		if (fileName.equals("")) {
@@ -133,13 +186,15 @@ public class QuarterMain {
 				String itemData[] = data[3].split(this.elementDelimiter);
 				Item i;
 				String date = itemData[3];
-				Date creationDate = new SimpleDateFormat("MM/dd/yyyy").parse(date);
+				Date creationDate = new SimpleDateFormat("MM/dd/yyyy")
+						.parse(date);
 				if (itemData[1].equals("") && itemData[2].equals("")) {
 					i = new Item(itemData[0], creationDate);
 				} else if (itemData[1].equals("") && !itemData[2].equals("")) {
 					i = new Item(itemData[0], itemData[2], creationDate);
 				} else {
-					i = new Item(itemData[0], itemData[1], itemData[2], creationDate);
+					i = new Item(itemData[0], itemData[1], itemData[2],
+							creationDate);
 				}
 				this.quarterList.get(qtCount - 1).getCourseList()
 						.get(courseCount - 1).getCategories().get(catCount - 1)

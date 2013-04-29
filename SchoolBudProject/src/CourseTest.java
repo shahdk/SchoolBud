@@ -3212,12 +3212,12 @@ public class CourseTest {
 		Date end = sdf.parse("04/22/2013");
 		
 		course.addCategory(cat);
-		course.getCategories().get(0).getItemList().get(0).setCreationdate(sdf.parse("4/05/2013"));
+		course.getCategories().get(0).getItemList().get(0).setUpdateDate(sdf.parse("4/05/2013"));
 		
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(start, course.getCategories().get(0).getItemList().get(0).getCreationDate());	}
+		assertEquals(start, course.getCategories().get(0).getItemList().get(0).getUpdateDate());	}
 	
 	@Test
 	public void testResettingItemDateTwo() throws Exception{
@@ -3231,5 +3231,5 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(end, course.getCategories().get(0).getItemList().get(0).getCreationDate());	}
+		assertEquals(end, course.getCategories().get(0).getItemList().get(0).getUpdateDate());	}
 }

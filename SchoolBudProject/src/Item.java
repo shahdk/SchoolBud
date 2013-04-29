@@ -5,17 +5,17 @@ public class Item {
 	private String earnedPoints = "";
 	private String totalPoints = "";
 	private String name = "";
-	private Date creationDate;
+	private Date updateDate;
 
-	public Item(String name, Date creationDate) {
+	public Item(String name, Date updateDate) {
 		if (name.length() == 0) {
 			throw new IllegalArgumentException();
 		}
 		this.name = name;
-		this.creationDate = creationDate;
+		this.updateDate = updateDate;
 	}
 
-	public Item(String name, String totalPoints, Date creationDate) {
+	public Item(String name, String totalPoints, Date updateDate) {
 		if (name.length() == 0
 				|| (!totalPoints.matches("([0-9]+(\\.[0-9]+)?)+"))) {
 			throw new IllegalArgumentException();
@@ -27,13 +27,13 @@ public class Item {
 			}
 			this.name = name;
 			this.totalPoints = totalPoints;
-			this.creationDate = creationDate;
+			this.updateDate = updateDate;
 		} catch (Exception e) {
 			throw new IllegalArgumentException();
 		}
 	}
 
-	public Item(String name, String earnedPoints, String totalPoints, Date creationDate) {
+	public Item(String name, String earnedPoints, String totalPoints, Date updateDate) {
 		if (name.length() == 0
 				|| (!totalPoints.matches("([0-9]+(\\.[0-9]+)?)+"))) {
 			throw new IllegalArgumentException();
@@ -46,7 +46,7 @@ public class Item {
 			this.name = name;
 			this.earnedPoints = earnedPoints;
 			this.totalPoints = totalPoints;
-			this.creationDate = creationDate;
+			this.updateDate = updateDate;
 		} catch (Exception e) {
 			throw new IllegalArgumentException();
 		}
@@ -64,12 +64,12 @@ public class Item {
 		return this.name;
 	}
 	
-	public Date getCreationDate(){
-		return this.creationDate;
+	public Date getUpdateDate(){
+		return this.updateDate;
 	}
 	
-	public void setCreationdate(Date creationDate){
-		this.creationDate = creationDate;
+	public void setUpdateDate(Date updateDate){
+		this.updateDate = updateDate;
 	}
 
 	public void setEarnedPoints(String earnedPoints) {
