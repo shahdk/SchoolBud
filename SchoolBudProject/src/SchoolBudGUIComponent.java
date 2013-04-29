@@ -3,6 +3,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -21,12 +23,13 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 
 	private JLabel picture;
 	private JComboBox quarterList, classList;
+	private ArrayList<Quarter> quarters;
 
 	public SchoolBudGUIComponent() {
 		super(new BorderLayout());
+		this.quarters = new ArrayList<Quarter>();
 
-		String[] quarterStrings = { "----", "Summer", "Fall",
-				"Winter", "Spring" };
+		String[] quarterStrings = { "----"};
 
 		this.quarterList = new JComboBox(quarterStrings);
 		this.quarterList.setSelectedIndex(0);
@@ -60,39 +63,36 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 		setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
 	}
+	
+	public void updateQuarters(ArrayList<Quarter> updatedQuarters){
+		this.quarters = updatedQuarters;
+		String[] newQuarters = new String[this.quarters.size()];
+		
+		for(int i = 0; i<this.quarters.size(); i++){
+			newQuarters[i] = this.quarters.get(i).getName();
+		}
+		
+		this.quarterList.setModel(new DefaultComboBoxModel(newQuarters));
+	}
 
 	/**
 	 * TODO Put here a description of what this method does.
 	 * 
 	 * @param string
 	 */
-	private void updateLabel(String name) {
-		String fall[] = { "CSSE120", "MA112" };
-		String winter[] = { "CSSE333", "MA275", "MA375", "IA351" };
-		String spring[] = { "CSSE376", "CSSE304", "CSSE132", "PH111", "SV151" };
-		String summer[] = { "CSSE230", "MA112" };
-		String empty[] = { "N/A" };
-
-		String picName = "";
-		if (name.equals("Spring")) {
-			// picName = "elephant.gif";
-			this.classList.setModel(new DefaultComboBoxModel(spring));
-		} else if (name.equals("Fall")) {
-			// picName = "tiger.gif";
-			this.classList.setModel(new DefaultComboBoxModel(fall));
-		} else if (name.equals("Winter")) {
-			// picName = "whale.gif";
-			this.classList.setModel(new DefaultComboBoxModel(winter));
-		} else if (name.equals("Summer")) {
-			// picName = "whaleRider.gif";
-			this.classList.setModel(new DefaultComboBoxModel(summer));
-		} else {
-			// picName = "rose.gif";
-			this.classList.setModel(new DefaultComboBoxModel(empty));
+	public void updateLabel(String name) {
+		for(Quarter current : this.quarters){
+			if(current.getName().equals(name)){
+				String[] newCourses = new String[current.getCourseList().size()];
+				
+				for(int i = 0; i<current.getCourseList().size(); i++){
+					newCourses[i] = current.getCourseList().get(i).getCourseName();
+				}
+				
+				this.classList.setModel(new DefaultComboBoxModel(newCourses));
+				break;
+			}
 		}
-
-//		ImageIcon icon = new ImageIcon(picName);
-//		this.picture.setIcon(icon);
 	}
 
 	@Override
@@ -101,6 +101,44 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 		JComboBox box = (JComboBox) arg0.getSource();
 		String quarterName = (String) box.getSelectedItem();
 		updateLabel(quarterName);
+	}
+	
+	public String getSelectedQuarter(){
+		return (String) this.quarterList.getSelectedItem();
+	}
+	public String getSelectedCourse(){
+		return (String) this.classList.getSelectedItem();
+	}
+	
+	public void addNewQuarter(ArrayList<Quarter> newQuarters){
+		updateQuarters(newQuarters);
+		updateLabel(getSelectedQuarter());
+	}
+	
+	public void addNewCourse(Course newCourse){
+		for(Quarter current : this.quarters){
+			if(current.getName().equals(getSelectedQuarter())){
+				current.addCourse(newCourse);
+				updateLabel(getSelectedQuarter());
+				break;
+			}
+		}
+	}
+	
+public void addNewCategory(Category newCategory){
+	for(Quarter current : this.quarters){
+		if(current.getName().equals(getSelectedQuarter())){
+			ArrayList<Course> currentCourses = current.getCourseList();
+			
+			for(int i = 0; i<currentCourses.size(); i++){
+				if(currentCourses.get(i).equals(getSelectedCourse())){
+					currentCourses.get(i).addCategory(newCategory);
+				}
+			}
+			
+			break;
+		}
+	}
 	}
 
 }
