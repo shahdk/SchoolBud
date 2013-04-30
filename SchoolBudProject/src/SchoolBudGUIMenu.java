@@ -1,11 +1,13 @@
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.swing.Box;
 import javax.swing.JComponent;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -47,6 +49,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 	private String weight;
 	private QuarterMain main;
 	private SchoolBudGUIComponent component;
+	private final JFileChooser chooser;
 
 	public SchoolBudGUIMenu(JFrame frame, SchoolBudGUIComponent component) {
 		this.frame = frame;
@@ -55,6 +58,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 				this.currentLocale);
 		this.main = new QuarterMain();
 		this.component = component;
+		this.chooser = new JFileChooser();
 		this.initialize();
 
 	}
@@ -123,7 +127,6 @@ public class SchoolBudGUIMenu extends JMenuBar {
 					SchoolBudGUIMenu.this.component
 							.addNewQuarter(SchoolBudGUIMenu.this.main
 									.getQuarterList());
-					System.out.println(name);
 				}
 			}
 
@@ -232,8 +235,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 								JOptionPane.OK_CANCEL_OPTION);
 				if (result == JOptionPane.OK_OPTION) {
 					String name = nameField.getText();
-					Quarter newCourse = new Quarter(name);
-					System.out.println(name);
+					component.editQuarter(name);
 				}
 			}
 
@@ -354,7 +356,18 @@ public class SchoolBudGUIMenu extends JMenuBar {
 		this.save.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				System.out.println("save");
+				if (chooser.showOpenDialog(component) != JFileChooser.APPROVE_OPTION) {
+					return;
+				}
+				String filePath = chooser.getSelectedFile().getPath();
+				
+				try {
+					main.saveFile(filePath);
+				} catch (Exception exception) {
+					// TODO Auto-generated catch-block stub.
+					exception.printStackTrace();
+				}
+				
 			}
 
 		});
@@ -363,7 +376,24 @@ public class SchoolBudGUIMenu extends JMenuBar {
 		this.load.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				System.out.println("load");
+				
+				if (chooser.showOpenDialog(component) != JFileChooser.APPROVE_OPTION) {
+					return;
+				}
+				
+				
+				String filePath = chooser.getSelectedFile().getPath();
+				try {
+					main.loadFile(filePath);
+				} catch (Exception exception) {
+					// TODO Auto-generated catch-block stub.
+					exception.printStackTrace();
+				}
+				
+				SchoolBudGUIMenu.this.component
+				.addNewQuarter(SchoolBudGUIMenu.this.main
+						.getQuarterList());
+				
 			}
 
 		});
