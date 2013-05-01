@@ -10,6 +10,10 @@ import javax.swing.JMenuBar;
  */
 public class SchoolBudGUI extends JFrame{
 	
+	/**
+	 * TODO Put here a description of what this constructor does.
+	 *
+	 */
 	public SchoolBudGUI(){
 		initialize();
 	}
@@ -20,11 +24,11 @@ public class SchoolBudGUI extends JFrame{
 	 */
 	private final void initialize() {
         
-        JComponent newContentPane = new SchoolBudGUIComponent();
+		SchoolBudGUIComponent newContentPane = new SchoolBudGUIComponent();
         newContentPane.setOpaque(true);
         setContentPane(newContentPane);
       
-        JMenuBar menubar = new SchoolBudGUIMenu(this);  
+        JMenuBar menubar = new SchoolBudGUIMenu(this, newContentPane);  
         setJMenuBar(menubar);
         
         setTitle("SchoolBud");
