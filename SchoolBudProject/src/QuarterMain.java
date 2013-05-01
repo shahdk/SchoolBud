@@ -151,7 +151,7 @@ public class QuarterMain {
 				catCount = 0;
 				qtCount++;
 			}
-			if (data[0].equals("") && !data[1].equals("")) {
+			if (this.isCourse(data)) {
 				String courseData[] = data[1].split(this.elementDelimiter);
 				Course c;
 				if (courseData[1].equals("")) {
@@ -162,19 +162,13 @@ public class QuarterMain {
 				}
 				c.setStartDate(sdf.parse(courseData[2]));
 				c.setEndDate(sdf.parse(courseData[3]));
-				Rubric rubric = new Rubric();
-				for (int i = 4; i < courseData.length; i += 4) {
-					rubric.addGrade(courseData[i],
-							Double.parseDouble(courseData[i + 1]),
-							Double.parseDouble(courseData[i + 2]),
-							Double.parseDouble(courseData[i + 3]));
-				}
-				c.setRubric(rubric);
+
+				c.setRubric(this.populateRubric(courseData));
 				this.quarterList.get(qtCount - 1).addCourse(c);
 				catCount = 0;
 				courseCount++;
 			}
-			if (data[0].equals("") && data[1].equals("") && !data[2].equals("")) {
+			if (this.isCategory(data)) {
 				String categoryData[] = data[2].split(this.elementDelimiter);
 				Category cat = new Category(categoryData[0],
 						Double.parseDouble(categoryData[1]));
@@ -182,26 +176,84 @@ public class QuarterMain {
 						.get(courseCount - 1).addCategory(cat);
 				catCount++;
 			}
-			if (data[0].equals("") && data[1].equals("") && data[2].equals("")) {
+			if (this.isItem(data)) {
 				String itemData[] = data[3].split(this.elementDelimiter);
-				Item i;
-				String date = itemData[3];
-				Date creationDate = new SimpleDateFormat("MM/dd/yyyy")
-						.parse(date);
-				if (itemData[1].equals("") && itemData[2].equals("")) {
-					i = new Item(itemData[0], creationDate);
-				} else if (itemData[1].equals("") && !itemData[2].equals("")) {
-					i = new Item(itemData[0], itemData[2], creationDate);
-				} else {
-					i = new Item(itemData[0], itemData[1], itemData[2],
-							creationDate);
-				}
 				this.quarterList.get(qtCount - 1).getCourseList()
 						.get(courseCount - 1).getCategories().get(catCount - 1)
-						.addItem(i);
+						.addItem(this.populateItems(itemData));
 			}
 		}
 		bReader.close();
 	}
 
+	/**
+	 * Private method to populate items when a file is loaded
+	 * 
+	 * @param itemData
+	 * @return
+	 * @throws Exception
+	 */
+	private Item populateItems(String itemData[]) throws Exception {
+		Item i;
+		String date = itemData[3];
+		Date creationDate = new SimpleDateFormat("MM/dd/yyyy").parse(date);
+		if (itemData[1].equals("") && itemData[2].equals("")) {
+			i = new Item(itemData[0], creationDate);
+
+		} else if (itemData[1].equals("") && !itemData[2].equals("")) {
+			i = new Item(itemData[0], itemData[2], creationDate);
+
+		} else {
+			i = new Item(itemData[0], itemData[1], itemData[2], creationDate);
+
+		}
+		return i;
+	}
+
+	/**
+	 * Populates a rubric
+	 * 
+	 * @param courseData
+	 * @return Rubric
+	 */
+	private Rubric populateRubric(String courseData[]) {
+		Rubric rubric = new Rubric();
+		for (int i = 4; i < courseData.length; i += 4) {
+			rubric.addGrade(courseData[i],
+					Double.parseDouble(courseData[i + 1]),
+					Double.parseDouble(courseData[i + 2]),
+					Double.parseDouble(courseData[i + 3]));
+		}
+		return rubric;
+	}
+
+	/**
+	 * Checks to see is the line in the file is information about the course
+	 * 
+	 * @param data
+	 * @return boolean
+	 */
+	private boolean isCourse(String data[]) {
+		return data[0].equals("") && !data[1].equals("");
+	}
+
+	/**
+	 * Checks to see is the line in the file is information about the category
+	 * 
+	 * @param data
+	 * @return boolean
+	 */
+	private boolean isCategory(String data[]) {
+		return data[0].equals("") && data[1].equals("") && !data[2].equals("");
+	}
+
+	/**
+	 * Checks to see is the line in the file is information about the item
+	 * 
+	 * @param data
+	 * @return boolean
+	 */
+	private boolean isItem(String data[]) {
+		return data[0].equals("") && data[1].equals("") && data[2].equals("");
+	}
 }
