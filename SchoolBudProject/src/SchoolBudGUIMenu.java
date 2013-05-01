@@ -1,12 +1,10 @@
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.swing.Box;
-import javax.swing.JComponent;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -45,8 +43,6 @@ public class SchoolBudGUIMenu extends JMenuBar {
 	private JMenuItem load;
 	private JMenuItem exit;
 	private JFrame frame;
-	private String name;
-	private String weight;
 	private QuarterMain main;
 	private SchoolBudGUIComponent component;
 	private final JFileChooser chooser;
