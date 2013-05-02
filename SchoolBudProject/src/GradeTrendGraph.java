@@ -58,7 +58,7 @@ public class GradeTrendGraph {
 
 	}
 
-/*
+
 	// Updates all instance variables, averages, predictions, data points
 	// and trends in accordance with the most up to date course items.
 	// Takes in various factors which will all be used to decide the
@@ -98,7 +98,7 @@ public class GradeTrendGraph {
 		// use updated trends to update PREDICTED best / worst / average grades
 
 	}
-*/
+
 	// Recursively find place to insert item
 	public void insertItemIntoItemDateList(Item item, int minIndex, int index) {
 
