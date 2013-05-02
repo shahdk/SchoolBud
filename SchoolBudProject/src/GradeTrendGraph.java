@@ -23,7 +23,7 @@ public class GradeTrendGraph {
 	private double predictedBestCaseGrade;
 	private double predictedWorstCaseGrade;
 	private ArrayList<Item> dateOrderedItemList;
-	private HashMap<String, Integer> itemFrequencies;
+	private HashMap<String, Integer> itemFrequencie;
 
 	// Evaluated Trends (list of points)
 	// (X Y) points purely for graphing
@@ -35,7 +35,10 @@ public class GradeTrendGraph {
 	private int classDifficulty_1_5;
 	private int futureWorkRate_neg5_pos5;
 	private Course course;
-
+	private Date startDate;
+	private Date endDate;
+	
+	
 	public GradeTrendGraph(Course course, int classDifficulty_1_5,
 			int futureWorkRate_neg5_pos5) throws InstantiationError {
 
