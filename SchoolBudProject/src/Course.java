@@ -386,7 +386,9 @@ public class Course {
 	public HashMap<String, Integer> getItemFrequency(Date start, Date end) {
 		HashMap<String, Integer> frequencies = new HashMap<String, Integer>();
 
-		if (end.before(start) || start.after(end)) {
+		if (end.before(start) || start.after(end)
+				|| start.before(this.startDate) || start.after(this.endDate)
+				|| end.before(this.startDate) || end.after(this.endDate)) {
 			throw new IllegalArgumentException();
 		}
 
@@ -394,7 +396,9 @@ public class Course {
 			int count = 0;
 			for (Item i : cat.getItemList()) {
 				Date creationDate = i.getUpdateDate();
-				if ((creationDate.before(end) || creationDate.equals(end)) && (creationDate.after(start) || creationDate.equals(start))) {
+				if ((creationDate.before(end) || creationDate.equals(end))
+						&& (creationDate.after(start) || creationDate
+								.equals(start))) {
 					count++;
 				}
 			}

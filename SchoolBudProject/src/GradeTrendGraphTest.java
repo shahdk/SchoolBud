@@ -207,7 +207,7 @@ public class GradeTrendGraphTest {
 			Item item1 = list1.get(i);
 			Item item2 = list2.get(i);
 
-			if (!(item1.getCreationDate() == item2.getCreationDate() && item1
+			if (!(item1.getUpdateDate() == item2.getUpdateDate() && item1
 					.getName() == item2.getName())) {
 				return false;
 			}

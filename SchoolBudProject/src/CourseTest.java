@@ -32,6 +32,21 @@ public class CourseTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testInitializeWithEmptyNameTwo() {
 		new Course("", 4.0);	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testInitializeWithEmptyNameThree() throws Exception {
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+		new Course("", start, end);	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void testInitializeWithEmptyNameFour() throws Exception {
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy"); 
+		Date start = sdf.parse("04/08/2013");
+		Date end = sdf.parse("04/22/2013");
+
+		new Course("", 4.0, start, end);	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testInitializeWithNegativeCreditHours() {

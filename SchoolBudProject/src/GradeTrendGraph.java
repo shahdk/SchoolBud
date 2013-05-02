@@ -77,7 +77,7 @@ public class GradeTrendGraph {
 		this.updateAndOrganizeItemListByDate();
 
 		// update item frequencies up to current date
-		this.itemFrequencies = this.course.getItemFrequency(new Date());
+		this.itemFrequencies = this.course.getItemFrequency(this.startDate, this.endDate);
 
 		// take shorter half of item grades towards
 		// current date compared to average for trend adjustment
@@ -90,7 +90,6 @@ public class GradeTrendGraph {
 
 		// use item frequencies to predict max / min variations
 		// for POSSIBLE EXTREMES for best / worst / average grade cases
-		
 
 		// Update trends and create their respective data points
 		// ---Data points X and Y are affected by an overall steepness factor
