@@ -35,7 +35,10 @@ public class GradeTrendGraph {
 	private int classDifficulty_1_5;
 	private int futureWorkRate_neg5_pos5;
 	private Course course;
-
+	private Date startDate;
+	private Date endDate;
+	
+	
 	public GradeTrendGraph(Course course, int classDifficulty_1_5,
 			int futureWorkRate_neg5_pos5) throws InstantiationError {
 
@@ -205,6 +208,38 @@ public class GradeTrendGraph {
 	 */
 	public ArrayList<Item> getDateOrderedItemsList() {
 		return this.dateOrderedItemList;
+	}
+
+
+	/**
+	 * @return the endDate
+	 */
+	public Date getEndDate() {
+		return endDate;
+	}
+
+
+	/**
+	 * @param endDate the endDate to set
+	 */
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
+
+	/**
+	 * @return the startDate
+	 */
+	public Date getStartDate() {
+		return startDate;
+	}
+
+
+	/**
+	 * @param startDate the startDate to set
+	 */
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
 	}
 
 }
