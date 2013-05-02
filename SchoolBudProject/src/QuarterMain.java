@@ -40,6 +40,7 @@ public class QuarterMain {
 	}
 
 	public void saveFile(String fileName) throws Exception {
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 		if (fileName.equals("")) {
 			throw new IllegalArgumentException();
 		}
@@ -50,7 +51,7 @@ public class QuarterMain {
 			for (Course c : q.getCourseList()) {
 				writer.print(this.objectDelimiter + c.getCourseName()
 						+ this.elementDelimiter + c.getCreditHours()
-						+ this.elementDelimiter);
+						+ this.elementDelimiter + sdf.format(c.getStartDate()) + this.elementDelimiter + sdf.format(c.getEndDate()) + this.elementDelimiter);
 				Rubric r = c.getRubric();
 				for (String grade : r.getGradeList()) {
 					writer.print(grade + this.elementDelimiter);
@@ -79,6 +80,7 @@ public class QuarterMain {
 	}
 
 	public void loadFile(String fileName) throws Exception {
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 		if (fileName.equals("")) {
 			throw new IllegalArgumentException();
 		}
@@ -105,8 +107,10 @@ public class QuarterMain {
 					c = new Course(courseData[0],
 							Double.parseDouble(courseData[1]));
 				}
+				c.setStartDate(sdf.parse(courseData[2]));
+				c.setEndDate(sdf.parse(courseData[3]));
 				Rubric rubric = new Rubric();
-				for (int i = 2; i < courseData.length; i += 4) {
+				for (int i = 4; i < courseData.length; i += 4) {
 					rubric.addGrade(courseData[i],
 							Double.parseDouble(courseData[i + 1]),
 							Double.parseDouble(courseData[i + 2]),

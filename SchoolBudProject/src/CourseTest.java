@@ -2433,6 +2433,60 @@ public class CourseTest {
 		assertEquals(d, course.getEndDate());
 	}
 	
+	@Test
+	public void testConstructorDateOne() throws Exception {
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date d = sdf.parse("04/08/2013");
+		Date temp = sdf.parse("04/22/2013");
+		Course course = new Course("CSSE376", d, temp);
+		assertEquals(d, course.getStartDate());
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testConstructorDateTwo() throws Exception {
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date d = sdf.parse("04/08/2013");
+		Date temp = sdf.parse("04/22/2013");
+		@SuppressWarnings("unused")
+		Course course = new Course("CSSE376", temp, d);}
+	
+	@Test
+	public void testConstructorDateThree() throws Exception {
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date d = sdf.parse("04/08/2013");
+		Date temp = sdf.parse("04/05/2013");
+		Course course = new Course("CSSE376", temp, d);
+		assertEquals(d, course.getEndDate());
+	}
+	
+	@Test
+	public void testConstructorDateFour() throws Exception {
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date d = sdf.parse("04/08/2013");
+		Date temp = sdf.parse("04/22/2013");
+		Course course = new Course("CSSE376", 4.0, d, temp);
+		assertEquals(d, course.getStartDate());
+	}
+	
+	@SuppressWarnings("unused")
+	@Test(expected = IllegalArgumentException.class)
+	public void testConstructorDateFive() throws Exception {
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date d = sdf.parse("04/08/2013");
+		Date temp = sdf.parse("04/22/2013");
+		Course course = new Course("CSSE376", 4.0, temp, d);}
+	
+	@Test
+	public void testConstructorDateSix() throws Exception {
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		Date d = sdf.parse("04/08/2013");
+		Date temp = sdf.parse("04/05/2013");
+		Course course = new Course("CSSE376", 4.0, temp, d);
+		assertEquals(d, course.getEndDate());
+	}
+	
 	@Test(expected = IllegalArgumentException.class)
 	public void testFrequencyCalculatorAssignmentMinLimitMinMinus()throws Exception{
 		Category cat = new Category("HW", 10.0);
