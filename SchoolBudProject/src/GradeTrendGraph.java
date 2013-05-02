@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  * 
@@ -37,8 +38,7 @@ public class GradeTrendGraph {
 	private Course course;
 	private Date startDate;
 	private Date endDate;
-	
-	
+
 	public GradeTrendGraph(Course course, int classDifficulty_1_5,
 			int futureWorkRate_neg5_pos5) throws InstantiationError {
 
@@ -61,7 +61,6 @@ public class GradeTrendGraph {
 
 	}
 
-
 	// Updates all instance variables, averages, predictions, data points
 	// and trends in accordance with the most up to date course items.
 	// Takes in various factors which will all be used to decide the
@@ -72,12 +71,13 @@ public class GradeTrendGraph {
 
 		// update current average
 		this.currentAverage = this.course.getCourseGrade();
-		
-		//update and sort item list by date
+
+		// update and sort item list by date
 		this.updateAndOrganizeItemListByDate();
 
 		// update item frequencies up to current date
-		this.itemFrequencies = this.course.getItemFrequency(this.startDate, this.endDate);
+		this.itemFrequencies = this.course.getItemFrequency(this.startDate,
+				this.endDate);
 
 		// take shorter half of item grades towards
 		// current date compared to average for trend adjustment
@@ -90,6 +90,7 @@ public class GradeTrendGraph {
 
 		// use item frequencies to predict max / min variations
 		// for POSSIBLE EXTREMES for best / worst / average grade cases
+		this.updateExtremeGrades();
 
 		// Update trends and create their respective data points
 		// ---Data points X and Y are affected by an overall steepness factor
@@ -101,6 +102,53 @@ public class GradeTrendGraph {
 
 	}
 
+	public void updateExtremeGrades() {
+		Set<String> categories = this.itemFrequencies.keySet();
+
+		int daysPassed = (int) ((this.endDate.getTime() - this.startDate
+				.getTime()) / (1000 * 60 * 60 * 24));
+
+		int daysRemaining = (int) ((this.course.getEndDate().getTime() - this.endDate
+				.getTime()) / (1000 * 60 * 60 * 24));
+		
+		Course tempMinCourse = new Course("tempCourse");
+		Course tempMaxCourse = new Course("tempMaxCourse");
+		ArrayList<Category> cats = this.course.getCategories();
+
+		for (String cat : categories) {
+			int freq = this.itemFrequencies.get(cat);
+			double currentRatio = freq / daysPassed;
+			int predictedItems = (int) ((currentRatio * daysRemaining) + 0.5);
+			double weight = this.getCategoryWeight(cats, cat);
+			
+			Category newMinCat = new Category(cat, predictedItems, weight);
+			for(int i=0; i<newMinCat.getItemList().size(); i++){
+				newMinCat.getItemList().get(i).setEarnedPoints("0");
+				newMinCat.getItemList().get(i).setTotalPoints("100");
+			}
+			tempMinCourse.addCategory(newMinCat);
+			
+			Category newMaxCat = new Category(cat, predictedItems, weight);
+			for(int i=0; i<newMaxCat.getItemList().size(); i++){
+				newMaxCat.getItemList().get(i).setEarnedPoints("100");
+				newMaxCat.getItemList().get(i).setTotalPoints("100");
+			}
+			tempMaxCourse.addCategory(newMaxCat);
+		}
+		
+		this.worstCaseGrade = (this.currentAverage + tempMinCourse.getCourseGrade()) / 2;
+		this.bestCaseGrade = (this.currentAverage + tempMaxCourse.getCourseGrade()) / 2;
+		
+	}
+
+	public double getCategoryWeight(ArrayList<Category> cats, String cat){
+		for(Category c: cats){
+			if(c.getName().equals(cat)){
+				return c.getWeight();
+			}
+		}
+		return 0;
+	}
 	// Recursively find place to insert item
 	public void insertItemIntoItemDateList(Item item, int minIndex, int index) {
 
@@ -209,7 +257,6 @@ public class GradeTrendGraph {
 		return this.dateOrderedItemList;
 	}
 
-
 	/**
 	 * @return the endDate
 	 */
@@ -217,14 +264,13 @@ public class GradeTrendGraph {
 		return endDate;
 	}
 
-
 	/**
-	 * @param endDate the endDate to set
+	 * @param endDate
+	 *            the endDate to set
 	 */
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-
 
 	/**
 	 * @return the startDate
@@ -233,12 +279,20 @@ public class GradeTrendGraph {
 		return startDate;
 	}
 
-
 	/**
-	 * @param startDate the startDate to set
+	 * @param startDate
+	 *            the startDate to set
 	 */
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
+	}
+	
+	public double getWorstCaseGrade(){
+		return this.worstCaseGrade;
+	}
+	
+	public double getBestCaseGrade(){
+		return this.bestCaseGrade;
 	}
 
 }
