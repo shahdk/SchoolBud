@@ -146,7 +146,7 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 	public void updateHeadings(ArrayList<String> headings){
 		String[] newHeadings = new String[headings.size()];
 		for(int i = 0; i<headings.size(); i++){
-			newHeadings[1] = headings.get(i);
+			newHeadings[i] = headings.get(i);
 		}
 		this.table.changeHeaderValues(newHeadings);
 	}

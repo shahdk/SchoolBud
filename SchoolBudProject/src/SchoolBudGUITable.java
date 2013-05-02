@@ -32,8 +32,8 @@ public class SchoolBudGUITable{
 	
 	public void changeHeaderValues(String[] headings){
 		for(int i = 0; i <this.table.getColumnCount(); i++){
-			this.table.getColumnModel().getColumn(i).setHeaderValue(headings[i]);
-			
+			this.table.getTableHeader().getColumnModel().getColumn(i).setHeaderValue(headings[i]);
+			this.table.repaint();
 		}
 //		((AbstractTableModel) table.getModel()).fireTableStructureChanged() ;
 	}
