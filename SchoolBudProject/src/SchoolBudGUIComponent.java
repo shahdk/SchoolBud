@@ -1,5 +1,4 @@
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -8,11 +7,8 @@ import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
+
 
 /**
  * TODO Put here a description of what this class does.
@@ -24,6 +20,8 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 	private JLabel picture;
 	private JComboBox quarterList, classList;
 	private ArrayList<Quarter> quarters;
+
+	private SchoolBudGUITable table;
 
 	public SchoolBudGUIComponent() {
 		super(new BorderLayout());
@@ -46,29 +44,12 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 		this.classList = new JComboBox();
 		this.classList.setPrototypeDisplayValue("XXXXXXXXXX");
 
-		String[] columnNames = { "Item Name", "Course Name", "S", "# of Years",
-				"Vegetarian" };
-
-		Object[][] data = {
-				{ "Kathy", "Smith", "Snowboarding", new Integer(5),
-						new Boolean(false) },
-				{ "John", "Doe", "Rowing", new Integer(3), new Boolean(true) },
-				{ "Sue", "Black", "Knitting", new Integer(2),
-						new Boolean(false) },
-				{ "Jane", "White", "Speed reading", new Integer(20),
-						new Boolean(true) },
-				{ "Joe", "Brown", "Pool", new Integer(10), new Boolean(false) } };
-
-		final JTable table = new JTable(data, columnNames);
-
-		table.setPreferredScrollableViewportSize(new Dimension(500, 300));
-		table.setFillsViewportHeight(true);
-		JScrollPane tableSP = new JScrollPane(table);
-		tableSP.setPreferredSize(new Dimension(500, 400));
-
+		String[] names = {"Item Name", "Earned Points", "Total Points", "Update Date", "Category", "Remove"};
+		this.table = new SchoolBudGUITable(names);
+		
 		add(this.quarterList, BorderLayout.PAGE_START);
 		add(this.classList, BorderLayout.CENTER);
-		add(tableSP, BorderLayout.PAGE_END);
+		add(this.table.getJScrollPane(), BorderLayout.PAGE_END);
 		setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
 	}
@@ -160,6 +141,14 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 			}
 			break;
 		}
+	}
+	
+	public void updateHeadings(ArrayList<String> headings){
+		String[] newHeadings = new String[headings.size()];
+		for(int i = 0; i<headings.size(); i++){
+			newHeadings[1] = headings.get(i);
+		}
+		this.table.changeHeaderValues(newHeadings);
 	}
 
 }
