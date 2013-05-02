@@ -87,7 +87,7 @@ public class GradeTrendGraph {
 
 		// use item frequencies to predict max / min variations
 		// for POSSIBLE EXTREMES for best / worst / average grade cases
-
+		
 
 		// Update trends and create their respective data points
 		// ---Data points X and Y are affected by an overall steepness factor
@@ -110,8 +110,8 @@ public class GradeTrendGraph {
 
 		int newIndex;
 		int offset;
-		int compared = item.getCreationDate().compareTo(
-				this.dateOrderedItemList.get(index).getCreationDate());
+		int compared = item.getUpdateDate().compareTo(
+				this.dateOrderedItemList.get(index).getUpdateDate());
 
 		if (compared == 0) {
 			this.dateOrderedItemList.add(index, item);
