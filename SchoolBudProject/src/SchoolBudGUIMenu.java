@@ -1,6 +1,7 @@
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -64,7 +65,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 
 	}
 
-	public final void initialize() {
+	public final void initialize(){
 		this.add = new JMenu(this.messages.getString("add"));
 		this.language = new JMenu(this.messages.getString("language"));
 		this.file = new JMenu(this.messages.getString("file"));
@@ -102,8 +103,17 @@ public class SchoolBudGUIMenu extends JMenuBar {
 						JOptionPane.OK_CANCEL_OPTION);
 				if (result == JOptionPane.OK_OPTION) {
 					String name = nameField.getText();
-					Course newCourse = new Course(name);
-					SchoolBudGUIMenu.this.component.addNewCourse(newCourse);
+					String start = startField.getText();
+					String end = endField.getText();
+					String credit = creditField.getText();
+					SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+					
+					try{
+						Course newCourse = new Course(name, Double.parseDouble(credit), sdf.parse(start), sdf.parse(end));
+						SchoolBudGUIMenu.this.component.addNewCourse(newCourse);
+					}catch(Exception e){
+						//do nothing
+					}
 				}
 			}
 
