@@ -23,7 +23,7 @@ public class GradeTrendGraph {
 	private double predictedBestCaseGrade;
 	private double predictedWorstCaseGrade;
 	private ArrayList<Item> dateOrderedItemList;
-	private HashMap<String, Integer> itemFrequencie;
+	private HashMap<String, Integer> itemFrequencies;
 
 	// Evaluated Trends (list of points)
 	// (X Y) points purely for graphing
@@ -208,6 +208,38 @@ public class GradeTrendGraph {
 	 */
 	public ArrayList<Item> getDateOrderedItemsList() {
 		return this.dateOrderedItemList;
+	}
+
+
+	/**
+	 * @return the endDate
+	 */
+	public Date getEndDate() {
+		return endDate;
+	}
+
+
+	/**
+	 * @param endDate the endDate to set
+	 */
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
+
+	/**
+	 * @return the startDate
+	 */
+	public Date getStartDate() {
+		return startDate;
+	}
+
+
+	/**
+	 * @param startDate the startDate to set
+	 */
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
 	}
 
 }
