@@ -2500,7 +2500,7 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(0, course.getItemFrequency(limit).get("HW").intValue());	}
+		assertEquals(0, course.getItemFrequency(start, limit).get("HW").intValue());	}
 	
 	@Test
 	public void testFrequencyCalculatorAssignmentMinLimitMin()throws Exception{
@@ -2515,7 +2515,7 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(0, course.getItemFrequency(limit).get("HW").intValue());
+		assertEquals(0, course.getItemFrequency(start, limit).get("HW").intValue());
 	}
 
 	@Test
@@ -2531,7 +2531,7 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(0, course.getItemFrequency(limit).get("HW").intValue());
+		assertEquals(0, course.getItemFrequency(start, limit).get("HW").intValue());
 	}
 	
 	@Test
@@ -2547,7 +2547,7 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(0, course.getItemFrequency(limit).get("HW").intValue());
+		assertEquals(0, course.getItemFrequency(start, limit).get("HW").intValue());
 	}
 	
 	@Test
@@ -2563,7 +2563,7 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(0, course.getItemFrequency(limit).get("HW").intValue());
+		assertEquals(0, course.getItemFrequency(start, limit).get("HW").intValue());
 	}
 	
 	@Test
@@ -2579,7 +2579,7 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(0, course.getItemFrequency(limit).get("HW").intValue());
+		assertEquals(0, course.getItemFrequency(start, limit).get("HW").intValue());
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
@@ -2595,7 +2595,7 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(0, course.getItemFrequency(limit).get("HW").intValue());	}
+		assertEquals(0, course.getItemFrequency(start, limit).get("HW").intValue());	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testFrequencyCalculatorAssignmentMinPlusLimitMinMinus()throws Exception{
@@ -2613,7 +2613,7 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(1, course.getItemFrequency(limit).get("HW").intValue());	}
+		assertEquals(1, course.getItemFrequency(start, limit).get("HW").intValue());	}
 	
 	@Test
 	public void testFrequencyCalculatorAssignmentMinPlusLimitMin()throws Exception{
@@ -2631,7 +2631,7 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(1, course.getItemFrequency(limit).get("HW").intValue());	}
+		assertEquals(1, course.getItemFrequency(start, limit).get("HW").intValue());	}
 	
 	@Test
 	public void testFrequencyCalculatorAssignmentMinPlusLimitMinPlus()throws Exception{
@@ -2649,7 +2649,7 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(1, course.getItemFrequency(limit).get("HW").intValue());	}
+		assertEquals(1, course.getItemFrequency(start, limit).get("HW").intValue());	}
 	
 	@Test
 	public void testFrequencyCalculatorAssignmentMinPlusLimitNominal()throws Exception{
@@ -2667,7 +2667,7 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(1, course.getItemFrequency(limit).get("HW").intValue());	}
+		assertEquals(1, course.getItemFrequency(start, limit).get("HW").intValue());	}
 	
 	@Test
 	public void testFrequencyCalculatorAssignmentMinPlusLimitMaxMinus()throws Exception{
@@ -2685,7 +2685,7 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(1, course.getItemFrequency(limit).get("HW").intValue());	}
+		assertEquals(1, course.getItemFrequency(start, limit).get("HW").intValue());	}
 	
 	@Test
 	public void testFrequencyCalculatorAssignmentMinPlusLimitMax()throws Exception{
@@ -2703,7 +2703,7 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(1, course.getItemFrequency(limit).get("HW").intValue());	}
+		assertEquals(1, course.getItemFrequency(start, limit).get("HW").intValue());	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testFrequencyCalculatorAssignmentMinPlusLimitMaxPlus()throws Exception{
@@ -2721,7 +2721,7 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(1, course.getItemFrequency(limit).get("HW").intValue());	}
+		assertEquals(1, course.getItemFrequency(start, limit).get("HW").intValue());	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testFrequencyCalculatorAssignmentNominalLimitMinMinus()throws Exception{
@@ -2743,7 +2743,7 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(10, course.getItemFrequency(limit).get("HW").intValue());	}
+		assertEquals(10, course.getItemFrequency(start, limit).get("HW").intValue());	}
 	
 	@Test
 	public void testFrequencyCalculatorAssignmentNominalLimitMin()throws Exception{
@@ -2764,7 +2764,7 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(10, course.getItemFrequency(limit).get("HW").intValue());
+		assertEquals(10, course.getItemFrequency(start, limit).get("HW").intValue());
 	}
 	
 	@Test
@@ -2787,7 +2787,7 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(10, course.getItemFrequency(limit).get("HW").intValue());	
+		assertEquals(10, course.getItemFrequency(start, limit).get("HW").intValue());	
 	}
 	
 	@Test
@@ -2810,7 +2810,7 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(10, course.getItemFrequency(limit).get("HW").intValue());
+		assertEquals(10, course.getItemFrequency(start, limit).get("HW").intValue());
 	}
 	
 	@Test
@@ -2834,7 +2834,7 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(10, course.getItemFrequency(limit).get("HW").intValue());
+		assertEquals(10, course.getItemFrequency(start, limit).get("HW").intValue());
 	}
 	
 	@Test
@@ -2858,7 +2858,7 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(10, course.getItemFrequency(limit).get("HW").intValue());	}
+		assertEquals(10, course.getItemFrequency(start, limit).get("HW").intValue());	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testFrequencyCalculatorAssignmentNominalLimitMaxPlus()throws Exception{
@@ -2881,7 +2881,7 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(10, course.getItemFrequency(limit).get("HW").intValue());	}
+		assertEquals(10, course.getItemFrequency(start, limit).get("HW").intValue());	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testFrequencyCalculatorAssignmentMaxMinusLimitMinMinus()throws Exception{
@@ -2903,7 +2903,7 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(19, course.getItemFrequency(limit).get("HW").intValue());	}
+		assertEquals(19, course.getItemFrequency(start, limit).get("HW").intValue());	}
 	
 	@Test
 	public void testFrequencyCalculatorAssignmentMaxMinusLimitMin()throws Exception{
@@ -2924,7 +2924,7 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(19, course.getItemFrequency(limit).get("HW").intValue());
+		assertEquals(19, course.getItemFrequency(start, limit).get("HW").intValue());
 	}
 	
 	@Test
@@ -2947,7 +2947,7 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(19, course.getItemFrequency(limit).get("HW").intValue());	
+		assertEquals(19, course.getItemFrequency(start, limit).get("HW").intValue());	
 	}
 	
 	@Test
@@ -2970,7 +2970,7 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(19, course.getItemFrequency(limit).get("HW").intValue());
+		assertEquals(19, course.getItemFrequency(start, limit).get("HW").intValue());
 	}
 	
 	@Test
@@ -2994,7 +2994,7 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(19, course.getItemFrequency(limit).get("HW").intValue());
+		assertEquals(19, course.getItemFrequency(start, limit).get("HW").intValue());
 	}
 	
 	@Test
@@ -3018,7 +3018,7 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(19, course.getItemFrequency(limit).get("HW").intValue());	}
+		assertEquals(19, course.getItemFrequency(start, limit).get("HW").intValue());	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testFrequencyCalculatorAssignmentMaxMinusLimitMaxPlus()throws Exception{
@@ -3041,7 +3041,7 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(19, course.getItemFrequency(limit).get("HW").intValue());	}
+		assertEquals(19, course.getItemFrequency(start, limit).get("HW").intValue());}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testFrequencyCalculatorAssignmentMaxLimitMinMinus()throws Exception{
@@ -3062,8 +3062,8 @@ public class CourseTest {
 		course.addCategory(cat);
 		course.setStartDate(start);
 		course.setEndDate(end);
-		
-		assertEquals(20, course.getItemFrequency(limit).get("HW").intValue());	}
+	
+		assertEquals(20, course.getItemFrequency(start, limit).get("HW").intValue());}
 	
 	@Test
 	public void testFrequencyCalculatorAssignmentMaxLimitMin()throws Exception{
@@ -3084,7 +3084,7 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(20, course.getItemFrequency(limit).get("HW").intValue());
+		assertEquals(20, course.getItemFrequency(start, limit).get("HW").intValue());
 	}
 	
 	@Test
@@ -3107,7 +3107,7 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(20, course.getItemFrequency(limit).get("HW").intValue());	
+		assertEquals(20, course.getItemFrequency(start, limit).get("HW").intValue());	
 	}
 	
 	@Test
@@ -3130,7 +3130,7 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(20, course.getItemFrequency(limit).get("HW").intValue());
+		assertEquals(20, course.getItemFrequency(start, limit).get("HW").intValue());
 	}
 	
 	@Test
@@ -3154,7 +3154,7 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(20, course.getItemFrequency(limit).get("HW").intValue());
+		assertEquals(20, course.getItemFrequency(start, limit).get("HW").intValue());
 	}
 	
 	@Test
@@ -3178,7 +3178,8 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(20, course.getItemFrequency(limit).get("HW").intValue());	}
+		assertEquals(20, course.getItemFrequency(start, limit).get("HW").intValue());
+	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testFrequencyCalculatorAssignmentMaxLimitMaxPlus() throws Exception{
@@ -3201,7 +3202,7 @@ public class CourseTest {
 		course.setStartDate(start);
 		course.setEndDate(end);
 		
-		assertEquals(20, course.getItemFrequency(limit).get("HW").intValue());	}
+		assertEquals(20, course.getItemFrequency(start, limit).get("HW").intValue());}
 	
 	@Test
 	public void testResettingItemDate() throws Exception{
