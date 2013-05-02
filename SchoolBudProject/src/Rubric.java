@@ -2,14 +2,31 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
+/**
+ * Java object to store information about a rubric associated with a particular
+ * course.
+ * 
+ * @author shahdk
+ * 
+ */
 public class Rubric {
 
+	/**
+	 * Stores the lower limit, upper limit and gpa associated with a particular
+	 * letter grade.
+	 */
 	private HashMap<String, ArrayList<Double>> grades;
 
+	/**
+	 * Constructor to initialize the Rubric object.
+	 */
 	public Rubric() {
 		this.grades = new HashMap<String, ArrayList<Double>>();
 	}
 
+	/**
+	 * Uses the Rose-Hulman rubric as a default rubric for a course.
+	 */
 	public void setDefaults() {
 		this.grades.clear();
 		this.addGrade("A", 90, 100, 4.0);
@@ -22,6 +39,15 @@ public class Rubric {
 		this.addGrade("F", 0, 59, 0.0);
 	}
 
+	/**
+	 * adds the given grade along with its lower limit, upper limit and gpa to
+	 * the rubric.
+	 * 
+	 * @param letterGrade
+	 * @param lowerLimit
+	 * @param upperLimit
+	 * @param gpa
+	 */
 	public void addGrade(String letterGrade, double lowerLimit,
 			double upperLimit, double gpa) {
 		if (lowerLimit > upperLimit || lowerLimit < 0 || lowerLimit > 100
@@ -51,21 +77,45 @@ public class Rubric {
 		this.grades.put(letterGrade, temp);
 	}
 
+	/**
+	 * Returns the lower limit for the specified letter grade.
+	 * 
+	 * @param letterGrade
+	 * @return double lower limit
+	 */
 	public double getLowerLimit(String letterGrade) {
 		ArrayList<Double> temp = this.grades.get(letterGrade);
 		return temp.get(0);
 	}
 
+	/**
+	 * Returns the upper limit for the specified letter grade
+	 * 
+	 * @param letterGrade
+	 * @return double upper limit
+	 */
 	public double getUpperLimit(String letterGrade) {
 		ArrayList<Double> temp = this.grades.get(letterGrade);
 		return temp.get(1);
 	}
 
+	/**
+	 * Returns the GPA for the specified letter grade
+	 * 
+	 * @param letterGrade
+	 * @return double gpa
+	 */
 	public double getGPA(String letterGrade) {
 		ArrayList<Double> temp = this.grades.get(letterGrade);
 		return temp.get(2);
 	}
 
+	/**
+	 * Sets the gpa for the given letter grade to the specified gpa
+	 * 
+	 * @param grade
+	 * @param gpa
+	 */
 	public void setGPA(String grade, double gpa) {
 		for (ArrayList<Double> x : this.grades.values()) {
 			if (gpa == x.get(2) || gpa < 0) {
@@ -75,6 +125,13 @@ public class Rubric {
 		this.grades.get(grade).set(2, gpa);
 	}
 
+	/**
+	 * Sets the lower limit for the given letter grade to the specified lower
+	 * limit
+	 * 
+	 * @param grade
+	 * @param lowerLimit
+	 */
 	public void setLowerLimit(String grade, double lowerLimit) {
 		if (lowerLimit < 0 || lowerLimit > 100) {
 			throw new IllegalArgumentException();
@@ -93,6 +150,13 @@ public class Rubric {
 		this.grades.get(grade).set(0, lowerLimit);
 	}
 
+	/**
+	 * Sets the upper limit for the given letter grade to the specified upper
+	 * limit
+	 * 
+	 * @param grade
+	 * @param upperLimit
+	 */
 	public void setUpperLimit(String grade, double upperLimit) {
 		if (upperLimit < 0 || upperLimit > 100) {
 			throw new IllegalArgumentException();
@@ -111,8 +175,14 @@ public class Rubric {
 		this.grades.get(grade).set(1, upperLimit);
 	}
 
+	/**
+	 * Replaces the old letter grade with the new letter grade
+	 * 
+	 * @param old
+	 * @param newGrade
+	 */
 	public void setLetterGrade(String old, String newGrade) {
-		if(this.grades.containsKey(newGrade) || newGrade.length()==0){
+		if (this.grades.containsKey(newGrade) || newGrade.length() == 0) {
 			throw new IllegalArgumentException();
 		}
 
@@ -121,41 +191,25 @@ public class Rubric {
 		this.grades.put(newGrade, temp);
 	}
 
+	/**
+	 * Removes the specified letter grade from the list of grades in the rubric
+	 * 
+	 * @param letterGrade
+	 * @return true if successful in removing
+	 */
 	public boolean removeGrade(String letterGrade) {
-		if(!this.grades.containsKey(letterGrade)){
+		if (!this.grades.containsKey(letterGrade)) {
 			return false;
 		}
 		this.grades.remove(letterGrade);
 		return true;
 	}
 
-	public void saveRubric() throws Exception {
-		FileParser rubric = new FileParser();
-		ArrayList<String> data = new ArrayList<String>();		
-		for(String key: this.grades.keySet()){
-			data.add(key);
-			ArrayList<Double> temp = this.grades.get(key);
-			data.add(temp.get(0)+"");
-			data.add(temp.get(1)+"");
-			data.add(temp.get(2)+"");
-		}
-
-		rubric.writeFile("rubric.txt", "\t", data, 4);
-	}
-
-	public void loadRubric(String fileName) throws Exception {
-		this.grades.clear();
-		FileParser rubric = new FileParser();
-		ArrayList<String> data = rubric.readFile(fileName, ";", 4);
-		for(int i=0; i<data.size(); i+=4){
-			ArrayList<Double> temp = new ArrayList<Double>();
-			temp.add(Double.parseDouble(data.get(i+1)));
-			temp.add(Double.parseDouble(data.get(i+2)));
-			temp.add(Double.parseDouble(data.get(i+3)));
-			this.grades.put(data.get(i), temp);
-		}
-	}
-
+	/**
+	 * Returns a list of letter grades in the rubric.
+	 * 
+	 * @return Set<String> of letter grades.
+	 */
 	public Set<String> getGradeList() {
 		return this.grades.keySet();
 	}

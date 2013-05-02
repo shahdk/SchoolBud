@@ -1,11 +1,36 @@
 import java.util.ArrayList;
 
+/**
+ * Java class to calculate the GPA
+ * 
+ * @author shahdk
+ * 
+ */
 public class GPACalculator {
 
+	/**
+	 * Arryalist of an array of doubles. gpaList[0] stores the credit hours and
+	 * gpaList[1] stores the gpa.
+	 */
 	private ArrayList<double[]> gpaList;
+	/**
+	 * Maximum possible credit hours for a course.
+	 */
 	private double maxCreditHours;
+	/**
+	 * Maximum GPA for a course.
+	 */
 	private double maxGPA;
 
+	/**
+	 * Constructor that initializes the GPACalculator object with the arraylist
+	 * of credit hours and gpa score, and the maximum possible credit hours and
+	 * gpa for a course.
+	 * 
+	 * @param val
+	 * @param maxCreditHours
+	 * @param maxGPA
+	 */
 	public GPACalculator(ArrayList<double[]> val, double maxCreditHours,
 			double maxGPA) {
 		this.gpaList = val;
@@ -13,6 +38,12 @@ public class GPACalculator {
 		this.maxGPA = maxGPA;
 	}
 
+	/**
+	 * Calculates the total grade points based on the list of credit hours and
+	 * gpa.
+	 * 
+	 * @return double total grade points.
+	 */
 	public double totalGradePoints() {
 
 		double sum = 0;
@@ -31,6 +62,11 @@ public class GPACalculator {
 		return sum;
 	}
 
+	/**
+	 * Calculates the GPA based on the list of credit hours and gpa.
+	 * 
+	 * @return double GPA
+	 */
 	public double totalGPA() {
 
 		double gradePoints = this.totalGradePoints();
