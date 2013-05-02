@@ -54,10 +54,17 @@ public class GradeTrendGraph {
 					"Future work rate must be and integer -5 to 5");
 		}
 
+		// check non null course
+		if (course == null) {
+			throw new InstantiationError("Must Enter Valid Course");
+		}
+		
 		this.classDifficulty_1_5 = classDifficulty_1_5;
 		this.futureWorkRate_neg5_pos5 = futureWorkRate_neg5_pos5;
 		this.course = course;
 		this.dateOrderedItemList = new ArrayList<Item>();
+		this.startDate = this.course.getStartDate();
+		this.endDate = this.course.getEndDate();
 
 	}
 
@@ -106,16 +113,16 @@ public class GradeTrendGraph {
 		Set<String> categories = this.itemFrequencies.keySet();
 
 		boolean isZero = true;
-		
+
 		int daysPassed = (int) ((this.endDate.getTime() - this.startDate
 				.getTime()) / (1000 * 60 * 60 * 24));
-		if(daysPassed == 0){
+		if (daysPassed == 0) {
 			daysPassed = 1;
 		}
 
 		int daysRemaining = (int) ((this.course.getEndDate().getTime() - this.endDate
 				.getTime()) / (1000 * 60 * 60 * 24));
-		
+
 		Course tempMinCourse = new Course("tempCourse");
 		Course tempMaxCourse = new Course("tempMaxCourse");
 		ArrayList<Category> cats = this.course.getCategories();
@@ -124,44 +131,47 @@ public class GradeTrendGraph {
 			int freq = this.itemFrequencies.get(cat);
 			double currentRatio = freq / daysPassed;
 			int predictedItems = (int) ((currentRatio * daysRemaining) + 0.5);
-			if(predictedItems > 0){
+			if (predictedItems > 0) {
 				isZero = false;
 			}
 			double weight = this.getCategoryWeight(cats, cat);
-			
+
 			Category newMinCat = new Category(cat, predictedItems, weight);
-			for(int i=0; i<newMinCat.getItemList().size(); i++){
+			for (int i = 0; i < newMinCat.getItemList().size(); i++) {
 				newMinCat.getItemList().get(i).setEarnedPoints("0");
 				newMinCat.getItemList().get(i).setTotalPoints("100");
 			}
 			tempMinCourse.addCategory(newMinCat);
-			
+
 			Category newMaxCat = new Category(cat, predictedItems, weight);
-			for(int i=0; i<newMaxCat.getItemList().size(); i++){
+			for (int i = 0; i < newMaxCat.getItemList().size(); i++) {
 				newMaxCat.getItemList().get(i).setEarnedPoints("100");
 				newMaxCat.getItemList().get(i).setTotalPoints("100");
 			}
 			tempMaxCourse.addCategory(newMaxCat);
 		}
-		
-		if(isZero){
+
+		if (isZero) {
 			this.worstCaseGrade = 0;
 			this.bestCaseGrade = 100;
-		} else{
-			this.worstCaseGrade = (int) (((this.currentAverage + tempMinCourse.getCourseGrade()) / 2) +0.5);
-			this.bestCaseGrade = (int) (((this.currentAverage + tempMaxCourse.getCourseGrade()) / 2) +0.5);
+		} else {
+			this.worstCaseGrade = (int) (((this.currentAverage + tempMinCourse
+					.getCourseGrade()) / 2) + 0.5);
+			this.bestCaseGrade = (int) (((this.currentAverage + tempMaxCourse
+					.getCourseGrade()) / 2) + 0.5);
 		}
-		
+
 	}
 
-	public double getCategoryWeight(ArrayList<Category> cats, String cat){
-		for(Category c: cats){
-			if(c.getName().equals(cat)){
+	public double getCategoryWeight(ArrayList<Category> cats, String cat) {
+		for (Category c : cats) {
+			if (c.getName().equals(cat)) {
 				return c.getWeight();
 			}
 		}
 		return 0;
 	}
+
 	// Recursively find place to insert item
 	public void insertItemIntoItemDateList(Item item, int minIndex, int index) {
 
@@ -209,9 +219,14 @@ public class GradeTrendGraph {
 			// go through each item
 			for (Item item : category.getItemList()) {
 
-				// insert into item list by date
-				this.insertItemIntoItemDateList(item, 0,
-						this.dateOrderedItemList.size() / 2);
+				// check to make sure each item is within user given date scope
+				if (!(item.getUpdateDate().compareTo(this.startDate) < 0 && item
+						.getUpdateDate().compareTo(this.endDate) > 0)) {
+
+					// insert into item list by date
+					this.insertItemIntoItemDateList(item, 0,
+							this.dateOrderedItemList.size() / 2);
+				}
 			}
 		}
 
@@ -299,12 +314,12 @@ public class GradeTrendGraph {
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
-	
-	public double getWorstCaseGrade(){
+
+	public double getWorstCaseGrade() {
 		return this.worstCaseGrade;
 	}
-	
-	public double getBestCaseGrade(){
+
+	public double getBestCaseGrade() {
 		return this.bestCaseGrade;
 	}
 

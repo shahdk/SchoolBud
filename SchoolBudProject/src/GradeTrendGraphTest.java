@@ -16,7 +16,7 @@ import org.junit.Test;
  * 
  */
 public class GradeTrendGraphTest {
-	
+
 	private static final double DELTA = 1e-15;
 
 	// test internal helper methods
@@ -93,19 +93,19 @@ public class GradeTrendGraphTest {
 	@Test
 	public void testAllUserEnteredVariablesGettersAndSetters() {
 
-		GradeTrendGraph graph = new GradeTrendGraph(null, 1, 5);
+		GradeTrendGraph graph = new GradeTrendGraph(new Course("math"), 1, 5);
 
 		// test getters
-		assertNull(graph.getCourse());
 		assertEquals(1, graph.getClassDifficulty_1_5());
 		assertEquals(5, graph.getFutureWorkRate_neg5_pos5());
+		assertEquals("math", graph.getCourse().getCourseName());
 
 		// test setters
 		graph.setClassDifficulty_1_5(3);
 		graph.setFutureWorkRate_neg5_pos5(-3);
 		graph.setCourse(new Course("science"));
 
-		assertNotNull(graph.getCourse());
+		assertEquals("science", graph.getCourse().getCourseName());
 		assertEquals(3, graph.getClassDifficulty_1_5());
 		assertEquals(-3, graph.getFutureWorkRate_neg5_pos5());
 
@@ -146,8 +146,16 @@ public class GradeTrendGraphTest {
 	@Test
 	public void testUpdateAndOrganizeItemListByDate() throws ParseException {
 		SimpleDateFormat dtFormat = new SimpleDateFormat("MM/dd/yyyy");
+		
+		String sDate = "02/25/2012";
+		Date startDate = dtFormat.parse(sDate);
+		String eDate = "09/25/2012";
+		Date endDate = dtFormat.parse(eDate);
 
 		Course course1 = new Course("math");
+		course1.setStartDate(startDate);
+		course1.setEndDate(endDate);
+		
 		Category cat1 = new Category("tests", 20);
 		Category cat2 = new Category("hwk", 10);
 
@@ -199,6 +207,89 @@ public class GradeTrendGraphTest {
 
 	}
 
+	@Test
+	public void testUpdateExtremeGradesOne() throws Exception {
+		SimpleDateFormat dtFormat = new SimpleDateFormat("MM/dd/yyyy");
+
+		String newDate1 = "04/03/2013";
+		Date newDt1 = dtFormat.parse(newDate1);
+
+		String newDate2 = "04/23/2013";
+		Date newDt2 = dtFormat.parse(newDate2);
+
+		Course course = new Course("Temp", 4.0, newDt1, newDt2);
+		Category cat = new Category("HW", 8, 100);
+		course.addCategory(cat);
+
+		GradeTrendGraph graph = new GradeTrendGraph(course, 2, 5);
+		graph.setStartDate(newDt1);
+		graph.setEndDate(newDt1);
+		graph.updateGraph();
+
+		assertEquals(0, graph.getWorstCaseGrade(), DELTA);
+		assertEquals(100, graph.getBestCaseGrade(), DELTA);
+	}
+
+	@Test
+	public void testUpdateExtremeGradesTwo() throws Exception {
+		SimpleDateFormat dtFormat = new SimpleDateFormat("MM/dd/yyyy");
+
+		String newDate1 = "04/03/2013";
+		Date newDt1 = dtFormat.parse(newDate1);
+
+		String newDate2 = "04/23/2013";
+		Date newDt2 = dtFormat.parse(newDate2);
+
+		Course course = new Course("Temp", 4.0, newDt1, newDt2);
+		Category cat = new Category("HW", 8, 100);
+		course.addCategory(cat);
+
+		GradeTrendGraph graph = new GradeTrendGraph(course, 2, 5);
+		graph.setStartDate(newDt1);
+		graph.setEndDate(newDt2);
+		graph.updateGraph();
+
+		assertEquals(0, graph.getWorstCaseGrade(), DELTA);
+		assertEquals(100, graph.getBestCaseGrade(), DELTA);
+	}
+
+	@Test
+	public void testUpdateExtremeGradesThree() throws Exception {
+		SimpleDateFormat dtFormat = new SimpleDateFormat("MM/dd/yyyy");
+
+		String newDate1 = "04/08/2013";
+		Date newDt1 = dtFormat.parse(newDate1);
+
+		String newDate2 = "04/28/2013";
+		Date newDt2 = dtFormat.parse(newDate2);
+
+		String newDate3 = "04/18/2013";
+		Date newDt3 = dtFormat.parse(newDate3);
+
+		Course course = new Course("Temp", 4.0, newDt1, newDt2);
+		Category cat = new Category("HW", 100);
+
+		String[] date = { "4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013",
+				"4/12/2013", "4/13/2013", "4/14/2013" };
+		for (int i = 0; i < 10; i++) {
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("HW" + i, dtFormat.parse(date[rand]));
+			it.setEarnedPoints("50");
+			it.setTotalPoints("100");
+			cat.addItem(it);
+		}
+
+		course.addCategory(cat);
+
+		GradeTrendGraph graph = new GradeTrendGraph(course, 2, 5);
+		graph.setStartDate(newDt1);
+		graph.setEndDate(newDt3);
+		graph.updateGraph();
+
+		assertEquals(25, graph.getWorstCaseGrade(), DELTA);
+		assertEquals(75, graph.getBestCaseGrade(), DELTA);
+	}
+
 	public boolean compareItemLists(ArrayList<Item> list1, ArrayList<Item> list2) {
 
 		if (list1.size() != list2.size()) {
@@ -217,88 +308,6 @@ public class GradeTrendGraphTest {
 		}
 
 		return true;
-	}
-	
-	@Test
-	public void testUpdateExtremeGradesOne()throws Exception{
-		SimpleDateFormat dtFormat = new SimpleDateFormat("MM/dd/yyyy");
-		
-		String newDate1 = "04/03/2013";
-		Date newDt1 = dtFormat.parse(newDate1);
-		
-		String newDate2 = "04/23/2013";
-		Date newDt2 = dtFormat.parse(newDate2);
-		
-		Course course = new Course("Temp", 4.0, newDt1, newDt2);
-		Category cat = new Category("HW", 8, 100);
-		course.addCategory(cat);
-		
-		GradeTrendGraph graph = new GradeTrendGraph(course, 2, 5);
-		graph.setStartDate(newDt1);
-		graph.setEndDate(newDt1);
-		graph.updateGraph();
-		
-		assertEquals(0, graph.getWorstCaseGrade(), DELTA);
-		assertEquals(100, graph.getBestCaseGrade(), DELTA);
-	}
-	
-	@Test
-	public void testUpdateExtremeGradesTwo()throws Exception{
-		SimpleDateFormat dtFormat = new SimpleDateFormat("MM/dd/yyyy");
-		
-		String newDate1 = "04/03/2013";
-		Date newDt1 = dtFormat.parse(newDate1);
-		
-		String newDate2 = "04/23/2013";
-		Date newDt2 = dtFormat.parse(newDate2);
-		
-		Course course = new Course("Temp", 4.0, newDt1, newDt2);
-		Category cat = new Category("HW", 8, 100);
-		course.addCategory(cat);
-		
-		GradeTrendGraph graph = new GradeTrendGraph(course, 2, 5);
-		graph.setStartDate(newDt1);
-		graph.setEndDate(newDt2);
-		graph.updateGraph();
-		
-		assertEquals(0, graph.getWorstCaseGrade(), DELTA);
-		assertEquals(100, graph.getBestCaseGrade(), DELTA);
-	}
-	
-	@Test
-	public void testUpdateExtremeGradesThree()throws Exception{
-		SimpleDateFormat dtFormat = new SimpleDateFormat("MM/dd/yyyy");
-		
-		String newDate1 = "04/08/2013";
-		Date newDt1 = dtFormat.parse(newDate1);
-		
-		String newDate2 = "04/28/2013";
-		Date newDt2 = dtFormat.parse(newDate2);
-		
-		String newDate3 = "04/18/2013";
-		Date newDt3 = dtFormat.parse(newDate3);
-		
-		Course course = new Course("Temp", 4.0, newDt1, newDt2);
-		Category cat = new Category("HW", 100);
-		
-		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013", "4/12/2013", "4/13/2013", "4/14/2013"}; 
-		for(int i=0; i<10; i++){
-			int rand = (int) Math.random() * date.length;
-			Item it = new Item("HW"+i, dtFormat.parse(date[rand]));
-			it.setEarnedPoints("50");
-			it.setTotalPoints("100");
-			cat.addItem(it);
-		}
-		
-		course.addCategory(cat);
-		
-		GradeTrendGraph graph = new GradeTrendGraph(course, 2, 5);
-		graph.setStartDate(newDt1);
-		graph.setEndDate(newDt3);
-		graph.updateGraph();
-		
-		assertEquals(25, graph.getWorstCaseGrade(), DELTA);
-		assertEquals(75, graph.getBestCaseGrade(), DELTA);
 	}
 
 	// public boolean compareDateLists(ArrayList<Date> list1, ArrayList<Date>
