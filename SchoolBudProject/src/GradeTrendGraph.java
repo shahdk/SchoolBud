@@ -105,8 +105,13 @@ public class GradeTrendGraph {
 	public void updateExtremeGrades() {
 		Set<String> categories = this.itemFrequencies.keySet();
 
+		boolean isZero = true;
+		
 		int daysPassed = (int) ((this.endDate.getTime() - this.startDate
 				.getTime()) / (1000 * 60 * 60 * 24));
+		if(daysPassed == 0){
+			daysPassed = 1;
+		}
 
 		int daysRemaining = (int) ((this.course.getEndDate().getTime() - this.endDate
 				.getTime()) / (1000 * 60 * 60 * 24));
@@ -119,6 +124,9 @@ public class GradeTrendGraph {
 			int freq = this.itemFrequencies.get(cat);
 			double currentRatio = freq / daysPassed;
 			int predictedItems = (int) ((currentRatio * daysRemaining) + 0.5);
+			if(predictedItems > 0){
+				isZero = false;
+			}
 			double weight = this.getCategoryWeight(cats, cat);
 			
 			Category newMinCat = new Category(cat, predictedItems, weight);
@@ -136,8 +144,13 @@ public class GradeTrendGraph {
 			tempMaxCourse.addCategory(newMaxCat);
 		}
 		
-		this.worstCaseGrade = (this.currentAverage + tempMinCourse.getCourseGrade()) / 2;
-		this.bestCaseGrade = (this.currentAverage + tempMaxCourse.getCourseGrade()) / 2;
+		if(isZero){
+			this.worstCaseGrade = 0;
+			this.bestCaseGrade = 100;
+		} else{
+			this.worstCaseGrade = (int) (((this.currentAverage + tempMinCourse.getCourseGrade()) / 2) +0.5);
+			this.bestCaseGrade = (int) (((this.currentAverage + tempMaxCourse.getCourseGrade()) / 2) +0.5);
+		}
 		
 	}
 

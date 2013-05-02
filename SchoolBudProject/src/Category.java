@@ -210,7 +210,10 @@ public class Category {
 	public double getTotalEarnedPoints() {
 		double earnedGrades = 0;
 		for (Item i : this.items) {
-			double earnedGrade = Double.parseDouble(i.getEarnedPoints());
+			double earnedGrade = 0;
+			if(!i.getEarnedPoints().equals("")){
+				earnedGrade = Double.parseDouble(i.getEarnedPoints());
+			}
 			earnedGrades += earnedGrade;
 		}
 		return earnedGrades;
@@ -224,7 +227,10 @@ public class Category {
 	public double getTotalPossiblePoints() {
 		double totalGrades = 0;
 		for (Item i : this.items) {
-			double totalGrade = Double.parseDouble(i.getTotalPoints());
+			double totalGrade = 100;
+			if(!i.getTotalPoints().equals("")){
+				totalGrade = Double.parseDouble(i.getTotalPoints());
+			}
 			totalGrades += totalGrade;
 		}
 		return totalGrades;
@@ -236,6 +242,9 @@ public class Category {
 	 * @return double percentage earned.
 	 */
 	public double getTotalPoints() {
+		if(this.items.size() == 0){
+			return 0;
+		}
 		double totalPoints = (this.getTotalEarnedPoints() / this
 				.getTotalPossiblePoints()) * 100;
 		return (Math.round(totalPoints * 100)) / 100.0;

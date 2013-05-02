@@ -192,6 +192,9 @@ public class Course {
 		double totalWeight = 0;
 		double totalGrade = 0;
 
+		if(this.categories.size() == 0){
+			return 0;
+		}
 		for (Category c : this.categories) {
 			totalWeight += c.getWeight();
 			totalGrade += (c.getTotalPoints() * c.getWeight());
