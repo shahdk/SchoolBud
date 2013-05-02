@@ -31,7 +31,7 @@ public class SchoolBudGUI extends JFrame{
         JMenuBar menubar = new SchoolBudGUIMenu(this, newContentPane);  
         setJMenuBar(menubar);
         
-        setTitle("SchoolBud");
+        setTitle("SchoolBud by ReverseOreo\u00a9");
         pack();
         setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);

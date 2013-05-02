@@ -1,6 +1,7 @@
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -28,6 +29,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 	private JMenu language;
 	private JMenu file;
 	private JMenu edit;
+	private JMenu view;
 	private Locale currentLocale;
 	private ResourceBundle messages;
 	private JMenuItem course;
@@ -42,10 +44,13 @@ public class SchoolBudGUIMenu extends JMenuBar {
 	private JMenuItem save;
 	private JMenuItem load;
 	private JMenuItem exit;
+	private JMenuItem trending;
+	private JMenuItem schedule;
 	private JFrame frame;
 	private QuarterMain main;
 	private SchoolBudGUIComponent component;
 	private final JFileChooser chooser;
+	private SchoolBudGUITable table;
 
 	public SchoolBudGUIMenu(JFrame frame, SchoolBudGUIComponent component) {
 		this.frame = frame;
@@ -64,6 +69,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 		this.language = new JMenu(this.messages.getString("language"));
 		this.file = new JMenu(this.messages.getString("file"));
 		this.edit = new JMenu(this.messages.getString("edit"));
+		this.view = new JMenu(this.messages.getString("view"));
 
 		this.course = new JMenuItem(this.messages.getString("course"));
 		this.course.addActionListener(new ActionListener() {
@@ -288,29 +294,11 @@ public class SchoolBudGUIMenu extends JMenuBar {
 			public void actionPerformed(ActionEvent event) {
 
 				JPanel myPanel = new JPanel();
+				String[] names = {"Grade", "Points"};
 
-				String[] columnNames = { "Item Name", "Course Name", "S",
-						"# of Years", "Options" };
+				table = new SchoolBudGUITable(names);
 
-				Object[][] data = {
-						{ "Kathy", "Smith", "Snowboarding", new Integer(5),
-								new Boolean(false) },
-						{ "John", "Doe", "Rowing", new Integer(3),
-								new Boolean(true) },
-						{ "Sue", "Black", "Knitting", new Integer(2),
-								new Boolean(false) },
-						{ "Jane", "White", "Speed reading", new Integer(20),
-								new Boolean(true) },
-						{ "Joe", "Brown", "Pool", new Integer(10),
-								new Boolean(false) } };
-
-				final JTable table = new JTable(data, columnNames);
-				table.setPreferredScrollableViewportSize(new Dimension(500, 300));
-				table.setFillsViewportHeight(true);
-				JScrollPane tableSP = new JScrollPane(table);
-				tableSP.setPreferredSize(new Dimension(500, 400));
-
-				myPanel.add(table);
+				myPanel.add(table.getJScrollPane());
 
 				int result = JOptionPane.showConfirmDialog(null, myPanel,
 						SchoolBudGUIMenu.this.messages.getString("editRubric"),
@@ -407,10 +395,50 @@ public class SchoolBudGUIMenu extends JMenuBar {
 		this.file.add(this.save);
 		this.file.add(this.load);
 		this.file.add(this.exit);
+		
+		this.trending = new JMenuItem(this.messages.getString("trending"));
+		this.trending.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				JPanel myPanel = new JPanel();
+
+				int result = JOptionPane
+						.showConfirmDialog(null, myPanel,
+								SchoolBudGUIMenu.this.messages
+										.getString("editQuarter"),
+								JOptionPane.OK_CANCEL_OPTION);
+				if (result == JOptionPane.OK_OPTION) {
+					//
+				}
+			}
+
+		});
+		
+		this.schedule = new JMenuItem(this.messages.getString("schedule"));
+		this.schedule.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				JPanel myPanel = new JPanel();
+
+				int result = JOptionPane
+						.showConfirmDialog(null, myPanel,
+								SchoolBudGUIMenu.this.messages
+										.getString("editQuarter"),
+								JOptionPane.OK_CANCEL_OPTION);
+				if (result == JOptionPane.OK_OPTION) {
+					//
+				}
+			}
+
+		});
+		
+		this.view.add(this.trending);
+		this.view.add(this.schedule);
 
 		add(this.file);
 		add(this.add);
 		add(this.edit);
+		add(this.view);
 		add(this.language);
 
 	}
@@ -440,6 +468,24 @@ public class SchoolBudGUIMenu extends JMenuBar {
 		this.save.setText(this.messages.getString("save"));
 		this.load.setText(this.messages.getString("load"));
 		this.exit.setText(this.messages.getString("exit"));
+		
+		this.view.setText(this.messages.getString("view"));
+		this.trending.setText(this.messages.getString("trending"));
+		this.schedule.setText(this.messages.getString("schedule"));
+		
+		translateHeadings();
+	}
+	
+	public void translateHeadings(){
+		ArrayList<String> headings = new ArrayList<String>();
+		headings.add(this.messages.getString("itemName"));
+		headings.add(this.messages.getString("earnedPoints"));
+		headings.add(this.messages.getString("totalPoints"));
+		headings.add(this.messages.getString("updateDate"));
+		headings.add(this.messages.getString("category"));
+		headings.add(this.messages.getString("remove"));
+		this.component.updateHeadings(headings);
+		
 	}
 
 }
