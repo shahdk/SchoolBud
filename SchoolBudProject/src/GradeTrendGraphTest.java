@@ -321,6 +321,31 @@ public class GradeTrendGraphTest {
 		assertEquals(25, graph.getWorstCaseGrade(), DELTA);
 		assertEquals(75, graph.getBestCaseGrade(), DELTA);
 	}
+	
+	@Test
+	public void testFindCategoryIndex() {
+		
+		ArrayList<Category> cats = new ArrayList<Category>();
+		
+		Category cat1 = new Category("tests", 0.5);
+		Category cat2 = new Category("homework", 0.3);
+		Category cat3 = new Category("quizzes", 0.2);
+		
+		Course course = new Course("math");
+		course.addCategory(cat1);
+		course.addCategory(cat2);
+		course.addCategory(cat3);
+		cats.add(cat1);
+		cats.add(cat2);
+		cats.add(cat3);
+		
+		GradeTrendGraph graph = new GradeTrendGraph(course, 4, 3);
+		
+		int i = graph.findCategoryIndex(cat2, cats);
+		
+		assertEquals("homework", cats.get(i).getName());
+		
+	}
 
 	public boolean compareItemLists(ArrayList<Item> list1, ArrayList<Item> list2) {
 
