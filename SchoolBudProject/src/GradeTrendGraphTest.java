@@ -1,5 +1,6 @@
 import static org.junit.Assert.*;
 
+import java.awt.event.ItemListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -144,9 +145,24 @@ public class GradeTrendGraphTest {
 	}
 
 	@Test
+	public void testInstantiationErrorThrownForNullCourse() {
+
+		boolean thrown = false;
+
+		try {
+			new GradeTrendGraph(null, 3, 3);
+		} catch (InstantiationError e) {
+			thrown = true;
+			assertEquals(e.getMessage(), "Must Enter Valid Course");
+		}
+
+		assertTrue(thrown);
+	}
+
+	@Test
 	public void testUpdateAndOrganizeItemListByDate() throws ParseException {
 		SimpleDateFormat dtFormat = new SimpleDateFormat("MM/dd/yyyy");
-		
+
 		String sDate = "02/25/2012";
 		Date startDate = dtFormat.parse(sDate);
 		String eDate = "09/25/2012";
@@ -155,7 +171,7 @@ public class GradeTrendGraphTest {
 		Course course1 = new Course("math");
 		course1.setStartDate(startDate);
 		course1.setEndDate(endDate);
-		
+
 		Category cat1 = new Category("tests", 20);
 		Category cat2 = new Category("hwk", 10);
 
@@ -204,6 +220,22 @@ public class GradeTrendGraphTest {
 		itemByDateList.add(item5);
 		assertTrue(this.compareItemLists(itemByDateList,
 				graph.getDateOrderedItemsList()));
+
+		// TEST 3 -- set Date Scope
+		String d = "08/26/2012";
+		Date date = dtFormat.parse(d);
+		graph.setStartDate(newDt4);
+		graph.setEndDate(date);
+		graph.updateAndOrganizeItemListByDate();
+		itemByDateList.remove(item3);
+		assertTrue(this.compareItemLists(itemByDateList,
+				graph.getDateOrderedItemsList()));
+
+		// TEST 4 -- set Date Scope For No results
+		graph.setStartDate(date);
+		graph.setEndDate(date);
+		graph.updateAndOrganizeItemListByDate();
+		assertEquals(0, graph.getDateOrderedItemsList().size());
 
 	}
 

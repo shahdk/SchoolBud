@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -58,7 +59,7 @@ public class GradeTrendGraph {
 		if (course == null) {
 			throw new InstantiationError("Must Enter Valid Course");
 		}
-		
+
 		this.classDifficulty_1_5 = classDifficulty_1_5;
 		this.futureWorkRate_neg5_pos5 = futureWorkRate_neg5_pos5;
 		this.course = course;
@@ -75,19 +76,26 @@ public class GradeTrendGraph {
 	// data points, STARTING at the actual current average as the initial fixed
 	// point
 	public void updateGraph() {
-
 		// update current average
 		this.currentAverage = this.course.getCourseGrade();
+		
+		//starting steepness factor and variation average
+		double steepnessFactor = 1;
+		double varAvg = this.currentAverage;
 
-		// update and sort item list by date
+
+		// update and sort item list by date and date scope
 		this.updateAndOrganizeItemListByDate();
 
-		// update item frequencies up to current date
+		// update item frequencies according to date scope
 		this.itemFrequencies = this.course.getItemFrequency(this.startDate,
 				this.endDate);
 
 		// take shorter half of item grades towards
 		// current date compared to average for trend adjustment
+		// by evaluating to a steepness factor adjustment
+		varAvg = this.getRecentGradeVariation();
+		
 
 		// take into account user given class difficulty to affect
 		// the steepness factor
@@ -106,6 +114,56 @@ public class GradeTrendGraph {
 		// point separation
 
 		// use updated trends to update PREDICTED best / worst / average grades
+
+	}
+
+	public int findCategoryIndex(Category c, ArrayList<Category> cats) {
+		int i = -1;
+		for (int j = 0; j < cats.size(); j++) {
+			if (cats.get(j).getName() == c.getName()
+					&& cats.get(j).getWeight() == c.getWeight()) {
+				i = j;
+			}
+		}
+		return i;
+	}
+
+	public double getRecentGradeVariation() {
+
+		int size = this.dateOrderedItemList.size();
+		int midIndex = (size / 2) + (size % 2);
+		List<Item> list = this.dateOrderedItemList.subList(midIndex, size);
+
+		// create new temp course to calculate weighted avg
+		Course courseTemp = new Course("temp");
+
+		// go through upper items date list
+		for (Item item : list) {
+
+			// got through current courses categories to find respective weight
+			for (Category cat : this.course.getCategories()) {
+
+				if (cat.getItemList().contains(item)) {
+
+					// check to see if category already exists
+					int index = this.findCategoryIndex(cat,
+							courseTemp.getCategories());
+					if (index >= 0) {
+						courseTemp.getCategories().get(index).addItem(item);
+					} else {
+						Category newCat = new Category(cat.getName(),
+								cat.getWeight());
+						newCat.addItem(item);
+						courseTemp.addCategory(newCat);
+					}
+
+					break;
+				}
+			}
+
+		}
+
+		return (courseTemp.getCourseGrade() + this.currentAverage) / 2;
 
 	}
 
@@ -220,7 +278,7 @@ public class GradeTrendGraph {
 			for (Item item : category.getItemList()) {
 
 				// check to make sure each item is within user given date scope
-				if (!(item.getUpdateDate().compareTo(this.startDate) < 0 && item
+				if (!(item.getUpdateDate().compareTo(this.startDate) < 0 || item
 						.getUpdateDate().compareTo(this.endDate) > 0)) {
 
 					// insert into item list by date
