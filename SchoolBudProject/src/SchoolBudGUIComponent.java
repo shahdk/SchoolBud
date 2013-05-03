@@ -1,5 +1,7 @@
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -23,8 +25,8 @@ import javax.swing.JTable;
 public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 
 	private JLabel picture;
-	private JComboBox quarterList, classList;
-	private JPanel comboPanel;
+	private JComboBox quarterList, classList, categoryList;
+	private JPanel comboPanel, quarterPanel, coursePanel, categoryPanel;
 	private ArrayList<Quarter> quarters;
 	private final int NUM_COLS = 6;
 	private SchoolBudGUITable table;
@@ -59,14 +61,45 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 				JComboBox box = (JComboBox) event.getSource();
 				String courseName = (String) box.getSelectedItem();
 				updateTable(courseName);
+				updateCategoryList(courseName);
 			}
 		});
+
+		this.categoryList = new JComboBox();
+		this.classList.setPrototypeDisplayValue("XXXXXXXXXX");
 
 		this.comboPanel = new JPanel();
 		this.comboPanel.setLayout(new BorderLayout());
 
-		this.comboPanel.add(this.quarterList, BorderLayout.NORTH);
-		this.comboPanel.add(this.classList, BorderLayout.CENTER);
+		this.quarterPanel = new JPanel();
+		this.quarterPanel.setLayout(new BorderLayout());
+
+		this.coursePanel = new JPanel();
+		this.coursePanel.setLayout(new BorderLayout());
+
+		this.categoryPanel = new JPanel();
+		this.categoryPanel.setLayout(new BorderLayout());
+
+		JLabel qt = new JLabel("Quarter");
+		JLabel cr = new JLabel("Course");
+		JLabel ct = new JLabel("Category");
+		Font f = new Font("Times New Roman", Font.BOLD, 17);
+		qt.setFont(f);
+		cr.setFont(f);
+		ct.setFont(f);
+
+		this.quarterPanel.add(qt, BorderLayout.NORTH);
+		this.quarterPanel.add(this.quarterList, BorderLayout.SOUTH);
+
+		this.coursePanel.add(cr, BorderLayout.NORTH);
+		this.coursePanel.add(this.classList, BorderLayout.SOUTH);
+
+		this.categoryPanel.add(ct, BorderLayout.NORTH);
+		this.categoryPanel.add(this.categoryList, BorderLayout.SOUTH);
+
+		this.comboPanel.add(this.quarterPanel, BorderLayout.NORTH);
+		this.comboPanel.add(this.coursePanel, BorderLayout.CENTER);
+		this.comboPanel.add(this.categoryPanel, BorderLayout.SOUTH);
 
 		add(this.comboPanel, BorderLayout.PAGE_START);
 		add(this.table.getJScrollPane(), BorderLayout.CENTER);
@@ -107,6 +140,25 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 		}
 	}
 
+	public void updateCategoryList(String name) {
+		for (Quarter current : this.quarters) {
+			if (current.getName().equals(this.getSelectedQuarter())) {
+				for (Course course : current.getCourseList()) {
+					if (course.getCourseName().equals(name)) {
+						String[] newCat = new String[course.getCategories()
+								.size()];
+						for (int i = 0; i < course.getCategories().size(); i++) {
+							newCat[i] = course.getCategories().get(i).getName();
+						}
+						this.categoryList.setModel(new DefaultComboBoxModel(
+								newCat));
+						return;
+					}
+				}
+			}
+		}
+	}
+
 	public void updateTable(String name) {
 		this.table.reset();
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -132,15 +184,15 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 							newItems[i] = info;
 						}
 
-						this.table.addItems(newItems, numItems);
+						this.table.addInitialItems(newItems, numItems);
 					}
-					this.table.setQuarters(quarters, getSelectedQuarter(), getSelectedCourse());
+					this.table.addEmptyRow();
+					this.table.setQuarters(quarters, getSelectedQuarter(),
+							getSelectedCourse());
 					return;
 				}
 			}
 		}
-
-		
 
 	}
 
@@ -163,6 +215,7 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 	public void addNewQuarter(ArrayList<Quarter> newQuarters) {
 		updateQuarters(newQuarters);
 		updateLabel(getSelectedQuarter());
+		updateCategoryList(this.getSelectedCourse());
 		updateTable(this.getSelectedCourse());
 	}
 

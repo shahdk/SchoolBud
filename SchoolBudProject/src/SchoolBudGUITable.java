@@ -1,31 +1,18 @@
-import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
-import javax.swing.AbstractAction;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.KeyStroke;
-import javax.swing.UIManager;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.*;
 
 /**
- * TODO Put here a description of what this class does.
+ * Put here a description of what this class does.
  * 
  * @author padillbt-1. Created May 1, 2013.
  */
@@ -37,11 +24,13 @@ public class SchoolBudGUITable {
 	private ArrayList<Quarter> quarters;
 	private String selectedQuarter;
 	private String selectedCourse;
+	private boolean newAdd = false;
+	private final int NUM_COLS = 6;
 
 	public SchoolBudGUITable(String[] names) {
 		this.columnNames = names;
 
-		Object[][] data = {};
+		Object[][] data = { { "", "", "", "", "", false } };
 
 		this.tableModel = new DefaultTableModel(data, this.columnNames);
 
@@ -49,7 +38,7 @@ public class SchoolBudGUITable {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public Class getColumnClass(int column) {
+			public Class<?> getColumnClass(int column) {
 				switch (column) {
 				case 0:
 				case 1:
@@ -71,80 +60,159 @@ public class SchoolBudGUITable {
 		this.table.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 
-				JTable target = (JTable) e.getSource();
-				int row = target.getSelectedRow();
-				int column = target.getSelectedColumn();
+				int row = table.getSelectedRow();
+				int column = table.getSelectedColumn();
 				if (column == 5) {
 					removeItem(row, column);
 				}
 			}
 
 		});
-		
+
 		TableCellListener tcl = new TableCellListener();
 		this.table.addPropertyChangeListener(tcl);
 	}
 
-	private class TableCellListener implements PropertyChangeListener{
+	private class TableCellListener implements PropertyChangeListener {
 
 		@Override
 		public void propertyChange(PropertyChangeEvent e) {
-			
-			if ("tableCellEditor".equals(e.getPropertyName()))
-			{
-				if (!table.isEditing()){
-					int row = table.getSelectedRow();
-					int col = table.getSelectedColumn();
-					for (Quarter current : quarters) {
-						if (current.getName().equals(selectedQuarter)) {
-							ArrayList<Course> currentCourses = current.getCourseList();
-							for (Course c : currentCourses) {
-								if (c.getCourseName().equals(selectedCourse)) {
-									String catName = (String) table.getValueAt(row, 4);
-									String itemName = (String) table
-											.getValueAt(row, 0);
 
-									for (int i = 0; i < c.getCategories().size(); i++) {
-										if (c.getCategories().get(i).getName()
-												.equals(catName)) {
-											for (int j = 0; j < c.getCategories().get(i)
-													.getItemList().size(); j++) {
-												if (c.getCategories().get(i).getItemList()
-														.get(j).getName().equals(itemName)) {
-													if(col == 0){
-														c.getCategories().get(i).getItemList().get(j).setName((String)table.getValueAt(row, col));
-													}else if(col == 1){
-														c.getCategories().get(i).getItemList().get(j).setEarnedPoints((String)table.getValueAt(row, col));
-													}else if(col == 2){
-														c.getCategories().get(i).getItemList().get(j).setTotalPoints((String)table.getValueAt(row, col));
-													}else if(col == 3){
-														try{
-															SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-															c.getCategories().get(i).getItemList().get(j).setUpdateDate(sdf.parse((String)table.getValueAt(row, col)));
-															c.getCategories().get(i).checkItemUpdateDate();
-															table.setValueAt(sdf.format(c.getCategories().get(i).getItemList().get(j).getUpdateDate()), row, col);
-															table.repaint();
-														}catch(Exception exp){
-															
-														}
-													}else if(col == 4){
-														c.getCategories().get(i).setName((String)table.getValueAt(row, col));
-													}
-													return;
-												}
-											}
-										}
-									}
+			if ("tableCellEditor".equals(e.getPropertyName())) {
+				int row = table.getSelectedRow();
+				int col = table.getSelectedColumn();
+
+				if (col < 5) {
+					if (!table.isEditing()) {
+						if (newAdd) {
+							Object[] data = new Object[NUM_COLS];
+							data[0] = table.getValueAt(row, 0);
+							data[1] = table.getValueAt(row, 1);
+							data[2] = table.getValueAt(row, 2);
+							data[3] = table.getValueAt(row, 3);
+							data[4] = table.getValueAt(row, 4);
+							data[5] = false;
+							if (!data[0].equals("") && !data[3].equals("")
+									&& !data[4].equals("")) {
+								addItem(data, row);
+								addEmptyRow();
+							}
+						} else {
+							if (!table.getValueAt(row, col).equals(""))
+								editItems(row, col);
+							newAdd = true;
+						}
+					} else {
+						if (row >= 0 && col >= 0) {
+							if (table.getValueAt(row, 0).equals("")) {
+								newAdd = true;
+							} else {
+								if (table.getValueAt(row, 3).equals("")) {
+									newAdd = true;
+								} else if (table.getValueAt(row, 4).equals("")) {
+									newAdd = true;
+								} else {
+									newAdd = false;
 								}
 							}
-
 						}
 					}
 				}
 			}
 		}
-		
 	}
+
+	public void editItems(int row, int col) {
+		for (Quarter current : quarters) {
+			if (current.getName().equals(selectedQuarter)) {
+				ArrayList<Course> currentCourses = current.getCourseList();
+				for (Course c : currentCourses) {
+					if (c.getCourseName().equals(selectedCourse)) {
+						String catName = (String) table.getValueAt(row, 4);
+						String itemName = (String) table.getValueAt(row, 0);
+
+						for (int i = 0; i < c.getCategories().size(); i++) {
+							if (c.getCategories().get(i).getName()
+									.equals(catName)) {
+								for (int j = 0; j < c.getCategories().get(i)
+										.getItemList().size(); j++) {
+									if (c.getCategories().get(i).getItemList()
+											.get(j).getName().equals(itemName)) {
+										if (col == 0) {
+											c.getCategories()
+													.get(i)
+													.getItemList()
+													.get(j)
+													.setName(
+															(String) table
+																	.getValueAt(
+																			row,
+																			col));
+										} else if (col == 1) {
+											c.getCategories()
+													.get(i)
+													.getItemList()
+													.get(j)
+													.setEarnedPoints(
+															(String) table
+																	.getValueAt(
+																			row,
+																			col));
+										} else if (col == 2) {
+											c.getCategories()
+													.get(i)
+													.getItemList()
+													.get(j)
+													.setTotalPoints(
+															(String) table
+																	.getValueAt(
+																			row,
+																			col));
+										} else if (col == 3) {
+											try {
+												SimpleDateFormat sdf = new SimpleDateFormat(
+														"MM/dd/yyyy");
+												c.getCategories()
+														.get(i)
+														.getItemList()
+														.get(j)
+														.setUpdateDate(
+																sdf.parse((String) table
+																		.getValueAt(
+																				row,
+																				col)));
+												c.getCategories().get(i)
+														.checkItemUpdateDate();
+												table.setValueAt(sdf.format(c
+														.getCategories().get(i)
+														.getItemList().get(j)
+														.getUpdateDate()), row,
+														col);
+												table.repaint();
+											} catch (Exception exp) {
+
+											}
+										} else if (col == 4) {
+											c.getCategories()
+													.get(i)
+													.setName(
+															(String) table
+																	.getValueAt(
+																			row,
+																			col));
+										}
+										return;
+									}
+								}
+							}
+						}
+					}
+				}
+
+			}
+		}
+	}
+
 	public void setQuarters(ArrayList<Quarter> quarters, String qt,
 			String course) {
 		this.quarters = quarters;
@@ -157,6 +225,7 @@ public class SchoolBudGUITable {
 	}
 
 	public void removeItem(int row, int column) {
+
 		for (Quarter current : quarters) {
 			if (current.getName().equals(selectedQuarter)) {
 				ArrayList<Course> currentCourses = current.getCourseList();
@@ -176,6 +245,7 @@ public class SchoolBudGUITable {
 											.get(j).getName().equals(itemName)) {
 										c.getCategories().get(i)
 												.removeItem(itemName);
+
 										this.tableModel.removeRow(row);
 										this.table.setModel(tableModel);
 										this.table.repaint();
@@ -186,7 +256,6 @@ public class SchoolBudGUITable {
 						}
 					}
 				}
-
 			}
 		}
 	}
@@ -199,7 +268,105 @@ public class SchoolBudGUITable {
 		}
 	}
 
-	public void addItems(Object[][] names, int numItems) {
+	public void addEmptyRow() {
+		Object[] emptyRow = { "", "", "", "", "", false };
+		this.tableModel.addRow(emptyRow);
+		this.table.setModel(this.tableModel);
+		this.table.repaint();
+	}
+
+	public void addItem(Object[] item, int row) {
+		for (Quarter current : quarters) {
+			if (current.getName().equals(selectedQuarter)) {
+				ArrayList<Course> currentCourses = current.getCourseList();
+
+				for (Course c : currentCourses) {
+					if (c.getCourseName().equals(selectedCourse)) {
+						String catName = (String) this.table.getValueAt(row, 4);
+						for (int i = 0; i < c.getCategories().size(); i++) {
+							if (c.getCategories().get(i).getName()
+									.equals(catName)) {
+								String itemName = (String) item[0];
+								String earnedPoints = (String) item[1];
+								String totalPoints = (String) item[2];
+								String updateDate = (String) item[3];
+								SimpleDateFormat sdf = new SimpleDateFormat(
+										"MM/dd/yyyy");
+								try {
+									Date date = sdf.parse(updateDate);
+									if (earnedPoints.equals("")
+											&& totalPoints.equals("")) {
+										Item newItem = new Item(itemName, date);
+										c.getCategories().get(i)
+												.addItem(newItem);
+										c.getCategories().get(i)
+												.checkItemUpdateDate();
+										table.setValueAt(
+												sdf.format(c
+														.getCategories()
+														.get(i)
+														.getItemList()
+														.get(c.getCategories()
+																.get(i)
+																.getItemList()
+																.size() - 1)
+														.getUpdateDate()), row,
+												3);
+									} else if (earnedPoints.equals("")
+											&& !totalPoints.equals("")) {
+										Item newItem = new Item(itemName,
+												totalPoints, date);
+										c.getCategories().get(i)
+												.addItem(newItem);
+										c.getCategories().get(i)
+												.checkItemUpdateDate();
+										table.setValueAt(
+												sdf.format(c
+														.getCategories()
+														.get(i)
+														.getItemList()
+														.get(c.getCategories()
+																.get(i)
+																.getItemList()
+																.size() - 1)
+														.getUpdateDate()), row,
+												3);
+									} else {
+										Item newItem = new Item(itemName,
+												earnedPoints, totalPoints, date);
+										c.getCategories().get(i)
+												.addItem(newItem);
+										c.getCategories().get(i)
+												.checkItemUpdateDate();
+										table.setValueAt(
+												sdf.format(c
+														.getCategories()
+														.get(i)
+														.getItemList()
+														.get(c.getCategories()
+																.get(i)
+																.getItemList()
+																.size() - 1)
+														.getUpdateDate()), row,
+												3);
+									}
+								} catch (Exception exp) {
+
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	public void addInitialItems(Object[][] names, int numItems) {
+
+		if (((String) this.tableModel.getValueAt(0, 0)).equals("")) {
+			this.tableModel.removeRow(0);
+		}
+
 		for (int i = 0; i < numItems; i++) {
 			this.tableModel.addRow(names[i]);
 		}
@@ -208,85 +375,12 @@ public class SchoolBudGUITable {
 	}
 
 	public void reset() {
-		Object[][] data = {};
+		Object[][] data = { { "", "", "", "", "", false } };
 		this.tableModel = new DefaultTableModel(data, this.columnNames);
 		this.table.setModel(this.tableModel);
 	}
 
 	public JTable getTable() {
 		return this.table;
-	}
-
-	class ButtonRenderer extends JButton implements TableCellRenderer {
-
-		public ButtonRenderer() {
-			setOpaque(true);
-		}
-
-		public Component getTableCellRendererComponent(JTable table,
-				Object value, boolean isSelected, boolean hasFocus, int row,
-				int column) {
-			if (isSelected) {
-				setForeground(table.getSelectionForeground());
-				setBackground(table.getSelectionBackground());
-			} else {
-				setForeground(table.getForeground());
-				setBackground(UIManager.getColor("Button.background"));
-			}
-			setText("Remove");
-			return this;
-		}
-	}
-
-	/**
-	 * @version 1.0 11/09/98
-	 */
-
-	class ButtonEditor extends DefaultCellEditor {
-		protected JButton button;
-
-		private String label;
-
-		private boolean isPushed;
-
-		public ButtonEditor(JCheckBox checkBox) {
-			super(checkBox);
-			button = new JButton();
-			button.setOpaque(true);
-			button.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					fireEditingStopped();
-				}
-			});
-		}
-
-		public Component getTableCellEditorComponent(JTable table,
-				Object value, boolean isSelected, int row, int column) {
-			if (isSelected) {
-				button.setForeground(table.getSelectionForeground());
-				button.setBackground(table.getSelectionBackground());
-			} else {
-				button.setForeground(table.getForeground());
-				button.setBackground(table.getBackground());
-			}
-			label = "Remove";
-			button.setText(label);
-			isPushed = true;
-			return button;
-		}
-
-		public Object getCellEditorValue() {
-			isPushed = false;
-			return new String(label);
-		}
-
-		public boolean stopCellEditing() {
-			isPushed = false;
-			return super.stopCellEditing();
-		}
-
-		protected void fireEditingStopped() {
-			super.fireEditingStopped();
-		}
 	}
 }
