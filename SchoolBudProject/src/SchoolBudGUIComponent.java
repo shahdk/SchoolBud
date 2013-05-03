@@ -2,10 +2,12 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,7 +24,7 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 	private JComboBox quarterList, classList;
 	private JPanel comboPanel;
 	private ArrayList<Quarter> quarters;
-
+	private final int NUM_COLS = 6;
 	private SchoolBudGUITable table;
 
 	public SchoolBudGUIComponent() {
@@ -31,6 +33,9 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 
 		String[] quarterStrings = { "----" };
 
+		String[] names = {"Item Name", "Earned Points", "Total Points", "Update Date", "Category", "Remove"};
+		this.table = new SchoolBudGUITable(names);
+		
 		this.quarterList = new JComboBox(quarterStrings);
 		this.quarterList.setSelectedIndex(0);
 		this.quarterList.addActionListener(new ActionListener() {
@@ -45,9 +50,15 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 
 		this.classList = new JComboBox();
 		this.classList.setPrototypeDisplayValue("XXXXXXXXXX");
+		this.classList.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				JComboBox box = (JComboBox) event.getSource();
+				String courseName = (String) box.getSelectedItem();
+				updateTable(courseName);
+			}
+		});
 
-		String[] names = {"Item Name", "Earned Points", "Total Points", "Update Date", "Category", "Remove"};
-		this.table = new SchoolBudGUITable(names);
 		
 		this.comboPanel = new JPanel();
 		this.comboPanel.setLayout(new BorderLayout());
@@ -93,6 +104,37 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 			}
 		}
 	}
+	
+	public void updateTable(String name){
+		this.table.reset();
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		for(Quarter current: this.quarters){
+			for(Course course: current.getCourseList()){
+				if(course.getCourseName().equals(name)){
+					for(Category cat: course.getCategories()){
+						int numItems = cat.getItemList().size();
+						
+						Object[][] newItems = new Object[numItems][this.NUM_COLS];
+						
+						for (int i = 0; i < numItems; i++) {
+							
+							Object[] info = new Object[this.NUM_COLS];
+							info[0] = (cat.getItemList().get(i).getName());
+							info[1] = cat.getItemList().get(i).getEarnedPoints();
+							info[2] = cat.getItemList().get(i).getTotalPoints();
+							info[3] = sdf.format(cat.getItemList().get(i).getUpdateDate());
+							info[4] = cat.getName();
+							info[5] = false;
+							newItems[i] = info;
+						}
+						
+						this.table.addItems(newItems, numItems);
+					}
+					return;
+				}
+			}
+		}
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
@@ -113,6 +155,7 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 	public void addNewQuarter(ArrayList<Quarter> newQuarters) {
 		updateQuarters(newQuarters);
 		updateLabel(getSelectedQuarter());
+		updateTable(this.getSelectedCourse());
 	}
 
 	public void addNewCourse(Course newCourse) {
