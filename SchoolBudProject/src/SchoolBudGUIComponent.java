@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 
 	private JLabel picture;
 	private JComboBox quarterList, classList;
+	private JPanel comboPanel;
 	private ArrayList<Quarter> quarters;
 
 	private SchoolBudGUITable table;
@@ -47,11 +49,17 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 		String[] names = {"Item Name", "Earned Points", "Total Points", "Update Date", "Category", "Remove"};
 		this.table = new SchoolBudGUITable(names);
 		
-		add(this.quarterList, BorderLayout.PAGE_START);
-		add(this.classList, BorderLayout.CENTER);
-		add(this.table.getJScrollPane(), BorderLayout.PAGE_END);
+		this.comboPanel = new JPanel();
+		this.comboPanel.setLayout(new BorderLayout());
+		
+		this.comboPanel.add(this.quarterList, BorderLayout.NORTH);
+		this.comboPanel.add(this.classList, BorderLayout.CENTER);
+		
+		add(this.comboPanel, BorderLayout.PAGE_START);
+		add(this.table.getJScrollPane(), BorderLayout.CENTER);
+		this.classList.setSize(this.quarterList.getSize());
 		setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-
+		repaint();
 	}
 
 	public void updateQuarters(ArrayList<Quarter> updatedQuarters) {
