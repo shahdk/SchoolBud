@@ -346,6 +346,64 @@ public class GradeTrendGraphTest {
 		assertEquals("homework", cats.get(i).getName());
 		
 	}
+	
+	
+	@Test
+	public void testGetRecentGradeVariation() throws ParseException {
+		
+		SimpleDateFormat dtFormat = new SimpleDateFormat("MM/dd/yyyy");
+
+		String newDate1 = "04/08/2013";
+		Date newDt1 = dtFormat.parse(newDate1);
+
+		String newDate2 = "04/28/2013";
+		Date newDt2 = dtFormat.parse(newDate2);
+
+		String newDate3 = "04/18/2013";
+		Date newDt3 = dtFormat.parse(newDate3);
+
+		Course course = new Course("Temp", 4.0, newDt1, newDt2);
+		Category cat = new Category("HW", 40);
+		Category cat2 = new Category("TEST", 60);
+
+		String[] date = { "4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013",
+				"4/12/2013", "4/13/2013", "4/14/2013" };
+		int count = 0;
+		for (int i = 0; i < 10; i++) {
+			if (count > 6) {
+				count = 0;
+			}
+			Item it = new Item("HW" + i, dtFormat.parse(date[count]));
+			it.setEarnedPoints(i * 8 + count + "");
+			it.setTotalPoints("100");
+			cat.addItem(it);
+			count++;
+		}
+		
+		count = 3;
+		for (int i = 5; i <= 9; i++) {
+			if (count > 6) {
+				count = 3;
+			}
+			Item it = new Item("TEST" + i, dtFormat.parse(date[count]));
+			it.setEarnedPoints((i * 9) + count + "");
+			it.setTotalPoints("100");
+			cat2.addItem(it);
+			count++;
+		}
+
+		course.addCategory(cat);
+		course.addCategory(cat2);
+
+		GradeTrendGraph graph = new GradeTrendGraph(course, 2, 5);
+		graph.setStartDate(newDt1);
+		graph.setEndDate(newDt3);
+		graph.updateGraph();
+
+		assertEquals(55.68, course.getCourseGrade(), DELTA);
+		assertEquals(56.1, graph.getRecentGradeVariation(), DELTA);
+		
+	}
 
 	public boolean compareItemLists(ArrayList<Item> list1, ArrayList<Item> list2) {
 

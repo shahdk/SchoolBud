@@ -132,8 +132,20 @@ public class GradeTrendGraph {
 
 		int size = this.dateOrderedItemList.size();
 		int midIndex = (size / 2) + (size % 2);
+		
+		// adjustMidIndex to include all grades from last overlapping day
+		while (midIndex > 0
+				&& this.dateOrderedItemList
+						.get(midIndex)
+						.getUpdateDate()
+						.equals(this.dateOrderedItemList.get(midIndex - 1)
+								.getUpdateDate())) {
+			midIndex--;
+		}
+		
+		
 		List<Item> list = this.dateOrderedItemList.subList(midIndex, size);
-
+		
 		// create new temp course to calculate weighted avg
 		Course courseTemp = new Course("temp");
 
