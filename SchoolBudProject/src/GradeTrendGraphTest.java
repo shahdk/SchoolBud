@@ -92,7 +92,8 @@ public class GradeTrendGraphTest {
 	}
 
 	@Test
-	public void testAllUserEnteredVariablesGettersAndSetters() {
+	public void testAllUserEnteredVariablesGettersAndSetters()
+			throws ParseException {
 
 		GradeTrendGraph graph = new GradeTrendGraph(new Course("math"), 1, 5);
 
@@ -100,6 +101,14 @@ public class GradeTrendGraphTest {
 		assertEquals(1, graph.getClassDifficulty_1_5());
 		assertEquals(5, graph.getFutureWorkRate_neg5_pos5());
 		assertEquals("math", graph.getCourse().getCourseName());
+
+		SimpleDateFormat dtFormat = new SimpleDateFormat("MM/dd/yyyy");
+		String sDate = "02/25/2012";
+		Date startDate = dtFormat.parse(sDate);
+		String eDate = "09/25/2012";
+		Date endDate = dtFormat.parse(eDate);
+		graph.setStartDate(startDate);
+		graph.setEndDate(endDate);
 
 		// test setters
 		graph.setClassDifficulty_1_5(3);
@@ -109,6 +118,10 @@ public class GradeTrendGraphTest {
 		assertEquals("science", graph.getCourse().getCourseName());
 		assertEquals(3, graph.getClassDifficulty_1_5());
 		assertEquals(-3, graph.getFutureWorkRate_neg5_pos5());
+
+		// Test setters - getters for start and end date scope
+		assertEquals(graph.getStartDate(), startDate);
+		assertEquals(graph.getEndDate(), endDate);
 
 	}
 
@@ -321,16 +334,16 @@ public class GradeTrendGraphTest {
 		assertEquals(25, graph.getWorstCaseGrade(), DELTA);
 		assertEquals(75, graph.getBestCaseGrade(), DELTA);
 	}
-	
+
 	@Test
 	public void testFindCategoryIndex() {
-		
+
 		ArrayList<Category> cats = new ArrayList<Category>();
-		
+
 		Category cat1 = new Category("tests", 0.5);
 		Category cat2 = new Category("homework", 0.3);
 		Category cat3 = new Category("quizzes", 0.2);
-		
+
 		Course course = new Course("math");
 		course.addCategory(cat1);
 		course.addCategory(cat2);
@@ -338,19 +351,18 @@ public class GradeTrendGraphTest {
 		cats.add(cat1);
 		cats.add(cat2);
 		cats.add(cat3);
-		
+
 		GradeTrendGraph graph = new GradeTrendGraph(course, 4, 3);
-		
+
 		int i = graph.findCategoryIndex(cat2, cats);
-		
+
 		assertEquals("homework", cats.get(i).getName());
-		
+
 	}
-	
-	
+
 	@Test
 	public void testGetRecentGradeVariation() throws ParseException {
-		
+
 		SimpleDateFormat dtFormat = new SimpleDateFormat("MM/dd/yyyy");
 
 		String newDate1 = "04/08/2013";
@@ -379,7 +391,7 @@ public class GradeTrendGraphTest {
 			cat.addItem(it);
 			count++;
 		}
-		
+
 		count = 3;
 		for (int i = 5; i <= 9; i++) {
 			if (count > 6) {
@@ -402,7 +414,41 @@ public class GradeTrendGraphTest {
 
 		assertEquals(55.68, course.getCourseGrade(), DELTA);
 		assertEquals(56.1, graph.getRecentGradeVariation(), DELTA);
-		
+
+	}
+
+	@Test
+	public void testGetPercentChangeValueFutureWorkRate() {
+
+		// test pos
+		double val = GradeTrendGraph.getPercentChangeValue(0, 3);
+		assertEquals(1.15, val, DELTA);
+
+		// test neg
+		val = GradeTrendGraph.getPercentChangeValue(0, -5);
+		assertEquals(.25, val, DELTA);
+
+		// test nom
+		val = GradeTrendGraph.getPercentChangeValue(0, 0);
+		assertEquals(1, val, DELTA);
+
+	}
+	
+	@Test
+	public void testGetPercentChangeValueClassDifficulty() {
+
+		// test above - easy
+		double val = GradeTrendGraph.getPercentChangeValue(3, 5);
+		assertEquals(1.1, val, DELTA);
+
+		// test below - hard
+		val = GradeTrendGraph.getPercentChangeValue(3, 1);
+		assertEquals(0.1, val, DELTA);
+
+		// test nom
+		val = GradeTrendGraph.getPercentChangeValue(3, 3);
+		assertEquals(1, val, DELTA);
+
 	}
 
 	public boolean compareItemLists(ArrayList<Item> list1, ArrayList<Item> list2) {

@@ -45,6 +45,7 @@ public class GradeTrendGraph {
 
 		// check for valid parameter entries
 		// check class difficulty between 1 and 5
+		//5  easiest === 1 hardest
 		if (!(classDifficulty_1_5 <= 5 && classDifficulty_1_5 >= 1)) {
 			throw new InstantiationError(
 					"Class Difficulty must be and integer 1 to 5");
@@ -99,6 +100,7 @@ public class GradeTrendGraph {
 
 		// take into account user given class difficulty to affect
 		// the steepness factor
+		
 
 		// take into account user given future work rate to affect
 		// the steepness factor
@@ -116,6 +118,22 @@ public class GradeTrendGraph {
 		// use updated trends to update PREDICTED best / worst / average grades
 
 	}
+	
+	public static double getPercentChangeValue(int midPoint, int value) {
+		double change = 1;
+		
+		//can influence grade up to 25% + or -
+		double diffVal = Math.abs(midPoint - value) * 0.05;
+		
+		if (value < midPoint) {
+			change = diffVal;
+		}
+		else {
+			change +=  diffVal;
+		}
+		return change;
+	}
+	
 
 	public int findCategoryIndex(Category c, ArrayList<Category> cats) {
 		int i = -1;
@@ -234,12 +252,14 @@ public class GradeTrendGraph {
 	}
 
 	public double getCategoryWeight(ArrayList<Category> cats, String cat) {
+		double weight = 0;
 		for (Category c : cats) {
 			if (c.getName().equals(cat)) {
-				return c.getWeight();
+				weight =  c.getWeight();
+				break;
 			}
 		}
-		return 0;
+		return weight;
 	}
 
 	// Recursively find place to insert item
