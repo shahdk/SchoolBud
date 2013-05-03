@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
-
 /**
  * 
  */
@@ -28,6 +27,7 @@ public class GradeTrendGraph {
 	private ArrayList<Item> dateOrderedItemList;
 	private HashMap<String, Integer> itemFrequencies;
 	private Date currentDate = new Date();
+	private Date testTurrentDate = new Date();
 
 	// Evaluated Trends (list of points)
 	// (X Y) points purely for graphing
@@ -81,7 +81,13 @@ public class GradeTrendGraph {
 	public void updateGraph() {
 
 		// update current date
-		this.currentDate = new Date();
+		if (this.testTurrentDate == null) {
+			this.currentDate = new Date();
+		}
+		else {
+			this.currentDate = this.testTurrentDate;
+		}
+		
 
 		// update current average
 		this.currentAverage = this.course.getCourseGrade();
@@ -264,17 +270,22 @@ public class GradeTrendGraph {
 
 		for (String cat : categories) {
 			int freq = this.itemFrequencies.get(cat);
-			double currentRatio = freq / daysPassed;
+			double currentRatio = (freq + 0.0) / daysPassed;
 			int predictedItems = (int) ((currentRatio * daysRemaining) + 0.5);
 			if (predictedItems > 0) {
 				isZero = false;
 			}
 			double weight = this.getCategoryWeight(cats, cat);
+			ArrayList<Item> currItems = this.getCategoryItems(cats, cat);
 
 			Category newMinCat = new Category(cat, predictedItems, weight);
 			for (int i = 0; i < newMinCat.getItemList().size(); i++) {
 				newMinCat.getItemList().get(i).setEarnedPoints("0");
 				newMinCat.getItemList().get(i).setTotalPoints("100");
+			}
+			for (Item i : currItems) {
+				i.setName(i.getName() + "temppppp");
+				newMinCat.addItem(i);
 			}
 			tempMinCourse.addCategory(newMinCat);
 
@@ -283,17 +294,19 @@ public class GradeTrendGraph {
 				newMaxCat.getItemList().get(i).setEarnedPoints("100");
 				newMaxCat.getItemList().get(i).setTotalPoints("100");
 			}
+			for (Item i : currItems) {
+				newMaxCat.addItem(i);
+			}
 			tempMaxCourse.addCategory(newMaxCat);
+
 		}
 
 		if (isZero) {
 			this.worstCaseGrade = 0;
 			this.bestCaseGrade = 100;
 		} else {
-			this.worstCaseGrade = (int) (((this.currentAverage + tempMinCourse
-					.getCourseGrade()) / 2) + 0.5);
-			this.bestCaseGrade = (int) (((this.currentAverage + tempMaxCourse
-					.getCourseGrade()) / 2) + 0.5);
+			this.worstCaseGrade = (int) (tempMinCourse.getCourseGrade() + 0.5);
+			this.bestCaseGrade = (int) (tempMaxCourse.getCourseGrade() + 0.5);
 		}
 
 	}
@@ -368,6 +381,15 @@ public class GradeTrendGraph {
 		}
 
 	}
+	
+	public ArrayList<Item> getCategoryItems(ArrayList<Category> cats, String cat){
+		for(Category c: cats){
+			if(c.getName().equals(cat)){
+				return c.getItemList();
+			}
+		}
+		return new ArrayList<Item>();
+	}
 
 	/**
 	 * @return the classDifficulty_1_5
@@ -426,7 +448,7 @@ public class GradeTrendGraph {
 	 * @return the endDate
 	 */
 	public Date getEndDate() {
-		return endDate;
+		return this.endDate;
 	}
 
 	/**
@@ -441,7 +463,7 @@ public class GradeTrendGraph {
 	 * @return the startDate
 	 */
 	public Date getStartDate() {
-		return startDate;
+		return this.startDate;
 	}
 
 	/**
@@ -479,6 +501,34 @@ public class GradeTrendGraph {
 	 */
 	public ArrayList<DataPoint> getGradePredictionCurvePoints() {
 		return gradePredictionCurvePoints;
+	}
+
+	/**
+	 * @return the predictedBestCaseGrade
+	 */
+	public double getPredictedBestCaseGrade() {
+		return this.predictedBestCaseGrade;
+	}
+
+	/**
+	 * @return the predictedWorstCaseGrade
+	 */
+	public double getPredictedWorstCaseGrade() {
+		return this.predictedWorstCaseGrade;
+	}
+
+	/**
+	 * @return the predictedGrade
+	 */
+	public double getPredictedGrade() {
+		return this.predictedGrade;
+	}
+	
+	/**
+	 * Sets the current date, for test purposes
+	 */
+	public void setTestCurrentDate(Date date) {
+		this.testTurrentDate = date;
 	}
 
 }
