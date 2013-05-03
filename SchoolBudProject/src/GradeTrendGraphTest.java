@@ -1,6 +1,5 @@
 import static org.junit.Assert.*;
 
-import java.awt.event.ItemListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -79,15 +78,15 @@ public class GradeTrendGraphTest {
 		DataPoint point = new DataPoint(5, 8);
 
 		// test getters
-		assertEquals(5, point.getX());
-		assertEquals(8, point.getY());
+		assertEquals(5, point.getX(), DELTA);
+		assertEquals(8, point.getY(), DELTA);
 
 		// test setters
 		point.setX(6);
 		point.setY(0);
 
-		assertEquals(6, point.getX());
-		assertEquals(0, point.getY());
+		assertEquals(6, point.getX(), DELTA);
+		assertEquals(0, point.getY(), DELTA);
 
 	}
 
@@ -418,6 +417,38 @@ public class GradeTrendGraphTest {
 	}
 
 	@Test
+	public void testGetPercenDaysRemaining() throws ParseException {
+		SimpleDateFormat dtFormat = new SimpleDateFormat("MM/dd/yyyy");
+
+		String newDate2 = "04/20/2013";
+		Date cur = dtFormat.parse(newDate2);
+
+		String newDate3 = "04/28/2013";
+		Date end = dtFormat.parse(newDate3);
+
+		assertEquals(GradeTrendGraph.getPercenDaysRemaining(cur, end, 20), 0.4,
+				DELTA);
+
+	}
+
+	@Test
+	public void testGetDateDiffDays() throws ParseException {
+		SimpleDateFormat dtFormat = new SimpleDateFormat("MM/dd/yyyy");
+
+		String newDate1 = "04/08/2013";
+		Date newDt1 = dtFormat.parse(newDate1);
+
+		String newDate2 = "04/28/2013";
+		Date newDt2 = dtFormat.parse(newDate2);
+
+		String newDate3 = "05/18/2013";
+		Date newDt3 = dtFormat.parse(newDate3);
+
+		assertEquals(GradeTrendGraph.getDateDiffDays(newDt1, newDt2), 20);
+		assertEquals(GradeTrendGraph.getDateDiffDays(newDt1, newDt3), 40);
+	}
+
+	@Test
 	public void testGetPercentChangeValueFutureWorkRate() {
 
 		// test pos
@@ -433,7 +464,7 @@ public class GradeTrendGraphTest {
 		assertEquals(1, val, DELTA);
 
 	}
-	
+
 	@Test
 	public void testGetPercentChangeValueClassDifficulty() {
 

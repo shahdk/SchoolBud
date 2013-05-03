@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
+
 /**
  * 
  */
@@ -26,6 +27,7 @@ public class GradeTrendGraph {
 	private double predictedWorstCaseGrade;
 	private ArrayList<Item> dateOrderedItemList;
 	private HashMap<String, Integer> itemFrequencies;
+	private Date currentDate = new Date();
 
 	// Evaluated Trends (list of points)
 	// (X Y) points purely for graphing
@@ -45,7 +47,7 @@ public class GradeTrendGraph {
 
 		// check for valid parameter entries
 		// check class difficulty between 1 and 5
-		//5  easiest === 1 hardest
+		// 5 easiest === 1 hardest
 		if (!(classDifficulty_1_5 <= 5 && classDifficulty_1_5 >= 1)) {
 			throw new InstantiationError(
 					"Class Difficulty must be and integer 1 to 5");
@@ -77,13 +79,15 @@ public class GradeTrendGraph {
 	// data points, STARTING at the actual current average as the initial fixed
 	// point
 	public void updateGraph() {
+
+		// update current date
+		this.currentDate = new Date();
+
 		// update current average
 		this.currentAverage = this.course.getCourseGrade();
-		
-		//starting steepness factor and variation average
-		double steepnessFactor = 1;
-		double varAvg = this.currentAverage;
 
+		// starting variation average
+		double varAvg = this.currentAverage;
 
 		// update and sort item list by date and date scope
 		this.updateAndOrganizeItemListByDate();
@@ -96,44 +100,88 @@ public class GradeTrendGraph {
 		// current date compared to average for trend adjustment
 		// by evaluating to a steepness factor adjustment
 		varAvg = this.getRecentGradeVariation();
-		
 
 		// take into account user given class difficulty to affect
 		// the steepness factor
-		
+		varAvg *= GradeTrendGraph.getPercentChangeValue(3,
+				this.classDifficulty_1_5);
 
 		// take into account user given future work rate to affect
 		// the steepness factor
+		varAvg *= GradeTrendGraph.getPercentChangeValue(0,
+				this.futureWorkRate_neg5_pos5);
 
 		// use item frequencies to predict max / min variations
 		// for POSSIBLE EXTREMES for best / worst / average grade cases
 		this.updateExtremeGrades();
+
+		// Take into account time remaining for flexibility of curve
+		double percentDaysRemaining = GradeTrendGraph.getPercenDaysRemaining(
+				this.currentDate, this.endDate,
+				GradeTrendGraph.getDateDiffDays(this.startDate, this.endDate));
+		double avgChange = varAvg - this.currentAverage;
+		// find percent average change to keep based off of remaining time
+		// disregard at > 50% time left
+		if (percentDaysRemaining < 0.5) {
+			avgChange *= percentDaysRemaining;
+		}
+		// add the final calculated change to the original average and set as
+		// nominal grade prediction
+		this.predictedGrade = this.currentAverage + avgChange;
+
+		// use updated nominal prediction to update PREDICTED best / worst
+		this.predictedBestCaseGrade = (this.predictedGrade
+				+ this.currentAverage + this.bestCaseGrade) / 3;
+		this.predictedWorstCaseGrade = (this.predictedGrade
+				+ this.currentAverage + this.worstCaseGrade) / 3;
 
 		// Update trends and create their respective data points
 		// ---Data points X and Y are affected by an overall steepness factor
 		// (determined by ALL of these calculated and given factors)
 		// which will be used to determine the rise / run variations of each
 		// point separation
-
-		// use updated trends to update PREDICTED best / worst / average grades
+		this.gradePredictionCurvePoints = this
+				.makeDataPointsFromPreditionGrade(this.predictedGrade);
+		this.bestGradePredictionCurvePoints = this
+				.makeDataPointsFromPreditionGrade(this.predictedBestCaseGrade);
+		this.worstGradePredictionCurvePoints = this
+				.makeDataPointsFromPreditionGrade(this.predictedWorstCaseGrade);
 
 	}
-	
+
+	public ArrayList<DataPoint> makeDataPointsFromPreditionGrade(double grade) {
+		ArrayList<DataPoint> points = new ArrayList<DataPoint>();
+		DataPoint start = new DataPoint(1, this.currentAverage);
+		DataPoint end = new DataPoint(GradeTrendGraph.getDateDiffDays(
+				this.currentDate, this.endDate), grade);
+		points.add(start);
+		points.add(end);
+		return points;
+	}
+
+	public static double getPercenDaysRemaining(Date start, Date end, int total) {
+		int daysRemain = GradeTrendGraph.getDateDiffDays(start, end);
+		return ((double) daysRemain) / total;
+	}
+
+	public static int getDateDiffDays(Date start, Date end) {
+		return (int) ((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
+	}
+
 	public static double getPercentChangeValue(int midPoint, int value) {
 		double change = 1;
-		
-		//can influence grade up to 25% + or -
+
+		// can influence grade up to 25% + or - for Work Rate
+		// and 10% + or - for class difficulty
 		double diffVal = Math.abs(midPoint - value) * 0.05;
-		
+
 		if (value < midPoint) {
 			change = diffVal;
-		}
-		else {
-			change +=  diffVal;
+		} else {
+			change += diffVal;
 		}
 		return change;
 	}
-	
 
 	public int findCategoryIndex(Category c, ArrayList<Category> cats) {
 		int i = -1;
@@ -150,7 +198,7 @@ public class GradeTrendGraph {
 
 		int size = this.dateOrderedItemList.size();
 		int midIndex = (size / 2) + (size % 2);
-		
+
 		// adjustMidIndex to include all grades from last overlapping day
 		while (midIndex > 0
 				&& this.dateOrderedItemList
@@ -160,10 +208,9 @@ public class GradeTrendGraph {
 								.getUpdateDate())) {
 			midIndex--;
 		}
-		
-		
+
 		List<Item> list = this.dateOrderedItemList.subList(midIndex, size);
-		
+
 		// create new temp course to calculate weighted avg
 		Course courseTemp = new Course("temp");
 
@@ -255,7 +302,7 @@ public class GradeTrendGraph {
 		double weight = 0;
 		for (Category c : cats) {
 			if (c.getName().equals(cat)) {
-				weight =  c.getWeight();
+				weight = c.getWeight();
 				break;
 			}
 		}
@@ -411,6 +458,27 @@ public class GradeTrendGraph {
 
 	public double getBestCaseGrade() {
 		return this.bestCaseGrade;
+	}
+
+	/**
+	 * @return the bestGradePredictionCurvePoints
+	 */
+	public ArrayList<DataPoint> getBestGradePredictionCurvePoints() {
+		return bestGradePredictionCurvePoints;
+	}
+
+	/**
+	 * @return the worstGradePredictionCurvePoints
+	 */
+	public ArrayList<DataPoint> getWorstGradePredictionCurvePoints() {
+		return worstGradePredictionCurvePoints;
+	}
+
+	/**
+	 * @return the gradePredictionCurvePoints
+	 */
+	public ArrayList<DataPoint> getGradePredictionCurvePoints() {
+		return gradePredictionCurvePoints;
 	}
 
 }
