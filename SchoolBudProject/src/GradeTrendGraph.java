@@ -119,20 +119,25 @@ public class GradeTrendGraph {
 		Course tempMinCourse = new Course("tempCourse");
 		Course tempMaxCourse = new Course("tempMaxCourse");
 		ArrayList<Category> cats = this.course.getCategories();
-
+		
 		for (String cat : categories) {
 			int freq = this.itemFrequencies.get(cat);
-			double currentRatio = freq / daysPassed;
+			double currentRatio = (freq+0.0) / daysPassed;
 			int predictedItems = (int) ((currentRatio * daysRemaining) + 0.5);
 			if(predictedItems > 0){
 				isZero = false;
 			}
 			double weight = this.getCategoryWeight(cats, cat);
+			ArrayList<Item> currItems = this.getCategoryItems(cats, cat);
 			
 			Category newMinCat = new Category(cat, predictedItems, weight);
 			for(int i=0; i<newMinCat.getItemList().size(); i++){
 				newMinCat.getItemList().get(i).setEarnedPoints("0");
 				newMinCat.getItemList().get(i).setTotalPoints("100");
+			}			
+			for(Item i: currItems){
+				i.setName(i.getName()+"temppppp");
+				newMinCat.addItem(i);
 			}
 			tempMinCourse.addCategory(newMinCat);
 			
@@ -141,15 +146,19 @@ public class GradeTrendGraph {
 				newMaxCat.getItemList().get(i).setEarnedPoints("100");
 				newMaxCat.getItemList().get(i).setTotalPoints("100");
 			}
+			for(Item i: currItems){
+				newMaxCat.addItem(i);
+			}
 			tempMaxCourse.addCategory(newMaxCat);
+			
 		}
 		
 		if(isZero){
 			this.worstCaseGrade = 0;
 			this.bestCaseGrade = 100;
 		} else{
-			this.worstCaseGrade = (int) (((this.currentAverage + tempMinCourse.getCourseGrade()) / 2) +0.5);
-			this.bestCaseGrade = (int) (((this.currentAverage + tempMaxCourse.getCourseGrade()) / 2) +0.5);
+			this.worstCaseGrade = (int) (tempMinCourse.getCourseGrade() + 0.5);
+			this.bestCaseGrade = (int) (tempMaxCourse.getCourseGrade() + 0.5);
 		}
 		
 	}
@@ -162,6 +171,16 @@ public class GradeTrendGraph {
 		}
 		return 0;
 	}
+	
+	public ArrayList<Item> getCategoryItems(ArrayList<Category> cats, String cat){
+		for(Category c: cats){
+			if(c.getName().equals(cat)){
+				return c.getItemList();
+			}
+		}
+		return new ArrayList<Item>();
+	}
+	
 	// Recursively find place to insert item
 	public void insertItemIntoItemDateList(Item item, int minIndex, int index) {
 

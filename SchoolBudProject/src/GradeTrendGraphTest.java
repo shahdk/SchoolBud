@@ -300,6 +300,242 @@ public class GradeTrendGraphTest {
 		assertEquals(25, graph.getWorstCaseGrade(), DELTA);
 		assertEquals(75, graph.getBestCaseGrade(), DELTA);
 	}
+	
+	@Test
+	public void testUpdateExtremeGradesFour()throws Exception{
+		SimpleDateFormat dtFormat = new SimpleDateFormat("MM/dd/yyyy");
+		
+		String newDate1 = "04/08/2013";
+		Date newDt1 = dtFormat.parse(newDate1);
+		
+		String newDate2 = "04/28/2013";
+		Date newDt2 = dtFormat.parse(newDate2);
+		
+		String newDate3 = "04/18/2013";
+		Date newDt3 = dtFormat.parse(newDate3);
+		
+		Course course = new Course("Temp", 4.0, newDt1, newDt2);
+		Category cat = new Category("HW", 25);
+		Category cat2 = new Category("Exam", 75);
+		
+		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013", "4/12/2013", "4/13/2013", "4/14/2013"}; 
+		for(int i=0; i<10; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("HW"+i, dtFormat.parse(date[rand]));
+			it.setEarnedPoints("50");
+			it.setTotalPoints("100");
+			cat.addItem(it);
+		}
+		
+		for(int i=0; i<5; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("Exam"+i, dtFormat.parse(date[rand]));
+			it.setEarnedPoints("90");
+			it.setTotalPoints("100");
+			cat2.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.addCategory(cat2);
+		
+		GradeTrendGraph graph = new GradeTrendGraph(course, 2, 5);
+		graph.setStartDate(newDt1);
+		graph.setEndDate(newDt3);
+		graph.updateGraph();
+		
+		assertEquals(40, graph.getWorstCaseGrade(), DELTA);
+		assertEquals(90, graph.getBestCaseGrade(), DELTA);
+	}
+	
+	@Test
+	public void testUpdateExtremeGradesFive()throws Exception{
+		SimpleDateFormat dtFormat = new SimpleDateFormat("MM/dd/yyyy");
+		
+		String newDate1 = "04/08/2013";
+		Date newDt1 = dtFormat.parse(newDate1);
+		
+		String newDate2 = "04/28/2013";
+		Date newDt2 = dtFormat.parse(newDate2);
+		
+		String newDate3 = "04/18/2013";
+		Date newDt3 = dtFormat.parse(newDate3);
+		
+		Course course = new Course("Temp", 4.0, newDt1, newDt2);
+		Category cat = new Category("HW", 25);
+		Category cat2 = new Category("Exam", 36);
+		Category cat3 = new Category("Project", 39);
+		
+		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013", "4/12/2013", "4/13/2013", "4/14/2013"}; 
+		for(int i=0; i<10; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("HW"+i, dtFormat.parse(date[rand]));
+			it.setEarnedPoints("75");
+			it.setTotalPoints("100");
+			cat.addItem(it);
+		}
+		
+		for(int i=0; i<3; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("Exam"+i, dtFormat.parse(date[rand]));
+			it.setEarnedPoints("86");
+			it.setTotalPoints("100");
+			cat2.addItem(it);
+		}
+		
+		int rand = (int) Math.random() * date.length;
+		Item it = new Item("Project0", dtFormat.parse(date[rand]));
+		it.setEarnedPoints("91");
+		it.setTotalPoints("100");
+		cat3.addItem(it);
+		
+		course.addCategory(cat);
+		course.addCategory(cat2);
+		course.addCategory(cat3);
+		
+		GradeTrendGraph graph = new GradeTrendGraph(course, 2, 5);
+		graph.setStartDate(newDt1);
+		graph.setEndDate(newDt3);
+		graph.updateGraph();
+		
+		assertEquals(43, graph.getWorstCaseGrade(), DELTA);
+		assertEquals(93, graph.getBestCaseGrade(), DELTA);
+	}
+	
+	@Test
+	public void testUpdateExtremeGradesSix()throws Exception{
+		SimpleDateFormat dtFormat = new SimpleDateFormat("MM/dd/yyyy");
+		
+		String newDate1 = "04/08/2013";
+		Date newDt1 = dtFormat.parse(newDate1);
+		
+		String newDate2 = "04/28/2013";
+		Date newDt2 = dtFormat.parse(newDate2);
+		
+		String newDate3 = "04/12/2013";
+		Date newDt3 = dtFormat.parse(newDate3);
+		
+		Course course = new Course("Temp", 4.0, newDt1, newDt2);
+		Category cat = new Category("HW", 100);
+		
+		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013"}; 
+		for(int i=0; i<10; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("HW"+i, dtFormat.parse(date[rand]));
+			it.setEarnedPoints("78");
+			it.setTotalPoints("100");
+			cat.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		
+		GradeTrendGraph graph = new GradeTrendGraph(course, 2, 5);
+		graph.setStartDate(newDt1);
+		graph.setEndDate(newDt3);
+		graph.updateGraph();
+		
+		assertEquals(16, graph.getWorstCaseGrade(), DELTA);
+		assertEquals(96, graph.getBestCaseGrade(), DELTA);
+	}
+	
+	@Test
+	public void testUpdateExtremeGradesSeven()throws Exception{
+		SimpleDateFormat dtFormat = new SimpleDateFormat("MM/dd/yyyy");
+		
+		String newDate1 = "04/08/2013";
+		Date newDt1 = dtFormat.parse(newDate1);
+		
+		String newDate2 = "04/28/2013";
+		Date newDt2 = dtFormat.parse(newDate2);
+		
+		String newDate3 = "04/11/2013";
+		Date newDt3 = dtFormat.parse(newDate3);
+		
+		Course course = new Course("Temp", 4.0, newDt1, newDt2);
+		Category cat = new Category("HW", 25);
+		Category cat2 = new Category("Exam", 75);
+		
+		String[] date = {"4/08/2013", "4/09/2013", "4/10/2013"}; 
+		for(int i=0; i<10; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("HW"+i, dtFormat.parse(date[rand]));
+			it.setEarnedPoints("68");
+			it.setTotalPoints("100");
+			cat.addItem(it);
+		}
+		
+		for(int i=0; i<5; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("Exam"+i, dtFormat.parse(date[rand]));
+			it.setEarnedPoints("90");
+			it.setTotalPoints("100");
+			cat2.addItem(it);
+		}
+		
+		course.addCategory(cat);
+		course.addCategory(cat2);
+		
+		GradeTrendGraph graph = new GradeTrendGraph(course, 2, 5);
+		graph.setStartDate(newDt1);
+		graph.setEndDate(newDt3);
+		graph.updateGraph();
+		
+		assertEquals(13, graph.getWorstCaseGrade(), DELTA);
+		assertEquals(98, graph.getBestCaseGrade(), DELTA);
+	}
+	
+	@Test
+	public void testUpdateExtremeGradesEight()throws Exception{
+		SimpleDateFormat dtFormat = new SimpleDateFormat("MM/dd/yyyy");
+		
+		String newDate1 = "04/08/2013";
+		Date newDt1 = dtFormat.parse(newDate1);
+		
+		String newDate2 = "04/28/2013";
+		Date newDt2 = dtFormat.parse(newDate2);
+		
+		String newDate3 = "04/13/2013";
+		Date newDt3 = dtFormat.parse(newDate3);
+		
+		Course course = new Course("Temp", 4.0, newDt1, newDt2);
+		Category cat = new Category("HW", 25);
+		Category cat2 = new Category("Exam", 36);
+		Category cat3 = new Category("Project", 39);
+		
+		String[] date = {"4/08/2013", "4/09/2013"}; 
+		for(int i=0; i<10; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("HW"+i, dtFormat.parse(date[rand]));
+			it.setEarnedPoints("75");
+			it.setTotalPoints("100");
+			cat.addItem(it);
+		}
+		
+		for(int i=0; i<3; i++){
+			int rand = (int) Math.random() * date.length;
+			Item it = new Item("Exam"+i, dtFormat.parse(date[rand]));
+			it.setEarnedPoints("86");
+			it.setTotalPoints("100");
+			cat2.addItem(it);
+		}
+		
+		int rand = (int) Math.random() * date.length;
+		Item it = new Item("Project0", dtFormat.parse(date[rand]));
+		it.setEarnedPoints("77");
+		it.setTotalPoints("100");
+		cat3.addItem(it);
+		
+		course.addCategory(cat);
+		course.addCategory(cat2);
+		course.addCategory(cat3);
+		
+		GradeTrendGraph graph = new GradeTrendGraph(course, 2, 5);
+		graph.setStartDate(newDt1);
+		graph.setEndDate(newDt3);
+		graph.updateGraph();
+		
+		assertEquals(20, graph.getWorstCaseGrade(), DELTA);
+		assertEquals(95, graph.getBestCaseGrade(), DELTA);
+	}
 
 	// public boolean compareDateLists(ArrayList<Date> list1, ArrayList<Date>
 	// list2) {
