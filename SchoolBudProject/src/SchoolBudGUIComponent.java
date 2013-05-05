@@ -1,13 +1,11 @@
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
@@ -15,7 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTable;
+import javax.swing.JTextField;
 
 /**
  * TODO Put here a description of what this class does.
@@ -24,12 +22,19 @@ import javax.swing.JTable;
  */
 public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 
-	private JLabel picture;
-	private JComboBox quarterList, classList, categoryList;
-	private JPanel comboPanel, quarterPanel, coursePanel, categoryPanel;
+	/**
+	 * Default serial version unique id.
+	 */
+	private static final long serialVersionUID = 1L;
+	private JComboBox<String> quarterList, classList, categoryList;
+	private JPanel comboPanel, quarterPanel, coursePanel, categoryPanel,
+			bottomPanel;
 	private ArrayList<Quarter> quarters;
 	private final int NUM_COLS = 6;
 	private SchoolBudGUITable table;
+	private JTextField courseGrade, letterGrade, targetGrade, neededGrade,
+			quarterGPA, overAllGPA;
+	private JButton calculate;
 
 	public SchoolBudGUIComponent() {
 		super(new BorderLayout());
@@ -41,31 +46,33 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 				"Update Date", "Category", "Remove" };
 		this.table = new SchoolBudGUITable(names);
 
-		this.quarterList = new JComboBox(quarterStrings);
+		this.quarterList = new JComboBox<String>(quarterStrings);
 		this.quarterList.setSelectedIndex(0);
 		this.quarterList.addActionListener(new ActionListener() {
+			@SuppressWarnings("unchecked")
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				JComboBox box = (JComboBox) event.getSource();
+				JComboBox<String> box = (JComboBox<String>) event.getSource();
 				String quarterName = (String) box.getSelectedItem();
 				updateLabel(quarterName);
 			}
 
 		});
 
-		this.classList = new JComboBox();
+		this.classList = new JComboBox<String>();
 		this.classList.setPrototypeDisplayValue("XXXXXXXXXX");
 		this.classList.addActionListener(new ActionListener() {
+			@SuppressWarnings("unchecked")
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				JComboBox box = (JComboBox) event.getSource();
+				JComboBox<String> box = (JComboBox<String>) event.getSource();
 				String courseName = (String) box.getSelectedItem();
 				updateTable(courseName);
 				updateCategoryList(courseName);
 			}
 		});
 
-		this.categoryList = new JComboBox();
+		this.categoryList = new JComboBox<String>();
 		this.classList.setPrototypeDisplayValue("XXXXXXXXXX");
 
 		this.comboPanel = new JPanel();
@@ -80,13 +87,94 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 		this.categoryPanel = new JPanel();
 		this.categoryPanel.setLayout(new BorderLayout());
 
+		this.bottomPanel = new JPanel();
+		this.bottomPanel.setLayout(new GridLayout(4, 2));
+
+		this.courseGrade = new JTextField("0.0");
+		this.courseGrade.setEditable(false);
+		this.letterGrade = new JTextField("0.0");
+		this.letterGrade.setEditable(false);
+		this.targetGrade = new JTextField("0.0");
+		this.targetGrade.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				double target = Double.parseDouble(targetGrade.getText());
+				for (Quarter q : quarters) {
+					if (q.getName().equals(getSelectedQuarter())) {
+						for (int i = 0; i < q.getCourseList().size(); i++) {
+							if (q.getCourseList().get(i).getCourseName()
+									.equals(getSelectedCourse())) {
+								q.getCourseList().get(i).setTargetGrade(target);
+							}
+						}
+					}
+				}
+			}
+
+		});
+		this.neededGrade = new JTextField("0.0");
+		this.neededGrade.setEditable(false);
+		this.quarterGPA = new JTextField("0.0");
+		this.quarterGPA.setEditable(false);
+		this.overAllGPA = new JTextField("0.0");
+		this.overAllGPA.setEditable(false);
+
+		JLabel courseGradeLabel = new JLabel("  Course Grade:");
+		JLabel letterGradeLabel = new JLabel("  Letter Grade:");
+		JLabel targetGradeLabel = new JLabel("  Target Grade:");
+		JLabel neededGradeLabel = new JLabel("  Needed Grade:");
+		JLabel quarterGPALabel = new JLabel("  Quarter GPA:");
+		JLabel overAllGPALabel = new JLabel("  Overall GPA:");
+		Font f = new Font("Times New Roman", Font.BOLD, 12);
+		courseGradeLabel.setFont(f);
+		letterGradeLabel.setFont(f);
+		targetGradeLabel.setFont(f);
+		neededGradeLabel.setFont(f);
+		quarterGPALabel.setFont(f);
+		overAllGPALabel.setFont(f);
+
+		JPanel courseGradePanel = new JPanel();
+		JPanel letterGradePanel = new JPanel();
+		JPanel targetGradePanel = new JPanel();
+		JPanel neededGradePanel = new JPanel();
+		JPanel quarterGPAPanel = new JPanel();
+		JPanel overAllGPAPanel = new JPanel();
+		courseGradePanel.setLayout(new GridLayout(1, 2));
+		letterGradePanel.setLayout(new GridLayout(1, 2));
+		targetGradePanel.setLayout(new GridLayout(1, 2));
+		neededGradePanel.setLayout(new GridLayout(1, 2));
+		quarterGPAPanel.setLayout(new GridLayout(1, 2));
+		overAllGPAPanel.setLayout(new GridLayout(1, 2));
+
+		courseGradePanel.add(courseGradeLabel);
+		courseGradePanel.add(this.courseGrade);
+
+		letterGradePanel.add(letterGradeLabel);
+		letterGradePanel.add(this.letterGrade);
+
+		targetGradePanel.add(targetGradeLabel);
+		targetGradePanel.add(this.targetGrade);
+
+		neededGradePanel.add(neededGradeLabel);
+		neededGradePanel.add(this.neededGrade);
+
+		quarterGPAPanel.add(quarterGPALabel);
+		quarterGPAPanel.add(this.quarterGPA);
+
+		overAllGPAPanel.add(overAllGPALabel);
+		overAllGPAPanel.add(this.overAllGPA);
+
+		this.calculate = new JButton("Calculate Grades");
+		this.calculate.addActionListener(this);
+
 		JLabel qt = new JLabel("Quarter");
 		JLabel cr = new JLabel("Course");
 		JLabel ct = new JLabel("Category");
-		Font f = new Font("Times New Roman", Font.BOLD, 17);
-		qt.setFont(f);
-		cr.setFont(f);
-		ct.setFont(f);
+		Font f1 = new Font("Times New Roman", Font.BOLD, 17);
+		qt.setFont(f1);
+		cr.setFont(f1);
+		ct.setFont(f1);
 
 		this.quarterPanel.add(qt, BorderLayout.NORTH);
 		this.quarterPanel.add(this.quarterList, BorderLayout.SOUTH);
@@ -101,8 +189,17 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 		this.comboPanel.add(this.coursePanel, BorderLayout.CENTER);
 		this.comboPanel.add(this.categoryPanel, BorderLayout.SOUTH);
 
+		this.bottomPanel.add(courseGradePanel);
+		this.bottomPanel.add(letterGradePanel);
+		this.bottomPanel.add(targetGradePanel);
+		this.bottomPanel.add(neededGradePanel);
+		this.bottomPanel.add(quarterGPAPanel);
+		this.bottomPanel.add(overAllGPAPanel);
+		this.bottomPanel.add(this.calculate);
+
 		add(this.comboPanel, BorderLayout.PAGE_START);
 		add(this.table.getJScrollPane(), BorderLayout.CENTER);
+		add(this.bottomPanel, BorderLayout.SOUTH);
 		this.classList.setSize(this.quarterList.getSize());
 		setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 		repaint();
@@ -116,14 +213,10 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 			newQuarters[i] = this.quarters.get(i).getName();
 		}
 
-		this.quarterList.setModel(new DefaultComboBoxModel(newQuarters));
+		this.quarterList
+				.setModel(new DefaultComboBoxModel<String>(newQuarters));
 	}
 
-	/**
-	 * TODO Put here a description of what this method does.
-	 * 
-	 * @param string
-	 */
 	public void updateLabel(String name) {
 		for (Quarter current : this.quarters) {
 			if (current.getName().equals(name)) {
@@ -134,7 +227,8 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 							.getCourseName();
 				}
 
-				this.classList.setModel(new DefaultComboBoxModel(newCourses));
+				this.classList.setModel(new DefaultComboBoxModel<String>(
+						newCourses));
 				break;
 			}
 		}
@@ -150,8 +244,9 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 						for (int i = 0; i < course.getCategories().size(); i++) {
 							newCat[i] = course.getCategories().get(i).getName();
 						}
-						this.categoryList.setModel(new DefaultComboBoxModel(
-								newCat));
+						this.categoryList
+								.setModel(new DefaultComboBoxModel<String>(
+										newCat));
 						return;
 					}
 				}
@@ -198,10 +293,46 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+		if (arg0.getSource().equals(this.calculate)) {
+			double target = Double.parseDouble(targetGrade.getText());
+			for (Quarter q : quarters) {
+				if (q.getName().equals(getSelectedQuarter())) {
+					for (int i = 0; i < q.getCourseList().size(); i++) {
+						if (q.getCourseList().get(i).getCourseName()
+								.equals(getSelectedCourse())) {
+							q.getCourseList().get(i).setTargetGrade(target);
+						}
+					}
+				}
+			}
+			this.calculateGrades();
+		}
+	}
 
-		JComboBox box = (JComboBox) arg0.getSource();
-		String quarterName = (String) box.getSelectedItem();
-		updateLabel(quarterName);
+	public void calculateGrades() {
+		double totalGPA = 0;
+		double quarterCount = 0;
+		for (Quarter q : this.quarters) {
+			totalGPA += q.getQuarterGPA();
+			if (q.getCourseList().size() > 0) {
+				quarterCount++;
+				if (q.getName().equals(this.getSelectedQuarter())) {
+					this.quarterGPA.setText(q.getQuarterGPA() + "");
+					for (Course c : q.getCourseList()) {
+						if (c.getCourseName().equals(this.getSelectedCourse())) {
+							this.courseGrade.setText(c.getCourseGrade() + "");
+							this.letterGrade.setText(c.getLetterGrade());
+							this.targetGrade.setText(c.getTargetGrade() + "");
+							this.neededGrade.setText(c.getNeededCourseGrade()
+									+ "");
+						}
+					}
+				}
+			}
+		}
+		double avgGPA = Math.round((totalGPA / quarterCount) * 100.0);
+		this.overAllGPA.setText((avgGPA / 100) + "");
+
 	}
 
 	public String getSelectedQuarter() {
@@ -210,6 +341,10 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 
 	public String getSelectedCourse() {
 		return (String) this.classList.getSelectedItem();
+	}
+
+	public String getSelectedCategory() {
+		return (String) this.categoryList.getSelectedItem();
 	}
 
 	public void addNewQuarter(ArrayList<Quarter> newQuarters) {
@@ -224,6 +359,7 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 			if (current.getName().equals(getSelectedQuarter())) {
 				current.addCourse(newCourse);
 				updateLabel(getSelectedQuarter());
+				updateCategoryList(this.getSelectedCourse());
 				break;
 			}
 		}
@@ -235,12 +371,13 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 				ArrayList<Course> currentCourses = current.getCourseList();
 
 				for (int i = 0; i < currentCourses.size(); i++) {
-					if (currentCourses.get(i).equals(getSelectedCourse())) {
+					if (currentCourses.get(i).getCourseName()
+							.equals(getSelectedCourse())) {
 						currentCourses.get(i).addCategory(newCategory);
+						updateCategoryList(this.getSelectedCourse());
+						return;
 					}
 				}
-
-				break;
 			}
 		}
 	}
@@ -255,12 +392,71 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 		}
 	}
 
+	public void editCourse(String name, double creditHours, Date start, Date end) {
+		for (Quarter current : this.quarters) {
+			if (current.getName().equals(getSelectedQuarter())) {
+				for (int i = 0; i < current.getCourseList().size(); i++) {
+					if (current.getCourseList().get(i).getCourseName()
+							.equals(getSelectedCourse())) {
+						current.getCourseList().get(i).setName(name);
+						current.getCourseList().get(i)
+								.setCreditHours(creditHours);
+						current.getCourseList().get(i).setStartDate(start);
+						current.getCourseList().get(i).setEndDate(end);
+						updateLabel(getSelectedQuarter());
+					}
+				}
+			}
+		}
+	}
+
 	public void updateHeadings(ArrayList<String> headings) {
 		String[] newHeadings = new String[headings.size()];
 		for (int i = 0; i < headings.size(); i++) {
 			newHeadings[i] = headings.get(i);
 		}
 		this.table.changeHeaderValues(newHeadings);
+	}
+
+	public void editCategory(String name, double weight) {
+		for (Quarter current : this.quarters) {
+			if (current.getName().equals(getSelectedQuarter())) {
+				for (Course c : current.getCourseList()) {
+					if (c.getCourseName().equals(getSelectedCourse())) {
+						for (int i = 0; i < c.getCategories().size(); i++) {
+							if (c.getCategories().get(i).getName()
+									.equals(this.getSelectedCategory())) {
+								c.getCategories().get(i).setName(name);
+								c.getCategories().get(i).setWeight(weight);
+								updateCategoryList(getSelectedCourse());
+								updateTable(getSelectedCourse());
+								return;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	public void editCategory(String name, double weight, int numOfItems) {
+		for (Quarter current : this.quarters) {
+			if (current.getName().equals(getSelectedQuarter())) {
+				for (Course c : current.getCourseList()) {
+					if (c.getCourseName().equals(getSelectedCourse())) {
+						for (int i = 0; i < c.getCategories().size(); i++) {
+							if (c.getCategories().get(i).getName()
+									.equals(this.getSelectedCategory())) {
+								c.getCategories().get(i).setName(name);
+								c.getCategories().get(i).setWeight(weight);
+								updateCategoryList(name);
+								return;
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 
 }

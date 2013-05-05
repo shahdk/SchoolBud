@@ -103,6 +103,7 @@ public class QuarterMain {
 					writer.print(r.getUpperLimit(grade) + this.elementDelimiter);
 					writer.print(r.getGPA(grade) + this.elementDelimiter);
 				}
+				writer.print(c.getTargetGrade()+this.elementDelimiter);
 				writer.print("\n");
 
 				for (Category cat : c.getCategories()) {
@@ -164,6 +165,8 @@ public class QuarterMain {
 				c.setEndDate(sdf.parse(courseData[3]));
 
 				c.setRubric(this.populateRubric(courseData));
+				double targetGrade = Double.parseDouble(courseData[courseData.length-1]);
+				c.setTargetGrade(targetGrade);
 				this.quarterList.get(qtCount - 1).addCourse(c);
 				catCount = 0;
 				courseCount++;
@@ -218,7 +221,7 @@ public class QuarterMain {
 	 */
 	private Rubric populateRubric(String courseData[]) {
 		Rubric rubric = new Rubric();
-		for (int i = 4; i < courseData.length; i += 4) {
+		for (int i = 4; i < courseData.length-1; i += 4) {
 			rubric.addGrade(courseData[i],
 					Double.parseDouble(courseData[i + 1]),
 					Double.parseDouble(courseData[i + 2]),

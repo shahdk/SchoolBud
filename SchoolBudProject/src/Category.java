@@ -171,7 +171,7 @@ public class Category {
 	 * 
 	 * @param weight
 	 */
-	public void setWeight(int weight) {
+	public void setWeight(double weight) {
 		if (weight < 0 || weight > 100) {
 			throw new IllegalArgumentException();
 		}

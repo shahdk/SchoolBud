@@ -3,6 +3,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -65,7 +66,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 
 	}
 
-	public final void initialize(){
+	public final void initialize() {
 		this.add = new JMenu(this.messages.getString("add"));
 		this.language = new JMenu(this.messages.getString("language"));
 		this.file = new JMenu(this.messages.getString("file"));
@@ -107,12 +108,14 @@ public class SchoolBudGUIMenu extends JMenuBar {
 					String end = endField.getText();
 					String credit = creditField.getText();
 					SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-					
-					try{
-						Course newCourse = new Course(name, Double.parseDouble(credit), sdf.parse(start), sdf.parse(end));
+
+					try {
+						Course newCourse = new Course(name, Double
+								.parseDouble(credit), sdf.parse(start), sdf
+								.parse(end));
 						SchoolBudGUIMenu.this.component.addNewCourse(newCourse);
-					}catch(Exception e){
-						//do nothing
+					} catch (Exception e) {
+						// do nothing
 					}
 				}
 			}
@@ -173,15 +176,15 @@ public class SchoolBudGUIMenu extends JMenuBar {
 				if (result == JOptionPane.OK_OPTION) {
 					if (numItemField.getText().equals("")) {
 						Category newCategory = new Category(
-								nameField.getText(), Integer
-										.parseInt(weightField.getText()));
-						System.out.println("no # of items");
+								nameField.getText(), Double
+										.parseDouble(weightField.getText()));
+						component.addNewCategory(newCategory);
 					} else {
 						Category newCategory = new Category(
 								nameField.getText(), Integer
-										.parseInt(weightField.getText()),
-								Integer.parseInt(numItemField.getText()));
-						System.out.println("# of items");
+										.parseInt(numItemField.getText()),
+								Double.parseDouble(weightField.getText()));
+						component.addNewCategory(newCategory);
 					}
 				}
 			}
@@ -222,9 +225,18 @@ public class SchoolBudGUIMenu extends JMenuBar {
 						SchoolBudGUIMenu.this.messages.getString("editCourse"),
 						JOptionPane.OK_CANCEL_OPTION);
 				if (result == JOptionPane.OK_OPTION) {
-					String name = nameField.getText();
-					Course newCourse = new Course(name);
-					System.out.println(name);
+					try {
+						String name = nameField.getText();
+						double creditHours = Double.parseDouble(creditField
+								.getText());
+						SimpleDateFormat sdf = new SimpleDateFormat(
+								"MM/dd/yyyy");
+						Date start = sdf.parse(startField.getText());
+						Date end = sdf.parse(endField.getText());
+						component.editCourse(name, creditHours, start, end);
+					} catch (Exception exp) {
+						// do nothing
+					}
 				}
 			}
 
@@ -259,7 +271,6 @@ public class SchoolBudGUIMenu extends JMenuBar {
 			public void actionPerformed(ActionEvent event) {
 				JTextField nameField = new JTextField(10);
 				JTextField weightField = new JTextField(5);
-				JTextField numItemField = new JTextField(5);
 
 				JPanel myPanel = new JPanel();
 				myPanel.add(new JLabel(SchoolBudGUIMenu.this.messages
@@ -270,29 +281,15 @@ public class SchoolBudGUIMenu extends JMenuBar {
 						.getString("weight")));
 				myPanel.add(weightField);
 				myPanel.add(Box.createHorizontalStrut(15));
-				myPanel.add(new JLabel(SchoolBudGUIMenu.this.messages
-						.getString("numItem")));
-				myPanel.add(numItemField);
 
 				int result = JOptionPane.showConfirmDialog(null, myPanel,
 						SchoolBudGUIMenu.this.messages
 								.getString("editCategory"),
 						JOptionPane.OK_CANCEL_OPTION);
 				if (result == JOptionPane.OK_OPTION) {
-					if (numItemField.getText().equals("")) {
-						Category newCategory = new Category(
-								nameField.getText(), Integer
-										.parseInt(weightField.getText()));
-						component.addNewCategory(newCategory);
-						System.out.println("no # of items");
-					} else {
-						Category newCategory = new Category(
-								nameField.getText(), Integer
-										.parseInt(weightField.getText()),
-								Integer.parseInt(numItemField.getText()));
-						component.addNewCategory(newCategory);
-						System.out.println("# of items");
-					}
+					String name = nameField.getText();
+					double weight = Double.parseDouble(weightField.getText());
+					component.editCategory(name, weight);
 				}
 			}
 
@@ -304,7 +301,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 			public void actionPerformed(ActionEvent event) {
 
 				JPanel myPanel = new JPanel();
-				String[] names = {"Grade", "Points"};
+				String[] names = { "Grade", "Points" };
 
 				table = new SchoolBudGUITable(names);
 
@@ -354,14 +351,14 @@ public class SchoolBudGUIMenu extends JMenuBar {
 					return;
 				}
 				String filePath = chooser.getSelectedFile().getPath();
-				
+
 				try {
 					main.saveFile(filePath);
 				} catch (Exception exception) {
 					// TODO Auto-generated catch-block stub.
 					exception.printStackTrace();
 				}
-				
+
 			}
 
 		});
@@ -370,12 +367,11 @@ public class SchoolBudGUIMenu extends JMenuBar {
 		this.load.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				
+
 				if (chooser.showOpenDialog(component) != JFileChooser.APPROVE_OPTION) {
 					return;
 				}
-				
-				
+
 				String filePath = chooser.getSelectedFile().getPath();
 				try {
 					main.loadFile(filePath);
@@ -383,11 +379,12 @@ public class SchoolBudGUIMenu extends JMenuBar {
 					// TODO Auto-generated catch-block stub.
 					exception.printStackTrace();
 				}
-				
+
 				SchoolBudGUIMenu.this.component
-				.addNewQuarter(SchoolBudGUIMenu.this.main
-						.getQuarterList());
-				
+						.addNewQuarter(SchoolBudGUIMenu.this.main
+								.getQuarterList());
+				SchoolBudGUIMenu.this.component.calculateGrades();
+
 			}
 
 		});
@@ -405,7 +402,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 		this.file.add(this.save);
 		this.file.add(this.load);
 		this.file.add(this.exit);
-		
+
 		this.trending = new JMenuItem(this.messages.getString("trending"));
 		this.trending.addActionListener(new ActionListener() {
 			@Override
@@ -423,7 +420,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 			}
 
 		});
-		
+
 		this.schedule = new JMenuItem(this.messages.getString("schedule"));
 		this.schedule.addActionListener(new ActionListener() {
 			@Override
@@ -441,7 +438,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 			}
 
 		});
-		
+
 		this.view.add(this.trending);
 		this.view.add(this.schedule);
 
@@ -478,15 +475,15 @@ public class SchoolBudGUIMenu extends JMenuBar {
 		this.save.setText(this.messages.getString("save"));
 		this.load.setText(this.messages.getString("load"));
 		this.exit.setText(this.messages.getString("exit"));
-		
+
 		this.view.setText(this.messages.getString("view"));
 		this.trending.setText(this.messages.getString("trending"));
 		this.schedule.setText(this.messages.getString("schedule"));
-		
+
 		translateHeadings();
 	}
-	
-	public void translateHeadings(){
+
+	public void translateHeadings() {
 		ArrayList<String> headings = new ArrayList<String>();
 		headings.add(this.messages.getString("itemName"));
 		headings.add(this.messages.getString("earnedPoints"));
@@ -495,7 +492,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 		headings.add(this.messages.getString("category"));
 		headings.add(this.messages.getString("remove"));
 		this.component.updateHeadings(headings);
-		
+
 	}
 
 }
