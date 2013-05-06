@@ -147,7 +147,6 @@ public class SchoolBudGUITable {
 					addEmptyRow();
 				}
 			} else {
-				System.out.println("here");
 				if (!table.getValueAt(row, col).equals(""))
 					editItems(row, col);
 				newAdd = true;
@@ -179,7 +178,6 @@ public class SchoolBudGUITable {
 						String itemName = (String) table.getValueAt(row, 0);
 
 						if (col == 4) {
-							System.out.println(catName);
 							int it = -1;;
 							int curr = -1;
 							int newCat = -1;
