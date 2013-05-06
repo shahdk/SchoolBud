@@ -44,7 +44,7 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 
 		String[] names = { "Item Name", "Earned Points", "Total Points",
 				"Update Date", "Category", "Remove" };
-		this.table = new SchoolBudGUITable(names);
+		this.table = new SchoolBudGUITable(names, "item");
 
 		this.quarterList = new JComboBox<String>(quarterStrings);
 		this.quarterList.setSelectedIndex(0);
@@ -263,6 +263,9 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 					for (Category cat : course.getCategories()) {
 						int numItems = cat.getItemList().size();
 
+						if(numItems == 0){
+							continue;
+						}
 						Object[][] newItems = new Object[numItems][this.NUM_COLS];
 
 						for (int i = 0; i < numItems; i++) {

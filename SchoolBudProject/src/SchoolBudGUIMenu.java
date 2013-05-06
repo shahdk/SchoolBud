@@ -52,7 +52,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 	private QuarterMain main;
 	private SchoolBudGUIComponent component;
 	private final JFileChooser chooser;
-	private SchoolBudGUITable table;
+	private SchoolBudGUITable table, rubricTable;
 
 	public SchoolBudGUIMenu(JFrame frame, SchoolBudGUIComponent component) {
 		this.frame = frame;
@@ -301,11 +301,13 @@ public class SchoolBudGUIMenu extends JMenuBar {
 			public void actionPerformed(ActionEvent event) {
 
 				JPanel myPanel = new JPanel();
-				String[] names = { "Grade", "Points" };
+				String[] names = { "Letter Grade", "Lower Limit", "Upper Limit", "GPA", "Remove" };
 
-				table = new SchoolBudGUITable(names);
+				rubricTable = new SchoolBudGUITable(names, "rubric");
+				rubricTable.setQuarters(component.getSelectedQuarter(),
+						component.getSelectedCourse());
 
-				myPanel.add(table.getJScrollPane());
+				myPanel.add(rubricTable.getJScrollPane());
 
 				int result = JOptionPane.showConfirmDialog(null, myPanel,
 						SchoolBudGUIMenu.this.messages.getString("editRubric"),

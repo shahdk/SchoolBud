@@ -24,50 +24,86 @@ public class SchoolBudGUITable {
 	private ArrayList<Quarter> quarters;
 	private String selectedQuarter;
 	private String selectedCourse;
+	private String type;
 	private boolean newAdd = false;
 	private final int NUM_COLS = 6;
 
-	public SchoolBudGUITable(String[] names) {
+	public SchoolBudGUITable(String[] names, String type) {
 		this.columnNames = names;
+		this.type = type;
 
-		Object[][] data = { { "", "", "", "", "", false } };
+		if (type.equals("item")) {
+			Object[][] data = { { "", "", "", "", "", false } };
+			this.tableModel = new DefaultTableModel(data, this.columnNames);
 
-		this.tableModel = new DefaultTableModel(data, this.columnNames);
+			this.table = new JTable(this.tableModel) {
+				private static final long serialVersionUID = 1L;
 
-		this.table = new JTable(this.tableModel) {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public Class<?> getColumnClass(int column) {
-				switch (column) {
-				case 0:
-				case 1:
-				case 2:
-				case 3:
-				case 4:
-					return String.class;
-				default:
-					return Boolean.class;
+				@Override
+				public Class<?> getColumnClass(int column) {
+					switch (column) {
+					case 0:
+					case 1:
+					case 2:
+					case 3:
+					case 4:
+						return String.class;
+					default:
+						return Boolean.class;
+					}
 				}
-			}
-		};
+			};
+		} else {
+			Object[][] data = { { "", "", "", "", false } };
+			this.tableModel = new DefaultTableModel(data, this.columnNames);
 
+			this.table = new JTable(this.tableModel) {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public Class<?> getColumnClass(int column) {
+					switch (column) {
+					case 0:
+					case 1:
+					case 2:
+					case 3:
+						return String.class;
+					default:
+						return Boolean.class;
+					}
+				}
+			};
+		}
 		this.table.setPreferredScrollableViewportSize(new Dimension(500, 300));
 		this.table.setFillsViewportHeight(true);
 		this.tableSP = new JScrollPane(table);
 		this.tableSP.setPreferredSize(new Dimension(500, 400));
 
-		this.table.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
+		if (type.equals("item")) {
+			this.table.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
 
-				int row = table.getSelectedRow();
-				int column = table.getSelectedColumn();
-				if (column == 5) {
-					removeItem(row, column);
+					int row = table.getSelectedRow();
+					int column = table.getSelectedColumn();
+					if (column == 5) {
+						removeItem(row, column);
+					}
 				}
-			}
 
-		});
+			});
+		} else {
+			this.table.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+
+					int row = table.getSelectedRow();
+					int column = table.getSelectedColumn();
+					if (column == 4) {
+						// removeRubric(row, column);
+					}
+				}
+
+			});
+		}
 
 		TableCellListener tcl = new TableCellListener();
 		this.table.addPropertyChangeListener(tcl);
@@ -82,41 +118,52 @@ public class SchoolBudGUITable {
 				int row = table.getSelectedRow();
 				int col = table.getSelectedColumn();
 
-				if (col < 5) {
-					if (!table.isEditing()) {
-						if (newAdd) {
-							Object[] data = new Object[NUM_COLS];
-							data[0] = table.getValueAt(row, 0);
-							data[1] = table.getValueAt(row, 1);
-							data[2] = table.getValueAt(row, 2);
-							data[3] = table.getValueAt(row, 3);
-							data[4] = table.getValueAt(row, 4);
-							data[5] = false;
-							if (!data[0].equals("") && !data[3].equals("")
-									&& !data[4].equals("")) {
-								addItem(data, row);
-								addEmptyRow();
-							}
+				if (type.equals("item")) {
+					if (col < 5) {
+						if (!table.isEditing()) {
+							itemEditing(row, col);
 						} else {
-							if (!table.getValueAt(row, col).equals(""))
-								editItems(row, col);
-							newAdd = true;
-						}
-					} else {
-						if (row >= 0 && col >= 0) {
-							if (table.getValueAt(row, 0).equals("")) {
-								newAdd = true;
-							} else {
-								if (table.getValueAt(row, 3).equals("")) {
-									newAdd = true;
-								} else if (table.getValueAt(row, 4).equals("")) {
-									newAdd = true;
-								} else {
-									newAdd = false;
-								}
+							if (row >= 0 && col >= 0) {
+								checkEditing(row, col);
 							}
 						}
 					}
+				}
+			}
+		}
+
+		public void itemEditing(int row, int col) {
+			if (newAdd) {
+				Object[] data = new Object[NUM_COLS];
+				data[0] = table.getValueAt(row, 0);
+				data[1] = table.getValueAt(row, 1);
+				data[2] = table.getValueAt(row, 2);
+				data[3] = table.getValueAt(row, 3);
+				data[4] = table.getValueAt(row, 4);
+				data[5] = false;
+				if (!data[0].equals("") && !data[3].equals("")
+						&& !data[4].equals("")) {
+					addItem(data, row);
+					addEmptyRow();
+				}
+			} else {
+				System.out.println("here");
+				if (!table.getValueAt(row, col).equals(""))
+					editItems(row, col);
+				newAdd = true;
+			}
+		}
+
+		public void checkEditing(int row, int col) {
+			if (table.getValueAt(row, 0).equals("")) {
+				newAdd = true;
+			} else {
+				if (table.getValueAt(row, 3).equals("")) {
+					newAdd = true;
+				} else if (table.getValueAt(row, 4).equals("")) {
+					newAdd = true;
+				} else {
+					newAdd = false;
 				}
 			}
 		}
@@ -131,77 +178,103 @@ public class SchoolBudGUITable {
 						String catName = (String) table.getValueAt(row, 4);
 						String itemName = (String) table.getValueAt(row, 0);
 
-						for (int i = 0; i < c.getCategories().size(); i++) {
-							if (c.getCategories().get(i).getName()
-									.equals(catName)) {
+						if (col == 4) {
+							System.out.println(catName);
+							int it = -1;;
+							int curr = -1;
+							int newCat = -1;
+							for (int i = 0; i < c.getCategories().size(); i++) {
+								if(c.getCategories().get(i).getName().equals(catName)){
+									newCat = i;
+								}
 								for (int j = 0; j < c.getCategories().get(i)
 										.getItemList().size(); j++) {
 									if (c.getCategories().get(i).getItemList()
 											.get(j).getName().equals(itemName)) {
-										if (col == 0) {
-											c.getCategories()
-													.get(i)
-													.getItemList()
-													.get(j)
-													.setName(
-															(String) table
-																	.getValueAt(
-																			row,
-																			col));
-										} else if (col == 1) {
-											c.getCategories()
-													.get(i)
-													.getItemList()
-													.get(j)
-													.setEarnedPoints(
-															(String) table
-																	.getValueAt(
-																			row,
-																			col));
-										} else if (col == 2) {
-											c.getCategories()
-													.get(i)
-													.getItemList()
-													.get(j)
-													.setTotalPoints(
-															(String) table
-																	.getValueAt(
-																			row,
-																			col));
-										} else if (col == 3) {
-											try {
-												SimpleDateFormat sdf = new SimpleDateFormat(
-														"MM/dd/yyyy");
+										curr = i;
+										it = j;
+										
+									}
+								}
+							}
+							if(newCat == -1){
+								table.setValueAt(c.getCategories().get(curr).getName(), row, col);
+								return;
+							}else{
+								c.getCategories().get(newCat).addItem(c.getCategories().get(curr).getItemList().get(it));
+								c.getCategories().get(curr).removeItem(itemName);
+								return;
+							}
+						} else {
+							for (int i = 0; i < c.getCategories().size(); i++) {
+								if (c.getCategories().get(i).getName()
+										.equals(catName)) {
+									for (int j = 0; j < c.getCategories()
+											.get(i).getItemList().size(); j++) {
+										if (c.getCategories().get(i)
+												.getItemList().get(j).getName()
+												.equals(itemName)) {
+											if (col == 0) {
 												c.getCategories()
 														.get(i)
 														.getItemList()
 														.get(j)
-														.setUpdateDate(
-																sdf.parse((String) table
+														.setName(
+																(String) table
 																		.getValueAt(
 																				row,
-																				col)));
-												c.getCategories().get(i)
-														.checkItemUpdateDate();
-												table.setValueAt(sdf.format(c
-														.getCategories().get(i)
-														.getItemList().get(j)
-														.getUpdateDate()), row,
-														col);
-												table.repaint();
-											} catch (Exception exp) {
+																				col));
+											} else if (col == 1) {
+												c.getCategories()
+														.get(i)
+														.getItemList()
+														.get(j)
+														.setEarnedPoints(
+																(String) table
+																		.getValueAt(
+																				row,
+																				col));
+											} else if (col == 2) {
+												c.getCategories()
+														.get(i)
+														.getItemList()
+														.get(j)
+														.setTotalPoints(
+																(String) table
+																		.getValueAt(
+																				row,
+																				col));
+											} else if (col == 3) {
+												try {
+													SimpleDateFormat sdf = new SimpleDateFormat(
+															"MM/dd/yyyy");
+													c.getCategories()
+															.get(i)
+															.getItemList()
+															.get(j)
+															.setUpdateDate(
+																	sdf.parse((String) table
+																			.getValueAt(
+																					row,
+																					col)));
+													c.getCategories()
+															.get(i)
+															.checkItemUpdateDate();
+													table.setValueAt(
+															sdf.format(c
+																	.getCategories()
+																	.get(i)
+																	.getItemList()
+																	.get(j)
+																	.getUpdateDate()),
+															row, col);
+													table.repaint();
+												} catch (Exception exp) {
 
+												}
 											}
-										} else if (col == 4) {
-											c.getCategories()
-													.get(i)
-													.setName(
-															(String) table
-																	.getValueAt(
-																			row,
-																			col));
+											return;
 										}
-										return;
 									}
 								}
 							}
@@ -216,6 +289,11 @@ public class SchoolBudGUITable {
 	public void setQuarters(ArrayList<Quarter> quarters, String qt,
 			String course) {
 		this.quarters = quarters;
+		this.selectedCourse = course;
+		this.selectedQuarter = qt;
+	}
+
+	public void setQuarters(String qt, String course) {
 		this.selectedCourse = course;
 		this.selectedQuarter = qt;
 	}
@@ -254,6 +332,27 @@ public class SchoolBudGUITable {
 								}
 							}
 						}
+					}
+				}
+			}
+		}
+	}
+
+	public void removeGrade(int row, int column) {
+
+		for (Quarter current : quarters) {
+			if (current.getName().equals(selectedQuarter)) {
+				ArrayList<Course> currentCourses = current.getCourseList();
+
+				for (Course c : currentCourses) {
+					if (c.getCourseName().equals(selectedCourse)) {
+						String letterGrade = (String) this.table.getValueAt(
+								row, 0);
+						c.getRubric().removeGrade(letterGrade);
+						this.tableModel.removeRow(row);
+						this.table.setModel(tableModel);
+						this.table.repaint();
+						return;
 					}
 				}
 			}
@@ -363,7 +462,7 @@ public class SchoolBudGUITable {
 
 	public void addInitialItems(Object[][] names, int numItems) {
 
-		if (((String) this.tableModel.getValueAt(0, 0)).equals("")) {
+		if (this.tableModel.getValueAt(0, 0).equals("")) {
 			this.tableModel.removeRow(0);
 		}
 
