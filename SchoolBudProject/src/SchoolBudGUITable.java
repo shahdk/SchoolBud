@@ -27,6 +27,8 @@ public class SchoolBudGUITable {
 	private String type;
 	private boolean newAdd = false;
 	private final int NUM_COLS = 6;
+	private final int NUM_RUBRIC_COLS = 5;
+	private String oldGrade = "";
 
 	public SchoolBudGUITable(String[] names, String type) {
 		this.columnNames = names;
@@ -98,8 +100,9 @@ public class SchoolBudGUITable {
 					int row = table.getSelectedRow();
 					int column = table.getSelectedColumn();
 					if (column == 4) {
-						// removeRubric(row, column);
+						removeRubric(row, column);
 					}
+					oldGrade = (String)table.getValueAt(row, 0);
 				}
 
 			});
@@ -128,6 +131,16 @@ public class SchoolBudGUITable {
 							}
 						}
 					}
+				} else {
+					if (col < 4) {
+						if (!table.isEditing()) {
+							rubricEditing(row, col);
+						} else {
+							if (row >= 0 && col >= 0) {
+								checkRubricEditing(row, col);
+							}
+						}
+					}
 				}
 			}
 		}
@@ -153,6 +166,26 @@ public class SchoolBudGUITable {
 			}
 		}
 
+		public void rubricEditing(int row, int col) {
+			if (newAdd) {
+				Object[] data = new Object[NUM_RUBRIC_COLS];
+				data[0] = table.getValueAt(row, 0);
+				data[1] = table.getValueAt(row, 1);
+				data[2] = table.getValueAt(row, 2);
+				data[3] = table.getValueAt(row, 3);
+				data[4] = false;
+				if (!data[0].equals("") && !data[1].equals("")
+						&& !data[2].equals("") && !data.equals("")) {
+					addRubric(data, row);
+					addEmptyRowRubric();
+				}
+			} else {
+				if (!table.getValueAt(row, col).equals(""))
+					editRubric(row, col);
+				newAdd = true;
+			}
+		}
+
 		public void checkEditing(int row, int col) {
 			if (table.getValueAt(row, 0).equals("")) {
 				newAdd = true;
@@ -164,6 +197,17 @@ public class SchoolBudGUITable {
 				} else {
 					newAdd = false;
 				}
+			}
+		}
+
+		public void checkRubricEditing(int row, int col) {
+			if (table.getValueAt(row, 0).equals("")
+					|| table.getValueAt(row, 1).equals("")
+					|| table.getValueAt(row, 2).equals("")
+					|| table.getValueAt(row, 3).equals("")) {
+				newAdd = true;
+			} else {
+				newAdd = false;
 			}
 		}
 	}
@@ -178,11 +222,13 @@ public class SchoolBudGUITable {
 						String itemName = (String) table.getValueAt(row, 0);
 
 						if (col == 4) {
-							int it = -1;;
+							int it = -1;
+							;
 							int curr = -1;
 							int newCat = -1;
 							for (int i = 0; i < c.getCategories().size(); i++) {
-								if(c.getCategories().get(i).getName().equals(catName)){
+								if (c.getCategories().get(i).getName()
+										.equals(catName)) {
 									newCat = i;
 								}
 								for (int j = 0; j < c.getCategories().get(i)
@@ -191,16 +237,22 @@ public class SchoolBudGUITable {
 											.get(j).getName().equals(itemName)) {
 										curr = i;
 										it = j;
-										
+
 									}
 								}
 							}
-							if(newCat == -1){
-								table.setValueAt(c.getCategories().get(curr).getName(), row, col);
+							if (newCat == -1) {
+								table.setValueAt(c.getCategories().get(curr)
+										.getName(), row, col);
 								return;
-							}else{
-								c.getCategories().get(newCat).addItem(c.getCategories().get(curr).getItemList().get(it));
-								c.getCategories().get(curr).removeItem(itemName);
+							} else {
+								c.getCategories()
+										.get(newCat)
+										.addItem(
+												c.getCategories().get(curr)
+														.getItemList().get(it));
+								c.getCategories().get(curr)
+										.removeItem(itemName);
 								return;
 							}
 						} else {
@@ -284,14 +336,37 @@ public class SchoolBudGUITable {
 		}
 	}
 
+	public void editRubric(int row, int col){
+		for (Quarter current : quarters) {
+			if (current.getName().equals(selectedQuarter)) {
+				ArrayList<Course> currentCourses = current.getCourseList();
+				for (Course c : currentCourses) {
+					if (c.getCourseName().equals(selectedCourse)) {
+						if(col == 0){
+							String newGrade = (String)this.tableModel.getValueAt(row, col);
+							c.getRubric().setLetterGrade(oldGrade, newGrade);
+						}else if(col == 1){
+							String lower = (String)this.tableModel.getValueAt(row, col);
+							String grade = (String)this.tableModel.getValueAt(row, 0);
+							c.getRubric().setLowerLimit(grade, Double.parseDouble(lower));
+						}else if(col == 2){
+							String upper = (String)this.tableModel.getValueAt(row, col);
+							String grade = (String)this.tableModel.getValueAt(row, 0);
+							c.getRubric().setUpperLimit(grade, Double.parseDouble(upper));
+						}else if(col == 3){
+							String gpa = (String)this.tableModel.getValueAt(row, col);
+							String grade = (String)this.tableModel.getValueAt(row, 0);
+							c.getRubric().setGPA(grade, Double.parseDouble(gpa));
+						}
+					}
+				}
+			}
+		}
+	}
+	
 	public void setQuarters(ArrayList<Quarter> quarters, String qt,
 			String course) {
 		this.quarters = quarters;
-		this.selectedCourse = course;
-		this.selectedQuarter = qt;
-	}
-
-	public void setQuarters(String qt, String course) {
 		this.selectedCourse = course;
 		this.selectedQuarter = qt;
 	}
@@ -336,7 +411,7 @@ public class SchoolBudGUITable {
 		}
 	}
 
-	public void removeGrade(int row, int column) {
+	public void removeRubric(int row, int column) {
 
 		for (Quarter current : quarters) {
 			if (current.getName().equals(selectedQuarter)) {
@@ -346,6 +421,9 @@ public class SchoolBudGUITable {
 					if (c.getCourseName().equals(selectedCourse)) {
 						String letterGrade = (String) this.table.getValueAt(
 								row, 0);
+						if (letterGrade.equals("")) {
+							return;
+						}
 						c.getRubric().removeGrade(letterGrade);
 						this.tableModel.removeRow(row);
 						this.table.setModel(tableModel);
@@ -367,6 +445,13 @@ public class SchoolBudGUITable {
 
 	public void addEmptyRow() {
 		Object[] emptyRow = { "", "", "", "", "", false };
+		this.tableModel.addRow(emptyRow);
+		this.table.setModel(this.tableModel);
+		this.table.repaint();
+	}
+
+	public void addEmptyRowRubric() {
+		Object[] emptyRow = { "", "", "", "", false };
 		this.tableModel.addRow(emptyRow);
 		this.table.setModel(this.tableModel);
 		this.table.repaint();
@@ -458,6 +543,25 @@ public class SchoolBudGUITable {
 		}
 	}
 
+	public void addRubric(Object[] rubric, int row){
+		for (Quarter current : quarters) {
+			if (current.getName().equals(selectedQuarter)) {
+				ArrayList<Course> currentCourses = current.getCourseList();
+
+				for (Course c : currentCourses) {
+					if (c.getCourseName().equals(selectedCourse)) {
+						String letter = (String) rubric[0];
+						String lower = (String) rubric[1];
+						String upper = (String) rubric[2];
+						String gpa = (String) rubric[3];
+						c.getRubric().addGrade(letter, Double.parseDouble(lower), Double.parseDouble(upper), Double.parseDouble(gpa));
+						return;
+					}
+				}
+			}
+		}
+	}
+	
 	public void addInitialItems(Object[][] names, int numItems) {
 
 		if (this.tableModel.getValueAt(0, 0).equals("")) {

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javax.swing.Box;
 import javax.swing.JFileChooser;
@@ -53,6 +54,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 	private SchoolBudGUIComponent component;
 	private final JFileChooser chooser;
 	private SchoolBudGUITable table, rubricTable;
+	private final int NUM_COLS = 5;
 
 	public SchoolBudGUIMenu(JFrame frame, SchoolBudGUIComponent component) {
 		this.frame = frame;
@@ -301,20 +303,19 @@ public class SchoolBudGUIMenu extends JMenuBar {
 			public void actionPerformed(ActionEvent event) {
 
 				JPanel myPanel = new JPanel();
-				String[] names = { "Letter Grade", "Lower Limit", "Upper Limit", "GPA", "Remove" };
+				String[] names = { "Letter Grade", "Lower Limit",
+						"Upper Limit", "GPA", "Remove" };
 
 				rubricTable = new SchoolBudGUITable(names, "rubric");
-				rubricTable.setQuarters(component.getSelectedQuarter(),
+				rubricTable.setQuarters(main.getQuarterList(), component.getSelectedQuarter(),
 						component.getSelectedCourse());
 
+				populateRubric();
 				myPanel.add(rubricTable.getJScrollPane());
 
-				int result = JOptionPane.showConfirmDialog(null, myPanel,
+				JOptionPane.showConfirmDialog(null, myPanel,
 						SchoolBudGUIMenu.this.messages.getString("editRubric"),
-						JOptionPane.OK_CANCEL_OPTION);
-				if (result == JOptionPane.OK_OPTION) {
-					System.out.println("working rubric");
-				}
+						JOptionPane.DEFAULT_OPTION);
 			}
 
 		});
@@ -497,4 +498,47 @@ public class SchoolBudGUIMenu extends JMenuBar {
 
 	}
 
+	public void populateRubric() {
+		for (Quarter q : this.main.getQuarterList()) {
+			if (q.getName().equals(this.component.getSelectedQuarter())) {
+				for (Course c : q.getCourseList()) {
+					if (c.getCourseName().equals(
+							this.component.getSelectedCourse())) {
+						Rubric r = c.getRubric();
+						Set<String> letterGrades = r.getGradeList();
+						String[] gr = new String[letterGrades.size()];
+						int i = 0;
+						for(String x: letterGrades){
+							gr[i] = x;
+							i++;
+						}
+						insertSort(gr);
+						Object data[][] = new Object[gr.length][this.NUM_COLS];
+						for (int j=0; j<gr.length; j++) {
+							data[j][0] = gr[j];
+							data[j][1] = r.getLowerLimit(gr[j]) + "";
+							data[j][2] = r.getUpperLimit(gr[j]) + "";
+							data[j][3] = r.getGPA(gr[j]) + "";
+							data[j][4] = false;
+						}
+						rubricTable.addInitialItems(data, i);
+						rubricTable.addEmptyRowRubric();
+						return;
+					}
+				}
+			}
+		}
+	}
+
+	public  void insertSort(String[] A) {
+		for (int i = 1; i < A.length; i++) {
+			String value = A[i];
+			int j = i - 1;
+			while (j >= 0 && A[j].compareTo(value)>0) {
+				A[j + 1] = A[j];
+				j = j - 1;
+			}
+			A[j + 1] = value;
+		}
+	}
 }
