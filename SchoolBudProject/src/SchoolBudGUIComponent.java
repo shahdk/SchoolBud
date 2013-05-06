@@ -26,14 +26,23 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 	 * Default serial version unique id.
 	 */
 	private static final long serialVersionUID = 1L;
-	private JComboBox<String> quarterList, classList, categoryList;
-	private JPanel comboPanel, quarterPanel, coursePanel, categoryPanel,
-			bottomPanel;
+	private JComboBox<String> quarterList;
+	private JComboBox<String> classList;
+	private JComboBox<String> categoryList;
+	private JPanel comboPanel;
+	private JPanel quarterPanel;
+	private JPanel coursePanel;
+	private JPanel categoryPanel;
+	private JPanel bottomPanel;
 	private ArrayList<Quarter> quarters;
 	private final int NUM_COLS = 6;
 	private SchoolBudGUITable table;
-	private JTextField courseGrade, letterGrade, targetGrade, neededGrade,
-			quarterGPA, overAllGPA;
+	private JTextField courseGrade;
+	private JTextField letterGrade;
+	private JTextField targetGrade;
+	private JTextField neededGrade;
+	private JTextField quarterGPA;
+	private JTextField overAllGPA;
 	private JButton calculate;
 
 	public SchoolBudGUIComponent() {

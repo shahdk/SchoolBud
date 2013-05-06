@@ -530,7 +530,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 		}
 	}
 
-	public  void insertSort(String[] A) {
+	public void insertSort(String[] A) {
 		for (int i = 1; i < A.length; i++) {
 			String value = A[i];
 			int j = i - 1;
