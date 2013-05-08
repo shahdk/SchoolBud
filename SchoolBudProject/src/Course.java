@@ -196,6 +196,9 @@ public class Course {
 			return 0;
 		}
 		for (Category c : this.categories) {
+			if(c.getTotalPossiblePoints() < 0){
+				continue;
+			}
 			totalWeight += c.getWeight();
 			totalGrade += (c.getTotalPoints() * c.getWeight());
 		}
@@ -236,6 +239,9 @@ public class Course {
 		double totalGrade = 0;
 
 		for (Category c : this.categories) {
+			if(c.getTotalPossiblePoints() < 0){
+				continue;
+			}
 			totalWeight += c.getWeight();
 			totalGrade += (c.getTotalPoints() * c.getWeight() / 100);
 		}

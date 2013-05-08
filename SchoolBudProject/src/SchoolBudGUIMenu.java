@@ -117,7 +117,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 								.parse(end));
 						SchoolBudGUIMenu.this.component.addNewCourse(newCourse);
 					} catch (Exception e) {
-						// do nothing
+						JOptionPane.showMessageDialog(frame, "Invalid Input");
 					}
 				}
 			}
@@ -138,12 +138,16 @@ public class SchoolBudGUIMenu extends JMenuBar {
 						SchoolBudGUIMenu.this.messages.getString("newQuarter"),
 						JOptionPane.OK_CANCEL_OPTION);
 				if (result == JOptionPane.OK_OPTION) {
-					String name = nameField.getText();
-					Quarter newCourse = new Quarter(name);
-					SchoolBudGUIMenu.this.main.addQuarter(newCourse);
-					SchoolBudGUIMenu.this.component
-							.addNewQuarter(SchoolBudGUIMenu.this.main
-									.getQuarterList());
+					try {
+						String name = nameField.getText();
+						Quarter newCourse = new Quarter(name);
+						SchoolBudGUIMenu.this.main.addQuarter(newCourse);
+						SchoolBudGUIMenu.this.component
+								.addNewQuarter(SchoolBudGUIMenu.this.main
+										.getQuarterList());
+					} catch (Exception exp) {
+						JOptionPane.showMessageDialog(frame, "Invalid Input");
+					}
 				}
 			}
 
@@ -176,17 +180,22 @@ public class SchoolBudGUIMenu extends JMenuBar {
 										.getString("newCategory"),
 								JOptionPane.OK_CANCEL_OPTION);
 				if (result == JOptionPane.OK_OPTION) {
-					if (numItemField.getText().equals("")) {
-						Category newCategory = new Category(
-								nameField.getText(), Double
-										.parseDouble(weightField.getText()));
-						component.addNewCategory(newCategory);
-					} else {
-						Category newCategory = new Category(
-								nameField.getText(), Integer
-										.parseInt(numItemField.getText()),
-								Double.parseDouble(weightField.getText()));
-						component.addNewCategory(newCategory);
+					try {
+						if (numItemField.getText().equals("")) {
+							Category newCategory = new Category(nameField
+									.getText(), Double.parseDouble(weightField
+									.getText()));
+							component.addNewCategory(newCategory);
+						} else {
+							Category newCategory = new Category(nameField
+									.getText(), Integer.parseInt(numItemField
+									.getText()), Double.parseDouble(weightField
+									.getText()));
+							component.addNewCategory(newCategory);
+							component.updateTable(component.getSelectedCourse());
+						}
+					} catch (Exception exp) {
+						JOptionPane.showMessageDialog(frame, "Invalid Input");
 					}
 				}
 			}
@@ -237,7 +246,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 						Date end = sdf.parse(endField.getText());
 						component.editCourse(name, creditHours, start, end);
 					} catch (Exception exp) {
-						// do nothing
+						JOptionPane.showMessageDialog(frame, "Invalid Input");
 					}
 				}
 			}
@@ -260,8 +269,12 @@ public class SchoolBudGUIMenu extends JMenuBar {
 										.getString("editQuarter"),
 								JOptionPane.OK_CANCEL_OPTION);
 				if (result == JOptionPane.OK_OPTION) {
-					String name = nameField.getText();
-					component.editQuarter(name);
+					try {
+						String name = nameField.getText();
+						component.editQuarter(name);
+					} catch (Exception exp) {
+						JOptionPane.showMessageDialog(frame, "Invalid Input");
+					}
 				}
 			}
 
@@ -289,9 +302,14 @@ public class SchoolBudGUIMenu extends JMenuBar {
 								.getString("editCategory"),
 						JOptionPane.OK_CANCEL_OPTION);
 				if (result == JOptionPane.OK_OPTION) {
-					String name = nameField.getText();
-					double weight = Double.parseDouble(weightField.getText());
-					component.editCategory(name, weight);
+					try {
+						String name = nameField.getText();
+						double weight = Double.parseDouble(weightField
+								.getText());
+						component.editCategory(name, weight);
+					} catch (Exception exp) {
+						JOptionPane.showMessageDialog(frame, "Invalid Input");
+					}
 				}
 			}
 
@@ -306,16 +324,22 @@ public class SchoolBudGUIMenu extends JMenuBar {
 				String[] names = { "Letter Grade", "Lower Limit",
 						"Upper Limit", "GPA", "Remove" };
 
-				rubricTable = new SchoolBudGUITable(names, "rubric");
-				rubricTable.setQuarters(main.getQuarterList(), component.getSelectedQuarter(),
-						component.getSelectedCourse());
+				try {
+					rubricTable = new SchoolBudGUITable(names, "rubric");
+					rubricTable.setQuarters(main.getQuarterList(),
+							component.getSelectedQuarter(),
+							component.getSelectedCourse());
 
-				populateRubric();
-				myPanel.add(rubricTable.getJScrollPane());
+					populateRubric();
+					myPanel.add(rubricTable.getJScrollPane());
 
-				JOptionPane.showConfirmDialog(null, myPanel,
-						SchoolBudGUIMenu.this.messages.getString("editRubric"),
-						JOptionPane.DEFAULT_OPTION);
+					JOptionPane.showConfirmDialog(null, myPanel,
+							SchoolBudGUIMenu.this.messages
+									.getString("editRubric"),
+							JOptionPane.DEFAULT_OPTION);
+				} catch (Exception exp) {
+					JOptionPane.showMessageDialog(frame, "Invalid Input");
+				}
 			}
 
 		});
@@ -358,8 +382,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 				try {
 					main.saveFile(filePath);
 				} catch (Exception exception) {
-					// TODO Auto-generated catch-block stub.
-					exception.printStackTrace();
+					JOptionPane.showMessageDialog(frame, "Invalid Input");
 				}
 
 			}
@@ -378,16 +401,13 @@ public class SchoolBudGUIMenu extends JMenuBar {
 				String filePath = chooser.getSelectedFile().getPath();
 				try {
 					main.loadFile(filePath);
+					SchoolBudGUIMenu.this.component
+							.addNewQuarter(SchoolBudGUIMenu.this.main
+									.getQuarterList());
+					SchoolBudGUIMenu.this.component.calculateGrades();
 				} catch (Exception exception) {
-					// TODO Auto-generated catch-block stub.
-					exception.printStackTrace();
+					JOptionPane.showMessageDialog(frame, "Invalid Input");
 				}
-
-				SchoolBudGUIMenu.this.component
-						.addNewQuarter(SchoolBudGUIMenu.this.main
-								.getQuarterList());
-				SchoolBudGUIMenu.this.component.calculateGrades();
-
 			}
 
 		});
@@ -508,13 +528,13 @@ public class SchoolBudGUIMenu extends JMenuBar {
 						Set<String> letterGrades = r.getGradeList();
 						String[] gr = new String[letterGrades.size()];
 						int i = 0;
-						for(String x: letterGrades){
+						for (String x : letterGrades) {
 							gr[i] = x;
 							i++;
 						}
 						insertSort(gr);
 						Object data[][] = new Object[gr.length][this.NUM_COLS];
-						for (int j=0; j<gr.length; j++) {
+						for (int j = 0; j < gr.length; j++) {
 							data[j][0] = gr[j];
 							data[j][1] = r.getLowerLimit(gr[j]) + "";
 							data[j][2] = r.getUpperLimit(gr[j]) + "";
@@ -534,7 +554,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 		for (int i = 1; i < A.length; i++) {
 			String value = A[i];
 			int j = i - 1;
-			while (j >= 0 && A[j].compareTo(value)>0) {
+			while (j >= 0 && A[j].compareTo(value) > 0) {
 				A[j + 1] = A[j];
 				j = j - 1;
 			}

@@ -59,7 +59,7 @@ public class Category {
 	 * @param weight
 	 */
 	public Category(String name, int numOfItems, double weight) {
-		if (weight < 0 || weight > 100 || name.length() == 0) {
+		if (weight < 0 || weight > 100 || name.length() == 0 || numOfItems < 0) {
 			throw new IllegalArgumentException();
 		}
 		this.catName = name;
@@ -227,11 +227,14 @@ public class Category {
 	public double getTotalPossiblePoints() {
 		double totalGrades = 0;
 		for (Item i : this.items) {
-			double totalGrade = 100;
-			if(!i.getTotalPoints().equals("")){
-				totalGrade = Double.parseDouble(i.getTotalPoints());
+			if(i.getTotalPoints().equals("")){
+				continue;
 			}
+			double totalGrade = Double.parseDouble(i.getTotalPoints());
 			totalGrades += totalGrade;
+		}
+		if(totalGrades == 0){
+			return -1;
 		}
 		return totalGrades;
 	}
