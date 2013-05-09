@@ -1,28 +1,40 @@
 import java.awt.BorderLayout;
+import java.awt.Font;
+import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * TODO Put here a description of what this class does.
- *
- * @author padillbt-1.
- *         Created May 8, 2013.
+ * 
+ * @author padillbt-1. Created May 8, 2013.
  */
-public class SchedulerComponent extends JPanel{
+public class SchedulerComponent extends JPanel {
 	private JComboBox courseList;
 	private JComboBox classList;
 	private JButton scheduleButton;
 	private JPanel topPanel;
+	private JPanel coursePanel;
+	private JPanel classPanel;
+	private JPanel schedulePanel;
 	private ArrayList<SchedulerCourse> courses;
 
-	public SchedulerComponent(){
+	public SchedulerComponent() {
 		super(new BorderLayout());
 		this.courses = new ArrayList<SchedulerCourse>();
 
@@ -50,27 +62,104 @@ public class SchedulerComponent extends JPanel{
 				String courseName = (String) box.getSelectedItem();
 			}
 		});
-		
-		this.scheduleButton = new JButton("Schedule");
+
+		this.scheduleButton = new JButton("Schedule Courses");
+
 		this.scheduleButton.addActionListener(new ActionListener() {
-			@SuppressWarnings("unchecked")
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				Scheduler scheduler = new Scheduler(8, courses);
-				System.out.println(scheduler.permutateSchedules().size());
+				JPanel myPanel = new JPanel();
+				JTextField nameField = new JTextField(10);
+
+				myPanel.add(new JLabel("Class Hours:"));
+				myPanel.add(nameField);
+
+				int result = JOptionPane.showConfirmDialog(null, myPanel,
+						"Schedule Now", JOptionPane.OK_CANCEL_OPTION);
+				if (result == JOptionPane.OK_OPTION) {
+
+					int classHours = Integer.parseInt(nameField.getText());
+					Scheduler scheduler = new Scheduler(classHours,
+							SchedulerComponent.this.courses);
+					createSchedules(scheduler.permutateSchedules(), classHours);
+
+				}
 			}
+
 		});
-		
+
 		this.topPanel = new JPanel(new BorderLayout());
-		
-		this.topPanel.add(this.courseList, BorderLayout.NORTH);
-		this.topPanel.add(this.classList, BorderLayout.CENTER);
+		this.coursePanel = new JPanel(new BorderLayout());
+		this.classPanel = new JPanel(new BorderLayout());
+		this.schedulePanel = new JPanel();
+
+		JLabel courseLabel = new JLabel("Courses");
+		JLabel classLabel = new JLabel("Classes");
+		Font f1 = new Font("Times New Roman", Font.BOLD, 17);
+		courseLabel.setFont(f1);
+		classLabel.setFont(f1);
+
+		this.coursePanel.add(courseLabel, BorderLayout.NORTH);
+		this.coursePanel.add(this.courseList, BorderLayout.SOUTH);
+
+		this.classPanel.add(classLabel, BorderLayout.NORTH);
+		this.classPanel.add(this.classList, BorderLayout.SOUTH);
+
+		this.topPanel.add(this.coursePanel, BorderLayout.NORTH);
+		this.topPanel.add(this.classPanel, BorderLayout.CENTER);
 		this.topPanel.add(this.scheduleButton, BorderLayout.SOUTH);
-		
+
 		add(this.topPanel, BorderLayout.NORTH);
+
+		JTable table = this.createTables(7);
+
+		this.schedulePanel.add(classLabel);
+		this.schedulePanel.add(table);
+		add(this.schedulePanel, BorderLayout.CENTER);
+
+		setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 	}
-	
-	public void addCourse(SchedulerCourse course){
+
+	public JTable createTables(int numberOfColumns) {
+		Object[][] data = { { "Day 1" }, { "Day 2" }, { "Day 3" }, { "Day 4" },
+				{ "Day 5" }, { "Day 6" }, { "Day 7" } };
+		String[] columnNames = { "" };
+		DefaultTableModel model = new DefaultTableModel(data, columnNames);
+		JTable table = new JTable(model);
+		for (int i = 1; i < numberOfColumns + 1; i++) {
+			model.addColumn("");
+		}
+		return table;
+	}
+
+	public void createSchedules(
+			ArrayList<ArrayList<SchedulerCourse>> schedules, int hours) {
+
+		this.schedulePanel.removeAll();
+		for (ArrayList<SchedulerCourse> schedule : schedules) {
+			JTable table = this.createTables(hours);
+			for (SchedulerCourse course : schedule) {
+				for (ClassSection section : course.getSections()) {
+					int dayNum = 0;
+					for (ClassDay day : section.getClassDays()) {
+						for (Integer hour : day.getHourSlots()) {
+							table.setValueAt(
+									course.getName() + ":"
+											+ section.getTeacher(), dayNum,
+									hour);
+						}
+						dayNum++;
+					}
+				}
+			}
+			this.schedulePanel.add(new JScrollPane(table));
+			table = null;
+		}
+		this.schedulePanel.repaint();
+		this.schedulePanel.revalidate();
+	}
+
+	public void addCourse(SchedulerCourse course) {
 		this.courses.add(course);
 		String[] newCourses = new String[this.courses.size()];
 
@@ -79,8 +168,8 @@ public class SchedulerComponent extends JPanel{
 		}
 		this.courseList.setModel(new DefaultComboBoxModel(newCourses));
 	}
-	
-	public void addSection(ClassSection newClass){
+
+	public void addSection(ClassSection newClass) {
 		for (SchedulerCourse current : this.courses) {
 			if (current.getName().equals(this.courseList.getSelectedItem())) {
 				current.addSections(newClass);
@@ -89,31 +178,29 @@ public class SchedulerComponent extends JPanel{
 					newClasses[i] = current.getSections().get(i).getTeacher();
 				}
 
-				this.classList.setModel(new DefaultComboBoxModel(
-						newClasses));
+				this.classList.setModel(new DefaultComboBoxModel(newClasses));
 				break;
 			}
 		}
 	}
-	
-	public void updateSection(){
+
+	public void updateSection() {
 		for (SchedulerCourse current : this.courses) {
 			if (current.getName().equals(this.courseList.getSelectedItem())) {
-				
+
 				String[] newClasses = new String[current.getSections().size()];
-				
+
 				for (int i = 0; i < current.getSections().size(); i++) {
 					newClasses[i] = current.getSections().get(i).getTeacher();
 				}
 
-				this.classList.setModel(new DefaultComboBoxModel(
-						newClasses));
+				this.classList.setModel(new DefaultComboBoxModel(newClasses));
 				break;
 			}
 		}
 	}
-	
-	public void updateCourse(){
+
+	public void updateCourse() {
 		String[] newCourses = new String[this.courses.size()];
 
 		for (int i = 0; i < this.courses.size(); i++) {
