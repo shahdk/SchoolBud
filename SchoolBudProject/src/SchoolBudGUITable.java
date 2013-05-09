@@ -7,6 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.*;
@@ -126,7 +128,7 @@ public class SchoolBudGUITable {
 						itemEdit(row, col);
 					}
 					return;
-					
+
 				}
 				if (col < 4) {
 					if (!table.isEditing()) {
@@ -140,8 +142,8 @@ public class SchoolBudGUITable {
 
 			}
 		}
-		
-		public void itemEdit(int row, int col){
+
+		public void itemEdit(int row, int col) {
 			if (!table.isEditing()) {
 				itemEditing(row, col);
 			} else {
@@ -160,15 +162,27 @@ public class SchoolBudGUITable {
 				data[3] = table.getValueAt(row, 3);
 				data[4] = table.getValueAt(row, 4);
 				data[5] = false;
-				if (!data[0].equals("") && !data[3].equals("")
-						&& !data[4].equals("")) {
-					addItem(data, row);
-					addEmptyRow();
+				try {
+					if (!data[0].equals("") && !data[3].equals("")
+							&& !data[4].equals("")) {
+						addItem(data, row);
+						addEmptyRow();
+					}
+				} catch (Exception e) {
+					reset();
+					JFrame frame = new JFrame();
+					JOptionPane.showMessageDialog(frame, "Invalid Input");
 				}
 			} else {
+				try{
 				if (!table.getValueAt(row, col).equals(""))
 					editItems(row, col);
 				newAdd = true;
+				}catch(Exception e){
+					reset();
+					JFrame frame = new JFrame();
+					JOptionPane.showMessageDialog(frame, "Invalid Input");
+				}
 			}
 		}
 

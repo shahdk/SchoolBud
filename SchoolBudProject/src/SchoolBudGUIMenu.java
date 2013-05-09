@@ -117,7 +117,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 								.parse(end));
 						SchoolBudGUIMenu.this.component.addNewCourse(newCourse);
 					} catch (Exception e) {
-						JOptionPane.showMessageDialog(frame, "Invalid Input");
+						JOptionPane.showMessageDialog(SchoolBudGUIMenu.this.frame, "Invalid Input");
 					}
 				}
 			}
@@ -146,7 +146,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 								.addNewQuarter(SchoolBudGUIMenu.this.main
 										.getQuarterList());
 					} catch (Exception exp) {
-						JOptionPane.showMessageDialog(frame, "Invalid Input");
+						JOptionPane.showMessageDialog(SchoolBudGUIMenu.this.frame, "Invalid Input");
 					}
 				}
 			}
@@ -185,17 +185,17 @@ public class SchoolBudGUIMenu extends JMenuBar {
 							Category newCategory = new Category(nameField
 									.getText(), Double.parseDouble(weightField
 									.getText()));
-							component.addNewCategory(newCategory);
+							SchoolBudGUIMenu.this.component.addNewCategory(newCategory);
 						} else {
 							Category newCategory = new Category(nameField
 									.getText(), Integer.parseInt(numItemField
 									.getText()), Double.parseDouble(weightField
 									.getText()));
-							component.addNewCategory(newCategory);
-							component.updateTable(component.getSelectedCourse());
+							SchoolBudGUIMenu.this.component.addNewCategory(newCategory);
+							SchoolBudGUIMenu.this.component.updateTable(SchoolBudGUIMenu.this.component.getSelectedCourse());
 						}
 					} catch (Exception exp) {
-						JOptionPane.showMessageDialog(frame, "Invalid Input");
+						JOptionPane.showMessageDialog(SchoolBudGUIMenu.this.frame, "Invalid Input");
 					}
 				}
 			}
@@ -244,9 +244,9 @@ public class SchoolBudGUIMenu extends JMenuBar {
 								"MM/dd/yyyy");
 						Date start = sdf.parse(startField.getText());
 						Date end = sdf.parse(endField.getText());
-						component.editCourse(name, creditHours, start, end);
+						SchoolBudGUIMenu.this.component.editCourse(name, creditHours, start, end);
 					} catch (Exception exp) {
-						JOptionPane.showMessageDialog(frame, "Invalid Input");
+						JOptionPane.showMessageDialog(SchoolBudGUIMenu.this.frame, "Invalid Input");
 					}
 				}
 			}
@@ -271,9 +271,9 @@ public class SchoolBudGUIMenu extends JMenuBar {
 				if (result == JOptionPane.OK_OPTION) {
 					try {
 						String name = nameField.getText();
-						component.editQuarter(name);
+						SchoolBudGUIMenu.this.component.editQuarter(name);
 					} catch (Exception exp) {
-						JOptionPane.showMessageDialog(frame, "Invalid Input");
+						JOptionPane.showMessageDialog(SchoolBudGUIMenu.this.frame, "Invalid Input");
 					}
 				}
 			}
@@ -306,9 +306,9 @@ public class SchoolBudGUIMenu extends JMenuBar {
 						String name = nameField.getText();
 						double weight = Double.parseDouble(weightField
 								.getText());
-						component.editCategory(name, weight);
+						SchoolBudGUIMenu.this.component.editCategory(name, weight);
 					} catch (Exception exp) {
-						JOptionPane.showMessageDialog(frame, "Invalid Input");
+						JOptionPane.showMessageDialog(SchoolBudGUIMenu.this.frame, "Invalid Input");
 					}
 				}
 			}
@@ -325,20 +325,20 @@ public class SchoolBudGUIMenu extends JMenuBar {
 						"Upper Limit", "GPA", "Remove" };
 
 				try {
-					rubricTable = new SchoolBudGUITable(names, "rubric");
-					rubricTable.setQuarters(main.getQuarterList(),
-							component.getSelectedQuarter(),
-							component.getSelectedCourse());
+					SchoolBudGUIMenu.this.rubricTable = new SchoolBudGUITable(names, "rubric");
+					SchoolBudGUIMenu.this.rubricTable.setQuarters(SchoolBudGUIMenu.this.main.getQuarterList(),
+							SchoolBudGUIMenu.this.component.getSelectedQuarter(),
+							SchoolBudGUIMenu.this.component.getSelectedCourse());
 
 					populateRubric();
-					myPanel.add(rubricTable.getJScrollPane());
+					myPanel.add(SchoolBudGUIMenu.this.rubricTable.getJScrollPane());
 
 					JOptionPane.showConfirmDialog(null, myPanel,
 							SchoolBudGUIMenu.this.messages
 									.getString("editRubric"),
 							JOptionPane.DEFAULT_OPTION);
 				} catch (Exception exp) {
-					JOptionPane.showMessageDialog(frame, "Invalid Input");
+					JOptionPane.showMessageDialog(SchoolBudGUIMenu.this.frame, "Invalid Input");
 				}
 			}
 
@@ -374,15 +374,15 @@ public class SchoolBudGUIMenu extends JMenuBar {
 		this.save.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				if (chooser.showOpenDialog(component) != JFileChooser.APPROVE_OPTION) {
+				if (SchoolBudGUIMenu.this.chooser.showOpenDialog(SchoolBudGUIMenu.this.component) != JFileChooser.APPROVE_OPTION) {
 					return;
 				}
-				String filePath = chooser.getSelectedFile().getPath();
+				String filePath = SchoolBudGUIMenu.this.chooser.getSelectedFile().getPath();
 
 				try {
-					main.saveFile(filePath);
+					SchoolBudGUIMenu.this.main.saveFile(filePath);
 				} catch (Exception exception) {
-					JOptionPane.showMessageDialog(frame, "Invalid Input");
+					JOptionPane.showMessageDialog(SchoolBudGUIMenu.this.frame, "Invalid Input");
 				}
 
 			}
@@ -394,19 +394,19 @@ public class SchoolBudGUIMenu extends JMenuBar {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 
-				if (chooser.showOpenDialog(component) != JFileChooser.APPROVE_OPTION) {
+				if (SchoolBudGUIMenu.this.chooser.showOpenDialog(SchoolBudGUIMenu.this.component) != JFileChooser.APPROVE_OPTION) {
 					return;
 				}
 
-				String filePath = chooser.getSelectedFile().getPath();
+				String filePath = SchoolBudGUIMenu.this.chooser.getSelectedFile().getPath();
 				try {
-					main.loadFile(filePath);
+					SchoolBudGUIMenu.this.main.loadFile(filePath);
 					SchoolBudGUIMenu.this.component
 							.addNewQuarter(SchoolBudGUIMenu.this.main
 									.getQuarterList());
 					SchoolBudGUIMenu.this.component.calculateGrades();
 				} catch (Exception exception) {
-					JOptionPane.showMessageDialog(frame, "Invalid Input");
+					JOptionPane.showMessageDialog(SchoolBudGUIMenu.this.frame, "Invalid Input");
 				}
 			}
 
@@ -435,7 +435,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 				int result = JOptionPane
 						.showConfirmDialog(null, myPanel,
 								SchoolBudGUIMenu.this.messages
-										.getString("editQuarter"),
+										.getString("trending"),
 								JOptionPane.OK_CANCEL_OPTION);
 				if (result == JOptionPane.OK_OPTION) {
 					//
@@ -448,16 +448,10 @@ public class SchoolBudGUIMenu extends JMenuBar {
 		this.schedule.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				JPanel myPanel = new JPanel();
+				ArrayList<SchedulerCourse> classes = new ArrayList<SchedulerCourse>();
+				SchedulerFrame frame = new SchedulerFrame(SchoolBudGUIMenu.this.currentLocale); 
+		        frame.setVisible(true);
 
-				int result = JOptionPane
-						.showConfirmDialog(null, myPanel,
-								SchoolBudGUIMenu.this.messages
-										.getString("editQuarter"),
-								JOptionPane.OK_CANCEL_OPTION);
-				if (result == JOptionPane.OK_OPTION) {
-					//
-				}
 			}
 
 		});
@@ -541,8 +535,8 @@ public class SchoolBudGUIMenu extends JMenuBar {
 							data[j][3] = r.getGPA(gr[j]) + "";
 							data[j][4] = false;
 						}
-						rubricTable.addInitialItems(data, i);
-						rubricTable.addEmptyRowRubric();
+						this.rubricTable.addInitialItems(data, i);
+						this.rubricTable.addEmptyRowRubric();
 						return;
 					}
 				}

@@ -24,6 +24,10 @@ public class Scheduler {
 
 	// ===========================================================================================
 	//
+	
+	public void setClasses(ArrayList<SchedulerCourse> courses){
+		this.classes = courses;
+	}
 
 	public ArrayList<ArrayList<SchedulerCourse>> permutateSchedules() {
 
