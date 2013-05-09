@@ -10,11 +10,11 @@
  */
 public class DataPoint {
 
-	private int x;
-	private int y;
+	private double x;
+	private double y;
 	
 	
-	public DataPoint(int x, int y) {
+	public DataPoint(double x, double y) {
 		this.setX(x);
 		this.setY(y);
 	}
@@ -23,7 +23,7 @@ public class DataPoint {
 	/**
 	 * @return the x
 	 */
-	public int getX() {
+	public double getX() {
 		return x;
 	}
 
@@ -31,7 +31,7 @@ public class DataPoint {
 	/**
 	 * @param x the x to set
 	 */
-	public void setX(int x) {
+	public void setX(double x) {
 		this.x = x;
 	}
 
@@ -39,7 +39,7 @@ public class DataPoint {
 	/**
 	 * @return the y
 	 */
-	public int getY() {
+	public double getY() {
 		return y;
 	}
 
@@ -47,8 +47,10 @@ public class DataPoint {
 	/**
 	 * @param y the y to set
 	 */
-	public void setY(int y) {
+	public void setY(double y) {
 		this.y = y;
 	}
+
+
 	
 }
