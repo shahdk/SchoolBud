@@ -8,12 +8,18 @@ public class SchedulerCourse extends Course {
 
 	private ArrayList<ClassSection> sections;
 	private boolean isOptional;
+	private String name;
 
 	public SchedulerCourse(String className, ArrayList<ClassSection> sections,
 			boolean isOptional) {
 		super(className);
 		this.setSections(sections);
 		this.setOptional(isOptional);
+		this.name = className;
+	}
+	
+	public String getName(){
+		return this.name;
 	}
 	
 	/**
@@ -28,6 +34,10 @@ public class SchedulerCourse extends Course {
 	 */
 	public void setSections(ArrayList<ClassSection> sections) {
 		this.sections = sections;
+	}
+	
+	public void addSections(ClassSection section) {
+		this.sections.add(section);
 	}
 
 	/**
