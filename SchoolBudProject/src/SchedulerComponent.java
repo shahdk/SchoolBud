@@ -1,15 +1,13 @@
 import java.awt.BorderLayout;
 import java.awt.Font;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
-import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -92,6 +90,7 @@ public class SchedulerComponent extends JPanel {
 		this.coursePanel = new JPanel(new BorderLayout());
 		this.classPanel = new JPanel(new BorderLayout());
 		this.schedulePanel = new JPanel();
+		this.schedulePanel.setLayout(new BoxLayout( schedulePanel, BoxLayout.PAGE_AXIS ) );
 
 		JLabel courseLabel = new JLabel("Courses");
 		JLabel classLabel = new JLabel("Classes");
@@ -112,17 +111,18 @@ public class SchedulerComponent extends JPanel {
 		add(this.topPanel, BorderLayout.NORTH);
 
 		JTable table = this.createTables(7);
+		
 
-		this.schedulePanel.add(classLabel);
 		this.schedulePanel.add(table);
 		add(this.schedulePanel, BorderLayout.CENTER);
+		
 
 		setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 	}
 
 	public JTable createTables(int numberOfColumns) {
-		Object[][] data = { { "Day 1" }, { "Day 2" }, { "Day 3" }, { "Day 4" },
-				{ "Day 5" }, { "Day 6" }, { "Day 7" } };
+		Object[][] data = { { "Monday" }, { "Tuesday" }, { "Wednesday" }, { "Thursday" },
+				{ "Friday" }, { "Saturday" }, { "Sunday" } };
 		String[] columnNames = { "" };
 		DefaultTableModel model = new DefaultTableModel(data, columnNames);
 		JTable table = new JTable(model);
