@@ -548,6 +548,16 @@ public class GradeTrendGraphTest {
 		assertEquals(graph.getGradePredictionCurvePoints().get(0).getY(), 56, 0.5);
 		assertEquals(graph.getGradePredictionCurvePoints().get(1).getX(), 10, 0.5);
 		assertEquals(graph.getGradePredictionCurvePoints().get(1).getY(), 56, 0.5);
+		
+		assertEquals(graph.getBestGradePredictionCurvePoints().get(0).getX(), 1, 0.5);
+		assertEquals(graph.getBestGradePredictionCurvePoints().get(0).getY(), 56, 0.5);
+		assertEquals(graph.getBestGradePredictionCurvePoints().get(1).getX(), 10, 0.5);
+		assertEquals(graph.getBestGradePredictionCurvePoints().get(1).getY(), 71, 0.5);
+		
+		assertEquals(graph.getWorstGradePredictionCurvePoints().get(0).getX(), 1, 0.5);
+		assertEquals(graph.getWorstGradePredictionCurvePoints().get(0).getY(), 56, 0.5);
+		assertEquals(graph.getWorstGradePredictionCurvePoints().get(1).getX(), 10, 0.5);
+		assertEquals(graph.getWorstGradePredictionCurvePoints().get(1).getY(), 37, 0.5);
 
 	}
 	
