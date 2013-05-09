@@ -30,6 +30,7 @@ public class SchedulerComponent extends JPanel {
 	private JPanel coursePanel;
 	private JPanel classPanel;
 	private JPanel schedulePanel;
+	private JScrollPane scheduleScrollPane;
 	private ArrayList<SchedulerCourse> courses;
 
 	public SchedulerComponent() {
@@ -110,11 +111,12 @@ public class SchedulerComponent extends JPanel {
 
 		add(this.topPanel, BorderLayout.NORTH);
 
-		JTable table = this.createTables(7);
+		JTable table = this.createTables(5);
 		
-
+		this.schedulePanel.add(table.getTableHeader());
 		this.schedulePanel.add(table);
-		add(this.schedulePanel, BorderLayout.CENTER);
+		this.scheduleScrollPane = new JScrollPane(this.schedulePanel);
+		add(this.scheduleScrollPane, BorderLayout.CENTER);
 		
 
 		setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -127,7 +129,7 @@ public class SchedulerComponent extends JPanel {
 		DefaultTableModel model = new DefaultTableModel(data, columnNames);
 		JTable table = new JTable(model);
 		for (int i = 1; i < numberOfColumns + 1; i++) {
-			model.addColumn("");
+			model.addColumn(i);
 		}
 		return table;
 	}
@@ -136,6 +138,7 @@ public class SchedulerComponent extends JPanel {
 			ArrayList<ArrayList<SchedulerCourse>> schedules, int hours) {
 
 		this.schedulePanel.removeAll();
+		int count = 0;
 		for (ArrayList<SchedulerCourse> schedule : schedules) {
 			JTable table = this.createTables(hours);
 			for (SchedulerCourse course : schedule) {
@@ -152,11 +155,21 @@ public class SchedulerComponent extends JPanel {
 					}
 				}
 			}
-			this.schedulePanel.add(new JScrollPane(table));
+			this.schedulePanel.add(new JLabel("  "));
+			JLabel countLabel = new JLabel("#" + count);
+			Font f1 = new Font("Times New Roman", Font.BOLD, 15);
+			countLabel.setFont(f1);
+			this.schedulePanel.add(countLabel);
+			this.schedulePanel.add(table.getTableHeader());
+			this.schedulePanel.add(table);
 			table = null;
+			count++;
 		}
+		
 		this.schedulePanel.repaint();
 		this.schedulePanel.revalidate();
+		this.scheduleScrollPane.repaint();
+		this.scheduleScrollPane.revalidate();
 	}
 
 	public void addCourse(SchedulerCourse course) {
