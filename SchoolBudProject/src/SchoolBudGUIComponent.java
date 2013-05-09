@@ -26,9 +26,9 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 	 * Default serial version unique id.
 	 */
 	private static final long serialVersionUID = 1L;
-	private JComboBox<String> quarterList;
-	private JComboBox<String> classList;
-	private JComboBox<String> categoryList;
+	private JComboBox quarterList;
+	private JComboBox classList;
+	private JComboBox categoryList;
 	private JPanel comboPanel;
 	private JPanel quarterPanel;
 	private JPanel coursePanel;
@@ -55,33 +55,33 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 				"Update Date", "Category", "Remove" };
 		this.table = new SchoolBudGUITable(names, "item");
 
-		this.quarterList = new JComboBox<String>(quarterStrings);
+		this.quarterList = new JComboBox(quarterStrings);
 		this.quarterList.setSelectedIndex(0);
 		this.quarterList.addActionListener(new ActionListener() {
 			@SuppressWarnings("unchecked")
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				JComboBox<String> box = (JComboBox<String>) event.getSource();
+				JComboBox box = (JComboBox) event.getSource();
 				String quarterName = (String) box.getSelectedItem();
 				updateLabel(quarterName);
 			}
 
 		});
 
-		this.classList = new JComboBox<String>();
+		this.classList = new JComboBox();
 		this.classList.setPrototypeDisplayValue("XXXXXXXXXX");
 		this.classList.addActionListener(new ActionListener() {
 			@SuppressWarnings("unchecked")
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				JComboBox<String> box = (JComboBox<String>) event.getSource();
+				JComboBox box = (JComboBox) event.getSource();
 				String courseName = (String) box.getSelectedItem();
 				updateTable(courseName);
 				updateCategoryList(courseName);
 			}
 		});
 
-		this.categoryList = new JComboBox<String>();
+		this.categoryList = new JComboBox();
 		this.classList.setPrototypeDisplayValue("XXXXXXXXXX");
 
 		this.comboPanel = new JPanel();
@@ -223,7 +223,7 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 		}
 
 		this.quarterList
-				.setModel(new DefaultComboBoxModel<String>(newQuarters));
+				.setModel(new DefaultComboBoxModel(newQuarters));
 	}
 
 	public void updateLabel(String name) {
@@ -236,7 +236,7 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 							.getCourseName();
 				}
 
-				this.classList.setModel(new DefaultComboBoxModel<String>(
+				this.classList.setModel(new DefaultComboBoxModel(
 						newCourses));
 				break;
 			}
@@ -254,7 +254,7 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 							newCat[i] = course.getCategories().get(i).getName();
 						}
 						this.categoryList
-								.setModel(new DefaultComboBoxModel<String>(
+								.setModel(new DefaultComboBoxModel(
 										newCat));
 						return;
 					}
