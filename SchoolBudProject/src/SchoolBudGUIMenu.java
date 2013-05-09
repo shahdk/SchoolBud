@@ -374,7 +374,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 		this.save.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				if (SchoolBudGUIMenu.this.chooser.showOpenDialog(SchoolBudGUIMenu.this.component) != JFileChooser.APPROVE_OPTION) {
+				if (SchoolBudGUIMenu.this.chooser.showDialog(SchoolBudGUIMenu.this.component, messages.getString("save")) != JFileChooser.APPROVE_OPTION) {
 					return;
 				}
 				String filePath = SchoolBudGUIMenu.this.chooser.getSelectedFile().getPath();
@@ -394,7 +394,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 
-				if (SchoolBudGUIMenu.this.chooser.showOpenDialog(SchoolBudGUIMenu.this.component) != JFileChooser.APPROVE_OPTION) {
+				if (SchoolBudGUIMenu.this.chooser.showDialog(SchoolBudGUIMenu.this.component, messages.getString("load")) != JFileChooser.APPROVE_OPTION) {
 					return;
 				}
 
@@ -496,6 +496,8 @@ public class SchoolBudGUIMenu extends JMenuBar {
 		this.view.setText(this.messages.getString("view"));
 		this.trending.setText(this.messages.getString("trending"));
 		this.schedule.setText(this.messages.getString("schedule"));
+		
+		this.component.updateTitles(this.currentLocale);
 
 		translateHeadings();
 	}
