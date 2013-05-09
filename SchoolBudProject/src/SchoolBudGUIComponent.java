@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
@@ -44,6 +46,15 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 	private JTextField quarterGPA;
 	private JTextField overAllGPA;
 	private JButton calculate;
+	private JLabel courseGradeLabel;
+	private JLabel letterGradeLabel;
+	private JLabel targetGradeLabel;
+	private JLabel neededGradeLabel;
+	private JLabel quarterGPALabel;
+	private JLabel overAllGPALabel;
+	private JLabel qt;
+	private JLabel ct;
+	private JLabel cr;
 
 	public SchoolBudGUIComponent() {
 		super(new BorderLayout());
@@ -108,8 +119,8 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				double target = Double.parseDouble(targetGrade.getText());
-				for (Quarter q : quarters) {
+				double target = Double.parseDouble(SchoolBudGUIComponent.this.targetGrade.getText());
+				for (Quarter q : SchoolBudGUIComponent.this.quarters) {
 					if (q.getName().equals(getSelectedQuarter())) {
 						for (int i = 0; i < q.getCourseList().size(); i++) {
 							if (q.getCourseList().get(i).getCourseName()
@@ -129,19 +140,19 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 		this.overAllGPA = new JTextField("0.0");
 		this.overAllGPA.setEditable(false);
 
-		JLabel courseGradeLabel = new JLabel("  Course Grade:");
-		JLabel letterGradeLabel = new JLabel("  Letter Grade:");
-		JLabel targetGradeLabel = new JLabel("  Target Grade:");
-		JLabel neededGradeLabel = new JLabel("  Needed Grade:");
-		JLabel quarterGPALabel = new JLabel("  Quarter GPA:");
-		JLabel overAllGPALabel = new JLabel("  Overall GPA:");
+		this.courseGradeLabel = new JLabel("  Course Grade:");
+		this.letterGradeLabel = new JLabel("  Letter Grade:");
+		this.targetGradeLabel = new JLabel("  Target Grade:");
+		this.neededGradeLabel = new JLabel("  Needed Grade:");
+		this.quarterGPALabel = new JLabel("  Quarter GPA:");
+		this.overAllGPALabel = new JLabel("  Overall GPA:");
 		Font f = new Font("Times New Roman", Font.BOLD, 12);
-		courseGradeLabel.setFont(f);
-		letterGradeLabel.setFont(f);
-		targetGradeLabel.setFont(f);
-		neededGradeLabel.setFont(f);
-		quarterGPALabel.setFont(f);
-		overAllGPALabel.setFont(f);
+		this.courseGradeLabel.setFont(f);
+		this.letterGradeLabel.setFont(f);
+		this.targetGradeLabel.setFont(f);
+		this.neededGradeLabel.setFont(f);
+		this.quarterGPALabel.setFont(f);
+		this.overAllGPALabel.setFont(f);
 
 		JPanel courseGradePanel = new JPanel();
 		JPanel letterGradePanel = new JPanel();
@@ -156,42 +167,42 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 		quarterGPAPanel.setLayout(new GridLayout(1, 2));
 		overAllGPAPanel.setLayout(new GridLayout(1, 2));
 
-		courseGradePanel.add(courseGradeLabel);
+		courseGradePanel.add(this.courseGradeLabel);
 		courseGradePanel.add(this.courseGrade);
 
-		letterGradePanel.add(letterGradeLabel);
+		letterGradePanel.add(this.letterGradeLabel);
 		letterGradePanel.add(this.letterGrade);
 
-		targetGradePanel.add(targetGradeLabel);
+		targetGradePanel.add(this.targetGradeLabel);
 		targetGradePanel.add(this.targetGrade);
 
-		neededGradePanel.add(neededGradeLabel);
+		neededGradePanel.add(this.neededGradeLabel);
 		neededGradePanel.add(this.neededGrade);
 
-		quarterGPAPanel.add(quarterGPALabel);
+		quarterGPAPanel.add(this.quarterGPALabel);
 		quarterGPAPanel.add(this.quarterGPA);
 
-		overAllGPAPanel.add(overAllGPALabel);
+		overAllGPAPanel.add(this.overAllGPALabel);
 		overAllGPAPanel.add(this.overAllGPA);
 
 		this.calculate = new JButton("Calculate Grades");
 		this.calculate.addActionListener(this);
 
-		JLabel qt = new JLabel("Quarter");
-		JLabel cr = new JLabel("Course");
-		JLabel ct = new JLabel("Category");
+		this.qt = new JLabel("Quarter");
+		this.cr = new JLabel("Course");
+		this.ct = new JLabel("Category");
 		Font f1 = new Font("Times New Roman", Font.BOLD, 17);
-		qt.setFont(f1);
-		cr.setFont(f1);
-		ct.setFont(f1);
+		this.qt.setFont(f1);
+		this.cr.setFont(f1);
+		this.ct.setFont(f1);
 
-		this.quarterPanel.add(qt, BorderLayout.NORTH);
+		this.quarterPanel.add(this.qt, BorderLayout.NORTH);
 		this.quarterPanel.add(this.quarterList, BorderLayout.SOUTH);
 
-		this.coursePanel.add(cr, BorderLayout.NORTH);
+		this.coursePanel.add(this.cr, BorderLayout.NORTH);
 		this.coursePanel.add(this.classList, BorderLayout.SOUTH);
 
-		this.categoryPanel.add(ct, BorderLayout.NORTH);
+		this.categoryPanel.add(this.ct, BorderLayout.NORTH);
 		this.categoryPanel.add(this.categoryList, BorderLayout.SOUTH);
 
 		this.comboPanel.add(this.quarterPanel, BorderLayout.NORTH);
@@ -224,6 +235,37 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 
 		this.quarterList
 				.setModel(new DefaultComboBoxModel(newQuarters));
+	}
+	
+	public void updateTitles(Locale locale){
+		ResourceBundle messages = ResourceBundle.getBundle("MessagesBundle",
+				locale);
+		this.courseGradeLabel.setText(messages.getString("courseGrade"));
+		this.letterGradeLabel.setText(messages.getString("letterGrade"));
+		this.targetGradeLabel.setText(messages.getString("targetGrade"));
+		this.neededGradeLabel.setText(messages.getString("neededGrade"));
+		this.quarterGPALabel.setText(messages.getString("quarterGPA"));
+		this.overAllGPALabel.setText(messages.getString("overallGPA"));
+		
+		Font f = new Font("Times New Roman", Font.BOLD, 12);
+		this.courseGradeLabel.setFont(f);
+		this.letterGradeLabel.setFont(f);
+		this.targetGradeLabel.setFont(f);
+		this.neededGradeLabel.setFont(f);
+		this.quarterGPALabel.setFont(f);
+		this.overAllGPALabel.setFont(f);
+		
+		this.qt.setText(messages.getString("quarter"));
+		this.ct.setText(messages.getString("category"));
+		this.cr.setText(messages.getString("course"));
+		
+		Font f1 = new Font("Times New Roman", Font.BOLD, 17);
+		this.qt.setFont(f1);
+		this.cr.setFont(f1);
+		this.ct.setFont(f1);
+		
+		this.calculate.setText(messages.getString("calculateGrades"));
+		
 	}
 
 	public void updateLabel(String name) {
@@ -294,7 +336,7 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 						this.table.addInitialItems(newItems, numItems);
 					}
 					this.table.addEmptyRow();
-					this.table.setQuarters(quarters, getSelectedQuarter(),
+					this.table.setQuarters(this.quarters, getSelectedQuarter(),
 							getSelectedCourse());
 					return;
 				}
@@ -306,8 +348,8 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource().equals(this.calculate)) {
-			double target = Double.parseDouble(targetGrade.getText());
-			for (Quarter q : quarters) {
+			double target = Double.parseDouble(this.targetGrade.getText());
+			for (Quarter q : this.quarters) {
 				if (q.getName().equals(getSelectedQuarter())) {
 					for (int i = 0; i < q.getCourseList().size(); i++) {
 						if (q.getCourseList().get(i).getCourseName()

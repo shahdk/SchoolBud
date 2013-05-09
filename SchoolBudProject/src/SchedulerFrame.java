@@ -24,7 +24,7 @@ public class SchedulerFrame extends JFrame{
 	 */
 	private final void initialize() {
         
-		SchedulerComponent newContentPane = new SchedulerComponent();
+		SchedulerComponent newContentPane = new SchedulerComponent(this.locale);
         newContentPane.setOpaque(true);
         setContentPane(newContentPane);
       

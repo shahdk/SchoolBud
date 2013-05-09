@@ -1,7 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -47,7 +46,7 @@ public class SchedulerMenu extends JMenuBar{
 			public void actionPerformed(ActionEvent event) {
 				JPanel myPanel = new JPanel();
 				JTextField nameField = new JTextField(15);
-				JCheckBox optional = new JCheckBox("Optional", false);
+				JCheckBox optional = new JCheckBox(messages.getString("optional"), false);
 				
 				myPanel.add(new JLabel(SchedulerMenu.this.messages
 						.getString("name")));
@@ -67,7 +66,7 @@ public class SchedulerMenu extends JMenuBar{
 
 		});
 		
-		this.section = new JMenuItem("Section");
+		this.section = new JMenuItem(this.messages.getString("section"));
 		this.section.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
@@ -75,6 +74,7 @@ public class SchedulerMenu extends JMenuBar{
 				JPanel topPanel = new JPanel(new BorderLayout());
 				JPanel myPanel = new JPanel();
 				JPanel myClassDays = new JPanel();
+				JPanel myInfo = new JPanel();
 				
 				JTextField nameField = new JTextField(10);
 				JTextField sectionField = new JTextField(10);
@@ -86,43 +86,48 @@ public class SchedulerMenu extends JMenuBar{
 				JTextField sectionField6 = new JTextField(10);
 				JTextField sectionField7 = new JTextField(10);
 				
-				myPanel.add(new JLabel("Teacher Name"));
+				myPanel.add(new JLabel(messages.getString("teacherName")));
 				myPanel.add(nameField);
 				myPanel.add(Box.createHorizontalStrut(10));
 	
-				myPanel.add(new JLabel("Day1 Hours"));
+				myPanel.add(new JLabel(messages.getString("mondayHours")));
 				myPanel.add(sectionField);
 				myPanel.add(Box.createHorizontalStrut(10));
 				
-				myPanel.add(new JLabel("Day2 Hours"));
+				myPanel.add(new JLabel(messages.getString("tuesdayHours")));
 				myPanel.add(sectionField1);
 				myPanel.add(Box.createHorizontalStrut(10));
 				
-				myPanel.add(new JLabel("Day3 Hours"));
-				myPanel.add(sectionField2);
-				myPanel.add(Box.createHorizontalStrut(10));
+				myClassDays.add(new JLabel(messages.getString("wednesdayHours")));
+				myClassDays.add(sectionField2);
+				myClassDays.add(Box.createHorizontalStrut(10));
 				
-				myClassDays.add(new JLabel("Day4 Hours"));
+				myClassDays.add(new JLabel(messages.getString("thursdayHours")));
 				myClassDays.add(sectionField3);
 				myClassDays.add(Box.createHorizontalStrut(10));
 				
-				myClassDays.add(new JLabel("Day5 Hours"));
+				myClassDays.add(new JLabel(messages.getString("fridayHours")));
 				myClassDays.add(sectionField4);
 				myClassDays.add(Box.createHorizontalStrut(10));
 				
-				myClassDays.add(new JLabel("Day6 Hours"));
-				myClassDays.add(sectionField5);
-				myClassDays.add(Box.createHorizontalStrut(10));
+				myInfo.add(new JLabel(messages.getString("saturdayHours")));
+				myInfo.add(sectionField5);
+				myInfo.add(Box.createHorizontalStrut(10));
 				
-				myClassDays.add(new JLabel("Day7 Hours"));
-				myClassDays.add(sectionField6);
-				myClassDays.add(Box.createHorizontalStrut(10));
+				myInfo.add(new JLabel(messages.getString("sundayHours")));
+				myInfo.add(sectionField6);
+				myInfo.add(Box.createHorizontalStrut(10));
 				
-				topPanel.add(myPanel, BorderLayout.PAGE_START);
-				topPanel.add(myClassDays, BorderLayout.PAGE_END);
+				myInfo.add(new JLabel(messages.getString("section") + " #"));
+				myInfo.add(sectionField7);
 				
+				topPanel.add(myPanel, BorderLayout.NORTH);
+				topPanel.add(myClassDays, BorderLayout.CENTER);
+				topPanel.add(myInfo, BorderLayout.SOUTH);
+				
+				if(!component.getSelectedCourse().equals("----")){
 				int result = JOptionPane
-						.showConfirmDialog(null, topPanel, "Section",
+						.showConfirmDialog(null, topPanel, messages.getString("section"),
 								JOptionPane.OK_CANCEL_OPTION);
 				
 				if (result == JOptionPane.OK_OPTION) {
@@ -170,8 +175,10 @@ public class SchedulerMenu extends JMenuBar{
 					}
 					
 					ClassSection section = new ClassSection(nameField.getText(), week);
+					section.setSection(sectionField7.getText());
 					SchedulerMenu.this.component.addSection(section);
 				}
+			}
 			}
 
 		});

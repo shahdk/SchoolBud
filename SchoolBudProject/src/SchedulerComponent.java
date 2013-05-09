@@ -3,6 +3,8 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -32,10 +34,15 @@ public class SchedulerComponent extends JPanel {
 	private JPanel schedulePanel;
 	private JScrollPane scheduleScrollPane;
 	private ArrayList<SchedulerCourse> courses;
+	private Locale locale;
+	private ResourceBundle messages;
 
-	public SchedulerComponent() {
+	public SchedulerComponent(Locale locale) {
 		super(new BorderLayout());
 		this.courses = new ArrayList<SchedulerCourse>();
+		this.locale = locale;
+		this.messages = ResourceBundle.getBundle("MessagesBundle",
+				this.locale);
 
 		String[] quarterStrings = { "----" };
 
@@ -62,7 +69,7 @@ public class SchedulerComponent extends JPanel {
 			}
 		});
 
-		this.scheduleButton = new JButton("Schedule Courses");
+		this.scheduleButton = new JButton(this.messages.getString("scheduleCourses"));
 
 		this.scheduleButton.addActionListener(new ActionListener() {
 			@Override
@@ -70,11 +77,11 @@ public class SchedulerComponent extends JPanel {
 				JPanel myPanel = new JPanel();
 				JTextField nameField = new JTextField(10);
 
-				myPanel.add(new JLabel("Class Hours:"));
+				myPanel.add(new JLabel(messages.getString("classHours")));
 				myPanel.add(nameField);
 
 				int result = JOptionPane.showConfirmDialog(null, myPanel,
-						"Schedule Now", JOptionPane.OK_CANCEL_OPTION);
+						messages.getString("createSchedules"), JOptionPane.OK_CANCEL_OPTION);
 				if (result == JOptionPane.OK_OPTION) {
 
 					int classHours = Integer.parseInt(nameField.getText());
@@ -93,8 +100,8 @@ public class SchedulerComponent extends JPanel {
 		this.schedulePanel = new JPanel();
 		this.schedulePanel.setLayout(new BoxLayout( schedulePanel, BoxLayout.PAGE_AXIS ) );
 
-		JLabel courseLabel = new JLabel("Courses");
-		JLabel classLabel = new JLabel("Classes");
+		JLabel courseLabel = new JLabel(this.messages.getString("courses"));
+		JLabel classLabel = new JLabel(this.messages.getString("sections"));
 		Font f1 = new Font("Times New Roman", Font.BOLD, 17);
 		courseLabel.setFont(f1);
 		classLabel.setFont(f1);
@@ -111,7 +118,7 @@ public class SchedulerComponent extends JPanel {
 
 		add(this.topPanel, BorderLayout.NORTH);
 
-		JTable table = this.createTables(5);
+		JTable table = this.createTables(4);
 		
 		this.schedulePanel.add(table.getTableHeader());
 		this.schedulePanel.add(table);
@@ -121,10 +128,14 @@ public class SchedulerComponent extends JPanel {
 
 		setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 	}
+	
+	public String getSelectedCourse(){
+		return (String) this.courseList.getSelectedItem();
+	}
 
 	public JTable createTables(int numberOfColumns) {
-		Object[][] data = { { "Monday" }, { "Tuesday" }, { "Wednesday" }, { "Thursday" },
-				{ "Friday" }, { "Saturday" }, { "Sunday" } };
+		Object[][] data = { { this.messages.getString("monday") }, { this.messages.getString("tuesday") }, { this.messages.getString("wednesday") }, { this.messages.getString("thursday") },
+				{ this.messages.getString("friday") }, { this.messages.getString("saturday") }, { this.messages.getString("sunday") } };
 		String[] columnNames = { "" };
 		DefaultTableModel model = new DefaultTableModel(data, columnNames);
 		JTable table = new JTable(model);
@@ -147,7 +158,7 @@ public class SchedulerComponent extends JPanel {
 					for (ClassDay day : section.getClassDays()) {
 						for (Integer hour : day.getHourSlots()) {
 							table.setValueAt(
-									course.getName() + ":"
+									course.getName() + "-" + section.getSection() + ":"
 											+ section.getTeacher(), dayNum,
 									hour);
 						}

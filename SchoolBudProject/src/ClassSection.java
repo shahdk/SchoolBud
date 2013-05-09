@@ -12,6 +12,7 @@ public class ClassSection {
 
 	private String teacher;
 	private ArrayList<ClassDay> classDays;
+	private String section;
 	
 	public ClassSection (String teacher, ArrayList<ClassDay> days) throws InstantiationError{
 		
@@ -20,6 +21,14 @@ public class ClassSection {
 		}
 		this.setClassDays(days);
 		this.setTeacher(teacher);
+	}
+	
+	public void setSection(String name){
+		this.section = name;
+	}
+	
+	public String getSection(){
+		return this.section;
 	}
 
 	/**
