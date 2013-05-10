@@ -1,4 +1,4 @@
-import java.awt.BorderLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -23,6 +23,10 @@ import javax.swing.JTextField;
  *         Created May 8, 2013.
  */
 public class SchedulerMenu extends JMenuBar{
+	/**
+	 * Defualt serial version id
+	 */
+	private static final long serialVersionUID = 1L;
 	private JMenu add;
 	private Locale currentLocale;
 	private ResourceBundle messages;
@@ -71,10 +75,18 @@ public class SchedulerMenu extends JMenuBar{
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				ArrayList<ClassDay> week = ClassSection.create7DayArrayList();
-				JPanel topPanel = new JPanel(new BorderLayout());
-				JPanel myPanel = new JPanel();
-				JPanel myClassDays = new JPanel();
-				JPanel myInfo = new JPanel();
+				JPanel topPanel = new JPanel(new GridLayout(3,3));
+				
+				JPanel teacherPanel = new JPanel(new GridLayout(1, 2));
+				JPanel mondayPanel = new JPanel(new GridLayout(1, 2));
+				JPanel tuesdayPanel = new JPanel(new GridLayout(1, 2));
+				JPanel wednesdayPanel = new JPanel(new GridLayout(1, 2));
+				JPanel thursdayPanel = new JPanel(new GridLayout(1, 2));
+				JPanel fridayPanel = new JPanel(new GridLayout(1, 2));
+				JPanel saturdayPanel = new JPanel(new GridLayout(1, 2));
+				JPanel sundayPanel = new JPanel(new GridLayout(1, 2));
+				JPanel sectionPanel = new JPanel(new GridLayout(1, 2));
+				
 				
 				JTextField nameField = new JTextField(10);
 				JTextField sectionField = new JTextField(10);
@@ -86,44 +98,42 @@ public class SchedulerMenu extends JMenuBar{
 				JTextField sectionField6 = new JTextField(10);
 				JTextField sectionField7 = new JTextField(10);
 				
-				myPanel.add(new JLabel(messages.getString("teacherName")));
-				myPanel.add(nameField);
-				myPanel.add(Box.createHorizontalStrut(10));
+				teacherPanel.add(new JLabel(messages.getString("teacherName")));
+				teacherPanel.add(nameField);
 	
-				myPanel.add(new JLabel(messages.getString("mondayHours")));
-				myPanel.add(sectionField);
-				myPanel.add(Box.createHorizontalStrut(10));
+				mondayPanel.add(new JLabel(messages.getString("mondayHours")));
+				mondayPanel.add(sectionField);
 				
-				myPanel.add(new JLabel(messages.getString("tuesdayHours")));
-				myPanel.add(sectionField1);
-				myPanel.add(Box.createHorizontalStrut(10));
+				tuesdayPanel.add(new JLabel(messages.getString("tuesdayHours")));
+				tuesdayPanel.add(sectionField1);
 				
-				myClassDays.add(new JLabel(messages.getString("wednesdayHours")));
-				myClassDays.add(sectionField2);
-				myClassDays.add(Box.createHorizontalStrut(10));
+				wednesdayPanel.add(new JLabel(messages.getString("wednesdayHours")));
+				wednesdayPanel.add(sectionField2);
 				
-				myClassDays.add(new JLabel(messages.getString("thursdayHours")));
-				myClassDays.add(sectionField3);
-				myClassDays.add(Box.createHorizontalStrut(10));
+				thursdayPanel.add(new JLabel(messages.getString("thursdayHours")));
+				thursdayPanel.add(sectionField3);
 				
-				myClassDays.add(new JLabel(messages.getString("fridayHours")));
-				myClassDays.add(sectionField4);
-				myClassDays.add(Box.createHorizontalStrut(10));
+				fridayPanel.add(new JLabel(messages.getString("fridayHours")));
+				fridayPanel.add(sectionField4);
 				
-				myInfo.add(new JLabel(messages.getString("saturdayHours")));
-				myInfo.add(sectionField5);
-				myInfo.add(Box.createHorizontalStrut(10));
+				saturdayPanel.add(new JLabel(messages.getString("saturdayHours")));
+				saturdayPanel.add(sectionField5);
 				
-				myInfo.add(new JLabel(messages.getString("sundayHours")));
-				myInfo.add(sectionField6);
-				myInfo.add(Box.createHorizontalStrut(10));
+				sundayPanel.add(new JLabel(messages.getString("sundayHours")));
+				sundayPanel.add(sectionField6);
 				
-				myInfo.add(new JLabel(messages.getString("section") + " #"));
-				myInfo.add(sectionField7);
+				sectionPanel.add(new JLabel(messages.getString("section") + " #"));
+				sectionPanel.add(sectionField7);
 				
-				topPanel.add(myPanel, BorderLayout.NORTH);
-				topPanel.add(myClassDays, BorderLayout.CENTER);
-				topPanel.add(myInfo, BorderLayout.SOUTH);
+				topPanel.add(teacherPanel);
+				topPanel.add(mondayPanel);
+				topPanel.add(tuesdayPanel);
+				topPanel.add(wednesdayPanel);
+				topPanel.add(thursdayPanel);
+				topPanel.add(fridayPanel);
+				topPanel.add(saturdayPanel);
+				topPanel.add(sundayPanel);
+				topPanel.add(sectionPanel);
 				
 				if(!component.getSelectedCourse().equals("----")){
 				int result = JOptionPane

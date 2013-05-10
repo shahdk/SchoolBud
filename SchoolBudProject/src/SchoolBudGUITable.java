@@ -466,7 +466,7 @@ public class SchoolBudGUITable {
 	}
 
 	public void changeHeaderValues(String[] headings) {
-		for (int i = 0; i < this.table.getColumnCount(); i++) {
+		for (int i = 0; i < headings.length; i++) {
 			this.table.getTableHeader().getColumnModel().getColumn(i)
 					.setHeaderValue(headings[i]);
 			this.table.repaint();

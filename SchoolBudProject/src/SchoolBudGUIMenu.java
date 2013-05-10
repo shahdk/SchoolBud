@@ -1,4 +1,3 @@
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
@@ -7,7 +6,6 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
-
 import javax.swing.Box;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -17,8 +15,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextField;
 
 /**
@@ -28,11 +24,16 @@ import javax.swing.JTextField;
  */
 public class SchoolBudGUIMenu extends JMenuBar {
 
+	/**
+	 * Default serial version id
+	 */
+	private static final long serialVersionUID = 1L;
 	private JMenu add;
 	private JMenu language;
 	private JMenu file;
 	private JMenu edit;
 	private JMenu view;
+	private JMenu remove;
 	private Locale currentLocale;
 	private ResourceBundle messages;
 	private JMenuItem course;
@@ -49,11 +50,14 @@ public class SchoolBudGUIMenu extends JMenuBar {
 	private JMenuItem exit;
 	private JMenuItem trending;
 	private JMenuItem schedule;
+	private JMenuItem rmQuarter;
+	private JMenuItem rmCourse;
+	private JMenuItem rmCat;
 	private JFrame frame;
 	private QuarterMain main;
 	private SchoolBudGUIComponent component;
 	private final JFileChooser chooser;
-	private SchoolBudGUITable table, rubricTable;
+	private SchoolBudGUITable rubricTable;
 	private final int NUM_COLS = 5;
 
 	public SchoolBudGUIMenu(JFrame frame, SchoolBudGUIComponent component) {
@@ -74,6 +78,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 		this.file = new JMenu(this.messages.getString("file"));
 		this.edit = new JMenu(this.messages.getString("edit"));
 		this.view = new JMenu(this.messages.getString("view"));
+		this.remove = new JMenu(this.messages.getString("remove"));
 
 		this.course = new JMenuItem(this.messages.getString("course"));
 		this.course.addActionListener(new ActionListener() {
@@ -117,7 +122,8 @@ public class SchoolBudGUIMenu extends JMenuBar {
 								.parse(end));
 						SchoolBudGUIMenu.this.component.addNewCourse(newCourse);
 					} catch (Exception e) {
-						JOptionPane.showMessageDialog(SchoolBudGUIMenu.this.frame, "Invalid Input");
+						JOptionPane.showMessageDialog(
+								SchoolBudGUIMenu.this.frame, "Invalid Input");
 					}
 				}
 			}
@@ -146,7 +152,8 @@ public class SchoolBudGUIMenu extends JMenuBar {
 								.addNewQuarter(SchoolBudGUIMenu.this.main
 										.getQuarterList());
 					} catch (Exception exp) {
-						JOptionPane.showMessageDialog(SchoolBudGUIMenu.this.frame, "Invalid Input");
+						JOptionPane.showMessageDialog(
+								SchoolBudGUIMenu.this.frame, "Invalid Input");
 					}
 				}
 			}
@@ -185,25 +192,30 @@ public class SchoolBudGUIMenu extends JMenuBar {
 							Category newCategory = new Category(nameField
 									.getText(), Double.parseDouble(weightField
 									.getText()));
-							SchoolBudGUIMenu.this.component.addNewCategory(newCategory);
+							SchoolBudGUIMenu.this.component
+									.addNewCategory(newCategory);
 						} else {
 							Category newCategory = new Category(nameField
 									.getText(), Integer.parseInt(numItemField
 									.getText()), Double.parseDouble(weightField
 									.getText()));
-							SchoolBudGUIMenu.this.component.addNewCategory(newCategory);
-							SchoolBudGUIMenu.this.component.updateTable(SchoolBudGUIMenu.this.component.getSelectedCourse());
+							SchoolBudGUIMenu.this.component
+									.addNewCategory(newCategory);
+							SchoolBudGUIMenu.this.component
+									.updateTable(SchoolBudGUIMenu.this.component
+											.getSelectedCourse());
 						}
 					} catch (Exception exp) {
-						JOptionPane.showMessageDialog(SchoolBudGUIMenu.this.frame, "Invalid Input");
+						JOptionPane.showMessageDialog(
+								SchoolBudGUIMenu.this.frame, "Invalid Input");
 					}
 				}
 			}
 
 		});
 
-		this.add.add(this.course);
 		this.add.add(this.quarter);
+		this.add.add(this.course);
 		this.add.add(this.category);
 
 		this.editCourse = new JMenuItem(this.messages.getString("course"));
@@ -244,9 +256,11 @@ public class SchoolBudGUIMenu extends JMenuBar {
 								"MM/dd/yyyy");
 						Date start = sdf.parse(startField.getText());
 						Date end = sdf.parse(endField.getText());
-						SchoolBudGUIMenu.this.component.editCourse(name, creditHours, start, end);
+						SchoolBudGUIMenu.this.component.editCourse(name,
+								creditHours, start, end);
 					} catch (Exception exp) {
-						JOptionPane.showMessageDialog(SchoolBudGUIMenu.this.frame, "Invalid Input");
+						JOptionPane.showMessageDialog(
+								SchoolBudGUIMenu.this.frame, "Invalid Input");
 					}
 				}
 			}
@@ -273,7 +287,8 @@ public class SchoolBudGUIMenu extends JMenuBar {
 						String name = nameField.getText();
 						SchoolBudGUIMenu.this.component.editQuarter(name);
 					} catch (Exception exp) {
-						JOptionPane.showMessageDialog(SchoolBudGUIMenu.this.frame, "Invalid Input");
+						JOptionPane.showMessageDialog(
+								SchoolBudGUIMenu.this.frame, "Invalid Input");
 					}
 				}
 			}
@@ -306,9 +321,11 @@ public class SchoolBudGUIMenu extends JMenuBar {
 						String name = nameField.getText();
 						double weight = Double.parseDouble(weightField
 								.getText());
-						SchoolBudGUIMenu.this.component.editCategory(name, weight);
+						SchoolBudGUIMenu.this.component.editCategory(name,
+								weight);
 					} catch (Exception exp) {
-						JOptionPane.showMessageDialog(SchoolBudGUIMenu.this.frame, "Invalid Input");
+						JOptionPane.showMessageDialog(
+								SchoolBudGUIMenu.this.frame, "Invalid Input");
 					}
 				}
 			}
@@ -321,33 +338,118 @@ public class SchoolBudGUIMenu extends JMenuBar {
 			public void actionPerformed(ActionEvent event) {
 
 				JPanel myPanel = new JPanel();
-				String[] names = { "Letter Grade", "Lower Limit",
-						"Upper Limit", "GPA", "Remove" };
+				String[] names = { SchoolBudGUIMenu.this.messages.getString("letgrade") , SchoolBudGUIMenu.this.messages.getString("lowerlimit"),
+						SchoolBudGUIMenu.this.messages.getString("upperlimit"), SchoolBudGUIMenu.this.messages.getString("gpa"), SchoolBudGUIMenu.this.messages.getString("remove") };
 
 				try {
-					SchoolBudGUIMenu.this.rubricTable = new SchoolBudGUITable(names, "rubric");
-					SchoolBudGUIMenu.this.rubricTable.setQuarters(SchoolBudGUIMenu.this.main.getQuarterList(),
-							SchoolBudGUIMenu.this.component.getSelectedQuarter(),
+					SchoolBudGUIMenu.this.rubricTable = new SchoolBudGUITable(
+							names, "rubric");
+					SchoolBudGUIMenu.this.rubricTable.setQuarters(
+							SchoolBudGUIMenu.this.main.getQuarterList(),
+							SchoolBudGUIMenu.this.component
+									.getSelectedQuarter(),
 							SchoolBudGUIMenu.this.component.getSelectedCourse());
 
 					populateRubric();
-					myPanel.add(SchoolBudGUIMenu.this.rubricTable.getJScrollPane());
+					myPanel.add(SchoolBudGUIMenu.this.rubricTable
+							.getJScrollPane());
 
 					JOptionPane.showConfirmDialog(null, myPanel,
 							SchoolBudGUIMenu.this.messages
 									.getString("editRubric"),
 							JOptionPane.DEFAULT_OPTION);
 				} catch (Exception exp) {
-					JOptionPane.showMessageDialog(SchoolBudGUIMenu.this.frame, "Invalid Input");
+					JOptionPane.showMessageDialog(SchoolBudGUIMenu.this.frame,
+							"Invalid Input");
 				}
 			}
 
 		});
 
-		this.edit.add(this.editCourse);
 		this.edit.add(this.editQuarter);
+		this.edit.add(this.editCourse);
 		this.edit.add(this.editCategory);
 		this.edit.add(this.editRubric);
+
+		this.rmQuarter = new JMenuItem(this.messages.getString("quarter"));
+		this.rmQuarter.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				main.removeQuarter(component.getSelectedQuarter());
+				component.updateQuarters(main.getQuarterList());
+				component.updateCourses(component.getSelectedQuarter());
+				component.updateTable(component.getSelectedCourse());
+				component.updateCategoryList(component.getSelectedCourse());
+				component.calculateGrades();
+				return;
+			}
+
+		});
+
+		this.rmCourse = new JMenuItem(this.messages.getString("course"));
+		this.rmCourse.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for (Quarter q : main.getQuarterList()) {
+					if (q.getName().equals(component.getSelectedQuarter())) {
+						for (int i = 0; i < q.getCourseList().size(); i++) {
+							if (q.getCourseList().get(i).getCourseName()
+									.equals(component.getSelectedCourse())) {
+								q.removeCourse(q.getCourseList().get(i));
+								component.updateCourses(component
+										.getSelectedQuarter());
+								component.updateCategoryList(component
+										.getSelectedCourse());
+								component.updateTable(component
+										.getSelectedCourse());
+								component.calculateGrades();
+								return;
+							}
+						}
+					}
+				}
+			}
+		});
+
+		this.rmCat = new JMenuItem(this.messages.getString("category"));
+		this.rmCat.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for (Quarter q : main.getQuarterList()) {
+					if (q.getName().equals(component.getSelectedQuarter())) {
+						for (Course c : q.getCourseList()) {
+							if (c.getCourseName().equals(
+									component.getSelectedCourse())) {
+								for (int i = 0; i < c.getCategories().size(); i++) {
+									if (c.getCategories()
+											.get(i)
+											.getName()
+											.equals(component
+													.getSelectedCategory())) {
+										c.removeCategory(component
+												.getSelectedCategory());
+										component.updateCategoryList(component
+												.getSelectedCourse());
+										component.updateTable(component
+												.getSelectedCourse());
+										component.calculateGrades();
+										return;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+		});
+
+		this.remove.add(this.rmQuarter);
+		this.remove.add(this.rmCourse);
+		this.remove.add(this.rmCat);
 
 		this.english = new JMenuItem(this.messages.getString("english"));
 		this.english.addActionListener(new ActionListener() {
@@ -374,15 +476,19 @@ public class SchoolBudGUIMenu extends JMenuBar {
 		this.save.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				if (SchoolBudGUIMenu.this.chooser.showDialog(SchoolBudGUIMenu.this.component, messages.getString("save")) != JFileChooser.APPROVE_OPTION) {
+				if (SchoolBudGUIMenu.this.chooser.showDialog(
+						SchoolBudGUIMenu.this.component,
+						messages.getString("save")) != JFileChooser.APPROVE_OPTION) {
 					return;
 				}
-				String filePath = SchoolBudGUIMenu.this.chooser.getSelectedFile().getPath();
+				String filePath = SchoolBudGUIMenu.this.chooser
+						.getSelectedFile().getPath();
 
 				try {
 					SchoolBudGUIMenu.this.main.saveFile(filePath);
 				} catch (Exception exception) {
-					JOptionPane.showMessageDialog(SchoolBudGUIMenu.this.frame, "Invalid Input");
+					JOptionPane.showMessageDialog(SchoolBudGUIMenu.this.frame,
+							"Invalid Input");
 				}
 
 			}
@@ -394,11 +500,14 @@ public class SchoolBudGUIMenu extends JMenuBar {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 
-				if (SchoolBudGUIMenu.this.chooser.showDialog(SchoolBudGUIMenu.this.component, messages.getString("load")) != JFileChooser.APPROVE_OPTION) {
+				if (SchoolBudGUIMenu.this.chooser.showDialog(
+						SchoolBudGUIMenu.this.component,
+						messages.getString("load")) != JFileChooser.APPROVE_OPTION) {
 					return;
 				}
 
-				String filePath = SchoolBudGUIMenu.this.chooser.getSelectedFile().getPath();
+				String filePath = SchoolBudGUIMenu.this.chooser
+						.getSelectedFile().getPath();
 				try {
 					SchoolBudGUIMenu.this.main.loadFile(filePath);
 					SchoolBudGUIMenu.this.component
@@ -406,7 +515,8 @@ public class SchoolBudGUIMenu extends JMenuBar {
 									.getQuarterList());
 					SchoolBudGUIMenu.this.component.calculateGrades();
 				} catch (Exception exception) {
-					JOptionPane.showMessageDialog(SchoolBudGUIMenu.this.frame, "Invalid Input");
+					JOptionPane.showMessageDialog(SchoolBudGUIMenu.this.frame,
+							"Invalid Input");
 				}
 			}
 
@@ -432,11 +542,9 @@ public class SchoolBudGUIMenu extends JMenuBar {
 			public void actionPerformed(ActionEvent event) {
 				JPanel myPanel = new JPanel();
 
-				int result = JOptionPane
-						.showConfirmDialog(null, myPanel,
-								SchoolBudGUIMenu.this.messages
-										.getString("trending"),
-								JOptionPane.OK_CANCEL_OPTION);
+				int result = JOptionPane.showConfirmDialog(null, myPanel,
+						SchoolBudGUIMenu.this.messages.getString("trending"),
+						JOptionPane.OK_CANCEL_OPTION);
 				if (result == JOptionPane.OK_OPTION) {
 					//
 				}
@@ -448,9 +556,9 @@ public class SchoolBudGUIMenu extends JMenuBar {
 		this.schedule.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				ArrayList<SchedulerCourse> classes = new ArrayList<SchedulerCourse>();
-				SchedulerFrame frame = new SchedulerFrame(SchoolBudGUIMenu.this.currentLocale); 
-		        frame.setVisible(true);
+				SchedulerFrame frame = new SchedulerFrame(
+						SchoolBudGUIMenu.this.currentLocale);
+				frame.setVisible(true);
 
 			}
 
@@ -462,6 +570,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 		add(this.file);
 		add(this.add);
 		add(this.edit);
+		add(this.remove);
 		add(this.view);
 		add(this.language);
 
@@ -485,6 +594,10 @@ public class SchoolBudGUIMenu extends JMenuBar {
 		this.editQuarter.setText(this.messages.getString("quarter"));
 		this.editCategory.setText(this.messages.getString("category"));
 		this.editRubric.setText(this.messages.getString("rubric"));
+		
+		this.rmQuarter.setText(this.messages.getString("quarter"));
+		this.rmCourse.setText(this.messages.getString("course"));
+		this.rmCat.setText(this.messages.getString("category"));
 
 		this.english.setText(this.messages.getString("english"));
 		this.spanish.setText(this.messages.getString("spanish"));
@@ -496,7 +609,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 		this.view.setText(this.messages.getString("view"));
 		this.trending.setText(this.messages.getString("trending"));
 		this.schedule.setText(this.messages.getString("schedule"));
-		
+
 		this.component.updateTitles(this.currentLocale);
 
 		translateHeadings();
@@ -511,9 +624,8 @@ public class SchoolBudGUIMenu extends JMenuBar {
 		headings.add(this.messages.getString("category"));
 		headings.add(this.messages.getString("remove"));
 		this.component.updateHeadings(headings);
-
 	}
-
+	
 	public void populateRubric() {
 		for (Quarter q : this.main.getQuarterList()) {
 			if (q.getName().equals(this.component.getSelectedQuarter())) {

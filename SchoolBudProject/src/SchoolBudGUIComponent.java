@@ -74,7 +74,10 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 			public void actionPerformed(ActionEvent event) {
 				JComboBox box = (JComboBox) event.getSource();
 				String quarterName = (String) box.getSelectedItem();
-				updateLabel(quarterName);
+				updateCourses(quarterName);
+				updateCategoryList(getSelectedCourse());
+				updateTable(getSelectedCourse());
+				calculateGrades();
 			}
 
 		});
@@ -89,11 +92,12 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 				String courseName = (String) box.getSelectedItem();
 				updateTable(courseName);
 				updateCategoryList(courseName);
+				calculateGrades();
 			}
 		});
 
 		this.categoryList = new JComboBox();
-		this.classList.setPrototypeDisplayValue("XXXXXXXXXX");
+		this.categoryList.setPrototypeDisplayValue("XXXXXXXXXX");
 
 		this.comboPanel = new JPanel();
 		this.comboPanel.setLayout(new BorderLayout());
@@ -119,7 +123,9 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				double target = Double.parseDouble(SchoolBudGUIComponent.this.targetGrade.getText());
+				double target = Double
+						.parseDouble(SchoolBudGUIComponent.this.targetGrade
+								.getText());
 				for (Quarter q : SchoolBudGUIComponent.this.quarters) {
 					if (q.getName().equals(getSelectedQuarter())) {
 						for (int i = 0; i < q.getCourseList().size(); i++) {
@@ -233,11 +239,10 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 			newQuarters[i] = this.quarters.get(i).getName();
 		}
 
-		this.quarterList
-				.setModel(new DefaultComboBoxModel(newQuarters));
+		this.quarterList.setModel(new DefaultComboBoxModel(newQuarters));
 	}
-	
-	public void updateTitles(Locale locale){
+
+	public void updateTitles(Locale locale) {
 		ResourceBundle messages = ResourceBundle.getBundle("MessagesBundle",
 				locale);
 		this.courseGradeLabel.setText(messages.getString("courseGrade"));
@@ -246,7 +251,7 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 		this.neededGradeLabel.setText(messages.getString("neededGrade"));
 		this.quarterGPALabel.setText(messages.getString("quarterGPA"));
 		this.overAllGPALabel.setText(messages.getString("overallGPA"));
-		
+
 		Font f = new Font("Times New Roman", Font.BOLD, 12);
 		this.courseGradeLabel.setFont(f);
 		this.letterGradeLabel.setFont(f);
@@ -254,21 +259,25 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 		this.neededGradeLabel.setFont(f);
 		this.quarterGPALabel.setFont(f);
 		this.overAllGPALabel.setFont(f);
-		
+
 		this.qt.setText(messages.getString("quarter"));
 		this.ct.setText(messages.getString("category"));
 		this.cr.setText(messages.getString("course"));
-		
+
 		Font f1 = new Font("Times New Roman", Font.BOLD, 17);
 		this.qt.setFont(f1);
 		this.cr.setFont(f1);
 		this.ct.setFont(f1);
-		
+
 		this.calculate.setText(messages.getString("calculateGrades"));
-		
+
 	}
 
-	public void updateLabel(String name) {
+	public void updateCourses(String name) {
+		if (name == null) {
+			this.classList.setModel(new DefaultComboBoxModel());
+			return;
+		}
 		for (Quarter current : this.quarters) {
 			if (current.getName().equals(name)) {
 				String[] newCourses = new String[current.getCourseList().size()];
@@ -278,14 +287,17 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 							.getCourseName();
 				}
 
-				this.classList.setModel(new DefaultComboBoxModel(
-						newCourses));
-				break;
+				this.classList.setModel(new DefaultComboBoxModel(newCourses));
+				return;
 			}
 		}
 	}
 
 	public void updateCategoryList(String name) {
+		if (name == null) {
+			this.categoryList.setModel(new DefaultComboBoxModel());
+			return;
+		}
 		for (Quarter current : this.quarters) {
 			if (current.getName().equals(this.getSelectedQuarter())) {
 				for (Course course : current.getCourseList()) {
@@ -295,9 +307,8 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 						for (int i = 0; i < course.getCategories().size(); i++) {
 							newCat[i] = course.getCategories().get(i).getName();
 						}
-						this.categoryList
-								.setModel(new DefaultComboBoxModel(
-										newCat));
+						this.categoryList.setModel(new DefaultComboBoxModel(
+								newCat));
 						return;
 					}
 				}
@@ -314,7 +325,7 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 					for (Category cat : course.getCategories()) {
 						int numItems = cat.getItemList().size();
 
-						if(numItems == 0){
+						if (numItems == 0) {
 							continue;
 						}
 						Object[][] newItems = new Object[numItems][this.NUM_COLS];
@@ -364,6 +375,12 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 	}
 
 	public void calculateGrades() {
+		this.courseGrade.setText("0.0");
+		this.letterGrade.setText("0.0");
+		this.targetGrade.setText("0.0");
+		this.neededGrade.setText("0.0");
+		this.quarterGPA.setText("0.0");
+		this.overAllGPA.setText("0.0");
 		double totalGPA = 0;
 		double quarterCount = 0;
 		for (Quarter q : this.quarters) {
@@ -403,7 +420,7 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 
 	public void addNewQuarter(ArrayList<Quarter> newQuarters) {
 		updateQuarters(newQuarters);
-		updateLabel(getSelectedQuarter());
+		updateCourses(getSelectedQuarter());
 		updateCategoryList(this.getSelectedCourse());
 		updateTable(this.getSelectedCourse());
 	}
@@ -412,7 +429,7 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 		for (Quarter current : this.quarters) {
 			if (current.getName().equals(getSelectedQuarter())) {
 				current.addCourse(newCourse);
-				updateLabel(getSelectedQuarter());
+				updateCourses(getSelectedQuarter());
 				updateCategoryList(this.getSelectedCourse());
 				break;
 			}
@@ -457,7 +474,7 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 								.setCreditHours(creditHours);
 						current.getCourseList().get(i).setStartDate(start);
 						current.getCourseList().get(i).setEndDate(end);
-						updateLabel(getSelectedQuarter());
+						updateCourses(getSelectedQuarter());
 					}
 				}
 			}
