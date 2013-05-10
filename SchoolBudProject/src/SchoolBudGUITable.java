@@ -1,3 +1,5 @@
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -6,6 +8,7 @@ import java.beans.PropertyChangeListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -31,6 +34,9 @@ public class SchoolBudGUITable {
 	private final int NUM_COLS = 6;
 	private final int NUM_RUBRIC_COLS = 5;
 	private String oldGrade = "";
+	private Color[] backColor = {Color.BLUE, Color.CYAN, Color.BLACK};
+	private Color[] foreColor = {Color.WHITE, Color.BLACK, Color.WHITE};
+	private HashMap<String, Integer> colorCode = new HashMap<String, Integer>();
 
 	public SchoolBudGUITable(String[] names, String type) {
 		this.columnNames = names;
@@ -57,6 +63,9 @@ public class SchoolBudGUITable {
 					}
 				}
 			};
+
+			this.table.setDefaultRenderer(String.class,
+					new MyItemTableCellRenderer());
 		} else {
 			Object[][] data = { { "", "", "", "", false } };
 			this.tableModel = new DefaultTableModel(data, this.columnNames);
@@ -77,6 +86,8 @@ public class SchoolBudGUITable {
 					}
 				}
 			};
+			this.table.setDefaultRenderer(String.class,
+					new MyTableCellRenderer());
 		}
 		this.table.setPreferredScrollableViewportSize(new Dimension(500, 300));
 		this.table.setFillsViewportHeight(true);
@@ -174,11 +185,11 @@ public class SchoolBudGUITable {
 					JOptionPane.showMessageDialog(frame, "Invalid Input");
 				}
 			} else {
-				try{
-				if (!table.getValueAt(row, col).equals(""))
-					editItems(row, col);
-				newAdd = true;
-				}catch(Exception e){
+				try {
+					if (!table.getValueAt(row, col).equals(""))
+						editItems(row, col);
+					newAdd = true;
+				} catch (Exception e) {
 					reset();
 					JFrame frame = new JFrame();
 					JOptionPane.showMessageDialog(frame, "Invalid Input");
@@ -477,6 +488,8 @@ public class SchoolBudGUITable {
 		Object[] emptyRow = { "", "", "", "", "", false };
 		this.tableModel.addRow(emptyRow);
 		this.table.setModel(this.tableModel);
+		this.table.setDefaultRenderer(String.class,
+				new MyItemTableCellRenderer());
 		this.table.repaint();
 	}
 
@@ -484,6 +497,7 @@ public class SchoolBudGUITable {
 		Object[] emptyRow = { "", "", "", "", false };
 		this.tableModel.addRow(emptyRow);
 		this.table.setModel(this.tableModel);
+		this.table.setDefaultRenderer(String.class, new MyTableCellRenderer());
 		this.table.repaint();
 	}
 
@@ -584,11 +598,15 @@ public class SchoolBudGUITable {
 						String lower = (String) rubric[1];
 						String upper = (String) rubric[2];
 						String gpa = (String) rubric[3];
-						c.getRubric().addGrade(letter,
-								Double.parseDouble(lower),
-								Double.parseDouble(upper),
-								Double.parseDouble(gpa));
-						return;
+						try {
+							c.getRubric().addGrade(letter,
+									Double.parseDouble(lower),
+									Double.parseDouble(upper),
+									Double.parseDouble(gpa));
+							return;
+						} catch (Exception exp) {
+							
+						}
 					}
 				}
 			}
@@ -596,16 +614,40 @@ public class SchoolBudGUITable {
 	}
 
 	public void addInitialItems(Object[][] names, int numItems) {
+		
+		if (this.type.equals("rubric")) {
+			this.tableModel = new DefaultTableModel(names, this.columnNames) {
+				private static final long serialVersionUID = 1L;
 
-		if (this.tableModel.getValueAt(0, 0).equals("")) {
-			this.tableModel.removeRow(0);
+				@Override
+				public Class<?> getColumnClass(int column) {
+					switch (column) {
+					case 0:
+					case 1:
+					case 2:
+					case 3:
+						return String.class;
+					default:
+						return Boolean.class;
+					}
+				}
+			};
+
+			this.table.setModel(tableModel);
+			this.table.setDefaultRenderer(String.class,
+					new MyTableCellRenderer());
+		}else{
+			if (this.tableModel.getValueAt(0, 0).equals("")) {
+				this.tableModel.removeRow(0);
+			}
+
+			for (int i = 0; i < numItems; i++) {
+				this.tableModel.addRow(names[i]);
+			}
+
+			this.table.setModel(this.tableModel);
 		}
 
-		for (int i = 0; i < numItems; i++) {
-			this.tableModel.addRow(names[i]);
-		}
-
-		this.table.setModel(this.tableModel);
 	}
 
 	public void reset() {
@@ -616,5 +658,45 @@ public class SchoolBudGUITable {
 
 	public JTable getTable() {
 		return this.table;
+	}
+	
+	public void setTableColor(String catName, int pos){
+		this.colorCode.put(catName, pos);
+	}
+
+	class MyTableCellRenderer extends
+			javax.swing.table.DefaultTableCellRenderer {
+		@Override
+		public Component getTableCellRendererComponent(JTable table,
+				Object value, boolean isSelected, boolean hasFocus, int row,
+				int column) {
+			// component will actually be this.
+			Component component = super.getTableCellRendererComponent(table,
+					value, isSelected, hasFocus, row, column);
+			component.setBackground(row % 2 == 0 ? Color.BLUE : Color.CYAN);
+			component.setForeground(row % 2 == 0 ? Color.white : Color.BLACK);
+			return component;
+		}
+	}
+
+	class MyItemTableCellRenderer extends
+			javax.swing.table.DefaultTableCellRenderer {
+		@Override
+		public Component getTableCellRendererComponent(JTable table,
+				Object value, boolean isSelected, boolean hasFocus, int row,
+				int column) {
+			int pos = 0;
+			try{
+				pos = colorCode.get((String)table.getValueAt(row, 4));
+			}catch (Exception exp){
+				
+			}
+			// component will actually be this.
+			Component component = super.getTableCellRendererComponent(table,
+					value, isSelected, hasFocus, row, column);
+			component.setBackground(backColor[pos]);
+			component.setForeground(foreColor[pos]);
+			return component;
+		}
 	}
 }

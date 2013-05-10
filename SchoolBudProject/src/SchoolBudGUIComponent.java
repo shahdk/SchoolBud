@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -315,14 +316,20 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 			}
 		}
 	}
-
+	
 	public void updateTable(String name) {
 		this.table.reset();
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 		for (Quarter current : this.quarters) {
 			for (Course course : current.getCourseList()) {
 				if (course.getCourseName().equals(name)) {
+					int pos = 0;
 					for (Category cat : course.getCategories()) {
+						
+						if(pos == 3){
+							pos = 0;
+						}
+						
 						int numItems = cat.getItemList().size();
 
 						if (numItems == 0) {
@@ -344,6 +351,8 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 							newItems[i] = info;
 						}
 
+						this.table.setTableColor(cat.getName(), pos);
+						pos++;
 						this.table.addInitialItems(newItems, numItems);
 					}
 					this.table.addEmptyRow();
