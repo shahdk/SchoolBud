@@ -34,8 +34,8 @@ public class SchoolBudGUITable {
 	private final int NUM_COLS = 6;
 	private final int NUM_RUBRIC_COLS = 5;
 	private String oldGrade = "";
-	private Color[] backColor = {Color.BLUE, Color.CYAN, Color.BLACK};
-	private Color[] foreColor = {Color.WHITE, Color.BLACK, Color.WHITE};
+	private Color[] backColor = {new Color(13496723), new Color(10543814), new Color(16776092)};
+	private Color[] foreColor = {Color.BLACK, Color.BLACK, Color.BLACK};
 	private HashMap<String, Integer> colorCode = new HashMap<String, Integer>();
 
 	public SchoolBudGUITable(String[] names, String type) {
