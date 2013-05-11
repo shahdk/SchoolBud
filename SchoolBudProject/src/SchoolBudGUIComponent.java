@@ -316,53 +316,55 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 			}
 		}
 	}
-	
+
 	public void updateTable(String name) {
 		this.table.reset();
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 		for (Quarter current : this.quarters) {
-			for (Course course : current.getCourseList()) {
-				if (course.getCourseName().equals(name)) {
-					int pos = 0;
-					for (Category cat : course.getCategories()) {
-						
-						if(pos == 3){
-							pos = 0;
+			if (current.getName().equals(this.getSelectedQuarter())) {
+				for (Course course : current.getCourseList()) {
+					if (course.getCourseName().equals(name)) {
+						int pos = 0;
+						for (Category cat : course.getCategories()) {
+
+							if (pos == 3) {
+								pos = 0;
+							}
+
+							int numItems = cat.getItemList().size();
+
+							if (numItems == 0) {
+								continue;
+							}
+							Object[][] newItems = new Object[numItems][this.NUM_COLS];
+
+							for (int i = 0; i < numItems; i++) {
+
+								Object[] info = new Object[this.NUM_COLS];
+								info[0] = (cat.getItemList().get(i).getName());
+								info[1] = cat.getItemList().get(i)
+										.getEarnedPoints();
+								info[2] = cat.getItemList().get(i)
+										.getTotalPoints();
+								info[3] = sdf.format(cat.getItemList().get(i)
+										.getUpdateDate());
+								info[4] = cat.getName();
+								info[5] = false;
+								newItems[i] = info;
+							}
+
+							this.table.setTableColor(cat.getName(), pos);
+							pos++;
+							this.table.addInitialItems(newItems, numItems);
 						}
-						
-						int numItems = cat.getItemList().size();
-
-						if (numItems == 0) {
-							continue;
-						}
-						Object[][] newItems = new Object[numItems][this.NUM_COLS];
-
-						for (int i = 0; i < numItems; i++) {
-
-							Object[] info = new Object[this.NUM_COLS];
-							info[0] = (cat.getItemList().get(i).getName());
-							info[1] = cat.getItemList().get(i)
-									.getEarnedPoints();
-							info[2] = cat.getItemList().get(i).getTotalPoints();
-							info[3] = sdf.format(cat.getItemList().get(i)
-									.getUpdateDate());
-							info[4] = cat.getName();
-							info[5] = false;
-							newItems[i] = info;
-						}
-
-						this.table.setTableColor(cat.getName(), pos);
-						pos++;
-						this.table.addInitialItems(newItems, numItems);
+						this.table.addEmptyRow();
+						this.table.setQuarters(this.quarters,
+								getSelectedQuarter(), getSelectedCourse());
+						return;
 					}
-					this.table.addEmptyRow();
-					this.table.setQuarters(this.quarters, getSelectedQuarter(),
-							getSelectedCourse());
-					return;
 				}
 			}
 		}
-
 	}
 
 	@Override

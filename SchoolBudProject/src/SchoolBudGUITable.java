@@ -101,7 +101,11 @@ public class SchoolBudGUITable {
 					int row = table.getSelectedRow();
 					int column = table.getSelectedColumn();
 					if (column == 5) {
-						removeItem(row, column);
+						try{
+							removeItem(row, column);
+						}catch (Exception exp){
+							
+						}
 					}
 				}
 
