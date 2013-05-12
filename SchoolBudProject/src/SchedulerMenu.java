@@ -220,8 +220,9 @@ public class SchedulerMenu extends JMenuBar {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				if (component.getCourseSize() > 0) {
-					System.out.println("hi");
-					component.removeCourse();
+					if(!component.getSelectedCourse().equals("----")){
+						component.removeCourse();
+					}
 				}
 			}
 
@@ -245,7 +246,7 @@ public class SchedulerMenu extends JMenuBar {
 		add(this.remove);
 	}
 
-	public ArrayList<Integer> getNumbers(String nums) {
+	public static ArrayList<Integer> getNumbers(String nums) {
 		ArrayList<Integer> numbers = new ArrayList<Integer>();
 		String[] temp = nums.split(" ");
 		int sum = 0;

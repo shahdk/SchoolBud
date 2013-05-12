@@ -3,14 +3,17 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -30,15 +33,33 @@ public class SchedulerComponent extends JPanel {
 	private JComboBox classList;
 	private JButton scheduleButton;
 	private JButton sectionButton;
+	private JButton hourButton;
+	private JButton gapButton;
 	private JPanel topPanel;
 	private JPanel coursePanel;
 	private JPanel classPanel;
 	private JPanel buttonPanel;
 	private JPanel schedulePanel;
+	private JPanel gapPanel;
+	private JPanel hourPanel;
 	private JScrollPane scheduleScrollPane;
 	private ArrayList<SchedulerCourse> courses;
 	private Locale locale;
 	private ResourceBundle messages;
+	private JCheckBox hourCheckBox;
+	private JCheckBox gapCheckBox;
+
+	private int minStartHour;
+	private int maxEndHour;
+	private ArrayList<Integer> hourIgnoreDays;
+
+	private ArrayList<Integer> gapIgnoreDays;
+	private int maxHoursPerGap;
+	private int minHoursPerGap;
+	private int minOccurences;
+	private int midOccurences;
+	private int maxOccurences;
+	private int maxExceptions;
 
 	public SchedulerComponent(Locale locale) {
 		super(new BorderLayout());
@@ -93,7 +114,49 @@ public class SchedulerComponent extends JPanel {
 					int classHours = Integer.parseInt(nameField.getText());
 					Scheduler scheduler = new Scheduler(classHours,
 							SchedulerComponent.this.courses);
-					createSchedules(scheduler.permutateSchedules(), classHours);
+					if (SchedulerComponent.this.hourCheckBox.isSelected()
+							&& SchedulerComponent.this.gapCheckBox.isSelected()) {
+						scheduler.permutateSchedules();
+						scheduler.filterGaps(
+								SchedulerComponent.this.maxHoursPerGap,
+								SchedulerComponent.this.maxOccurences,
+								SchedulerComponent.this.minHoursPerGap,
+								SchedulerComponent.this.minOccurences,
+								SchedulerComponent.this.midOccurences,
+								SchedulerComponent.this.maxExceptions,
+								SchedulerComponent.this.gapIgnoreDays);
+						createSchedules(scheduler.filterHoursConcentration(
+								SchedulerComponent.this.minStartHour,
+								SchedulerComponent.this.maxEndHour,
+								SchedulerComponent.this.hourIgnoreDays),
+								classHours);
+						System.out.println("both filter");
+					} else if (SchedulerComponent.this.hourCheckBox
+							.isSelected()) {
+						scheduler.permutateSchedules();
+						createSchedules(scheduler.filterHoursConcentration(
+								SchedulerComponent.this.minStartHour,
+								SchedulerComponent.this.maxEndHour,
+								SchedulerComponent.this.hourIgnoreDays),
+								classHours);
+						System.out.println("hour filter");
+					} 
+					else if(SchedulerComponent.this.gapCheckBox.isSelected()){
+						createSchedules(scheduler.filterGaps(
+								SchedulerComponent.this.maxHoursPerGap,
+								SchedulerComponent.this.maxOccurences,
+								SchedulerComponent.this.minHoursPerGap,
+								SchedulerComponent.this.minOccurences,
+								SchedulerComponent.this.midOccurences,
+								SchedulerComponent.this.maxExceptions,
+								SchedulerComponent.this.gapIgnoreDays),
+								classHours);
+						System.out.println("gap filter");
+					}
+					else {
+						createSchedules(scheduler.permutateSchedules(),
+								classHours);
+					}
 
 				}
 			}
@@ -123,66 +186,76 @@ public class SchedulerComponent extends JPanel {
 					nameField.setText(currentSection.getTeacher());
 
 					JTextField sectionField = new JTextField(10);
-					sectionField.setText(currentSection.getClassDays().get(0).getHourSlots().toString());
+					sectionField.setText(currentSection.getClassDays().get(0)
+							.getHourSlots().toString());
 
 					JTextField sectionField1 = new JTextField(10);
-					sectionField1.setText(currentSection.getClassDays().get(1).getHourSlots().toString());
-
+					sectionField1.setText(currentSection.getClassDays().get(1)
+							.getHourSlots().toString());
 
 					JTextField sectionField2 = new JTextField(10);
-					sectionField2.setText(currentSection.getClassDays().get(2).getHourSlots().toString());
-
+					sectionField2.setText(currentSection.getClassDays().get(2)
+							.getHourSlots().toString());
 
 					JTextField sectionField3 = new JTextField(10);
-					sectionField3.setText(currentSection.getClassDays().get(3).getHourSlots().toString());
-
+					sectionField3.setText(currentSection.getClassDays().get(3)
+							.getHourSlots().toString());
 
 					JTextField sectionField4 = new JTextField(10);
-					sectionField4.setText(currentSection.getClassDays().get(4).getHourSlots().toString());
+					sectionField4.setText(currentSection.getClassDays().get(4)
+							.getHourSlots().toString());
 
 					JTextField sectionField5 = new JTextField(10);
-					sectionField5.setText(currentSection.getClassDays().get(5).getHourSlots().toString());
+					sectionField5.setText(currentSection.getClassDays().get(5)
+							.getHourSlots().toString());
 
 					JTextField sectionField6 = new JTextField(10);
-					sectionField6.setText(currentSection.getClassDays().get(6).getHourSlots().toString());
+					sectionField6.setText(currentSection.getClassDays().get(6)
+							.getHourSlots().toString());
 
 					JTextField sectionField7 = new JTextField(10);
 					sectionField7.setText(currentSection.getSection());
 
-					teacherPanel.add(new JLabel(messages
-							.getString("teacherName")));
+					teacherPanel.add(new JLabel(
+							SchedulerComponent.this.messages
+									.getString("teacherName")));
 					teacherPanel.add(nameField);
 
-					mondayPanel.add(new JLabel(messages
+					mondayPanel.add(new JLabel(SchedulerComponent.this.messages
 							.getString("mondayHours")));
 					mondayPanel.add(sectionField);
 
-					tuesdayPanel.add(new JLabel(messages
-							.getString("tuesdayHours")));
+					tuesdayPanel.add(new JLabel(
+							SchedulerComponent.this.messages
+									.getString("tuesdayHours")));
 					tuesdayPanel.add(sectionField1);
 
-					wednesdayPanel.add(new JLabel(messages
-							.getString("wednesdayHours")));
+					wednesdayPanel.add(new JLabel(
+							SchedulerComponent.this.messages
+									.getString("wednesdayHours")));
 					wednesdayPanel.add(sectionField2);
 
-					thursdayPanel.add(new JLabel(messages
-							.getString("thursdayHours")));
+					thursdayPanel.add(new JLabel(
+							SchedulerComponent.this.messages
+									.getString("thursdayHours")));
 					thursdayPanel.add(sectionField3);
 
-					fridayPanel.add(new JLabel(messages
+					fridayPanel.add(new JLabel(SchedulerComponent.this.messages
 							.getString("fridayHours")));
 					fridayPanel.add(sectionField4);
 
-					saturdayPanel.add(new JLabel(messages
-							.getString("saturdayHours")));
+					saturdayPanel.add(new JLabel(
+							SchedulerComponent.this.messages
+									.getString("saturdayHours")));
 					saturdayPanel.add(sectionField5);
 
-					sundayPanel.add(new JLabel(messages
+					sundayPanel.add(new JLabel(SchedulerComponent.this.messages
 							.getString("sundayHours")));
 					sundayPanel.add(sectionField6);
 
-					sectionPanel.add(new JLabel(messages.getString("section")
-							+ " #"));
+					sectionPanel.add(new JLabel(
+							SchedulerComponent.this.messages
+									.getString("section") + " #"));
 					sectionPanel.add(sectionField7);
 
 					topPanel.add(teacherPanel);
@@ -194,15 +267,165 @@ public class SchedulerComponent extends JPanel {
 					topPanel.add(saturdayPanel);
 					topPanel.add(sundayPanel);
 					topPanel.add(sectionPanel);
-					
+
 					int result = JOptionPane.showConfirmDialog(null, topPanel,
-							messages.getString("course"),
+							SchedulerComponent.this.messages
+									.getString("course"),
 							JOptionPane.OK_CANCEL_OPTION);
 				}
 
 			}
 
 		});
+
+		this.gapPanel = new JPanel(new BorderLayout());
+		this.hourPanel = new JPanel(new BorderLayout());
+
+		this.gapButton = new JButton(this.messages.getString("filterGaps"));
+		this.gapButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				JPanel topPanel = new JPanel(new GridLayout(2, 4));
+
+				JPanel maxHourPanel = new JPanel(new GridLayout(1, 2));
+				JPanel minHourPanel = new JPanel(new GridLayout(1, 2));
+				JPanel minOccurencePanel = new JPanel(new GridLayout(1, 2));
+				JPanel midOccurencePanel = new JPanel(new GridLayout(1, 2));
+				JPanel maxOccurencePanel = new JPanel(new GridLayout(1, 2));
+				JPanel maxExceptionPanel = new JPanel(new GridLayout(1, 2));
+				JPanel ignoreDaysPanel = new JPanel(new GridLayout(1, 2));
+
+				JTextField nameField = new JTextField(10);
+				JTextField sectionField = new JTextField(10);
+				JTextField sectionField1 = new JTextField(10);
+				JTextField sectionField2 = new JTextField(10);
+				JTextField sectionField3 = new JTextField(10);
+				JTextField sectionField4 = new JTextField(10);
+				JTextField sectionField5 = new JTextField(10);
+
+				maxHourPanel.add(new JLabel(SchedulerComponent.this.messages
+						.getString("maxHour")));
+				maxHourPanel.add(nameField);
+
+				minHourPanel.add(new JLabel(SchedulerComponent.this.messages
+						.getString("minHour")));
+				minHourPanel.add(sectionField);
+
+				minOccurencePanel.add(new JLabel(
+						SchedulerComponent.this.messages
+								.getString("minOccurence")));
+				minOccurencePanel.add(sectionField1);
+
+				midOccurencePanel.add(new JLabel(
+						SchedulerComponent.this.messages
+								.getString("midOccurence")));
+				midOccurencePanel.add(sectionField2);
+
+				maxOccurencePanel.add(new JLabel(
+						SchedulerComponent.this.messages
+								.getString("maxOccurence")));
+				maxOccurencePanel.add(sectionField3);
+
+				maxExceptionPanel.add(new JLabel(
+						SchedulerComponent.this.messages
+								.getString("maxException")));
+				maxExceptionPanel.add(sectionField4);
+
+				ignoreDaysPanel.add(new JLabel(SchedulerComponent.this.messages
+						.getString("ignoreDays")));
+				ignoreDaysPanel.add(sectionField5);
+
+				topPanel.add(maxHourPanel);
+				topPanel.add(minHourPanel);
+				topPanel.add(minOccurencePanel);
+				topPanel.add(midOccurencePanel);
+				topPanel.add(maxOccurencePanel);
+				topPanel.add(maxExceptionPanel);
+				topPanel.add(ignoreDaysPanel);
+
+				int result = JOptionPane.showConfirmDialog(null, topPanel,
+						SchedulerComponent.this.messages
+								.getString("filterGaps"),
+						JOptionPane.OK_CANCEL_OPTION);
+
+				if (result == JOptionPane.OK_OPTION) {
+					SchedulerComponent.this.maxHoursPerGap = Integer
+							.parseInt(nameField.getText());
+					SchedulerComponent.this.minHoursPerGap = Integer
+							.parseInt(sectionField.getText());
+					SchedulerComponent.this.minOccurences = Integer
+							.parseInt(sectionField1.getText());
+					SchedulerComponent.this.midOccurences = Integer
+							.parseInt(sectionField2.getText());
+					SchedulerComponent.this.maxOccurences = Integer
+							.parseInt(sectionField3.getText());
+					SchedulerComponent.this.maxExceptions = Integer
+							.parseInt(sectionField4.getText());
+					SchedulerComponent.this.gapIgnoreDays = SchedulerMenu
+							.getNumbers(sectionField5.getText());
+
+					SchedulerComponent.this.gapCheckBox.setEnabled(true);
+
+				}
+			}
+
+		});
+
+		this.hourButton = new JButton(this.messages.getString("filterHours"));
+		this.hourButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+
+				JTextField ignoreField = new JTextField(5);
+				JTextField startField = new JTextField(5);
+				JTextField endField = new JTextField(5);
+
+				JPanel myPanel = new JPanel();
+				myPanel.add(Box.createHorizontalStrut(15));
+				myPanel.add(new JLabel(SchedulerComponent.this.messages
+						.getString("minStartHour")));
+				myPanel.add(startField);
+				myPanel.add(Box.createHorizontalStrut(15));
+				myPanel.add(new JLabel(SchedulerComponent.this.messages
+						.getString("maxEndHour")));
+				myPanel.add(endField);
+				myPanel.add(Box.createHorizontalStrut(15));
+				myPanel.add(new JLabel(SchedulerComponent.this.messages
+						.getString("ignoreDays")));
+				myPanel.add(ignoreField);
+
+				int result = JOptionPane.showConfirmDialog(null, myPanel,
+						SchedulerComponent.this.messages
+								.getString("filterHours"),
+						JOptionPane.OK_CANCEL_OPTION);
+				if (result == JOptionPane.OK_OPTION) {
+					String start = startField.getText();
+					String end = endField.getText();
+					String credit = ignoreField.getText();
+
+					SchedulerComponent.this.minStartHour = Integer
+							.parseInt(start);
+					SchedulerComponent.this.maxEndHour = Integer.parseInt(end);
+					SchedulerComponent.this.hourIgnoreDays = SchedulerMenu
+							.getNumbers(credit);
+					SchedulerComponent.this.hourCheckBox.setEnabled(true);
+
+				}
+			}
+
+		});
+
+		this.gapCheckBox = new JCheckBox();
+		this.gapCheckBox.setEnabled(false);
+
+		this.hourCheckBox = new JCheckBox();
+		this.hourCheckBox.setEnabled(false);
+
+		this.gapPanel.add(this.gapButton, BorderLayout.WEST);
+		this.gapPanel.add(this.gapCheckBox, BorderLayout.EAST);
+
+		this.hourPanel.add(this.hourButton, BorderLayout.WEST);
+		this.hourPanel.add(this.hourCheckBox, BorderLayout.EAST);
 
 		this.topPanel = new JPanel(new BorderLayout());
 		this.coursePanel = new JPanel(new BorderLayout());
@@ -222,10 +445,12 @@ public class SchedulerComponent extends JPanel {
 		this.coursePanel.add(this.courseList, BorderLayout.SOUTH);
 
 		this.classPanel.add(classLabel, BorderLayout.NORTH);
-		this.classPanel.add(this.classList, BorderLayout.SOUTH);
+		this.classPanel.add(this.classList, BorderLayout.CENTER);
+		this.classPanel.add(this.sectionButton, BorderLayout.SOUTH);
 
-		this.buttonPanel.add(this.sectionButton, BorderLayout.NORTH);
-		this.buttonPanel.add(this.scheduleButton, BorderLayout.SOUTH);
+		this.buttonPanel.add(this.scheduleButton, BorderLayout.NORTH);
+		this.buttonPanel.add(this.gapPanel, BorderLayout.WEST);
+		this.buttonPanel.add(this.hourPanel, BorderLayout.EAST);
 
 		this.topPanel.add(this.coursePanel, BorderLayout.NORTH);
 		this.topPanel.add(this.classPanel, BorderLayout.CENTER);
