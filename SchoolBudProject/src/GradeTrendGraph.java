@@ -93,6 +93,8 @@ public class GradeTrendGraph {
 		int numDays = GradeTrendGraph.getDateDiffDays(this.currentDate,
 				this.endDate);
 		int numWeeks = numDays / 7;
+		
+		int remainDays = numDays % 7;
 
 		// loop through num weeks and calculate data point for each week
 		for (int i = 0; i < numWeeks; i++) {
