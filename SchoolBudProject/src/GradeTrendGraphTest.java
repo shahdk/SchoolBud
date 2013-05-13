@@ -809,6 +809,11 @@ public class GradeTrendGraphTest {
 		assertEquals(pred.get(2).getX(), dates.get(2));
 		System.out.println("2--- " + pred.get(2).getX());
 		System.out.println("2--- " + dates.get(2));
+		
+		// remaining days
+		assertEquals(pred.get(3).getX(), dates.get(3));
+		System.out.println("3--- " + pred.get(3).getX());
+		System.out.println("3--- " + dates.get(3));
 
 		// assertEquals(graph.getBestGradePredictionCurvePoints().get(0).getX(),
 		// curr);
