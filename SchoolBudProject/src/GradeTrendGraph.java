@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -27,13 +28,13 @@ public class GradeTrendGraph {
 	private ArrayList<Item> dateOrderedItemList;
 	private HashMap<String, Integer> itemFrequencies;
 	private Date currentDate = new Date();
-	private Date testTurrentDate = new Date();
+	private Date testCurrentDate = new Date();
 
 	// Evaluated Trends (list of points)
 	// (X Y) points purely for graphing
-	private ArrayList<DataPoint> bestGradePredictionCurvePoints;
-	private ArrayList<DataPoint> worstGradePredictionCurvePoints;
-	private ArrayList<DataPoint> gradePredictionCurvePoints;
+	private ArrayList<DataPoint> bestGradePredictionCurvePoints = new ArrayList<DataPoint>();
+	private ArrayList<DataPoint> worstGradePredictionCurvePoints = new ArrayList<DataPoint>();
+	private ArrayList<DataPoint> gradePredictionCurvePoints = new ArrayList<DataPoint>();
 
 	// User personally entered variables
 	private int classDifficulty_1_5;
@@ -69,6 +70,46 @@ public class GradeTrendGraph {
 		this.dateOrderedItemList = new ArrayList<Item>();
 		this.startDate = this.course.getStartDate();
 		this.endDate = this.course.getEndDate();
+		this.currentDate = new Date();
+		this.currentAverage = this.course.getCourseGrade();
+
+	}
+
+	public void updateAll() {
+
+		// update - check for a supplied test date
+		if (this.testCurrentDate == null) {
+			this.updateCurrentDate();
+		} else {
+			this.currentDate = this.testCurrentDate;
+		}
+
+		// clear previous data points
+		this.gradePredictionCurvePoints.clear();
+		this.bestGradePredictionCurvePoints.clear();
+		this.worstGradePredictionCurvePoints.clear();
+
+		// find time periods --- get number of weeks --- and left over days
+		int numDays = GradeTrendGraph.getDateDiffDays(this.currentDate,
+				this.endDate);
+		int numWeeks = numDays / 7;
+
+		// loop through num weeks and calculate data point for each week
+		for (int i = 0; i < numWeeks; i++) {
+
+			// update the graph to find next weeks's values
+			this.updateGraph();
+
+			// update necessary calculated value for next update
+			this.currentAverage = this.predictedGrade;
+
+			// LASTLY - increment current date a week
+			Calendar c = Calendar.getInstance();
+			c.setTime(this.currentDate);
+			c.add(Calendar.DATE, 7);
+			this.setCurrentDate(c.getTime());
+
+		}
 
 	}
 
@@ -79,18 +120,6 @@ public class GradeTrendGraph {
 	// data points, STARTING at the actual current average as the initial fixed
 	// point
 	public void updateGraph() {
-
-		// update current date
-		if (this.testTurrentDate == null) {
-			this.currentDate = new Date();
-		}
-		else {
-			this.currentDate = this.testTurrentDate;
-		}
-		
-
-		// update current average
-		this.currentAverage = this.course.getCourseGrade();
 
 		// starting variation average
 		double varAvg = this.currentAverage;
@@ -146,23 +175,13 @@ public class GradeTrendGraph {
 		// (determined by ALL of these calculated and given factors)
 		// which will be used to determine the rise / run variations of each
 		// point separation
-		this.gradePredictionCurvePoints = this
-				.makeDataPointsFromPreditionGrade(this.predictedGrade);
-		this.bestGradePredictionCurvePoints = this
-				.makeDataPointsFromPreditionGrade(this.predictedBestCaseGrade);
-		this.worstGradePredictionCurvePoints = this
-				.makeDataPointsFromPreditionGrade(this.predictedWorstCaseGrade);
+		this.gradePredictionCurvePoints.add(new DataPoint(this.currentDate,
+				this.predictedGrade));
+		this.bestGradePredictionCurvePoints.add(new DataPoint(this.currentDate,
+				this.predictedBestCaseGrade));
+		this.worstGradePredictionCurvePoints.add(new DataPoint(
+				this.currentDate, this.predictedWorstCaseGrade));
 
-	}
-
-	public ArrayList<DataPoint> makeDataPointsFromPreditionGrade(double grade) {
-		ArrayList<DataPoint> points = new ArrayList<DataPoint>();
-		DataPoint start = new DataPoint(1, this.currentAverage);
-		DataPoint end = new DataPoint(GradeTrendGraph.getDateDiffDays(
-				this.currentDate, this.endDate), grade);
-		points.add(start);
-		points.add(end);
-		return points;
 	}
 
 	public static double getPercenDaysRemaining(Date start, Date end, int total) {
@@ -267,7 +286,7 @@ public class GradeTrendGraph {
 		Course tempMinCourse = new Course("tempCourse");
 		Course tempMaxCourse = new Course("tempMaxCourse");
 		ArrayList<Category> cats = this.course.getCategories();
-		
+
 		for (String cat : categories) {
 			int freq = this.itemFrequencies.get(cat);
 			double currentRatio = (freq + 0.0) / daysPassed;
@@ -282,15 +301,12 @@ public class GradeTrendGraph {
 			for (int i = 0; i < newMinCat.getItemList().size(); i++) {
 				newMinCat.getItemList().get(i).setEarnedPoints("0");
 				newMinCat.getItemList().get(i).setTotalPoints("100");
-			}			
-			for(Item i: currItems){
-				i.setName(i.getName()+"temppppp");
-				newMinCat.addItem(i);
 			}
 			for (Item i : currItems) {
 				i.setName(i.getName() + "temppppp");
 				newMinCat.addItem(i);
 			}
+
 			tempMinCourse.addCategory(newMinCat);
 
 			Category newMaxCat = new Category(cat, predictedItems, weight);
@@ -325,9 +341,9 @@ public class GradeTrendGraph {
 		return weight;
 	}
 
-	public ArrayList<Item> getCategoryItems(ArrayList<Category> cats, String cat){
-		for(Category c: cats){
-			if(c.getName().equals(cat)){
+	public ArrayList<Item> getCategoryItems(ArrayList<Category> cats, String cat) {
+		for (Category c : cats) {
+			if (c.getName().equals(cat)) {
 				return c.getItemList();
 			}
 		}
@@ -470,10 +486,43 @@ public class GradeTrendGraph {
 	}
 
 	/**
+	 * @param currentDate
+	 * 
+	 */
+	public void updateCurrentDate() {
+
+		// check for possible lower current date than new start date
+
+		if (this.currentDate.compareTo(this.startDate) < 0) {
+			this.currentDate = this.startDate;
+		} else if (this.currentDate.compareTo(this.endDate) > 0) {
+			this.currentDate = this.endDate;
+		} else {
+			this.currentDate = new Date();
+		}
+	}
+
+	/**
+	 * @param currentDate
+	 *            the current Date to set
+	 */
+	public void setCurrentDate(Date date) {
+
+		this.currentDate = date;
+
+		if (this.currentDate.compareTo(this.startDate) < 0) {
+			this.currentDate = this.startDate;
+		} else if (this.currentDate.compareTo(this.endDate) > 0) {
+			this.currentDate = this.endDate;
+		}
+	}
+
+	/**
 	 * @param startDate
 	 *            the startDate to set
 	 */
 	public void setStartDate(Date startDate) {
+
 		this.startDate = startDate;
 	}
 
@@ -526,12 +575,12 @@ public class GradeTrendGraph {
 	public double getPredictedGrade() {
 		return this.predictedGrade;
 	}
-	
+
 	/**
 	 * Sets the current date, for test purposes
 	 */
 	public void setTestCurrentDate(Date date) {
-		this.testTurrentDate = date;
+		this.testCurrentDate = date;
 	}
 
 }
