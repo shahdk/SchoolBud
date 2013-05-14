@@ -89,15 +89,30 @@ public class GradeTrendGraph {
 		this.bestGradePredictionCurvePoints.clear();
 		this.worstGradePredictionCurvePoints.clear();
 
+		// add CURRENT - ORGINAL grade data points
+		this.gradePredictionCurvePoints.add(new DataPoint(this.currentDate,
+				this.currentAverage));
+		this.bestGradePredictionCurvePoints.add(new DataPoint(this.currentDate,
+				this.currentAverage));
+		this.worstGradePredictionCurvePoints.add(new DataPoint(
+				this.currentDate, this.currentAverage));
+
 		// find time periods --- get number of weeks --- and left over days
 		int numDays = GradeTrendGraph.getDateDiffDays(this.currentDate,
 				this.endDate);
 		int numWeeks = numDays / 7;
-		
 		int remainDays = numDays % 7;
+
+		// initialize calendar
+		Calendar c = Calendar.getInstance();
+		c.setTime(this.currentDate);
 
 		// loop through num weeks and calculate data point for each week
 		for (int i = 0; i < numWeeks; i++) {
+
+			// increment current date a week
+			c.add(Calendar.DATE, 7);
+			this.setCurrentDate(c.getTime());
 
 			// update the graph to find next weeks's values
 			this.updateGraph();
@@ -105,13 +120,12 @@ public class GradeTrendGraph {
 			// update necessary calculated value for next update
 			this.currentAverage = this.predictedGrade;
 
-			// LASTLY - increment current date a week
-			Calendar c = Calendar.getInstance();
-			c.setTime(this.currentDate);
-			c.add(Calendar.DATE, 7);
-			this.setCurrentDate(c.getTime());
-
 		}
+
+//		// check for remaining days
+//		if (remainDays != 0) {
+//			this.updateGraph();
+//		}
 
 	}
 

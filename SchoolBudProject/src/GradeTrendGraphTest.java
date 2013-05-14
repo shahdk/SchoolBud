@@ -798,9 +798,9 @@ public class GradeTrendGraphTest {
 		ArrayList<DataPoint> pred = graph.getGradePredictionCurvePoints();
 
 		// check points X - date
-		assertEquals(pred.get(0).getX(), curr);
+		assertEquals(pred.get(0).getX(), dates.get(0));
 		System.out.println("0--- " + pred.get(0).getX());
-		System.out.println("0--- " + curr);
+		System.out.println("0--- " + dates.get(0));
 
 		assertEquals(pred.get(1).getX(), dates.get(1));
 		System.out.println("1--- " + pred.get(1).getX());
@@ -809,11 +809,15 @@ public class GradeTrendGraphTest {
 		assertEquals(pred.get(2).getX(), dates.get(2));
 		System.out.println("2--- " + pred.get(2).getX());
 		System.out.println("2--- " + dates.get(2));
-		
-		// remaining days
+
 		assertEquals(pred.get(3).getX(), dates.get(3));
 		System.out.println("3--- " + pred.get(3).getX());
 		System.out.println("3--- " + dates.get(3));
+
+//		 // remaining days
+//		 assertEquals(pred.get(4).getX(), dates.get(4));
+//		 System.out.println("4--- " + pred.get(4).getX());
+		 System.out.println("4--- " + dates.get(4));
 
 		// assertEquals(graph.getBestGradePredictionCurvePoints().get(0).getX(),
 		// curr);
@@ -848,21 +852,20 @@ public class GradeTrendGraphTest {
 		// setup calander incrementer
 		Calendar c = Calendar.getInstance();
 		c.setTime(s);
+		
+		// add initial start date
+		dateList.add(c.getTime());
 
 		// loop through num weeks and calculate data point for each week
 		for (int i = 0; i < numWeeks; i++) {
 
+			//increment calender by a week
+			c.add(Calendar.DATE, 7);
+
 			// add current incremented date to list
 			dateList.add(c.getTime());
 
-			// THEN increment calender by a week
-			c.add(Calendar.DATE, 7);
-
 		}
-
-		// increment date to remaining days
-		c.add(Calendar.DATE, numRemainDays);
-		dateList.add(c.getTime());
 
 		return dateList;
 	}
