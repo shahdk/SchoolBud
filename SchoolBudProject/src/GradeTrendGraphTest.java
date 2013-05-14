@@ -815,8 +815,8 @@ public class GradeTrendGraphTest {
 		System.out.println("3--- " + dates.get(3));
 
 //		 // remaining days
-//		 assertEquals(pred.get(4).getX(), dates.get(4));
-//		 System.out.println("4--- " + pred.get(4).getX());
+		 assertEquals(pred.get(4).getX(), dates.get(4));
+		 System.out.println("4--- " + pred.get(4).getX());
 		 System.out.println("4--- " + dates.get(4));
 
 		// assertEquals(graph.getBestGradePredictionCurvePoints().get(0).getX(),
@@ -865,6 +865,12 @@ public class GradeTrendGraphTest {
 			// add current incremented date to list
 			dateList.add(c.getTime());
 
+		}
+		
+		// check for reamining days
+		if (numRemainDays != 0) {
+			c.add(Calendar.DATE, numRemainDays);
+			dateList.add(c.getTime());
 		}
 
 		return dateList;
