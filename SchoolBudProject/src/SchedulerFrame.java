@@ -3,9 +3,8 @@ import java.util.Locale;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 
-
 /**
- * TODO Put here a description of what this class does.
+ * This class is the JFrame that contains all the components for the Scheduler
  *
  * @author padillbt-1.
  *         Created May 8, 2013.
@@ -13,18 +12,23 @@ import javax.swing.JMenuBar;
 public class SchedulerFrame extends JFrame{
 	private Locale locale;
 	
+	/**
+	 * The constructor initializes values
+	 *
+	 * @param locale
+	 */
 	SchedulerFrame(Locale locale){
 		this.locale = locale;
 		initialize();
 	}
 
 	/**
-	 * TODO Put here a description of what this method does.
+	 * This method adds on all the Scheduler components onto the Frame
 	 *
 	 */
 	private final void initialize() {
         
-		SchedulerComponent newContentPane = new SchedulerComponent(this.locale);
+		SchedulerComponent newContentPane = new SchedulerComponent(this.locale, this);
         newContentPane.setOpaque(true);
         setContentPane(newContentPane);
       

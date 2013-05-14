@@ -376,12 +376,12 @@ public class SchoolBudGUIMenu extends JMenuBar {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				main.removeQuarter(component.getSelectedQuarter());
-				component.updateQuarters(main.getQuarterList());
-				component.updateCourses(component.getSelectedQuarter());
-				component.updateTable(component.getSelectedCourse());
-				component.updateCategoryList(component.getSelectedCourse());
-				component.calculateGrades();
+				SchoolBudGUIMenu.this.main.removeQuarter(SchoolBudGUIMenu.this.component.getSelectedQuarter());
+				SchoolBudGUIMenu.this.component.updateQuarters(SchoolBudGUIMenu.this.main.getQuarterList());
+				SchoolBudGUIMenu.this.component.updateCourses(SchoolBudGUIMenu.this.component.getSelectedQuarter());
+				SchoolBudGUIMenu.this.component.updateTable(SchoolBudGUIMenu.this.component.getSelectedCourse());
+				SchoolBudGUIMenu.this.component.updateCategoryList(SchoolBudGUIMenu.this.component.getSelectedCourse());
+				SchoolBudGUIMenu.this.component.calculateGrades();
 				return;
 			}
 
@@ -392,19 +392,19 @@ public class SchoolBudGUIMenu extends JMenuBar {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				for (Quarter q : main.getQuarterList()) {
-					if (q.getName().equals(component.getSelectedQuarter())) {
+				for (Quarter q : SchoolBudGUIMenu.this.main.getQuarterList()) {
+					if (q.getName().equals(SchoolBudGUIMenu.this.component.getSelectedQuarter())) {
 						for (int i = 0; i < q.getCourseList().size(); i++) {
 							if (q.getCourseList().get(i).getCourseName()
-									.equals(component.getSelectedCourse())) {
+									.equals(SchoolBudGUIMenu.this.component.getSelectedCourse())) {
 								q.removeCourse(q.getCourseList().get(i));
-								component.updateCourses(component
+								SchoolBudGUIMenu.this.component.updateCourses(SchoolBudGUIMenu.this.component
 										.getSelectedQuarter());
-								component.updateCategoryList(component
+								SchoolBudGUIMenu.this.component.updateCategoryList(SchoolBudGUIMenu.this.component
 										.getSelectedCourse());
-								component.updateTable(component
+								SchoolBudGUIMenu.this.component.updateTable(SchoolBudGUIMenu.this.component
 										.getSelectedCourse());
-								component.calculateGrades();
+								SchoolBudGUIMenu.this.component.calculateGrades();
 								return;
 							}
 						}
@@ -418,24 +418,24 @@ public class SchoolBudGUIMenu extends JMenuBar {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				for (Quarter q : main.getQuarterList()) {
-					if (q.getName().equals(component.getSelectedQuarter())) {
+				for (Quarter q : SchoolBudGUIMenu.this.main.getQuarterList()) {
+					if (q.getName().equals(SchoolBudGUIMenu.this.component.getSelectedQuarter())) {
 						for (Course c : q.getCourseList()) {
 							if (c.getCourseName().equals(
-									component.getSelectedCourse())) {
+									SchoolBudGUIMenu.this.component.getSelectedCourse())) {
 								for (int i = 0; i < c.getCategories().size(); i++) {
 									if (c.getCategories()
 											.get(i)
 											.getName()
-											.equals(component
+											.equals(SchoolBudGUIMenu.this.component
 													.getSelectedCategory())) {
-										c.removeCategory(component
+										c.removeCategory(SchoolBudGUIMenu.this.component
 												.getSelectedCategory());
-										component.updateCategoryList(component
+										SchoolBudGUIMenu.this.component.updateCategoryList(SchoolBudGUIMenu.this.component
 												.getSelectedCourse());
-										component.updateTable(component
+										SchoolBudGUIMenu.this.component.updateTable(SchoolBudGUIMenu.this.component
 												.getSelectedCourse());
-										component.calculateGrades();
+										SchoolBudGUIMenu.this.component.calculateGrades();
 										return;
 									}
 								}
@@ -478,7 +478,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 			public void actionPerformed(ActionEvent event) {
 				if (SchoolBudGUIMenu.this.chooser.showDialog(
 						SchoolBudGUIMenu.this.component,
-						messages.getString("save")) != JFileChooser.APPROVE_OPTION) {
+						SchoolBudGUIMenu.this.messages.getString("save")) != JFileChooser.APPROVE_OPTION) {
 					return;
 				}
 				String filePath = SchoolBudGUIMenu.this.chooser
@@ -502,7 +502,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 
 				if (SchoolBudGUIMenu.this.chooser.showDialog(
 						SchoolBudGUIMenu.this.component,
-						messages.getString("load")) != JFileChooser.APPROVE_OPTION) {
+						SchoolBudGUIMenu.this.messages.getString("load")) != JFileChooser.APPROVE_OPTION) {
 					return;
 				}
 

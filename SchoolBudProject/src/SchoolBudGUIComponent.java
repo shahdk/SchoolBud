@@ -1,5 +1,4 @@
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -9,7 +8,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
-
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
@@ -19,7 +17,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
- * TODO Put here a description of what this class does.
+ * This class is the JPanel that contains all the components to be added onto
+ * the JFrame
  * 
  * @author padillbt-1. Created Apr 18, 2013.
  */
@@ -57,6 +56,12 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 	private JLabel ct;
 	private JLabel cr;
 
+	/**
+	 * This constructor initializes and adds the components onto the JPanel to
+	 * be added onto the JFrame. It also places action listeners on the
+	 * JOptionBoxes and JButtons
+	 * 
+	 */
 	public SchoolBudGUIComponent() {
 		super(new BorderLayout());
 		this.quarters = new ArrayList<Quarter>();
@@ -70,7 +75,6 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 		this.quarterList = new JComboBox(quarterStrings);
 		this.quarterList.setSelectedIndex(0);
 		this.quarterList.addActionListener(new ActionListener() {
-			@SuppressWarnings("unchecked")
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				JComboBox box = (JComboBox) event.getSource();
@@ -86,7 +90,6 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 		this.classList = new JComboBox();
 		this.classList.setPrototypeDisplayValue("XXXXXXXXXX");
 		this.classList.addActionListener(new ActionListener() {
-			@SuppressWarnings("unchecked")
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				JComboBox box = (JComboBox) event.getSource();
@@ -232,6 +235,12 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 		repaint();
 	}
 
+	/**
+	 * This method updates the list of quarters depending on the quarters that
+	 * exist in the ArrayList passed in.
+	 * 
+	 * @param updatedQuarters
+	 */
 	public void updateQuarters(ArrayList<Quarter> updatedQuarters) {
 		this.quarters = updatedQuarters;
 		String[] newQuarters = new String[this.quarters.size()];
@@ -243,6 +252,12 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 		this.quarterList.setModel(new DefaultComboBoxModel(newQuarters));
 	}
 
+	/**
+	 * This method updates the text throughout the component depending on the
+	 * inputted Locale
+	 * 
+	 * @param locale
+	 */
 	public void updateTitles(Locale locale) {
 		ResourceBundle messages = ResourceBundle.getBundle("MessagesBundle",
 				locale);
@@ -274,6 +289,12 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 
 	}
 
+	/**
+	 * This method updates the list of courses depending upon the inputted
+	 * quarter name
+	 * 
+	 * @param name
+	 */
 	public void updateCourses(String name) {
 		if (name == null) {
 			this.classList.setModel(new DefaultComboBoxModel());
@@ -294,6 +315,12 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 		}
 	}
 
+	/**
+	 * This method updates the list of available categories depending upon the
+	 * inputted course name
+	 * 
+	 * @param name
+	 */
 	public void updateCategoryList(String name) {
 		if (name == null) {
 			this.categoryList.setModel(new DefaultComboBoxModel());
@@ -317,6 +344,12 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 		}
 	}
 
+	/**
+	 * This method updates the data in the table depending upon the current
+	 * quarter and inputted course name
+	 * 
+	 * @param name
+	 */
 	public void updateTable(String name) {
 		this.table.reset();
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
@@ -385,6 +418,10 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 		}
 	}
 
+	/**
+	 * This method calculates the GPA of the selected quarter
+	 * 
+	 */
 	public void calculateGrades() {
 		this.courseGrade.setText("0.0");
 		this.letterGrade.setText("0.0");
@@ -417,18 +454,38 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 
 	}
 
+	/**
+	 * This method returns the selected quarter's name
+	 * 
+	 * @return quarter name
+	 */
 	public String getSelectedQuarter() {
 		return (String) this.quarterList.getSelectedItem();
 	}
 
+	/**
+	 * This method returns the selected course's name
+	 * 
+	 * @return course name
+	 */
 	public String getSelectedCourse() {
 		return (String) this.classList.getSelectedItem();
 	}
 
+	/**
+	 * This method returns the selected category's name
+	 * 
+	 * @return category name
+	 */
 	public String getSelectedCategory() {
 		return (String) this.categoryList.getSelectedItem();
 	}
 
+	/**
+	 * This method adds a new quarter
+	 * 
+	 * @param newQuarters
+	 */
 	public void addNewQuarter(ArrayList<Quarter> newQuarters) {
 		updateQuarters(newQuarters);
 		updateCourses(getSelectedQuarter());
@@ -436,6 +493,11 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 		updateTable(this.getSelectedCourse());
 	}
 
+	/**
+	 * This method adds a new course
+	 * 
+	 * @param newCourse
+	 */
 	public void addNewCourse(Course newCourse) {
 		for (Quarter current : this.quarters) {
 			if (current.getName().equals(getSelectedQuarter())) {
@@ -447,6 +509,11 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 		}
 	}
 
+	/**
+	 * This method adds a new Category
+	 * 
+	 * @param newCategory
+	 */
 	public void addNewCategory(Category newCategory) {
 		for (Quarter current : this.quarters) {
 			if (current.getName().equals(getSelectedQuarter())) {
@@ -464,6 +531,12 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 		}
 	}
 
+	/**
+	 * This method changes the name of the selected quarter with the name given
+	 * as a parameter
+	 * 
+	 * @param name
+	 */
 	public void editQuarter(String name) {
 		for (Quarter current : this.quarters) {
 			if (current.getName().equals(getSelectedQuarter())) {
@@ -474,6 +547,15 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 		}
 	}
 
+	/**
+	 * This method replaces the information of the selected course with the
+	 * information given as parameters
+	 * 
+	 * @param name
+	 * @param creditHours
+	 * @param start
+	 * @param end
+	 */
 	public void editCourse(String name, double creditHours, Date start, Date end) {
 		for (Quarter current : this.quarters) {
 			if (current.getName().equals(getSelectedQuarter())) {
@@ -492,6 +574,11 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 		}
 	}
 
+	/**
+	 * This method updates the table headings for internationalization
+	 * 
+	 * @param headings
+	 */
 	public void updateHeadings(ArrayList<String> headings) {
 		String[] newHeadings = new String[headings.size()];
 		for (int i = 0; i < headings.size(); i++) {
@@ -500,6 +587,13 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 		this.table.changeHeaderValues(newHeadings);
 	}
 
+	/**
+	 * This method edits the information of the category whose name is given as
+	 * a parameter
+	 * 
+	 * @param name
+	 * @param weight
+	 */
 	public void editCategory(String name, double weight) {
 		for (Quarter current : this.quarters) {
 			if (current.getName().equals(getSelectedQuarter())) {
@@ -521,6 +615,14 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 		}
 	}
 
+	/**
+	 * This method edits the information of the category whose name is given as
+	 * a parameter
+	 * 
+	 * @param name
+	 * @param weight
+	 * @param numOfItems
+	 */
 	public void editCategory(String name, double weight, int numOfItems) {
 		for (Quarter current : this.quarters) {
 			if (current.getName().equals(getSelectedQuarter())) {
