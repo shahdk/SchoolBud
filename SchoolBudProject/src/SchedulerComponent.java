@@ -3,7 +3,6 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -24,7 +23,8 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 /**
- * TODO Put here a description of what this class does.
+ * This class is the JPanel that contains all the components to be added onto
+ * the SchedulerFrame
  * 
  * @author padillbt-1. Created May 8, 2013.
  */
@@ -60,25 +60,26 @@ public class SchedulerComponent extends JPanel {
 	private int midOccurences;
 	private int maxOccurences;
 	private int maxExceptions;
-	
-	private SchedulerFrame frame;
 
-	public SchedulerComponent(Locale locale, final SchedulerFrame frame) {
+	/**
+	 * This constructor initializes the JButtons and JOptionBoxes. Also
+	 * implements ActionListeners for the different components
+	 * 
+	 * @param locale
+	 * @param frame
+	 */
+	public SchedulerComponent(Locale locale) {
 		super(new BorderLayout());
 		this.courses = new ArrayList<SchedulerCourse>();
 		this.locale = locale;
 		this.messages = ResourceBundle.getBundle("MessagesBundle", this.locale);
-		this.frame = frame;
 
 		String[] quarterStrings = { "----" };
 
 		this.courseList = new JComboBox(quarterStrings);
 		this.courseList.addActionListener(new ActionListener() {
-			@SuppressWarnings("unchecked")
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				JComboBox box = (JComboBox) event.getSource();
-				String quarterName = (String) box.getSelectedItem();
 				updateSection();
 			}
 
@@ -86,14 +87,6 @@ public class SchedulerComponent extends JPanel {
 
 		this.classList = new JComboBox();
 		this.classList.setPrototypeDisplayValue("XXXXXXXXXX");
-		this.classList.addActionListener(new ActionListener() {
-			@SuppressWarnings("unchecked")
-			@Override
-			public void actionPerformed(ActionEvent event) {
-				JComboBox box = (JComboBox) event.getSource();
-				String courseName = (String) box.getSelectedItem();
-			}
-		});
 
 		this.scheduleButton = new JButton(
 				this.messages.getString("scheduleCourses"));
@@ -133,7 +126,6 @@ public class SchedulerComponent extends JPanel {
 								SchedulerComponent.this.maxEndHour,
 								SchedulerComponent.this.hourIgnoreDays),
 								classHours);
-						System.out.println("both filter");
 					} else if (SchedulerComponent.this.hourCheckBox
 							.isSelected()) {
 						scheduler.permutateSchedules();
@@ -142,9 +134,8 @@ public class SchedulerComponent extends JPanel {
 								SchedulerComponent.this.maxEndHour,
 								SchedulerComponent.this.hourIgnoreDays),
 								classHours);
-						System.out.println("hour filter");
-					} 
-					else if(SchedulerComponent.this.gapCheckBox.isSelected()){
+					} else if (SchedulerComponent.this.gapCheckBox.isSelected()) {
+						scheduler.permutateSchedules();
 						createSchedules(scheduler.filterGaps(
 								SchedulerComponent.this.maxHoursPerGap,
 								SchedulerComponent.this.maxOccurences,
@@ -154,9 +145,7 @@ public class SchedulerComponent extends JPanel {
 								SchedulerComponent.this.maxExceptions,
 								SchedulerComponent.this.gapIgnoreDays),
 								classHours);
-						System.out.println("gap filter");
-					}
-					else {
+					} else {
 						createSchedules(scheduler.permutateSchedules(),
 								classHours);
 					}
@@ -190,44 +179,44 @@ public class SchedulerComponent extends JPanel {
 					nameField.setEditable(false);
 
 					JTextField sectionField = new JTextField(10);
-					sectionField.setText(makeProperString(currentSection.getClassDays().get(0)
-							.getHourSlots().toString()));
+					sectionField.setText(makeProperString(currentSection
+							.getClassDays().get(0).getHourSlots().toString()));
 					sectionField.setEditable(false);
 
 					JTextField sectionField1 = new JTextField(10);
-					sectionField1.setText(makeProperString(currentSection.getClassDays().get(1)
-							.getHourSlots().toString()));
+					sectionField1.setText(makeProperString(currentSection
+							.getClassDays().get(1).getHourSlots().toString()));
 					sectionField1.setEditable(false);
 
 					JTextField sectionField2 = new JTextField(10);
-					sectionField2.setText(makeProperString(currentSection.getClassDays().get(2)
-							.getHourSlots().toString()));
+					sectionField2.setText(makeProperString(currentSection
+							.getClassDays().get(2).getHourSlots().toString()));
 					sectionField2.setEditable(false);
-					
+
 					JTextField sectionField3 = new JTextField(10);
-					sectionField3.setText(makeProperString(currentSection.getClassDays().get(3)
-							.getHourSlots().toString()));
+					sectionField3.setText(makeProperString(currentSection
+							.getClassDays().get(3).getHourSlots().toString()));
 					sectionField3.setEditable(false);
-					
+
 					JTextField sectionField4 = new JTextField(10);
-					sectionField4.setText(makeProperString(currentSection.getClassDays().get(4)
-							.getHourSlots().toString()));
+					sectionField4.setText(makeProperString(currentSection
+							.getClassDays().get(4).getHourSlots().toString()));
 					sectionField4.setEditable(false);
-					
+
 					JTextField sectionField5 = new JTextField(10);
-					sectionField5.setText(makeProperString(currentSection.getClassDays().get(5)
-							.getHourSlots().toString()));
+					sectionField5.setText(makeProperString(currentSection
+							.getClassDays().get(5).getHourSlots().toString()));
 					sectionField5.setEditable(false);
-					
+
 					JTextField sectionField6 = new JTextField(10);
-					sectionField6.setText(makeProperString(currentSection.getClassDays().get(6)
-							.getHourSlots().toString()));
+					sectionField6.setText(makeProperString(currentSection
+							.getClassDays().get(6).getHourSlots().toString()));
 					sectionField6.setEditable(false);
-					
+
 					JTextField sectionField7 = new JTextField(10);
 					sectionField7.setText(currentSection.getSection());
 					sectionField7.setEditable(false);
-					
+
 					teacherPanel.add(new JLabel(
 							SchedulerComponent.this.messages
 									.getString("teacherName")));
@@ -280,10 +269,14 @@ public class SchedulerComponent extends JPanel {
 					topPanel.add(sundayPanel);
 					topPanel.add(sectionPanel);
 
-					int result = JOptionPane.showConfirmDialog(null, topPanel,
+					Object[] options = { "OK" };
+					JOptionPane.showOptionDialog(null, topPanel,
 							SchedulerComponent.this.messages
 									.getString("course"),
-							JOptionPane.OK_CANCEL_OPTION);
+							JOptionPane.PLAIN_MESSAGE,
+							JOptionPane.QUESTION_MESSAGE, null, options,
+							options[0]);
+
 				}
 
 			}
@@ -361,25 +354,24 @@ public class SchedulerComponent extends JPanel {
 						JOptionPane.OK_CANCEL_OPTION);
 
 				if (result == JOptionPane.OK_OPTION) {
-					try{
-					SchedulerComponent.this.maxHoursPerGap = Integer
-							.parseInt(nameField.getText());
-					SchedulerComponent.this.minHoursPerGap = Integer
-							.parseInt(sectionField.getText());
-					SchedulerComponent.this.minOccurences = Integer
-							.parseInt(sectionField1.getText());
-					SchedulerComponent.this.midOccurences = Integer
-							.parseInt(sectionField2.getText());
-					SchedulerComponent.this.maxOccurences = Integer
-							.parseInt(sectionField3.getText());
-					SchedulerComponent.this.maxExceptions = Integer
-							.parseInt(sectionField4.getText());
-					SchedulerComponent.this.gapIgnoreDays = SchedulerMenu
-							.getNumbers(sectionField5.getText());
-					SchedulerComponent.this.gapCheckBox.setEnabled(true);
-					}catch (Exception exp) {
-						JOptionPane.showMessageDialog(
-								frame, "Invalid Input");
+					try {
+						SchedulerComponent.this.maxHoursPerGap = Integer
+								.parseInt(nameField.getText());
+						SchedulerComponent.this.minHoursPerGap = Integer
+								.parseInt(sectionField.getText());
+						SchedulerComponent.this.minOccurences = Integer
+								.parseInt(sectionField1.getText());
+						SchedulerComponent.this.midOccurences = Integer
+								.parseInt(sectionField2.getText());
+						SchedulerComponent.this.maxOccurences = Integer
+								.parseInt(sectionField3.getText());
+						SchedulerComponent.this.maxExceptions = Integer
+								.parseInt(sectionField4.getText());
+						SchedulerComponent.this.gapIgnoreDays = SchedulerMenu
+								.getNumbers(sectionField5.getText());
+						SchedulerComponent.this.gapCheckBox.setEnabled(true);
+					} catch (Exception exp) {
+						JOptionPane.showMessageDialog(null, "Invalid Input");
 					}
 
 				}
@@ -415,20 +407,20 @@ public class SchedulerComponent extends JPanel {
 								.getString("filterHours"),
 						JOptionPane.OK_CANCEL_OPTION);
 				if (result == JOptionPane.OK_OPTION) {
-					try{
-					String start = startField.getText();
-					String end = endField.getText();
-					String credit = ignoreField.getText();
+					try {
+						String start = startField.getText();
+						String end = endField.getText();
+						String credit = ignoreField.getText();
 
-					SchedulerComponent.this.minStartHour = Integer
-							.parseInt(start);
-					SchedulerComponent.this.maxEndHour = Integer.parseInt(end);
-					SchedulerComponent.this.hourIgnoreDays = SchedulerMenu
-							.getNumbers(credit);
-					SchedulerComponent.this.hourCheckBox.setEnabled(true);
-					}catch (Exception exp) {
-						JOptionPane.showMessageDialog(
-								frame, "Invalid Input");
+						SchedulerComponent.this.minStartHour = Integer
+								.parseInt(start);
+						SchedulerComponent.this.maxEndHour = Integer
+								.parseInt(end);
+						SchedulerComponent.this.hourIgnoreDays = SchedulerMenu
+								.getNumbers(credit);
+						SchedulerComponent.this.hourCheckBox.setEnabled(true);
+					} catch (Exception exp) {
+						JOptionPane.showMessageDialog(null, "Invalid Input");
 					}
 
 				}
@@ -489,10 +481,21 @@ public class SchedulerComponent extends JPanel {
 		setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 	}
 
+	/**
+	 * This method returns the selected course's name
+	 * 
+	 * @return course name
+	 */
 	public String getSelectedCourse() {
 		return (String) this.courseList.getSelectedItem();
 	}
 
+	/**
+	 * This method creates an empty JTable with the days of the week included
+	 * 
+	 * @param numberOfColumns
+	 * @return empty JTable
+	 */
 	public JTable createTables(int numberOfColumns) {
 		Object[][] data = { { this.messages.getString("monday") },
 				{ this.messages.getString("tuesday") },
@@ -510,6 +513,13 @@ public class SchedulerComponent extends JPanel {
 		return table;
 	}
 
+	/**
+	 * This method creates the JTables that contain the data from the created
+	 * schedules
+	 * 
+	 * @param schedules
+	 * @param hours
+	 */
 	public void createSchedules(
 			ArrayList<ArrayList<SchedulerCourse>> schedules, int hours) {
 
@@ -550,6 +560,11 @@ public class SchedulerComponent extends JPanel {
 		this.scheduleScrollPane.revalidate();
 	}
 
+	/**
+	 * This method adds a course to the JOptionBox
+	 * 
+	 * @param course
+	 */
 	public void addCourse(SchedulerCourse course) {
 		this.courses.add(course);
 		String[] newCourses = new String[this.courses.size()];
@@ -560,6 +575,11 @@ public class SchedulerComponent extends JPanel {
 		this.courseList.setModel(new DefaultComboBoxModel(newCourses));
 	}
 
+	/**
+	 * This method adds a section to the JOptionBox
+	 * 
+	 * @param newClass
+	 */
 	public void addSection(ClassSection newClass) {
 		for (SchedulerCourse current : this.courses) {
 			if (current.getName().equals(this.courseList.getSelectedItem())) {
@@ -575,6 +595,11 @@ public class SchedulerComponent extends JPanel {
 		}
 	}
 
+	/**
+	 * This method changes the value within the JOptionBox of courses depending
+	 * on the number of courses
+	 * 
+	 */
 	public void updateSection() {
 		for (SchedulerCourse current : this.courses) {
 			if (current.getName().equals(this.courseList.getSelectedItem())) {
@@ -591,6 +616,11 @@ public class SchedulerComponent extends JPanel {
 		}
 	}
 
+	/**
+	 * This method changes the value within the JOptionBox of sections depending
+	 * on the course selected
+	 *
+	 */
 	public void updateCourse() {
 		String[] newCourses = new String[this.courses.size()];
 
@@ -600,6 +630,10 @@ public class SchedulerComponent extends JPanel {
 		this.courseList.setModel(new DefaultComboBoxModel(newCourses));
 	}
 
+	/**
+	 * This method removes the current course
+	 *
+	 */
 	public void removeCourse() {
 		for (int i = 0; i < this.courses.size(); i++) {
 			if (this.courseList.getSelectedItem().equals(
@@ -612,6 +646,10 @@ public class SchedulerComponent extends JPanel {
 		updateSection();
 	}
 
+	/**
+	 * This method removes the current section
+	 *
+	 */
 	public void removeSection() {
 		for (int i = 0; i < this.courses.size(); i++) {
 			if (this.courseList.getSelectedItem().equals(
@@ -629,6 +667,12 @@ public class SchedulerComponent extends JPanel {
 		updateSection();
 	}
 
+	/**
+	 * This methods returns the section that is currently selected
+	 *
+	 * @return current section
+	 */
+	@SuppressWarnings("unused")
 	public ClassSection getCurrentSection() {
 		ClassSection temp = null;
 		for (int i = 0; i < this.courses.size(); i++) {
@@ -648,19 +692,31 @@ public class SchedulerComponent extends JPanel {
 		return temp;
 	}
 
+	/**
+	 * This method returns the number of items in the JOptionBox of courses
+	 *
+	 * @return number of courses
+	 */
 	public int getCourseSize() {
 		return this.courseList.getItemCount();
 	}
 
+	/**
+	 * This method returns the number of items in the JOptionBox of sections
+	 *
+	 * @return number of sections for the selected course
+	 */
 	public int getSectionSize() {
 		return this.classList.getItemCount();
 	}
 
-	public JComboBox getCourseList() {
-		return this.courseList;
-	}
-	
-	public String makeProperString(String word){
+	/**
+	 * This method removes square brackets from the given String
+	 *
+	 * @param word
+	 * @return without brackets
+	 */
+	public String makeProperString(String word) {
 		word = word.replace('[', '\0');
 		word = word.replace(']', '\0');
 		return word;

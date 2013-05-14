@@ -18,7 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
- * TODO Put here a description of what this class does.
+ * This class is the JMenuBarto be added onto the JFrame
  * 
  * @author padillbt-1. Created Apr 23, 2013.
  */
@@ -60,6 +60,13 @@ public class SchoolBudGUIMenu extends JMenuBar {
 	private SchoolBudGUITable rubricTable;
 	private final int NUM_COLS = 5;
 
+	/**
+	 * This constructor initializes variables and the different components in
+	 * the JMenuBar
+	 * 
+	 * @param frame
+	 * @param component
+	 */
 	public SchoolBudGUIMenu(JFrame frame, SchoolBudGUIComponent component) {
 		this.frame = frame;
 		this.currentLocale = new Locale("en", "US");
@@ -72,6 +79,11 @@ public class SchoolBudGUIMenu extends JMenuBar {
 
 	}
 
+	/**
+	 * This method creates the JMenus and JMenuItems for the JMenuBar and adds
+	 * the ActionListeners for them
+	 * 
+	 */
 	public final void initialize() {
 		this.add = new JMenu(this.messages.getString("add"));
 		this.language = new JMenu(this.messages.getString("language"));
@@ -338,8 +350,12 @@ public class SchoolBudGUIMenu extends JMenuBar {
 			public void actionPerformed(ActionEvent event) {
 
 				JPanel myPanel = new JPanel();
-				String[] names = { SchoolBudGUIMenu.this.messages.getString("letgrade") , SchoolBudGUIMenu.this.messages.getString("lowerlimit"),
-						SchoolBudGUIMenu.this.messages.getString("upperlimit"), SchoolBudGUIMenu.this.messages.getString("gpa"), SchoolBudGUIMenu.this.messages.getString("remove") };
+				String[] names = {
+						SchoolBudGUIMenu.this.messages.getString("letgrade"),
+						SchoolBudGUIMenu.this.messages.getString("lowerlimit"),
+						SchoolBudGUIMenu.this.messages.getString("upperlimit"),
+						SchoolBudGUIMenu.this.messages.getString("gpa"),
+						SchoolBudGUIMenu.this.messages.getString("remove") };
 
 				try {
 					SchoolBudGUIMenu.this.rubricTable = new SchoolBudGUITable(
@@ -376,11 +392,21 @@ public class SchoolBudGUIMenu extends JMenuBar {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				SchoolBudGUIMenu.this.main.removeQuarter(SchoolBudGUIMenu.this.component.getSelectedQuarter());
-				SchoolBudGUIMenu.this.component.updateQuarters(SchoolBudGUIMenu.this.main.getQuarterList());
-				SchoolBudGUIMenu.this.component.updateCourses(SchoolBudGUIMenu.this.component.getSelectedQuarter());
-				SchoolBudGUIMenu.this.component.updateTable(SchoolBudGUIMenu.this.component.getSelectedCourse());
-				SchoolBudGUIMenu.this.component.updateCategoryList(SchoolBudGUIMenu.this.component.getSelectedCourse());
+				SchoolBudGUIMenu.this.main
+						.removeQuarter(SchoolBudGUIMenu.this.component
+								.getSelectedQuarter());
+				SchoolBudGUIMenu.this.component
+						.updateQuarters(SchoolBudGUIMenu.this.main
+								.getQuarterList());
+				SchoolBudGUIMenu.this.component
+						.updateCourses(SchoolBudGUIMenu.this.component
+								.getSelectedQuarter());
+				SchoolBudGUIMenu.this.component
+						.updateTable(SchoolBudGUIMenu.this.component
+								.getSelectedCourse());
+				SchoolBudGUIMenu.this.component
+						.updateCategoryList(SchoolBudGUIMenu.this.component
+								.getSelectedCourse());
 				SchoolBudGUIMenu.this.component.calculateGrades();
 				return;
 			}
@@ -393,18 +419,27 @@ public class SchoolBudGUIMenu extends JMenuBar {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				for (Quarter q : SchoolBudGUIMenu.this.main.getQuarterList()) {
-					if (q.getName().equals(SchoolBudGUIMenu.this.component.getSelectedQuarter())) {
+					if (q.getName().equals(
+							SchoolBudGUIMenu.this.component
+									.getSelectedQuarter())) {
 						for (int i = 0; i < q.getCourseList().size(); i++) {
-							if (q.getCourseList().get(i).getCourseName()
-									.equals(SchoolBudGUIMenu.this.component.getSelectedCourse())) {
+							if (q.getCourseList()
+									.get(i)
+									.getCourseName()
+									.equals(SchoolBudGUIMenu.this.component
+											.getSelectedCourse())) {
 								q.removeCourse(q.getCourseList().get(i));
-								SchoolBudGUIMenu.this.component.updateCourses(SchoolBudGUIMenu.this.component
-										.getSelectedQuarter());
-								SchoolBudGUIMenu.this.component.updateCategoryList(SchoolBudGUIMenu.this.component
-										.getSelectedCourse());
-								SchoolBudGUIMenu.this.component.updateTable(SchoolBudGUIMenu.this.component
-										.getSelectedCourse());
-								SchoolBudGUIMenu.this.component.calculateGrades();
+								SchoolBudGUIMenu.this.component
+										.updateCourses(SchoolBudGUIMenu.this.component
+												.getSelectedQuarter());
+								SchoolBudGUIMenu.this.component
+										.updateCategoryList(SchoolBudGUIMenu.this.component
+												.getSelectedCourse());
+								SchoolBudGUIMenu.this.component
+										.updateTable(SchoolBudGUIMenu.this.component
+												.getSelectedCourse());
+								SchoolBudGUIMenu.this.component
+										.calculateGrades();
 								return;
 							}
 						}
@@ -419,10 +454,13 @@ public class SchoolBudGUIMenu extends JMenuBar {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				for (Quarter q : SchoolBudGUIMenu.this.main.getQuarterList()) {
-					if (q.getName().equals(SchoolBudGUIMenu.this.component.getSelectedQuarter())) {
+					if (q.getName().equals(
+							SchoolBudGUIMenu.this.component
+									.getSelectedQuarter())) {
 						for (Course c : q.getCourseList()) {
 							if (c.getCourseName().equals(
-									SchoolBudGUIMenu.this.component.getSelectedCourse())) {
+									SchoolBudGUIMenu.this.component
+											.getSelectedCourse())) {
 								for (int i = 0; i < c.getCategories().size(); i++) {
 									if (c.getCategories()
 											.get(i)
@@ -431,11 +469,14 @@ public class SchoolBudGUIMenu extends JMenuBar {
 													.getSelectedCategory())) {
 										c.removeCategory(SchoolBudGUIMenu.this.component
 												.getSelectedCategory());
-										SchoolBudGUIMenu.this.component.updateCategoryList(SchoolBudGUIMenu.this.component
-												.getSelectedCourse());
-										SchoolBudGUIMenu.this.component.updateTable(SchoolBudGUIMenu.this.component
-												.getSelectedCourse());
-										SchoolBudGUIMenu.this.component.calculateGrades();
+										SchoolBudGUIMenu.this.component
+												.updateCategoryList(SchoolBudGUIMenu.this.component
+														.getSelectedCourse());
+										SchoolBudGUIMenu.this.component
+												.updateTable(SchoolBudGUIMenu.this.component
+														.getSelectedCourse());
+										SchoolBudGUIMenu.this.component
+												.calculateGrades();
 										return;
 									}
 								}
@@ -576,6 +617,12 @@ public class SchoolBudGUIMenu extends JMenuBar {
 
 	}
 
+	/**
+	 * This method changes the Locale and updates the text in the JMenuBar
+	 * 
+	 * @param language
+	 * @param country
+	 */
 	public void updateText(String language, String country) {
 		this.currentLocale = new Locale(language, country);
 		this.messages = ResourceBundle.getBundle("MessagesBundle",
@@ -594,7 +641,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 		this.editQuarter.setText(this.messages.getString("quarter"));
 		this.editCategory.setText(this.messages.getString("category"));
 		this.editRubric.setText(this.messages.getString("rubric"));
-		
+
 		this.rmQuarter.setText(this.messages.getString("quarter"));
 		this.rmCourse.setText(this.messages.getString("course"));
 		this.rmCat.setText(this.messages.getString("category"));
@@ -615,6 +662,10 @@ public class SchoolBudGUIMenu extends JMenuBar {
 		translateHeadings();
 	}
 
+	/**
+	 * This translates the text within the JTable headings
+	 * 
+	 */
 	public void translateHeadings() {
 		ArrayList<String> headings = new ArrayList<String>();
 		headings.add(this.messages.getString("itemName"));
@@ -625,7 +676,11 @@ public class SchoolBudGUIMenu extends JMenuBar {
 		headings.add(this.messages.getString("remove"));
 		this.component.updateHeadings(headings);
 	}
-	
+
+	/**
+	 * This method places the values within the Rubric
+	 * 
+	 */
 	public void populateRubric() {
 		for (Quarter q : this.main.getQuarterList()) {
 			if (q.getName().equals(this.component.getSelectedQuarter())) {
@@ -658,6 +713,11 @@ public class SchoolBudGUIMenu extends JMenuBar {
 		}
 	}
 
+	/**
+	 * This method chnages the values in the given String[]
+	 * 
+	 * @param A
+	 */
 	public void insertSort(String[] A) {
 		for (int i = 1; i < A.length; i++) {
 			String value = A[i];
