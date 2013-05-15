@@ -28,32 +28,113 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 	 * Default serial version unique id.
 	 */
 	private static final long serialVersionUID = 1L;
+	/**
+	 * Dropdown list of quarters
+	 */
 	private JComboBox quarterList;
+	/**
+	 * Dropdown list of courses
+	 */
 	private JComboBox classList;
+	/**
+	 * Dropdown list of categories
+	 */
 	private JComboBox categoryList;
+	/**
+	 * Panel encapsulating the quarter, category and courses panel
+	 */
 	private JPanel comboPanel;
+	/**
+	 * Panel encapsulating the drop down list and label for quarters.
+	 */
 	private JPanel quarterPanel;
+	/**
+	 * Panel encapsulating the drop down list and label for courses.
+	 */
 	private JPanel coursePanel;
+	/**
+	 * Panel encapsulating the drop down list and label for category.
+	 */
 	private JPanel categoryPanel;
+	/**
+	 * Panel encapsulating the labels for displaying grades.
+	 */
 	private JPanel bottomPanel;
+	/**
+	 * List of quarters
+	 */
 	private ArrayList<Quarter> quarters;
+	/**
+	 * Number of columns for table displaying items.
+	 */
 	private final int NUM_COLS = 6;
+	/**
+	 * The table for displaying items
+	 */
 	private SchoolBudGUITable table;
+	/**
+	 * Textfield to display course grade in %.
+	 */
 	private JTextField courseGrade;
+	/**
+	 * Textfield to display course letter grade.
+	 */
 	private JTextField letterGrade;
+	/**
+	 * Textfield to display the target grade for course.
+	 */
 	private JTextField targetGrade;
+	/**
+	 * Textfield to display the needed grade for the course.
+	 */
 	private JTextField neededGrade;
+	/**
+	 * Textfield to display quarter gpa.
+	 */
 	private JTextField quarterGPA;
+	/**
+	 * Textfield to display the total gpa of all quarters..
+	 */
 	private JTextField overAllGPA;
+	/**
+	 * Button to calculate the grades
+	 */
 	private JButton calculate;
+	/**
+	 * Label for course grade.
+	 */
 	private JLabel courseGradeLabel;
+	/**
+	 * Label for letter course grade.
+	 */
 	private JLabel letterGradeLabel;
+	/**
+	 * Label for target course grade.
+	 */
 	private JLabel targetGradeLabel;
+	/**
+	 * Label for needed course grade.
+	 */
 	private JLabel neededGradeLabel;
+	/**
+	 * Label for quarter gpa
+	 */
 	private JLabel quarterGPALabel;
+	/**
+	 * Label for overall gpa
+	 */
 	private JLabel overAllGPALabel;
+	/**
+	 * Label for Quarter
+	 */
 	private JLabel qt;
+	/**
+	 * Label for category
+	 */
 	private JLabel ct;
+	/**
+	 * Label for Courses
+	 */
 	private JLabel cr;
 
 	/**
