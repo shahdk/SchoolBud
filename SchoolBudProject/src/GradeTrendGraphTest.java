@@ -839,17 +839,7 @@ public class GradeTrendGraphTest {
 				0.5);
 		assertEquals(graph.getGradePredictionCurvePoints().get(4).getY(), 89,
 				0.5);
-		
-		// test for exact amount of points
-		boolean thrown = false;
-		try {
-			assertEquals(graph.getGradePredictionCurvePoints().get(5).getY(), 89,
-					0.5);
-		}
-		catch (IndexOutOfBoundsException e) {
-			thrown = true;
-		}
-		assertTrue(thrown);
+		assertEquals(graph.getGradePredictionCurvePoints().size(), 5);		
 		
 		
 		// check points Y - grade Best prediction
@@ -863,6 +853,7 @@ public class GradeTrendGraphTest {
 				92, 0.5);
 		assertEquals(graph.getBestGradePredictionCurvePoints().get(4).getY(),
 				93, 0.5);
+		assertEquals(graph.getBestGradePredictionCurvePoints().size(), 5);
 		
 		// check points Y - grade Worst prediction
 		assertEquals(graph.getWorstGradePredictionCurvePoints().get(0).getY(),
@@ -875,6 +866,7 @@ public class GradeTrendGraphTest {
 				58, 0.5);
 		assertEquals(graph.getWorstGradePredictionCurvePoints().get(4).getY(),
 				59, 0.5);
+		assertEquals(graph.getWorstGradePredictionCurvePoints().size(), 5);
 
 	}
 
