@@ -153,8 +153,10 @@ public class GradeTrendGraph {
 
 		// take into account user given class difficulty to affect
 		// the steepness factor
+		System.out.println(varAvg);
 		varAvg *= GradeTrendGraph.getPercentChangeValue(3,
 				this.classDifficulty_1_5);
+		System.out.println("var1 --- " + varAvg);
 
 		// take into account user given future work rate to affect
 		// the steepness factor
@@ -227,7 +229,7 @@ public class GradeTrendGraph {
 		double diffVal = Math.abs(midPoint - value) * 0.05;
 
 		if (value < midPoint) {
-			change = diffVal;
+			change -= diffVal;
 		} else {
 			change += diffVal;
 		}
@@ -300,14 +302,12 @@ public class GradeTrendGraph {
 
 		boolean isZero = true;
 
-		int daysPassed = (int) ((this.endDate.getTime() - this.startDate
-				.getTime()) / (1000 * 60 * 60 * 24));
+		int daysPassed = GradeTrendGraph.getDateDiffDays(this.startDate, this.currentDate);
 		if (daysPassed == 0) {
 			daysPassed = 1;
 		}
 
-		int daysRemaining = (int) ((this.course.getEndDate().getTime() - this.endDate
-				.getTime()) / (1000 * 60 * 60 * 24));
+		int daysRemaining = GradeTrendGraph.getDateDiffDays(this.currentDate, this.endDate);
 
 		Course tempMinCourse = new Course("tempCourse");
 		Course tempMaxCourse = new Course("tempMaxCourse");
@@ -322,7 +322,6 @@ public class GradeTrendGraph {
 			}
 			double weight = this.getCategoryWeight(cats, cat);
 			ArrayList<Item> currItems = this.getCategoryItems(cats, cat);
-
 			Category newMinCat = new Category(cat, predictedItems, weight);
 			for (int i = 0; i < newMinCat.getItemList().size(); i++) {
 				newMinCat.getItemList().get(i).setEarnedPoints("0");

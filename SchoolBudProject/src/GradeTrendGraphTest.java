@@ -311,15 +311,15 @@ public class GradeTrendGraphTest {
 	 SimpleDateFormat dtFormat = new SimpleDateFormat("MM/dd/yyyy");
 	
 	 String newDate1 = "04/08/2013";
-	 Date newDt1 = dtFormat.parse(newDate1);
+	 Date start = dtFormat.parse(newDate1);
 	
 	 String newDate2 = "04/28/2013";
-	 Date newDt2 = dtFormat.parse(newDate2);
+	 Date end = dtFormat.parse(newDate2);
 	
 	 String newDate3 = "04/18/2013";
-	 Date newDt3 = dtFormat.parse(newDate3);
+	 Date current = dtFormat.parse(newDate3);
 	
-	 Course course = new Course("Temp", 4.0, newDt1, newDt2);
+	 Course course = new Course("Temp", 4.0, start, end);
 	 Category cat = new Category("HW", 100);
 	
 	 String[] date = { "4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013",
@@ -335,8 +335,9 @@ public class GradeTrendGraphTest {
 	 course.addCategory(cat);
 	
 	 GradeTrendGraph graph = new GradeTrendGraph(course, 2, 5);
-	 graph.setStartDate(newDt1);
-	 graph.setEndDate(newDt3);
+	 graph.setStartDate(start);
+	 graph.setEndDate(end);
+	 graph.setCurrentDate(current);
 	 graph.updateGraph();
 	
 	 assertEquals(25, graph.getWorstCaseGrade(), DELTA);
@@ -348,15 +349,15 @@ public class GradeTrendGraphTest {
 	 SimpleDateFormat dtFormat = new SimpleDateFormat("MM/dd/yyyy");
 	
 	 String newDate1 = "04/08/2013";
-	 Date newDt1 = dtFormat.parse(newDate1);
+	 Date start = dtFormat.parse(newDate1);
 	
-	 String newDate2 = "04/28/2013";
-	 Date newDt2 = dtFormat.parse(newDate2);
+	 String newDate2 = "06/28/2013";
+	 Date end = dtFormat.parse(newDate2);
 	
 	 String newDate3 = "04/18/2013";
-	 Date newDt3 = dtFormat.parse(newDate3);
+	 Date current = dtFormat.parse(newDate3);
 	
-	 Course course = new Course("Temp", 4.0, newDt1, newDt2);
+	 Course course = new Course("Temp", 4.0, start, end);
 	 Category cat = new Category("HW", 25);
 	 Category cat2 = new Category("Exam", 75);
 	
@@ -382,12 +383,13 @@ public class GradeTrendGraphTest {
 	 course.addCategory(cat2);
 	
 	 GradeTrendGraph graph = new GradeTrendGraph(course, 2, 5);
-	 graph.setStartDate(newDt1);
-	 graph.setEndDate(newDt3);
+	 graph.setStartDate(start);
+	 graph.setEndDate(end);
+	 graph.setCurrentDate(current);
 	 graph.updateGraph();
 	
-	 assertEquals(40, graph.getWorstCaseGrade(), DELTA);
-	 assertEquals(90, graph.getBestCaseGrade(), DELTA);
+	 assertEquals(10, graph.getWorstCaseGrade(), DELTA);
+	 assertEquals(98, graph.getBestCaseGrade(), DELTA);
 	 }
 	
 	 @Test
@@ -397,10 +399,10 @@ public class GradeTrendGraphTest {
 	 String newDate1 = "04/08/2013";
 	 Date newDt1 = dtFormat.parse(newDate1);
 	
-	 String newDate2 = "04/28/2013";
+	 String newDate2 = "06/28/2013";
 	 Date newDt2 = dtFormat.parse(newDate2);
 	
-	 String newDate3 = "04/18/2013";
+	 String newDate3 = "06/18/2013";
 	 Date newDt3 = dtFormat.parse(newDate3);
 	
 	 Course course = new Course("Temp", 4.0, newDt1, newDt2);
@@ -438,10 +440,10 @@ public class GradeTrendGraphTest {
 	
 	 GradeTrendGraph graph = new GradeTrendGraph(course, 2, 5);
 	 graph.setStartDate(newDt1);
-	 graph.setEndDate(newDt3);
+	 graph.setEndDate(newDt2);
 	 graph.updateGraph();
 	
-	 assertEquals(43, graph.getWorstCaseGrade(), DELTA);
+	 assertEquals(42, graph.getWorstCaseGrade(), DELTA);
 	 assertEquals(93, graph.getBestCaseGrade(), DELTA);
 	 }
 	
@@ -450,15 +452,15 @@ public class GradeTrendGraphTest {
 	 SimpleDateFormat dtFormat = new SimpleDateFormat("MM/dd/yyyy");
 	
 	 String newDate1 = "04/08/2013";
-	 Date newDt1 = dtFormat.parse(newDate1);
+	 Date start = dtFormat.parse(newDate1);
 	
-	 String newDate2 = "04/28/2013";
-	 Date newDt2 = dtFormat.parse(newDate2);
+	 String newDate2 = "04/28/2014";
+	 Date end = dtFormat.parse(newDate2);
 	
 	 String newDate3 = "04/12/2013";
-	 Date newDt3 = dtFormat.parse(newDate3);
+	 Date current = dtFormat.parse(newDate3);
 	
-	 Course course = new Course("Temp", 4.0, newDt1, newDt2);
+	 Course course = new Course("Temp", 4.0, start, end);
 	 Category cat = new Category("HW", 100);
 	
 	 String[] date = {"4/08/2013", "4/09/2013", "4/10/2013"};
@@ -473,12 +475,13 @@ public class GradeTrendGraphTest {
 	 course.addCategory(cat);
 	
 	 GradeTrendGraph graph = new GradeTrendGraph(course, 2, 5);
-	 graph.setStartDate(newDt1);
-	 graph.setEndDate(newDt3);
+	 graph.setStartDate(start);
+	 graph.setEndDate(end);
+	 graph.setCurrentDate(current);
 	 graph.updateGraph();
 	
-	 assertEquals(16, graph.getWorstCaseGrade(), DELTA);
-	 assertEquals(96, graph.getBestCaseGrade(), DELTA);
+	 assertEquals(1, graph.getWorstCaseGrade(), DELTA);
+	 assertEquals(100, graph.getBestCaseGrade(), DELTA);
 	 }
 	
 	 @Test
@@ -486,15 +489,15 @@ public class GradeTrendGraphTest {
 	 SimpleDateFormat dtFormat = new SimpleDateFormat("MM/dd/yyyy");
 	
 	 String newDate1 = "04/08/2013";
-	 Date newDt1 = dtFormat.parse(newDate1);
+	 Date start = dtFormat.parse(newDate1);
 	
-	 String newDate2 = "04/28/2013";
-	 Date newDt2 = dtFormat.parse(newDate2);
+	 String newDate2 = "04/28/2014";
+	 Date end = dtFormat.parse(newDate2);
 	
 	 String newDate3 = "04/11/2013";
-	 Date newDt3 = dtFormat.parse(newDate3);
+	 Date current = dtFormat.parse(newDate3);
 	
-	 Course course = new Course("Temp", 4.0, newDt1, newDt2);
+	 Course course = new Course("Temp", 4.0, start, end);
 	 Category cat = new Category("HW", 25);
 	 Category cat2 = new Category("Exam", 75);
 	
@@ -519,12 +522,13 @@ public class GradeTrendGraphTest {
 	 course.addCategory(cat2);
 	
 	 GradeTrendGraph graph = new GradeTrendGraph(course, 2, 5);
-	 graph.setStartDate(newDt1);
-	 graph.setEndDate(newDt3);
+	 graph.setStartDate(start);
+	 graph.setEndDate(end);
+	 graph.setCurrentDate(current);
 	 graph.updateGraph();
 	
-	 assertEquals(13, graph.getWorstCaseGrade(), DELTA);
-	 assertEquals(98, graph.getBestCaseGrade(), DELTA);
+	 assertEquals(1, graph.getWorstCaseGrade(), DELTA);
+	 assertEquals(100, graph.getBestCaseGrade(), DELTA);
 	 }
 	
 	 @Test
@@ -532,15 +536,15 @@ public class GradeTrendGraphTest {
 	 SimpleDateFormat dtFormat = new SimpleDateFormat("MM/dd/yyyy");
 	
 	 String newDate1 = "04/08/2013";
-	 Date newDt1 = dtFormat.parse(newDate1);
+	 Date start = dtFormat.parse(newDate1);
 	
-	 String newDate2 = "04/28/2013";
-	 Date newDt2 = dtFormat.parse(newDate2);
+	 String newDate2 = "04/28/2014";
+	 Date end = dtFormat.parse(newDate2);
 	
 	 String newDate3 = "04/13/2013";
-	 Date newDt3 = dtFormat.parse(newDate3);
+	 Date current = dtFormat.parse(newDate3);
 	
-	 Course course = new Course("Temp", 4.0, newDt1, newDt2);
+	 Course course = new Course("Temp", 4.0, start, end);
 	 Category cat = new Category("HW", 25);
 	 Category cat2 = new Category("Exam", 36);
 	 Category cat3 = new Category("Project", 39);
@@ -573,12 +577,13 @@ public class GradeTrendGraphTest {
 	 course.addCategory(cat3);
 	
 	 GradeTrendGraph graph = new GradeTrendGraph(course, 2, 5);
-	 graph.setStartDate(newDt1);
-	 graph.setEndDate(newDt3);
+	 graph.setStartDate(start);
+	 graph.setEndDate(end);
+	 graph.setCurrentDate(current);
 	 graph.updateGraph();
 	
-	 assertEquals(20, graph.getWorstCaseGrade(), DELTA);
-	 assertEquals(95, graph.getBestCaseGrade(), DELTA);
+	 assertEquals(1, graph.getWorstCaseGrade(), DELTA);
+	 assertEquals(100, graph.getBestCaseGrade(), DELTA);
 	 }
 	
 	 @Test
@@ -612,15 +617,15 @@ public class GradeTrendGraphTest {
 	 SimpleDateFormat dtFormat = new SimpleDateFormat("MM/dd/yyyy");
 	
 	 String newDate1 = "04/08/2013";
-	 Date newDt1 = dtFormat.parse(newDate1);
+	 Date start = dtFormat.parse(newDate1);
 	
-	 String newDate2 = "04/28/2013";
-	 Date newDt2 = dtFormat.parse(newDate2);
+	 String newDate2 = "04/28/2014";
+	 Date end = dtFormat.parse(newDate2);
 	
 	 String newDate3 = "04/18/2013";
-	 Date newDt3 = dtFormat.parse(newDate3);
+	 Date current = dtFormat.parse(newDate3);
 	
-	 Course course = new Course("Temp", 4.0, newDt1, newDt2);
+	 Course course = new Course("Temp", 4.0, start, end);
 	 Category cat = new Category("HW", 40);
 	 Category cat2 = new Category("TEST", 60);
 	
@@ -654,8 +659,9 @@ public class GradeTrendGraphTest {
 	 course.addCategory(cat2);
 	
 	 GradeTrendGraph graph = new GradeTrendGraph(course, 2, 5);
-	 graph.setStartDate(newDt1);
-	 graph.setEndDate(newDt3);
+	 graph.setStartDate(start);
+	 graph.setEndDate(end);
+	 graph.setCurrentDate(current);
 	 graph.updateGraph();
 	
 	 assertEquals(55.68, course.getCourseGrade(), DELTA);
@@ -670,10 +676,10 @@ public class GradeTrendGraphTest {
 	 String newDate2 = "04/20/2013";
 	 Date cur = dtFormat.parse(newDate2);
 	
-	 String newDate3 = "04/28/2013";
+	 String newDate3 = "04/28/2014";
 	 Date end = dtFormat.parse(newDate3);
 	
-	 assertEquals(GradeTrendGraph.getPercenDaysRemaining(cur, end, 20), 0.4,
+	 assertEquals(GradeTrendGraph.getPercenDaysRemaining(cur, end, 20), 18.65,
 	 DELTA);
 	
 	 }
@@ -704,7 +710,7 @@ public class GradeTrendGraphTest {
 	
 	 // test neg
 	 val = GradeTrendGraph.getPercentChangeValue(0, -5);
-	 assertEquals(.25, val, DELTA);
+	 assertEquals(.75, val, DELTA);
 	
 	 // test nom
 	 val = GradeTrendGraph.getPercentChangeValue(0, 0);
@@ -721,7 +727,7 @@ public class GradeTrendGraphTest {
 	
 	 // test below - hard
 	 val = GradeTrendGraph.getPercentChangeValue(3, 1);
-	 assertEquals(0.1, val, DELTA);
+	 assertEquals(0.9, val, DELTA);
 	
 	 // test nom
 	 val = GradeTrendGraph.getPercentChangeValue(3, 3);
@@ -730,7 +736,7 @@ public class GradeTrendGraphTest {
 	 }
 
 	@Test
-	public void testIntegrationGradeTrendGraph() throws ParseException {
+	public void testIntegrationGradeTrendGraph1() throws ParseException {
 
 		SimpleDateFormat dtFormat = new SimpleDateFormat("MM/dd/yyyy");
 
@@ -838,11 +844,11 @@ public class GradeTrendGraphTest {
 		assertEquals(graph.getBestGradePredictionCurvePoints().get(0).getY(),
 				56, 0.5);
 		assertEquals(graph.getBestGradePredictionCurvePoints().get(1).getY(),
-				77, 0.5);
+				75, 0.5);
 		assertEquals(graph.getBestGradePredictionCurvePoints().get(2).getY(),
-				87, 0.5);
+				81, 0.5);
 		assertEquals(graph.getBestGradePredictionCurvePoints().get(3).getY(),
-				92, 0.5);
+				82, 0.5);
 		assertEquals(graph.getBestGradePredictionCurvePoints().get(4).getY(),
 				93, 0.5);
 		assertEquals(graph.getBestGradePredictionCurvePoints().size(), 5);
@@ -851,17 +857,140 @@ public class GradeTrendGraphTest {
 		assertEquals(graph.getWorstGradePredictionCurvePoints().get(0).getY(),
 				56, 0.5);
 		assertEquals(graph.getWorstGradePredictionCurvePoints().get(1).getY(),
-				43, 0.5);
+				45, 0.5);
 		assertEquals(graph.getWorstGradePredictionCurvePoints().get(2).getY(),
-				53, 0.5);
+				60, 0.5);
 		assertEquals(graph.getWorstGradePredictionCurvePoints().get(3).getY(),
-				58, 0.5);
+				70, 0.5);
 		assertEquals(graph.getWorstGradePredictionCurvePoints().get(4).getY(),
 				59, 0.5);
 		assertEquals(graph.getWorstGradePredictionCurvePoints().size(), 5);
 
 	}
 
+	
+	@Test
+	public void testIntegrationGradeTrendGraph2() throws ParseException {
+
+		SimpleDateFormat dtFormat = new SimpleDateFormat("MM/dd/yyyy");
+
+		String newDate1 = "04/03/2013";
+		Date start = dtFormat.parse(newDate1);
+
+		String newDate2 = "04/28/2013";
+		Date end = dtFormat.parse(newDate2);
+
+		String newDate3 = "04/05/2013";
+		Date curr = dtFormat.parse(newDate3);
+
+		Course course = new Course("Temp", 4.0, start, end);
+		Category cat = new Category("HW", 40);
+		Category cat2 = new Category("TEST", 60);
+
+		String[] date = { "4/08/2013", "4/09/2013", "4/10/2013", "4/11/2013",
+				"4/12/2013", "4/13/2013", "4/14/2013" };
+		int count = 0;
+		for (int i = 0; i < 10; i++) {
+			if (count > 6) {
+				count = 0;
+			}
+			Item it = new Item("HW" + i, dtFormat.parse(date[count]));
+			it.setEarnedPoints(i * 8 + count + "");
+			it.setTotalPoints("100");
+			cat.addItem(it);
+			count++;
+		}
+
+		count = 3;
+		for (int i = 5; i <= 9; i++) {
+			if (count > 6) {
+				count = 3;
+			}
+			Item it = new Item("TEST" + i, dtFormat.parse(date[count]));
+			it.setEarnedPoints((i * 9) + count + "");
+			it.setTotalPoints("100");
+			cat2.addItem(it);
+			count++;
+		}
+
+		course.addCategory(cat);
+		course.addCategory(cat2);
+
+		GradeTrendGraph graph = new GradeTrendGraph(course, 1, 5);
+		graph.setStartDate(start);
+		graph.setEndDate(end);
+		graph.setTestCurrentDate(curr);
+
+		// UPDATE ALL
+		graph.updateAll();
+
+		// check FINAL stats
+//		assertEquals(55.68, course.getCourseGrade(), DELTA);
+//		assertEquals(89, graph.getPredictedGrade(), 0.5);
+//		assertEquals(59, graph.getPredictedWorstCaseGrade(), 0.6);
+//		assertEquals(93, graph.getPredictedBestCaseGrade(), 0.5);
+//		assertEquals(100, graph.getBestCaseGrade(), DELTA);
+//		assertEquals(0, graph.getWorstCaseGrade(), DELTA);
+//
+//		// TEST DATES
+//		ArrayList<Date> dates = this.findDates(curr, end);
+//		// GRAPH DATES
+//		ArrayList<DataPoint> pred = graph.getGradePredictionCurvePoints();
+//
+//		// check points X - date
+//		assertEquals(pred.get(0).getX(), dates.get(0));
+//
+//		assertEquals(pred.get(1).getX(), dates.get(1));
+//
+//		assertEquals(pred.get(2).getX(), dates.get(2));
+//
+//		assertEquals(pred.get(3).getX(), dates.get(3));
+//
+//		 // remaining days
+//		 assertEquals(pred.get(4).getX(), dates.get(4));
+
+		// check points Y - grade
+		assertEquals(graph.getGradePredictionCurvePoints().get(0).getY(), 56,
+				0.5);
+		assertEquals(graph.getGradePredictionCurvePoints().get(1).getY(), 63,
+				0.5);
+		assertEquals(graph.getGradePredictionCurvePoints().get(2).getY(), 67,
+				0.5);
+		assertEquals(graph.getGradePredictionCurvePoints().get(3).getY(), 68,
+				0.5);
+		assertEquals(graph.getGradePredictionCurvePoints().get(4).getY(), 68,
+				0.5);
+		assertEquals(graph.getGradePredictionCurvePoints().size(), 5);
+		
+		
+		// check points Y - grade Best prediction
+		assertEquals(graph.getBestGradePredictionCurvePoints().get(0).getY(),
+				56, 0.5);
+		assertEquals(graph.getBestGradePredictionCurvePoints().get(1).getY(),
+				72, 0.5);
+		assertEquals(graph.getBestGradePredictionCurvePoints().get(2).getY(),
+				71, 0.5);
+		assertEquals(graph.getBestGradePredictionCurvePoints().get(3).getY(),
+				69, 0.5);
+		assertEquals(graph.getBestGradePredictionCurvePoints().get(4).getY(),
+				79, 0.5);
+		assertEquals(graph.getBestGradePredictionCurvePoints().size(), 5);
+		
+		// check points Y - grade Worst prediction
+		assertEquals(graph.getWorstGradePredictionCurvePoints().get(0).getY(),
+				56, 0.5);
+		assertEquals(graph.getWorstGradePredictionCurvePoints().get(1).getY(),
+				41, 0.5);
+		assertEquals(graph.getWorstGradePredictionCurvePoints().get(2).getY(),
+				50, 0.5);
+		assertEquals(graph.getWorstGradePredictionCurvePoints().get(3).getY(),
+				57, 0.5);
+		assertEquals(graph.getWorstGradePredictionCurvePoints().get(4).getY(),
+				45, 0.5);
+		assertEquals(graph.getWorstGradePredictionCurvePoints().size(), 5);
+
+	}
+	
 	public ArrayList<Date> findDates(Date s, Date e) {
 
 		ArrayList<Date> dateList = new ArrayList<Date>();
