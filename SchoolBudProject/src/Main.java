@@ -1,6 +1,6 @@
 
 /**
- * TODO Put here a description of what this class does.
+ * This class starts the program
  *
  * @author padillbt-1.
  *         Created Apr 23, 2013.
@@ -8,7 +8,7 @@
 public class Main {
 
 	/**
-	 * TODO Put here a description of what this method does.
+	 * Creates and enables the SchoolBudGUI
 	 *
 	 * @param args
 	 */

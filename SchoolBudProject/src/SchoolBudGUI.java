@@ -1,9 +1,8 @@
-import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 
 /**
- * TODO Put here a description of what this class does.
+ * This class is the JFrame that contains all the SchoolBudGUI components
  *
  * @author padillbt-1.
  *         Created Apr 17, 2013.
@@ -11,7 +10,7 @@ import javax.swing.JMenuBar;
 public class SchoolBudGUI extends JFrame{
 	
 	/**
-	 * TODO Put here a description of what this constructor does.
+	 * This constructor initializes all the values to be added to the JFrame
 	 *
 	 */
 	public SchoolBudGUI(){
@@ -19,7 +18,7 @@ public class SchoolBudGUI extends JFrame{
 	}
 
 	/**
-	 * TODO Put here a description of what this method does.
+	 * This method adds all the components onto the JFrame
 	 *
 	 */
 	private final void initialize() {
