@@ -294,7 +294,7 @@ public class SchoolBudGUITable {
 				data[3] = SchoolBudGUITable.this.table.getValueAt(row, 3);
 				data[4] = false;
 				if (!data[0].equals("") && !data[1].equals("")
-						&& !data[2].equals("") && !data.equals("")) {
+						&& !data[2].equals("") && !data[3].equals("")) {
 					addRubric(data, row);
 					addEmptyRowRubric();
 				}
@@ -862,11 +862,9 @@ public class SchoolBudGUITable {
 		public Component getTableCellRendererComponent(JTable table,
 				Object value, boolean isSelected, boolean hasFocus, int row,
 				int column) {
-			// component will actually be this.
 			Component component = super.getTableCellRendererComponent(table,
 					value, isSelected, hasFocus, row, column);
-			component.setBackground(row % 2 == 0 ? Color.BLUE : Color.CYAN);
-			component.setForeground(row % 2 == 0 ? Color.white : Color.BLACK);
+			component.setBackground(row % 2 == 0 ? new Color(13496723) : new Color(10543814));
 			return component;
 		}
 	}

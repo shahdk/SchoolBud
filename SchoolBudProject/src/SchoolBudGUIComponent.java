@@ -13,6 +13,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -512,6 +513,7 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 		this.overAllGPA.setText("0.0");
 		double totalGPA = 0;
 		double quarterCount = 0;
+		try{
 		for (Quarter q : this.quarters) {
 			totalGPA += q.getQuarterGPA();
 			if (q.getCourseList().size() > 0) {
@@ -529,6 +531,9 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 					}
 				}
 			}
+		}}catch(Exception exp){
+			JOptionPane.showMessageDialog(null,
+					"Invalid Input");
 		}
 		double avgGPA = Math.round((totalGPA / quarterCount) * 100.0);
 		this.overAllGPA.setText((avgGPA / 100) + "");
