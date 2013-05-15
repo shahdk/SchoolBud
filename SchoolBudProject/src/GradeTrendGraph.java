@@ -110,22 +110,24 @@ public class GradeTrendGraph {
 		// loop through num weeks and calculate data point for each week
 		for (int i = 0; i < numWeeks; i++) {
 
-			// increment current date a week
-			c.add(Calendar.DATE, 7);
-			this.setCurrentDate(c.getTime());
-
 			// update the graph to find next weeks's values
 			this.updateGraph();
 
 			// update necessary calculated value for next update
 			this.currentAverage = this.predictedGrade;
 
+			// increment current date a week
+			c.add(Calendar.DATE, 7);
+			this.setCurrentDate(c.getTime());
+
 		}
 
-//		// check for remaining days
-//		if (remainDays != 0) {
-//			this.updateGraph();
-//		}
+		// check for remaining days
+		if (remainDays != 0) {
+			c.add(Calendar.DATE, remainDays);
+			this.setCurrentDate(c.getTime());
+			this.updateGraph();
+		}
 
 	}
 
@@ -137,9 +139,6 @@ public class GradeTrendGraph {
 	// point
 	public void updateGraph() {
 
-		// starting variation average
-		double varAvg = this.currentAverage;
-
 		// update and sort item list by date and date scope
 		this.updateAndOrganizeItemListByDate();
 
@@ -150,7 +149,7 @@ public class GradeTrendGraph {
 		// take shorter half of item grades towards
 		// current date compared to average for trend adjustment
 		// by evaluating to a steepness factor adjustment
-		varAvg = this.getRecentGradeVariation();
+		double varAvg = this.getRecentGradeVariation();
 
 		// take into account user given class difficulty to affect
 		// the steepness factor
@@ -178,6 +177,7 @@ public class GradeTrendGraph {
 		}
 		// add the final calculated change to the original average and set as
 		// nominal grade prediction
+		System.out.println(avgChange);
 		this.predictedGrade = this.currentAverage + avgChange;
 
 		// use updated nominal prediction to update PREDICTED best / worst
@@ -191,12 +191,23 @@ public class GradeTrendGraph {
 		// (determined by ALL of these calculated and given factors)
 		// which will be used to determine the rise / run variations of each
 		// point separation
-		this.gradePredictionCurvePoints.add(new DataPoint(this.currentDate,
+
+		// incremented date the next weeks prediction
+		Calendar c = Calendar.getInstance();
+		c.setTime(this.currentDate);
+		c.add(Calendar.DATE, 7);
+		Date date = c.getTime();
+		
+		if (date.compareTo(this.endDate) > 0) {
+			date = this.endDate;
+		}
+
+		this.gradePredictionCurvePoints.add(new DataPoint(date,
 				this.predictedGrade));
-		this.bestGradePredictionCurvePoints.add(new DataPoint(this.currentDate,
+		this.bestGradePredictionCurvePoints.add(new DataPoint(date,
 				this.predictedBestCaseGrade));
-		this.worstGradePredictionCurvePoints.add(new DataPoint(
-				this.currentDate, this.predictedWorstCaseGrade));
+		this.worstGradePredictionCurvePoints.add(new DataPoint(date,
+				this.predictedWorstCaseGrade));
 
 	}
 
