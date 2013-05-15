@@ -1,3 +1,4 @@
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
@@ -713,14 +714,29 @@ public class SchoolBudGUIMenu extends JMenuBar {
 		this.trending.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				JPanel myPanel = new JPanel();
-
-				int result = JOptionPane.showConfirmDialog(null, myPanel,
-						SchoolBudGUIMenu.this.messages.getString("trending"),
-						JOptionPane.OK_CANCEL_OPTION);
-				if (result == JOptionPane.OK_OPTION) {
-					//
-				}
+				
+				JFrame graphFrame = new JFrame("Trends Graph");
+				graphFrame.setLayout(new BorderLayout());
+				
+				JPanel pane1 = new JPanel();
+				JPanel pane2 = new JPanel();
+				JPanel pane3 = new JPanel();
+				
+				TrendsGraphGUI best = new TrendsGraphGUI(getCourse(component.getSelectedCourse()), 3, 0, 0);
+				TrendsGraphGUI worst = new TrendsGraphGUI(getCourse(component.getSelectedCourse()), 3, 0, 1);
+				TrendsGraphGUI medium = new TrendsGraphGUI(getCourse(component.getSelectedCourse()), 3, 0, 2);
+				
+				
+				pane1.add(best.showGraph());
+				pane2.add(medium.showGraph());
+				pane2.add(worst.showGraph());
+				
+				graphFrame.add(pane1, BorderLayout.NORTH);
+				graphFrame.add(pane2, BorderLayout.CENTER);
+				graphFrame.add(pane3, BorderLayout.SOUTH);
+				graphFrame.pack();
+				graphFrame.setVisible(true);
+				
 			}
 
 		});
