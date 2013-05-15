@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.ResourceBundle;
-
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -29,36 +28,150 @@ import javax.swing.table.DefaultTableModel;
  * @author padillbt-1. Created May 8, 2013.
  */
 public class SchedulerComponent extends JPanel {
+	/**
+	 * This variable is the JOptionBox containing a list of courses
+	 *
+	 */
 	private JComboBox courseList;
-	private JComboBox classList;
+	/**
+	 * This variable is the JOptionBox containing a list of sections
+	 *
+	 */
+	private JComboBox sectionList;
+	/**
+	 * This variable is the JButton that calls the function to schedule classes
+	 *
+	 */
 	private JButton scheduleButton;
+	/**
+	 * This variable is the JButton that calls the function to check section data
+	 *
+	 */
 	private JButton sectionButton;
+	/**
+	 * This variable is the JButton that calls the JFrame to input data for the hour filter
+	 *
+	 */
 	private JButton hourButton;
+	/**
+	 * This variable is the JButton that calls the JFrame to input data for the gap filter
+	 *
+	 */
 	private JButton gapButton;
+	/**
+	 * This variable is the outermost JPanel 
+	 *
+	 */
 	private JPanel topPanel;
+	/**
+	 * This variable is the JPanel containing components relevant to courses 
+	 *
+	 */
 	private JPanel coursePanel;
+	/**
+	 * This variable is the JPanel containing components relevant to sections 
+	 *
+	 */
 	private JPanel classPanel;
+	/**
+	 * This variable is the JPanel containing JButtons
+	 *
+	 */
 	private JPanel buttonPanel;
+	/**
+	 * This variable is the JPanel containing the JTables
+	 *
+	 */
 	private JPanel schedulePanel;
+	/**
+	 * This variable is the JPanel containing components relevant to gap filter 
+	 *
+	 */
 	private JPanel gapPanel;
+	/**
+	 * This variable is the JPanel containing components relevant to hour filter
+	 *
+	 */
 	private JPanel hourPanel;
+	/**
+	 * This variable is the JScrollPanel containing JTables
+	 *
+	 */
 	private JScrollPane scheduleScrollPane;
+	/**
+	 * This variable is the ArrayList containing all Course objects that have been created
+	 *
+	 */
 	private ArrayList<SchedulerCourse> courses;
+	/**
+	 * This variable is the current Locale
+	 *
+	 */
 	private Locale locale;
+	/**
+	 * This variable is the ResourceBundle used for internationalization
+	 *
+	 */
 	private ResourceBundle messages;
+	/**
+	 * This variable is the JCheckBox enabling the hour filter
+	 *
+	 */
 	private JCheckBox hourCheckBox;
+	/**
+	 * This variable is the JCheckBox enabling the gap filter
+	 *
+	 */
 	private JCheckBox gapCheckBox;
-
+	/**
+	 * This variable is an Integer denoting the minimum start hour
+	 *
+	 */
 	private int minStartHour;
+	/**
+	 * This variable is an Integer denoting the maximum start hour
+	 *
+	 */
 	private int maxEndHour;
+	/**
+	 * This variable is an ArrayList of days to ignore for hour filter
+	 *
+	 */
 	private ArrayList<Integer> hourIgnoreDays;
-
+	/**
+	 * This variable is an ArrayList of days to ignore for gap filter
+	 *
+	 */
 	private ArrayList<Integer> gapIgnoreDays;
+	/**
+	 * This variable is an Integer denoting the maximum hours per gap
+	 *
+	 */
 	private int maxHoursPerGap;
+	/**
+	 * This variable is an Integer denoting the maximum hours per gap
+	 *
+	 */
 	private int minHoursPerGap;
+	/**
+	 * This variable is an Integer denoting the minimum number of filter occurrences
+	 *
+	 */
 	private int minOccurences;
+	/**
+	 * This variable is an Integer denoting the average number of filter occurrences
+	 *
+	 */
 	private int midOccurences;
+	/**
+	 * This variable is an Integer denoting the maximum number of filter occurrences
+	 *
+	 */
 	private int maxOccurences;
+	/**
+	 * This variable is an Integer denoting the maximum number of filter exceptions
+	 *
+	 */
 	private int maxExceptions;
 
 	/**
@@ -85,8 +198,8 @@ public class SchedulerComponent extends JPanel {
 
 		});
 
-		this.classList = new JComboBox();
-		this.classList.setPrototypeDisplayValue("XXXXXXXXXX");
+		this.sectionList = new JComboBox();
+		this.sectionList.setPrototypeDisplayValue("XXXXXXXXXX");
 
 		this.scheduleButton = new JButton(
 				this.messages.getString("scheduleCourses"));
@@ -458,7 +571,7 @@ public class SchedulerComponent extends JPanel {
 		this.coursePanel.add(this.courseList, BorderLayout.SOUTH);
 
 		this.classPanel.add(classLabel, BorderLayout.NORTH);
-		this.classPanel.add(this.classList, BorderLayout.CENTER);
+		this.classPanel.add(this.sectionList, BorderLayout.CENTER);
 		this.classPanel.add(this.sectionButton, BorderLayout.SOUTH);
 
 		this.buttonPanel.add(this.scheduleButton, BorderLayout.NORTH);
@@ -589,7 +702,7 @@ public class SchedulerComponent extends JPanel {
 					newClasses[i] = current.getSections().get(i).getTeacher();
 				}
 
-				this.classList.setModel(new DefaultComboBoxModel(newClasses));
+				this.sectionList.setModel(new DefaultComboBoxModel(newClasses));
 				break;
 			}
 		}
@@ -610,7 +723,7 @@ public class SchedulerComponent extends JPanel {
 					newClasses[i] = current.getSections().get(i).getTeacher();
 				}
 
-				this.classList.setModel(new DefaultComboBoxModel(newClasses));
+				this.sectionList.setModel(new DefaultComboBoxModel(newClasses));
 				break;
 			}
 		}
@@ -656,7 +769,7 @@ public class SchedulerComponent extends JPanel {
 					this.courses.get(i).getName())) {
 				for (int j = 0; j < this.courses.get(i).getSections().size(); j++) {
 					if (this.courses.get(i).getSections().get(j).getTeacher()
-							.equals(this.classList.getSelectedItem())) {
+							.equals(this.sectionList.getSelectedItem())) {
 						this.courses.get(i).getSections().remove(j);
 						break;
 					}
@@ -680,7 +793,7 @@ public class SchedulerComponent extends JPanel {
 					this.courses.get(i).getName())) {
 				for (int j = 0; j < this.courses.get(i).getSections().size(); j++) {
 					if (this.courses.get(i).getSections().get(j).getTeacher()
-							.equals(this.classList.getSelectedItem())) {
+							.equals(this.sectionList.getSelectedItem())) {
 						temp = this.courses.get(i).getSections().get(j);
 						break;
 					}
@@ -707,7 +820,7 @@ public class SchedulerComponent extends JPanel {
 	 * @return number of sections for the selected course
 	 */
 	public int getSectionSize() {
-		return this.classList.getItemCount();
+		return this.sectionList.getItemCount();
 	}
 
 	/**

@@ -24,14 +24,50 @@ public class SchedulerMenu extends JMenuBar {
 	 * Defualt serial version id
 	 */
 	private static final long serialVersionUID = 1L;
+	/**
+	 * This variable is the add tab
+	 *
+	 */
 	private JMenu add;
+	/**
+	 * This variable if the remove tab
+	 *
+	 */
 	private JMenu remove;
+	/**
+	 * This variable is the current locale
+	 *
+	 */
 	private Locale currentLocale;
+	/**
+	 * This variable is the ResourceBundle used for internationalization
+	 *
+	 */
 	private ResourceBundle messages;
+	/**
+	 * This variable is an option in the add tab
+	 *
+	 */
 	private JMenuItem course;
+	/**
+	 * This variable is an option in the add tab
+	 *
+	 */
 	private JMenuItem section;
+	/**
+	 * This variable is the course option in the remove tab
+	 *
+	 */
 	private JMenuItem rmCourse;
+	/**
+	 * This variable is the section option in the remove tab
+	 *
+	 */
 	private JMenuItem rmSection;
+	/**
+	 * This variable is the JPanel used by the Scheduler
+	 *
+	 */
 	private SchedulerComponent component;
 
 	/**
