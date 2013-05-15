@@ -230,7 +230,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 				myPanel.add(nameField);
 				myPanel.add(Box.createHorizontalStrut(15));
 				myPanel.add(new JLabel(SchoolBudGUIMenu.this.messages
-						.getString("weight")));
+						.getString("creditHours")));
 				myPanel.add(creditField);
 				myPanel.add(Box.createHorizontalStrut(15));
 				myPanel.add(new JLabel(SchoolBudGUIMenu.this.messages
@@ -361,14 +361,20 @@ public class SchoolBudGUIMenu extends JMenuBar {
 				JTextField creditField = new JTextField(5);
 				JTextField startField = new JTextField(5);
 				JTextField endField = new JTextField(5);
+				SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy");
 
+				nameField.setText(component.getSelectedCourse());
+				creditField.setText(getCourse(component.getSelectedCourse()).getCreditHours()+"");
+				startField.setText(sdf.format(getCourse(component.getSelectedCourse()).getStartDate()));
+				endField.setText(sdf.format(getCourse(component.getSelectedCourse()).getEndDate()));
+				
 				JPanel myPanel = new JPanel();
 				myPanel.add(new JLabel(SchoolBudGUIMenu.this.messages
 						.getString("name")));
 				myPanel.add(nameField);
 				myPanel.add(Box.createHorizontalStrut(15));
 				myPanel.add(new JLabel(SchoolBudGUIMenu.this.messages
-						.getString("weight")));
+						.getString("creditHours")));
 				myPanel.add(creditField);
 				myPanel.add(Box.createHorizontalStrut(15));
 				myPanel.add(new JLabel(SchoolBudGUIMenu.this.messages
@@ -387,8 +393,6 @@ public class SchoolBudGUIMenu extends JMenuBar {
 						String name = nameField.getText();
 						double creditHours = Double.parseDouble(creditField
 								.getText());
-						SimpleDateFormat sdf = new SimpleDateFormat(
-								"MM/dd/yyyy");
 						Date start = sdf.parse(startField.getText());
 						Date end = sdf.parse(endField.getText());
 						SchoolBudGUIMenu.this.component.editCourse(name,
@@ -407,6 +411,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				JTextField nameField = new JTextField(10);
+				nameField.setText(component.getSelectedQuarter());
 				JPanel myPanel = new JPanel();
 				myPanel.add(new JLabel(SchoolBudGUIMenu.this.messages
 						.getString("name")));
@@ -437,6 +442,9 @@ public class SchoolBudGUIMenu extends JMenuBar {
 				JTextField nameField = new JTextField(10);
 				JTextField weightField = new JTextField(5);
 
+				nameField.setText(component.getSelectedCategory());
+				weightField.setText(getCategory(component.getSelectedCategory()).getWeight()+"");
+				
 				JPanel myPanel = new JPanel();
 				myPanel.add(new JLabel(SchoolBudGUIMenu.this.messages
 						.getString("name")));
@@ -677,6 +685,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 					SchoolBudGUIMenu.this.component
 							.addNewQuarter(SchoolBudGUIMenu.this.main
 									.getQuarterList());
+					translateHeadings();
 					SchoolBudGUIMenu.this.component.calculateGrades();
 				} catch (Exception exception) {
 					JOptionPane.showMessageDialog(SchoolBudGUIMenu.this.frame,
@@ -739,6 +748,38 @@ public class SchoolBudGUIMenu extends JMenuBar {
 		add(this.language);
 
 	}
+	
+	public Course getCourse(String name){
+		for(Quarter q: main.getQuarterList()){
+			if(q.getName().equals(component.getSelectedQuarter())){
+				for(Course c: q.getCourseList()){
+					if(c.getCourseName().equals(name)){
+						return c;
+					}
+				}
+			}
+		}
+			
+		return null;
+	}
+	
+	public Category getCategory(String name){
+		for(Quarter q: main.getQuarterList()){
+			if(q.getName().equals(component.getSelectedQuarter())){
+				for(Course c: q.getCourseList()){
+					if(c.getCourseName().equals(component.getSelectedCourse())){
+						for(Category cat: c.getCategories()){
+							if(cat.getName().equals(name)){
+								return cat;
+							}
+						}
+					}
+				}
+			}
+		}
+			
+		return null;
+	}
 
 	/**
 	 * This method changes the Locale and updates the text in the JMenuBar
@@ -754,6 +795,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 		this.add.setText(this.messages.getString("add"));
 		this.language.setText(this.messages.getString("language"));
 		this.file.setText(this.messages.getString("file"));
+		this.remove.setText(this.messages.getString("remove"));
 		this.edit.setText(this.messages.getString("edit"));
 
 		this.course.setText(this.messages.getString("course"));
