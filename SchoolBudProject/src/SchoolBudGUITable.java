@@ -17,27 +17,81 @@ import javax.swing.JTable;
 import javax.swing.table.*;
 
 /**
- * Put here a description of what this class does.
+ * Displays the JTable for the program.
  * 
  * @author padillbt-1. Created May 1, 2013.
  */
 public class SchoolBudGUITable {
+	/**
+	 * The table being used.
+	 */
 	private JTable table;
+	/**
+	 * Scrollpane for the table
+	 */
 	private JScrollPane tableSP;
+	/**
+	 * TableModel to construct the table
+	 */
 	private DefaultTableModel tableModel;
+	/**
+	 * Stores the column headers
+	 */
 	private String[] columnNames;
+	/**
+	 * List of quarters
+	 */
 	private ArrayList<Quarter> quarters;
+	/**
+	 * Current quarter
+	 */
 	private String selectedQuarter;
+	/**
+	 * Current course
+	 */
 	private String selectedCourse;
+	/**
+	 * Stores the type of table, that is, table used for display rubric or items
+	 */
 	private String type;
+	/**
+	 * Indicates whether the table row is being edited or a new row is to be
+	 * added
+	 */
 	private boolean newAdd = false;
+	/**
+	 * Number of columns for displaying items
+	 */
 	private final int NUM_COLS = 6;
+	/**
+	 * Number of columns for displaying rubric
+	 */
 	private final int NUM_RUBRIC_COLS = 5;
+	/**
+	 * Stores the old grade before replacing the grade with a new one
+	 */
 	private String oldGrade = "";
-	private Color[] backColor = {new Color(13496723), new Color(10543814), new Color(16776092)};
-	private Color[] foreColor = {Color.BLACK, Color.BLACK, Color.BLACK};
+	/**
+	 * background color for table rows.
+	 */
+	private Color[] backColor = { new Color(13496723), new Color(10543814),
+			new Color(16776092) };
+	/**
+	 * text color for table.
+	 */
+	private Color[] foreColor = { Color.BLACK, Color.BLACK, Color.BLACK };
+	/**
+	 * maps category to specific colors.
+	 */
 	private HashMap<String, Integer> colorCode = new HashMap<String, Integer>();
 
+	/**
+	 * Constructor initialize the table with the given column headers and the
+	 * type of table to be initialized.
+	 * 
+	 * @param names
+	 * @param type
+	 */
 	public SchoolBudGUITable(String[] names, String type) {
 		this.columnNames = names;
 		this.type = type;
@@ -99,11 +153,12 @@ public class SchoolBudGUITable {
 				public void mouseClicked(MouseEvent e) {
 
 					int row = SchoolBudGUITable.this.table.getSelectedRow();
-					int column = SchoolBudGUITable.this.table.getSelectedColumn();
+					int column = SchoolBudGUITable.this.table
+							.getSelectedColumn();
 					if (column == 5) {
-						try{
+						try {
 							removeItem(row, column);
-						}catch (Exception exp){
+						} catch (Exception exp) {
 							//
 						}
 					}
@@ -115,11 +170,13 @@ public class SchoolBudGUITable {
 				public void mouseClicked(MouseEvent e) {
 
 					int row = SchoolBudGUITable.this.table.getSelectedRow();
-					int column = SchoolBudGUITable.this.table.getSelectedColumn();
+					int column = SchoolBudGUITable.this.table
+							.getSelectedColumn();
 					if (column == 4) {
 						removeRubric(row, column);
 					}
-					SchoolBudGUITable.this.oldGrade = (String) SchoolBudGUITable.this.table.getValueAt(row, 0);
+					SchoolBudGUITable.this.oldGrade = (String) SchoolBudGUITable.this.table
+							.getValueAt(row, 0);
 				}
 
 			});
@@ -129,6 +186,12 @@ public class SchoolBudGUITable {
 		this.table.addPropertyChangeListener(tcl);
 	}
 
+	/**
+	 * Inner class to check for changes made to a table cell.
+	 * 
+	 * @author shahdk
+	 * 
+	 */
 	private class TableCellListener implements PropertyChangeListener {
 
 		@Override
@@ -158,6 +221,12 @@ public class SchoolBudGUITable {
 			}
 		}
 
+		/**
+		 * Checks to see if a table cell is being edited
+		 * 
+		 * @param row
+		 * @param col
+		 */
 		public void itemEdit(int row, int col) {
 			if (!SchoolBudGUITable.this.table.isEditing()) {
 				itemEditing(row, col);
@@ -168,6 +237,13 @@ public class SchoolBudGUITable {
 			}
 		}
 
+		/**
+		 * Adds or edits the table cell based on the values entered and the
+		 * cells updated
+		 * 
+		 * @param row
+		 * @param col
+		 */
 		public void itemEditing(int row, int col) {
 			if (SchoolBudGUITable.this.newAdd) {
 				Object[] data = new Object[SchoolBudGUITable.this.NUM_COLS];
@@ -190,7 +266,8 @@ public class SchoolBudGUITable {
 				}
 			} else {
 				try {
-					if (!SchoolBudGUITable.this.table.getValueAt(row, col).equals(""))
+					if (!SchoolBudGUITable.this.table.getValueAt(row, col)
+							.equals(""))
 						editItems(row, col);
 					SchoolBudGUITable.this.newAdd = true;
 				} catch (Exception e) {
@@ -201,6 +278,13 @@ public class SchoolBudGUITable {
 			}
 		}
 
+		/**
+		 * Adds or edits the table cell based on the values entered and the
+		 * cells updated
+		 * 
+		 * @param row
+		 * @param col
+		 */
 		public void rubricEditing(int row, int col) {
 			if (SchoolBudGUITable.this.newAdd) {
 				Object[] data = new Object[SchoolBudGUITable.this.NUM_RUBRIC_COLS];
@@ -215,19 +299,26 @@ public class SchoolBudGUITable {
 					addEmptyRowRubric();
 				}
 			} else {
-				if (!SchoolBudGUITable.this.table.getValueAt(row, col).equals(""))
+				if (!SchoolBudGUITable.this.table.getValueAt(row, col).equals(
+						""))
 					editRubric(row, col);
 				SchoolBudGUITable.this.newAdd = true;
 			}
 		}
 
+		/**
+		 * Checks to see if a row is being edited or a new row is being created.
+		 * 
+		 * @param row
+		 */
 		public void checkEditing(int row) {
 			if (SchoolBudGUITable.this.table.getValueAt(row, 0).equals("")) {
 				SchoolBudGUITable.this.newAdd = true;
 			} else {
 				if (SchoolBudGUITable.this.table.getValueAt(row, 3).equals("")) {
 					SchoolBudGUITable.this.newAdd = true;
-				} else if (SchoolBudGUITable.this.table.getValueAt(row, 4).equals("")) {
+				} else if (SchoolBudGUITable.this.table.getValueAt(row, 4)
+						.equals("")) {
 					SchoolBudGUITable.this.newAdd = true;
 				} else {
 					SchoolBudGUITable.this.newAdd = false;
@@ -235,11 +326,20 @@ public class SchoolBudGUITable {
 			}
 		}
 
+		/**
+		 * Checks to see if a row is being edited or a new row is being created.
+		 * 
+		 * @param row
+		 * @param col
+		 */
 		public void checkRubricEditing(int row, int col) {
 			if (SchoolBudGUITable.this.table.getValueAt(row, 0).equals("")
-					|| SchoolBudGUITable.this.table.getValueAt(row, 1).equals("")
-					|| SchoolBudGUITable.this.table.getValueAt(row, 2).equals("")
-					|| SchoolBudGUITable.this.table.getValueAt(row, 3).equals("")) {
+					|| SchoolBudGUITable.this.table.getValueAt(row, 1).equals(
+							"")
+					|| SchoolBudGUITable.this.table.getValueAt(row, 2).equals(
+							"")
+					|| SchoolBudGUITable.this.table.getValueAt(row, 3).equals(
+							"")) {
 				SchoolBudGUITable.this.newAdd = true;
 			} else {
 				SchoolBudGUITable.this.newAdd = false;
@@ -247,6 +347,12 @@ public class SchoolBudGUITable {
 		}
 	}
 
+	/**
+	 * Edit the item based on the row that was just updated
+	 * 
+	 * @param row
+	 * @param col
+	 */
 	public void editItems(int row, int col) {
 		for (Quarter current : this.quarters) {
 			if (current.getName().equals(this.selectedQuarter)) {
@@ -254,7 +360,8 @@ public class SchoolBudGUITable {
 				for (Course c : currentCourses) {
 					if (c.getCourseName().equals(this.selectedCourse)) {
 						String catName = (String) this.table.getValueAt(row, 4);
-						String itemName = (String) this.table.getValueAt(row, 0);
+						String itemName = (String) this.table
+								.getValueAt(row, 0);
 
 						if (col == 4) {
 							int it = -1;
@@ -276,8 +383,9 @@ public class SchoolBudGUITable {
 								}
 							}
 							if (newCat == -1) {
-								this.table.setValueAt(c.getCategories().get(curr)
-										.getName(), row, col);
+								this.table.setValueAt(
+										c.getCategories().get(curr).getName(),
+										row, col);
 								return;
 							} else {
 								c.getCategories()
@@ -344,14 +452,15 @@ public class SchoolBudGUITable {
 													c.getCategories()
 															.get(i)
 															.checkItemUpdateDate();
-													this.table.setValueAt(
-															sdf.format(c
-																	.getCategories()
-																	.get(i)
-																	.getItemList()
-																	.get(j)
-																	.getUpdateDate()),
-															row, col);
+													this.table
+															.setValueAt(
+																	sdf.format(c
+																			.getCategories()
+																			.get(i)
+																			.getItemList()
+																			.get(j)
+																			.getUpdateDate()),
+																	row, col);
 													this.table.repaint();
 												} catch (Exception exp) {
 
@@ -370,6 +479,12 @@ public class SchoolBudGUITable {
 		}
 	}
 
+	/**
+	 * Edit the rubric based on the row that was just updated
+	 * 
+	 * @param row
+	 * @param col
+	 */
 	public void editRubric(int row, int col) {
 		for (Quarter current : this.quarters) {
 			if (current.getName().equals(this.selectedQuarter)) {
@@ -379,7 +494,8 @@ public class SchoolBudGUITable {
 						if (col == 0) {
 							String newGrade = (String) this.tableModel
 									.getValueAt(row, col);
-							c.getRubric().setLetterGrade(this.oldGrade, newGrade);
+							c.getRubric().setLetterGrade(this.oldGrade,
+									newGrade);
 						} else if (col == 1) {
 							String lower = (String) this.tableModel.getValueAt(
 									row, col);
@@ -408,6 +524,13 @@ public class SchoolBudGUITable {
 		}
 	}
 
+	/**
+	 * Sets the list of quarters, the current quarter and the current course
+	 * 
+	 * @param quarters
+	 * @param qt
+	 * @param course
+	 */
 	public void setQuarters(ArrayList<Quarter> quarters, String qt,
 			String course) {
 		this.quarters = quarters;
@@ -415,10 +538,21 @@ public class SchoolBudGUITable {
 		this.selectedQuarter = qt;
 	}
 
+	/**
+	 * Returns the scrollpane of the table
+	 * 
+	 * @return JScrollPane
+	 */
 	public JScrollPane getJScrollPane() {
 		return this.tableSP;
 	}
 
+	/**
+	 * Removes the selected item.
+	 * 
+	 * @param row
+	 * @param column
+	 */
 	public void removeItem(int row, int column) {
 
 		for (Quarter current : this.quarters) {
@@ -455,6 +589,12 @@ public class SchoolBudGUITable {
 		}
 	}
 
+	/**
+	 * Removes the selected rubric grade from Rubric.
+	 * 
+	 * @param row
+	 * @param column
+	 */
 	public void removeRubric(int row, int column) {
 
 		for (Quarter current : this.quarters) {
@@ -479,6 +619,11 @@ public class SchoolBudGUITable {
 		}
 	}
 
+	/**
+	 * Changes the header values for internationalization.
+	 * 
+	 * @param headings
+	 */
 	public void changeHeaderValues(String[] headings) {
 		for (int i = 0; i < headings.length; i++) {
 			this.table.getTableHeader().getColumnModel().getColumn(i)
@@ -487,6 +632,9 @@ public class SchoolBudGUITable {
 		}
 	}
 
+	/**
+	 * Adds an empty row to the item table
+	 */
 	public void addEmptyRow() {
 		Object[] emptyRow = { "", "", "", "", "", false };
 		this.tableModel.addRow(emptyRow);
@@ -496,6 +644,9 @@ public class SchoolBudGUITable {
 		this.table.repaint();
 	}
 
+	/**
+	 * Adds an empty row to the rubric table
+	 */
 	public void addEmptyRowRubric() {
 		Object[] emptyRow = { "", "", "", "", false };
 		this.tableModel.addRow(emptyRow);
@@ -504,6 +655,12 @@ public class SchoolBudGUITable {
 		this.table.repaint();
 	}
 
+	/**
+	 * Creates a new item based on the values from the table row
+	 * 
+	 * @param item
+	 * @param row
+	 */
 	public void addItem(Object[] item, int row) {
 		for (Quarter current : this.quarters) {
 			if (current.getName().equals(this.selectedQuarter)) {
@@ -590,6 +747,12 @@ public class SchoolBudGUITable {
 		}
 	}
 
+	/**
+	 * Creates a new letter grade based on the values from the table row
+	 * 
+	 * @param rubric
+	 * @param row
+	 */
 	public void addRubric(Object[] rubric, int row) {
 		for (Quarter current : this.quarters) {
 			if (current.getName().equals(this.selectedQuarter)) {
@@ -608,7 +771,7 @@ public class SchoolBudGUITable {
 									Double.parseDouble(gpa));
 							return;
 						} catch (Exception exp) {
-							
+
 						}
 					}
 				}
@@ -616,8 +779,14 @@ public class SchoolBudGUITable {
 		}
 	}
 
+	/**
+	 * Initializes the table when loading a file.
+	 * 
+	 * @param names
+	 * @param numItems
+	 */
 	public void addInitialItems(Object[][] names, int numItems) {
-		
+
 		if (this.type.equals("rubric")) {
 			this.tableModel = new DefaultTableModel(names, this.columnNames) {
 				private static final long serialVersionUID = 1L;
@@ -639,7 +808,7 @@ public class SchoolBudGUITable {
 			this.table.setModel(this.tableModel);
 			this.table.setDefaultRenderer(String.class,
 					new MyTableCellRenderer());
-		}else{
+		} else {
 			if (this.tableModel.getValueAt(0, 0).equals("")) {
 				this.tableModel.removeRow(0);
 			}
@@ -653,20 +822,40 @@ public class SchoolBudGUITable {
 
 	}
 
+	/**
+	 * Resets the table
+	 */
 	public void reset() {
 		Object[][] data = { { "", "", "", "", "", false } };
 		this.tableModel = new DefaultTableModel(data, this.columnNames);
 		this.table.setModel(this.tableModel);
 	}
 
+	/**
+	 * Returns the table
+	 * 
+	 * @return JTable
+	 */
 	public JTable getTable() {
 		return this.table;
 	}
-	
-	public void setTableColor(String catName, int pos){
+
+	/**
+	 * Maps the category with a color
+	 * 
+	 * @param catName
+	 * @param pos
+	 */
+	public void setTableColor(String catName, int pos) {
 		this.colorCode.put(catName, pos);
 	}
 
+	/**
+	 * Inner class to color the items table
+	 * 
+	 * @author shahdk
+	 * 
+	 */
 	class MyTableCellRenderer extends
 			javax.swing.table.DefaultTableCellRenderer {
 		@Override
@@ -682,6 +871,12 @@ public class SchoolBudGUITable {
 		}
 	}
 
+	/**
+	 * Inner class to color the rubric table
+	 * 
+	 * @author shahdk
+	 * 
+	 */
 	class MyItemTableCellRenderer extends
 			javax.swing.table.DefaultTableCellRenderer {
 		@Override
@@ -689,12 +884,12 @@ public class SchoolBudGUITable {
 				Object value, boolean isSelected, boolean hasFocus, int row,
 				int column) {
 			int pos = 0;
-			try{
-				pos = SchoolBudGUITable.this.colorCode.get(table.getValueAt(row, 4));
-			}catch (Exception exp){
-				//ignore
+			try {
+				pos = SchoolBudGUITable.this.colorCode.get(table.getValueAt(
+						row, 4));
+			} catch (Exception exp) {
+				// ignore
 			}
-			// component will actually be this.
 			Component component = super.getTableCellRendererComponent(table,
 					value, isSelected, hasFocus, row, column);
 			component.setBackground(SchoolBudGUITable.this.backColor[pos]);
