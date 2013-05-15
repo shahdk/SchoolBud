@@ -177,7 +177,6 @@ public class GradeTrendGraph {
 		}
 		// add the final calculated change to the original average and set as
 		// nominal grade prediction
-		System.out.println(avgChange);
 		this.predictedGrade = this.currentAverage + avgChange;
 
 		// use updated nominal prediction to update PREDICTED best / worst
