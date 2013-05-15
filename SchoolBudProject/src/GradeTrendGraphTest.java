@@ -819,14 +819,6 @@ public class GradeTrendGraphTest {
 		 System.out.println("4--- " + pred.get(4).getX());
 		 System.out.println("4--- " + dates.get(4));
 
-		// assertEquals(graph.getBestGradePredictionCurvePoints().get(0).getX(),
-		// curr);
-		// assertEquals(graph.getBestGradePredictionCurvePoints().get(1).getX(),
-		// dates.get(1));
-		// assertEquals(graph.getWorstGradePredictionCurvePoints().get(0).getX(),
-		// curr);
-		// assertEquals(graph.getWorstGradePredictionCurvePoints().get(1).getX(),
-		// dates.get(1));
 
 		// check points Y - grade
 		assertEquals(graph.getGradePredictionCurvePoints().get(0).getY(), 56,
@@ -839,7 +831,7 @@ public class GradeTrendGraphTest {
 				0.5);
 		assertEquals(graph.getGradePredictionCurvePoints().get(4).getY(), 89,
 				0.5);
-		assertEquals(graph.getGradePredictionCurvePoints().size(), 5);		
+		assertEquals(graph.getGradePredictionCurvePoints().size(), 5);
 		
 		
 		// check points Y - grade Best prediction
