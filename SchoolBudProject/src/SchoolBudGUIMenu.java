@@ -28,36 +28,159 @@ public class SchoolBudGUIMenu extends JMenuBar {
 	 * Default serial version id
 	 */
 	private static final long serialVersionUID = 1L;
+	/**
+	 * This variable is the add tab in the JMenuBar
+	 *
+	 */
 	private JMenu add;
+	/**
+	 * This variable is the language tab in the JMenuBar
+	 *
+	 */
 	private JMenu language;
+	/**
+	 * This variable is the file tab in the JMenuBar
+	 *
+	 */
 	private JMenu file;
+	/**
+	 * This variable is the edit tab in the JMenuBar
+	 *
+	 */
 	private JMenu edit;
+	/**
+	 * This variable is the view tab in the JMenuBar
+	 *
+	 */
 	private JMenu view;
+	/**
+	 * This variable is the remove tab in the JMenuBar
+	 *
+	 */
 	private JMenu remove;
+	/**
+	 * This variable is the current Locale
+	 *
+	 */
 	private Locale currentLocale;
+	/**
+	 * This variable is the ResourseBunble used for internationalization
+	 *
+	 */
 	private ResourceBundle messages;
+	/**
+	 * This variable is the course option in the add tab
+	 *
+	 */
 	private JMenuItem course;
+	/**
+	 * This variable is the quarter option in the add tab
+	 *
+	 */
 	private JMenuItem quarter;
+	/**
+	 * This variable is the category option in the add tab
+	 *
+	 */
 	private JMenuItem category;
+	/**
+	 * This variable is the course option in the edit tab
+	 *
+	 */
 	private JMenuItem editCourse;
+	/**
+	 * This variable is the quarter option in the edit tab
+	 *
+	 */
 	private JMenuItem editQuarter;
+	/**
+	 * This variable is the category option in the edit tab
+	 *
+	 */
 	private JMenuItem editCategory;
+	/**
+	 * This variable is the rubric option in the edit tab
+	 *
+	 */
 	private JMenuItem editRubric;
+	/**
+	 * This variable is the English option in the language tab
+	 *
+	 */
 	private JMenuItem english;
+	/**Spanish option in the language tab
+	 *
+	 */
 	private JMenuItem spanish;
+	/**
+	 * This variable is the save option in the file tab
+	 *
+	 */
 	private JMenuItem save;
+	/**
+	 * This variable is the load option in the file tab
+	 *
+	 */
 	private JMenuItem load;
+	/**
+	 * This variable is the exit option in the file tab
+	 *
+	 */
 	private JMenuItem exit;
+	/**
+	 * This variable is the trending option in the view tab
+	 *
+	 */
 	private JMenuItem trending;
+	/**
+	 * This variable is the schedule option in the view tab
+	 *
+	 */
 	private JMenuItem schedule;
+	/**
+	 * This variable is the quarter option in the remove tab
+	 *
+	 */
 	private JMenuItem rmQuarter;
+	/**
+	 * This variable is the course option in the remove tab
+	 *
+	 */
 	private JMenuItem rmCourse;
+	/**
+	 * This variable is the category option in the remove tab
+	 *
+	 */
 	private JMenuItem rmCat;
+	/**
+	 * This variable is the JFrame for the SchoolBudGUI
+	 *
+	 */
 	private JFrame frame;
+	/**
+	 * This variable is the Object containing the list of quarters
+	 *
+	 */
 	private QuarterMain main;
+	/**
+	 * This variable is the JPanel for the SchoolBudGUI
+	 *
+	 */
 	private SchoolBudGUIComponent component;
+	/**
+	 * This variable is the JChooser to load and save files
+	 *
+	 */
 	private final JFileChooser chooser;
+	/**
+	 * This variable is the JTable used to store Rubric data
+	 *
+	 */
 	private SchoolBudGUITable rubricTable;
+	/**
+	 * This variable is the default number of rows for JTables
+	 *
+	 */
 	private final int NUM_COLS = 5;
 
 	/**

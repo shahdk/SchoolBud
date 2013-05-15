@@ -10,6 +10,10 @@ import javax.swing.JMenuBar;
  *         Created May 8, 2013.
  */
 public class SchedulerFrame extends JFrame{
+	/**
+	 * This variable is the current Locale that determines the language of the text
+	 *
+	 */
 	private Locale locale;
 	
 	/**
