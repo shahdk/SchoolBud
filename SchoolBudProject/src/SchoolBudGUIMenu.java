@@ -200,6 +200,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 		this.component = component;
 		this.chooser = new JFileChooser();
 		this.initialize();
+		
 
 	}
 
