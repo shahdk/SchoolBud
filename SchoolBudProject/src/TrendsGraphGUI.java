@@ -23,7 +23,7 @@ public class TrendsGraphGUI {
 		
 		graph = new GradeTrendGraph(course, difficulty, rate);
 		graph.updateAll();
-		int len = 0;
+		double len = 0;
 		
 		switch(caseNum){
 		case 0:
@@ -64,7 +64,7 @@ public class TrendsGraphGUI {
 				"Weeks", // x axis label
 				"Percent Points", // y axis label
 				dataset, // data
-				PlotOrientation.VERTICAL, true, // include legend
+				PlotOrientation.VERTICAL, false, // include legend
 				true, // tooltips
 				false // urls
 				);
