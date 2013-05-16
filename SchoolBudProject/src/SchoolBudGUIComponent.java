@@ -137,6 +137,10 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 	 * Label for Courses
 	 */
 	private JLabel cr;
+	/**
+	 * Resource Bundle for Internationalization
+	 */
+	private ResourceBundle messages;
 
 	/**
 	 * This constructor initializes and adds the components onto the JPanel to
@@ -146,6 +150,8 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 	 */
 	public SchoolBudGUIComponent() {
 		super(new BorderLayout());
+		this.messages = ResourceBundle.getBundle("MessagesBundle",
+				new Locale("en", "US"));
 		this.quarters = new ArrayList<Quarter>();
 
 		String[] quarterStrings = { "----" };
@@ -341,14 +347,14 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 	 * @param locale
 	 */
 	public void updateTitles(Locale locale) {
-		ResourceBundle messages = ResourceBundle.getBundle("MessagesBundle",
+		this.messages = ResourceBundle.getBundle("MessagesBundle",
 				locale);
-		this.courseGradeLabel.setText(messages.getString("courseGrade"));
-		this.letterGradeLabel.setText(messages.getString("letterGrade"));
-		this.targetGradeLabel.setText(messages.getString("targetGrade"));
-		this.neededGradeLabel.setText(messages.getString("neededGrade"));
-		this.quarterGPALabel.setText(messages.getString("quarterGPA"));
-		this.overAllGPALabel.setText(messages.getString("overallGPA"));
+		this.courseGradeLabel.setText(this.messages.getString("courseGrade"));
+		this.letterGradeLabel.setText(this.messages.getString("letterGrade"));
+		this.targetGradeLabel.setText(this.messages.getString("targetGrade"));
+		this.neededGradeLabel.setText(this.messages.getString("neededGrade"));
+		this.quarterGPALabel.setText(this.messages.getString("quarterGPA"));
+		this.overAllGPALabel.setText(this.messages.getString("overallGPA"));
 
 		Font f = new Font("Times New Roman", Font.BOLD, 12);
 		this.courseGradeLabel.setFont(f);
@@ -358,16 +364,16 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 		this.quarterGPALabel.setFont(f);
 		this.overAllGPALabel.setFont(f);
 
-		this.qt.setText(messages.getString("quarter"));
-		this.ct.setText(messages.getString("category"));
-		this.cr.setText(messages.getString("course"));
+		this.qt.setText(this.messages.getString("quarter"));
+		this.ct.setText(this.messages.getString("category"));
+		this.cr.setText(this.messages.getString("course"));
 
 		Font f1 = new Font("Times New Roman", Font.BOLD, 17);
 		this.qt.setFont(f1);
 		this.cr.setFont(f1);
 		this.ct.setFont(f1);
 
-		this.calculate.setText(messages.getString("calculateGrades"));
+		this.calculate.setText(this.messages.getString("calculateGrades"));
 
 	}
 
@@ -533,7 +539,7 @@ public class SchoolBudGUIComponent extends JPanel implements ActionListener {
 			}
 		}}catch(Exception exp){
 			JOptionPane.showMessageDialog(null,
-					"Invalid Input");
+					this.messages.getString("invalid"));
 		}
 		double avgGPA = Math.round((totalGPA / quarterCount) * 100.0);
 		this.overAllGPA.setText((avgGPA / 100) + "");

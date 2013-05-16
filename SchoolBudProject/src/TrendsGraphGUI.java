@@ -21,46 +21,48 @@ public class TrendsGraphGUI {
 		dataset = new XYSeriesCollection();
 		XYSeries data = new XYSeries("data");
 		
-		graph = new GradeTrendGraph(course, difficulty, rate);
-		graph.updateAll();
-		double len = 0;
+			graph = new GradeTrendGraph(course, difficulty, rate);
+			graph.updateAll();
+			double len = 0;
+			System.out.println("Here");
+			switch (caseNum) {
+			case 0:
+				type = "Best Case";
+				for (DataPoint d : graph.getBestGradePredictionCurvePoints()) {
+					len++;
+					data.add(len, d.getY());
+				}
+				break;
+			case 1:
+				type = "Medium Case";
+				for (DataPoint d : graph.getGradePredictionCurvePoints()) {
+					len++;
+					data.add(len, d.getY());
+				}
+				break;
+			default:
+				type = "Worst Case";
+				for (DataPoint d : graph.getWorstGradePredictionCurvePoints()) {
+					len++;
+					data.add(len, d.getY());
+				}
+				break;
+			}
+			dataset.addSeries(data);
 		
-		switch(caseNum){
-		case 0:
-			type = "Best Case";
-			for (DataPoint d : graph.getBestGradePredictionCurvePoints()) {
-				len++;
-				data.add(len, d.getY());
-			}
-			break;
-		case 1:
-			type = "Medium Case";
-			for (DataPoint d : graph.getGradePredictionCurvePoints()) {
-				len++;
-				data.add(len, d.getY());
-			}
-			break;
-		default:
-			type = "Worst Case";
-			for (DataPoint d : graph.getWorstGradePredictionCurvePoints()) {
-				len++;
-				data.add(len, d.getY());
-			}
-			break;
-		}
-		dataset.addSeries(data);
 	}
 
 	public ChartPanel showGraph() {
 		final JFreeChart chart = createChart(dataset, type);
 		final ChartPanel chartPanel = new ChartPanel(chart);
 		chartPanel.setPreferredSize(new java.awt.Dimension(500, 270));
-		return chartPanel;		
+		return chartPanel;
 	}
 
 	private JFreeChart createChart(final XYDataset dataset, String type) {
-		final JFreeChart chart = ChartFactory.createScatterPlot("Trends Graph - "+type, // chart
-																				// title
+		final JFreeChart chart = ChartFactory.createScatterPlot(
+				"Trends Graph - " + type, // chart
+				// title
 				"Weeks", // x axis label
 				"Percent Points", // y axis label
 				dataset, // data

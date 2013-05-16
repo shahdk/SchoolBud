@@ -259,7 +259,7 @@ public class SchedulerMenu extends JMenuBar {
 
 							} catch (Exception exp) {
 								JOptionPane.showMessageDialog(null,
-										"Invalid Input");
+										SchedulerMenu.this.messages.getString("invalid"));
 							}
 						}
 					}

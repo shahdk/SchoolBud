@@ -1,5 +1,4 @@
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
@@ -9,7 +8,6 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
 import javax.swing.Box;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -20,7 +18,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.Border;
+import javax.swing.WindowConstants;
 
 /**
  * This class is the JMenuBarto be added onto the JFrame
@@ -187,14 +185,6 @@ public class SchoolBudGUIMenu extends JMenuBar {
 	 *
 	 */
 	private final int NUM_COLS = 5;
-	/**
-	 * Difficulty of a course
-	 */
-	private int degreeOfDifficulty;
-	/**
-	 * Work ethic
-	 */
-	private int degreeOfWork;
 
 	/**
 	 * This constructor initializes variables and the different components in
@@ -271,7 +261,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 						SchoolBudGUIMenu.this.component.addNewCourse(newCourse);
 					} catch (Exception e) {
 						JOptionPane.showMessageDialog(
-								SchoolBudGUIMenu.this.frame, "Invalid Input");
+								SchoolBudGUIMenu.this.frame, SchoolBudGUIMenu.this.messages.getString("invalid"));
 					}
 				}
 			}
@@ -301,7 +291,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 										.getQuarterList());
 					} catch (Exception exp) {
 						JOptionPane.showMessageDialog(
-								SchoolBudGUIMenu.this.frame, "Invalid Input");
+								SchoolBudGUIMenu.this.frame, SchoolBudGUIMenu.this.messages.getString("invalid"));
 					}
 				}
 			}
@@ -355,7 +345,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 						}
 					} catch (Exception exp) {
 						JOptionPane.showMessageDialog(
-								SchoolBudGUIMenu.this.frame, "Invalid Input");
+								SchoolBudGUIMenu.this.frame, SchoolBudGUIMenu.this.messages.getString("invalid"));
 					}
 				}
 			}
@@ -376,10 +366,10 @@ public class SchoolBudGUIMenu extends JMenuBar {
 				JTextField endField = new JTextField(5);
 				SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yy");
 
-				nameField.setText(component.getSelectedCourse());
-				creditField.setText(getCourse(component.getSelectedCourse()).getCreditHours()+"");
-				startField.setText(sdf.format(getCourse(component.getSelectedCourse()).getStartDate()));
-				endField.setText(sdf.format(getCourse(component.getSelectedCourse()).getEndDate()));
+				nameField.setText(SchoolBudGUIMenu.this.component.getSelectedCourse());
+				creditField.setText(getCourse(SchoolBudGUIMenu.this.component.getSelectedCourse()).getCreditHours()+"");
+				startField.setText(sdf.format(getCourse(SchoolBudGUIMenu.this.component.getSelectedCourse()).getStartDate()));
+				endField.setText(sdf.format(getCourse(SchoolBudGUIMenu.this.component.getSelectedCourse()).getEndDate()));
 				
 				JPanel myPanel = new JPanel();
 				myPanel.add(new JLabel(SchoolBudGUIMenu.this.messages
@@ -412,7 +402,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 								creditHours, start, end);
 					} catch (Exception exp) {
 						JOptionPane.showMessageDialog(
-								SchoolBudGUIMenu.this.frame, "Invalid Input");
+								SchoolBudGUIMenu.this.frame, SchoolBudGUIMenu.this.messages.getString("invalid"));
 					}
 				}
 			}
@@ -424,7 +414,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				JTextField nameField = new JTextField(10);
-				nameField.setText(component.getSelectedQuarter());
+				nameField.setText(SchoolBudGUIMenu.this.component.getSelectedQuarter());
 				JPanel myPanel = new JPanel();
 				myPanel.add(new JLabel(SchoolBudGUIMenu.this.messages
 						.getString("name")));
@@ -441,7 +431,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 						SchoolBudGUIMenu.this.component.editQuarter(name);
 					} catch (Exception exp) {
 						JOptionPane.showMessageDialog(
-								SchoolBudGUIMenu.this.frame, "Invalid Input");
+								SchoolBudGUIMenu.this.frame, SchoolBudGUIMenu.this.messages.getString("invalid"));
 					}
 				}
 			}
@@ -455,8 +445,8 @@ public class SchoolBudGUIMenu extends JMenuBar {
 				JTextField nameField = new JTextField(10);
 				JTextField weightField = new JTextField(5);
 
-				nameField.setText(component.getSelectedCategory());
-				weightField.setText(getCategory(component.getSelectedCategory()).getWeight()+"");
+				nameField.setText(SchoolBudGUIMenu.this.component.getSelectedCategory());
+				weightField.setText(getCategory(SchoolBudGUIMenu.this.component.getSelectedCategory()).getWeight()+"");
 				
 				JPanel myPanel = new JPanel();
 				myPanel.add(new JLabel(SchoolBudGUIMenu.this.messages
@@ -481,7 +471,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 								weight);
 					} catch (Exception exp) {
 						JOptionPane.showMessageDialog(
-								SchoolBudGUIMenu.this.frame, "Invalid Input");
+								SchoolBudGUIMenu.this.frame, SchoolBudGUIMenu.this.messages.getString("invalid"));
 					}
 				}
 			}
@@ -520,7 +510,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 							JOptionPane.DEFAULT_OPTION);
 				} catch (Exception exp) {
 					JOptionPane.showMessageDialog(SchoolBudGUIMenu.this.frame,
-							"Invalid Input");
+							SchoolBudGUIMenu.this.messages.getString("invalid"));
 				}
 			}
 
@@ -673,7 +663,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 					SchoolBudGUIMenu.this.main.saveFile(filePath);
 				} catch (Exception exception) {
 					JOptionPane.showMessageDialog(SchoolBudGUIMenu.this.frame,
-							"Invalid Input");
+							SchoolBudGUIMenu.this.messages.getString("invalid"));
 				}
 
 			}
@@ -702,7 +692,7 @@ public class SchoolBudGUIMenu extends JMenuBar {
 					SchoolBudGUIMenu.this.component.calculateGrades();
 				} catch (Exception exception) {
 					JOptionPane.showMessageDialog(SchoolBudGUIMenu.this.frame,
-							"Invalid Input");
+							SchoolBudGUIMenu.this.messages.getString("invalid"));
 				}
 			}
 
@@ -728,9 +718,10 @@ public class SchoolBudGUIMenu extends JMenuBar {
 			public void actionPerformed(ActionEvent event) {
 				
 				JPanel myPanel = new JPanel(new BorderLayout());
-				
-				JPanel ethicPane = new JPanel(new BorderLayout());
-				JPanel workPane = new JPanel(new BorderLayout());
+				JPanel otherPanel = new JPanel(new BorderLayout());
+				JPanel otherPanel1 = new JPanel(new BorderLayout());
+				JPanel ethicPane = new JPanel();
+				JPanel workPane = new JPanel();
 				
 				//combo boxes
 				String[] difficultyNums = { "1", "2", "3", "4", "5" };
@@ -741,60 +732,59 @@ public class SchoolBudGUIMenu extends JMenuBar {
 				workEthic.setSelectedIndex(5);
 				
 				//labels
-				JLabel work = new JLabel("Work Ethic: ");
-				JLabel degree = new JLabel("Difficulty: ");
+				JLabel work = new JLabel(SchoolBudGUIMenu.this.messages.getString("work"));
+				JLabel degree = new JLabel(SchoolBudGUIMenu.this.messages.getString("difficulty"));
 				
-				JLabel work1 = new JLabel("-5 is worst/ 5 is the best ");
-				JLabel degree1 = new JLabel(" 1 is the worst/ 5 is the best");
+				JLabel work1 = new JLabel(SchoolBudGUIMenu.this.messages.getString("workInstr"));
+				JLabel degree1 = new JLabel(SchoolBudGUIMenu.this.messages.getString("diffInstr"));
 				
 				//stuff
-				ethicPane.add(work, BorderLayout.WEST);
-				ethicPane.add(workEthic, BorderLayout.EAST);
-				ethicPane.add(work1, BorderLayout.SOUTH);
+				ethicPane.add(work);
+				ethicPane.add(workEthic);
+				otherPanel1.add(ethicPane, BorderLayout.NORTH);
+				otherPanel1.add(work1, BorderLayout.SOUTH);
 				
-				workPane.add(degree, BorderLayout.WEST);
-				workPane.add(difficulty, BorderLayout.EAST);
-				workPane.add(degree1, BorderLayout.SOUTH);
+				workPane.add(degree);
+				workPane.add(difficulty);
+				otherPanel.add(workPane, BorderLayout.NORTH);
+				otherPanel.add(degree1, BorderLayout.SOUTH);
 				
-				myPanel.add(workPane, BorderLayout.EAST);
-				myPanel.add(ethicPane, BorderLayout.WEST);
+				myPanel.add(otherPanel, BorderLayout.NORTH);
+				myPanel.add(otherPanel1, BorderLayout.SOUTH);
 				
 				int result = JOptionPane.showConfirmDialog(null, myPanel,
-						SchoolBudGUIMenu.this.messages
-								.getString("editCategory"),
+						SchoolBudGUIMenu.this.messages.getString("trending"),
 						JOptionPane.OK_CANCEL_OPTION);
 				if (result == JOptionPane.OK_OPTION) {
 					try {
 						int degreeOfDifficulty = Integer.parseInt((String) difficulty.getSelectedItem());
 						int degreeOfWork = Integer.parseInt((String) workEthic.getSelectedItem());
 						
-						System.out.println(degreeOfWork);
-						System.out.println(degreeOfDifficulty);
-						
 						JPanel pane2 = new JPanel(new BorderLayout());
-						TrendsGraphGUI best = new TrendsGraphGUI(getCourse(component.getSelectedCourse()), degreeOfDifficulty, degreeOfWork, 0);
-						TrendsGraphGUI worst = new TrendsGraphGUI(getCourse(component.getSelectedCourse()), degreeOfDifficulty, degreeOfWork, 2);
-						TrendsGraphGUI medium = new TrendsGraphGUI(getCourse(component.getSelectedCourse()), degreeOfDifficulty, degreeOfWork, 1);
+//						TrendsGraphGUI best = new TrendsGraphGUI(getCourse(component.getSelectedCourse()), degreeOfDifficulty, degreeOfWork, 0);
+//						TrendsGraphGUI worst = new TrendsGraphGUI(getCourse(component.getSelectedCourse()), degreeOfDifficulty, degreeOfWork, 2);
+						TrendsGraphGUI medium = new TrendsGraphGUI(getCourse(SchoolBudGUIMenu.this.component.getSelectedCourse()), degreeOfDifficulty, degreeOfWork, 1);
 						
-						pane2.add(best.showGraph(), BorderLayout.NORTH);
+//						pane2.add(best.showGraph(), BorderLayout.NORTH);
 						pane2.add(medium.showGraph(), BorderLayout.CENTER);
-						pane2.add(worst.showGraph(), BorderLayout.SOUTH);
+//						pane2.add(worst.showGraph(), BorderLayout.SOUTH);
 						
 						JFrame frame = new JFrame();
 						frame.setContentPane(pane2);
 						frame.pack();
 						frame.setVisible(true);
-						frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+						frame.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 						
-					} catch (Exception exp) {
+					} catch (InstantiationError ex) {
 						JOptionPane.showMessageDialog(
-								SchoolBudGUIMenu.this.frame, "Invalid Input");
+								SchoolBudGUIMenu.this.frame, SchoolBudGUIMenu.this.messages.getString("invalid"));
 					}
 				}
 
 			}
 
 		});
+		
 
 		this.schedule = new JMenuItem(this.messages.getString("schedule"));
 		this.schedule.addActionListener(new ActionListener() {
@@ -820,9 +810,15 @@ public class SchoolBudGUIMenu extends JMenuBar {
 
 	}
 	
+	/**
+	 * This method returns the course whose name is inputed
+	 *
+	 * @param name
+	 * @return selected
+	 */
 	public Course getCourse(String name){
-		for(Quarter q: main.getQuarterList()){
-			if(q.getName().equals(component.getSelectedQuarter())){
+		for(Quarter q: this.main.getQuarterList()){
+			if(q.getName().equals(this.component.getSelectedQuarter())){
 				for(Course c: q.getCourseList()){
 					if(c.getCourseName().equals(name)){
 						return c;
@@ -834,11 +830,17 @@ public class SchoolBudGUIMenu extends JMenuBar {
 		return null;
 	}
 	
+	/**
+	 * This method returns the inpuuted category
+	 *
+	 * @param name
+	 * @return selected category
+	 */
 	public Category getCategory(String name){
-		for(Quarter q: main.getQuarterList()){
-			if(q.getName().equals(component.getSelectedQuarter())){
+		for(Quarter q: this.main.getQuarterList()){
+			if(q.getName().equals(this.component.getSelectedQuarter())){
 				for(Course c: q.getCourseList()){
-					if(c.getCourseName().equals(component.getSelectedCourse())){
+					if(c.getCourseName().equals(this.component.getSelectedCourse())){
 						for(Category cat: c.getCategories()){
 							if(cat.getName().equals(name)){
 								return cat;

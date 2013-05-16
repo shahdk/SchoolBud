@@ -484,7 +484,7 @@ public class SchedulerComponent extends JPanel {
 								.getNumbers(sectionField5.getText());
 						SchedulerComponent.this.gapCheckBox.setEnabled(true);
 					} catch (Exception exp) {
-						JOptionPane.showMessageDialog(null, "Invalid Input");
+						JOptionPane.showMessageDialog(null, SchedulerComponent.this.messages.getString("invalid"));
 					}
 
 				}
@@ -533,7 +533,7 @@ public class SchedulerComponent extends JPanel {
 								.getNumbers(credit);
 						SchedulerComponent.this.hourCheckBox.setEnabled(true);
 					} catch (Exception exp) {
-						JOptionPane.showMessageDialog(null, "Invalid Input");
+						JOptionPane.showMessageDialog(null, SchedulerComponent.this.messages.getString("invalid"));
 					}
 
 				}
