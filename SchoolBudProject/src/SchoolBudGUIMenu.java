@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
@@ -8,6 +9,8 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Set;
 import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -17,6 +20,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 
 /**
  * This class is the JMenuBarto be added onto the JFrame
@@ -183,6 +187,14 @@ public class SchoolBudGUIMenu extends JMenuBar {
 	 *
 	 */
 	private final int NUM_COLS = 5;
+	/**
+	 * Difficulty of a course
+	 */
+	private int degreeOfDifficulty;
+	/**
+	 * Work ethic
+	 */
+	private int degreeOfWork;
 
 	/**
 	 * This constructor initializes variables and the different components in
@@ -715,28 +727,71 @@ public class SchoolBudGUIMenu extends JMenuBar {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				
-				JFrame graphFrame = new JFrame("Trends Graph");
-				graphFrame.setLayout(new BorderLayout());
+				JPanel myPanel = new JPanel(new BorderLayout());
 				
-				JPanel pane1 = new JPanel();
-				JPanel pane2 = new JPanel();
-				JPanel pane3 = new JPanel();
+				JPanel ethicPane = new JPanel(new BorderLayout());
+				JPanel workPane = new JPanel(new BorderLayout());
 				
-				TrendsGraphGUI best = new TrendsGraphGUI(getCourse(component.getSelectedCourse()), 3, 0, 0);
-				TrendsGraphGUI worst = new TrendsGraphGUI(getCourse(component.getSelectedCourse()), 3, 0, 1);
-				TrendsGraphGUI medium = new TrendsGraphGUI(getCourse(component.getSelectedCourse()), 3, 0, 2);
+				//combo boxes
+				String[] difficultyNums = { "1", "2", "3", "4", "5" };
+				String[] ethicNums = { "-5", "-4", "-3", "-2", "-1", "0", "1", "2", "3", "4", "5" };
+				final JComboBox difficulty = new JComboBox(difficultyNums);
+				difficulty.setSelectedIndex(2);
+				final JComboBox workEthic = new JComboBox(ethicNums);
+				workEthic.setSelectedIndex(5);
 				
+				//labels
+				JLabel work = new JLabel("Work Ethic: ");
+				JLabel degree = new JLabel("Difficulty: ");
 				
-				pane1.add(best.showGraph());
-				pane2.add(medium.showGraph());
-				pane2.add(worst.showGraph());
+				JLabel work1 = new JLabel("-5 is worst/ 5 is the best ");
+				JLabel degree1 = new JLabel(" 1 is the worst/ 5 is the best");
 				
-				graphFrame.add(pane1, BorderLayout.NORTH);
-				graphFrame.add(pane2, BorderLayout.CENTER);
-				graphFrame.add(pane3, BorderLayout.SOUTH);
-				graphFrame.pack();
-				graphFrame.setVisible(true);
+				//stuff
+				ethicPane.add(work, BorderLayout.WEST);
+				ethicPane.add(workEthic, BorderLayout.EAST);
+				ethicPane.add(work1, BorderLayout.SOUTH);
 				
+				workPane.add(degree, BorderLayout.WEST);
+				workPane.add(difficulty, BorderLayout.EAST);
+				workPane.add(degree1, BorderLayout.SOUTH);
+				
+				myPanel.add(workPane, BorderLayout.EAST);
+				myPanel.add(ethicPane, BorderLayout.WEST);
+				
+				int result = JOptionPane.showConfirmDialog(null, myPanel,
+						SchoolBudGUIMenu.this.messages
+								.getString("editCategory"),
+						JOptionPane.OK_CANCEL_OPTION);
+				if (result == JOptionPane.OK_OPTION) {
+					try {
+						int degreeOfDifficulty = Integer.parseInt((String) difficulty.getSelectedItem());
+						int degreeOfWork = Integer.parseInt((String) workEthic.getSelectedItem());
+						
+						System.out.println(degreeOfWork);
+						System.out.println(degreeOfDifficulty);
+						
+						JPanel pane2 = new JPanel(new BorderLayout());
+						TrendsGraphGUI best = new TrendsGraphGUI(getCourse(component.getSelectedCourse()), degreeOfDifficulty, degreeOfWork, 0);
+						TrendsGraphGUI worst = new TrendsGraphGUI(getCourse(component.getSelectedCourse()), degreeOfDifficulty, degreeOfWork, 2);
+						TrendsGraphGUI medium = new TrendsGraphGUI(getCourse(component.getSelectedCourse()), degreeOfDifficulty, degreeOfWork, 1);
+						
+						pane2.add(best.showGraph(), BorderLayout.NORTH);
+						pane2.add(medium.showGraph(), BorderLayout.CENTER);
+						pane2.add(worst.showGraph(), BorderLayout.SOUTH);
+						
+						JFrame frame = new JFrame();
+						frame.setContentPane(pane2);
+						frame.pack();
+						frame.setVisible(true);
+						frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+						
+					} catch (Exception exp) {
+						JOptionPane.showMessageDialog(
+								SchoolBudGUIMenu.this.frame, "Invalid Input");
+					}
+				}
+
 			}
 
 		});
